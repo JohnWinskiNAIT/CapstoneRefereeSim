@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
 
 public class PlayerControl : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField]
     float maxSpeed, accelerationSpeed, breakingSpeed;
+    [SerializeField]
+    float cameraSpeed, cameraMaxY, cameraMinY;
 
     private InputAction moveAction, lookAction, callAction, whistleAction, pauseAction;
     private Vector2 moveInput, lookInput;
@@ -71,5 +74,15 @@ public class PlayerControl : MonoBehaviour
     {
         //Do all camera-related changes in here.
 
+        //Apply input to the internal value of where the camera should be looking.
+        cameraAngle += new Vector3(lookInput.y, lookInput.x, 0) * cameraSpeed;
+
+        //Determine new values to rotate to.
+        float xChange = 0;
+        float yChange = 0;
+
+        //Perform rotation on physical game object.
+        mainCamera.transform.Rotate(mainCamera.transform.right, xChange);
+        mainCamera.transform.Rotate(mainCamera.transform.up, yChange);
     }
 }
