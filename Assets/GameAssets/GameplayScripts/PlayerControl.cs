@@ -9,7 +9,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActions;
     private Rigidbody rb;
-    private Camera mainCamera;
 
     [SerializeField]
     float maxSpeed, accelerationSpeed, breakingSpeed;
@@ -18,7 +17,7 @@ public class PlayerControl : MonoBehaviour
 
     private InputAction moveAction, lookAction, callAction, whistleAction, pauseAction;
     private Vector2 moveInput, lookInput;
-    private Vector3 cameraAngle;
+    public Vector3 cameraAngle { get; private set; }
 
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
@@ -32,7 +31,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
-        cameraAngle = mainCamera.transform.rotation.eulerAngles;
+        rb = GetComponent<Rigidbody>();
+        cameraAngle = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -57,32 +57,45 @@ public class PlayerControl : MonoBehaviour
         //Camera logic might need to be determined here then visuals performed in late update.
     }
 
+    private void LateUpdate()
+    {
+        // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
+        cameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
+
+        if (cameraAngle.x > 360)
+        {
+            cameraAngle = new Vector3(cameraAngle.x - 360, cameraAngle.y);
+        }
+        if (cameraAngle.x < 0)
+        {
+            cameraAngle = new Vector3(cameraAngle.x + 360, cameraAngle.y);
+        }
+    }
+
     private void PlayerMovement()
     {
         //Apply force.
-        rb.AddRelativeForce(moveInput * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
         if (capTest.magnitude > maxSpeed)
         {
-            rb.velocity = new Vector3(rb.velocity.normalized.x * maxSpeed, rb.velocity.y, rb.velocity.normalized.z);
+            rb.velocity = new Vector3(rb.velocity.normalized.x * maxSpeed, rb.velocity.y, rb.velocity.normalized.z * maxSpeed);
         }
     }
 
-    private void LateUpdate()
+    #region Enable and Disable
+    private void OnEnable()
     {
-        //Do all camera-related changes in here.
-
-        //Apply input to the internal value of where the camera should be looking.
-        cameraAngle += new Vector3(lookInput.y, lookInput.x, 0) * cameraSpeed;
-
-        //Determine new values to rotate to.
-        float xChange = 0;
-        float yChange = 0;
-
-        //Perform rotation on physical game object.
-        mainCamera.transform.Rotate(mainCamera.transform.right, xChange);
-        mainCamera.transform.Rotate(mainCamera.transform.up, yChange);
+        moveAction.Enable();
+        lookAction.Enable();
     }
+
+    private void OnDisable()
+    {
+        moveAction.Disable();
+        lookAction.Disable();
+    }
+    #endregion
 }
