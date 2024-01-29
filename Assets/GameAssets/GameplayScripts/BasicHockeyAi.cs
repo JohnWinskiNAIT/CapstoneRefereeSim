@@ -7,14 +7,16 @@ using UnityEngine.InputSystem;
 public class NewBehaviourScript : MonoBehaviour
 {
     private NavMeshAgent agent;
-    //public InputAction moveAction;
-    //[SerializeField] Vector2 moveValue;
+
     Vector3 destination, movementVector;
-    //[SerializeField] float movementSpeed = 1;
+
 
     [SerializeField] List<Vector3> destinationList;
-    [SerializeField] int maxDestinations, currentDestination = 0 ;
-    [SerializeField] float timeStamp, timewait;
+    [SerializeField] List<float> timeToWait;
+    //Each destionation must have its assoiated time to wait for its destination. Ensure that time to wait and destination list have the same count of lists. 
+
+    [SerializeField] int maxDestinations, currentDestinationIndicator = 0;
+    [SerializeField] float timeStamp;
     void Start()
     {
         maxDestinations = destinationList.Count;
@@ -23,37 +25,21 @@ public class NewBehaviourScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        //moveValue = moveAction.ReadValue<Vector2>();
-        //movementVector = new Vector3(moveValue.x,0,moveValue.y);
 
-        //destination = transform.position + movementVector*movementSpeed;
-        
-        //agent.destination = destination;
     }
     private void Update()
     {
         // Once the timer is up, The current destination is changed to the next destination in the list. If it is at the last destination in the list it goes back to the first.
-        if (Time.time > timeStamp + timewait)
+        if (Time.time > timeStamp + timeToWait[currentDestinationIndicator])
         {
-            if (currentDestination < maxDestinations)
+            currentDestinationIndicator++;
+            if (currentDestinationIndicator >= maxDestinations)
             {
-                currentDestination++;
-                timeStamp = Time.time;
+                //Loops back to start
+                currentDestinationIndicator = 0;
             }
-            else
-            {
-                currentDestination = 0;
-                timeStamp = Time.time;
-            }
+            timeStamp = Time.time;
+            agent.destination = destinationList[currentDestinationIndicator];
         }
-        agent.destination = destinationList[currentDestination];
     }
-    //private void OnEnable()
-    //{
-    //    moveAction.Enable();
-    //}
-    //private void OnDisable()
-    //{
-    //    moveAction.Disable();
-    //}
 }

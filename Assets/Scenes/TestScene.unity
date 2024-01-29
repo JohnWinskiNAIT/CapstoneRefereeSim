@@ -233,66 +233,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c703200d1d27d946a253ba188270f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bb195137-0452-4197-9708-5b0d6e899417
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 31ba2401-8f52-44f3-a6cf-3f1ffe3a7439
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 8e59d130-5db3-410b-a0e1-fc34e1cac6dd
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: down
-      m_Id: c56e0667-fb99-4359-9377-8705f2ea148e
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: left
-      m_Id: b46d4c95-e8ff-4e1b-aa8f-b26dab4fc5a5
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 7eec5ff2-c053-4acd-a90e-36da94800545
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    m_Flags: 0
-  moveValue: {x: 0, y: 0}
-  movementSpeed: 4
   destinationList:
   - {x: 10, y: 1, z: -10}
   - {x: 10, y: 1, z: 10}
   - {x: -10, y: 1, z: 10}
   - {x: -10, y: 1, z: -10}
+  timeToWait:
+  - 2
+  - 2
+  - 2
+  - 2
   maxDestinations: 0
-  currentDestination: 0
+  currentDestinationIndicator: 0
   timeStamp: 0
-  timewait: 8
 --- !u!195 &728666811
 NavMeshAgent:
   m_ObjectHideFlags: 0
