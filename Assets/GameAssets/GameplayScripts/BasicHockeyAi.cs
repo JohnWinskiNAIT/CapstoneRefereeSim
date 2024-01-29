@@ -21,6 +21,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         maxDestinations = destinationList.Count;
         agent = GetComponent<NavMeshAgent>();
+        agent.destination = destinationList[currentDestinationIndicator];
     }
 
     void FixedUpdate()
