@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,8 @@ using UnityEngine.InputSystem;
 public class NewBehaviourScript : MonoBehaviour
 {
     private NavMeshAgent agent;
-
+    [SerializeField] player hockeyPlayer;
+    [SerializeField] player targetPlayer;
     Vector3 destination, movementVector;
 
 
@@ -19,6 +21,7 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] float timeStamp;
     void Start()
     {
+        hockeyPlayer = new player();
         maxDestinations = destinationList.Count;
         agent = GetComponent<NavMeshAgent>();
         agent.destination = destinationList[currentDestinationIndicator];
@@ -43,4 +46,23 @@ public class NewBehaviourScript : MonoBehaviour
             agent.destination = destinationList[currentDestinationIndicator];
         }
     }
+    public void PassPuck()
+    {
+        if (hockeyPlayer.puckPossesion)
+        {
+            targetPlayer.puckPossesion = true;
+            hockeyPlayer.puckPossesion = false;
+        }
+    }
+    public void Shoot()
+    {
+        if(hockeyPlayer.puckPossesion)
+        {
+            targetPlayer.puckPossesion = true;
+            hockeyPlayer.puckPossesion = false;
+        }
+    }
+    
 }
+
+
