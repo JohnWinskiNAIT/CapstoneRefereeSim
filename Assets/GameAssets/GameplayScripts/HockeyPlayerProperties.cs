@@ -19,6 +19,7 @@ public struct player
     public dominantHand dominantHand;
     public float height;
     public Animation currentAnimation;
+    public int playerIndex;
 }
 public enum team
 {

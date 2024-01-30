@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-public class NewBehaviourScript : MonoBehaviour
+public class BasicHockeyAi : MonoBehaviour
 {
     private NavMeshAgent agent;
     [SerializeField] player hockeyPlayer;
@@ -45,6 +45,10 @@ public class NewBehaviourScript : MonoBehaviour
             timeStamp = Time.time;
             agent.destination = destinationList[currentDestinationIndicator];
         }
+    }
+    public player GetThisPlayer()
+    {
+        return hockeyPlayer;
     }
     public void PassPuck()
     {
