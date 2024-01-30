@@ -71,6 +71,11 @@ public class PlayerControl : MonoBehaviour
         {
             StoredActionCheck();
         }
+
+
+        Vector3 test1 = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        Vector3 test2 = Vector3.Cross(transform.forward, new Vector3(moveInput.x, 0, -moveInput.y));
+        Debug.Log(Vector3.Angle(Vector3.forward, test2));
     }
 
     private void StoredActionCheck()
