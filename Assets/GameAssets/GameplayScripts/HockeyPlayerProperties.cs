@@ -7,6 +7,7 @@ public class HockeyPlayerProperties : MonoBehaviour
     struct player
     {
         bool puckPossesion;
+        int jerseyNumber;
         team playerTeam;
         dominantHand dominantHand;
         float height;
