@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grabs all the players in each hockey ai script
         for (var index = 0; index < hockeyAi.Length; index++)
         {
             players[index] = hockeyAi[index].GetThisPlayer();

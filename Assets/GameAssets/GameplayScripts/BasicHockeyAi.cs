@@ -50,18 +50,22 @@ public class BasicHockeyAi : MonoBehaviour
     {
         return hockeyPlayer;
     }
+    //basic groundwork for a pass method
     public void PassPuck()
     {
         if (hockeyPlayer.puckPossesion)
         {
+            //something to find the player to pass to.
             targetPlayer.puckPossesion = true;
             hockeyPlayer.puckPossesion = false;
         }
     }
+    //basic groundwork for a shoot method
     public void Shoot()
     {
         if(hockeyPlayer.puckPossesion)
         {
+            //something to find the goalie target
             targetPlayer.puckPossesion = true;
             hockeyPlayer.puckPossesion = false;
         }

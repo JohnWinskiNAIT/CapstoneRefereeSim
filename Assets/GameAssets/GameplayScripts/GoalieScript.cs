@@ -9,8 +9,8 @@ public class GoalieScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //goalies are players too
         goaliePlayer = new player();
-
     }
 
     // Update is called once per frame

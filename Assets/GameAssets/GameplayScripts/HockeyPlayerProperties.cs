@@ -14,12 +14,19 @@ public class HockeyPlayerProperties : MonoBehaviour
 public struct player
 {
     public bool puckPossesion;
+
     public int jerseyNumber;
+
     public team playerTeam;
+
     public dominantHand dominantHand;
+
     public float height;
+
     public Animation currentAnimation;
+
     public int playerIndex;
+
 }
 public enum team
 {
