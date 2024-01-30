@@ -20,14 +20,11 @@ public class PlayerCamera : MonoBehaviour
         float xChange = transform.rotation.eulerAngles.x - playerControls.cameraAngle.x;
         float yChange = transform.rotation.eulerAngles.y - playerControls.cameraAngle.y;
 
-        Debug.Log($"Angle 1: {transform.rotation.eulerAngles.x} Angle 2: {playerControls.cameraAngle.x}");
+        Debug.Log($"Angle 1: {transform.rotation.eulerAngles.x} Angle 2: {playerControls.cameraAngle.y}");
 
         //Setting the rotation from euler atm.
         //transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
 
-        //Perform rotation on physical game object.
-        transform.Rotate(transform.right, xChange, Space.Self);
-        //transform.Rotate(transform.right, -0.1f);
-        transform.Rotate(transform.up, yChange, Space.Self);
+        transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
     }
 }
