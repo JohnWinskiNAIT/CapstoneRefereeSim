@@ -73,11 +73,13 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        Vector3 test1 = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        /*Vector3 test1 = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         Vector3 test2 = Vector3.Cross(transform.forward, new Vector3(moveInput.x, 0, -moveInput.y));
-        Debug.Log(Vector3.Angle(Vector3.forward, test2));
+        Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
     }
 
+    //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
+    //If true, check if it's been held for long enough and use the appropriate method if so.
     private void StoredActionCheck()
     {
         if (!storedAction.IsPressed())
@@ -114,12 +116,12 @@ public class PlayerControl : MonoBehaviour
 
     private void CallActivate()
     {
-
+        //Unfinished.
     }
 
     private void WhistleActivate()
     {
-
+        //Unfinished.
     }
 
     private void FixedUpdate()
@@ -146,20 +148,38 @@ public class PlayerControl : MonoBehaviour
 
         if (cameraAngle.y > 360)
         {
-            cameraAngle = new Vector3(cameraAngle.y, cameraAngle.y - 360);
+            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y - 360);
         }
         if (cameraAngle.y < 0)
         {
             cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y + 360);
         }
 
-        transform.Rotate(Vector3.up, (cameraAngle.y - transform.rotation.eulerAngles.y) * 0.9f);
+        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
+        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
+        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+        if (Mathf.Abs(rotateValue) > 180)
+        {
+            Debug.Log($"testingtesting, {rotateValue}");
+        }
+        if (rotateValue > 180)
+        {
+            rotateValue -= 360;
+        }
+        if (rotateValue < -180)
+        {
+            rotateValue += 360;
+        }
+        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
     private void PlayerMovement()
     {
         //Apply force.
-        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        //rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        //Test to check a handmade RelativeForce.
+        rb.AddForce(Vector3.Cross(new Vector3(moveInput.x, 0, moveInput.y), transform.forward) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
