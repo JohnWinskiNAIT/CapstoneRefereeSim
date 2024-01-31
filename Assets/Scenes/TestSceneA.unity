@@ -871,8 +871,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7b469705176244dafe391817c8cd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
   tempPlayerControl: {fileID: 698313452}
   inputStoreRadial: {fileID: 1439535752}
+  leftSideStore: {fileID: 519493058}
+  rightSideStore: {fileID: 1107081530}
+  chargingCornerOffset: 0.45
 --- !u!1 &1345023308
 GameObject:
   m_ObjectHideFlags: 0

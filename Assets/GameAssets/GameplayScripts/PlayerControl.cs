@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
     float cameraSpeed, cameraMaxY, cameraMinY;
 
     private InputAction moveAction, lookAction, callAction, whistleAction, pauseAction;
-    private InputAction storedAction;
+    public InputAction storedAction { get; private set; }
 
     private float storeTimestamp;
 
