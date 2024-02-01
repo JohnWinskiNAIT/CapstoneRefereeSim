@@ -1,17 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HockeyPlayerProperties : MonoBehaviour
-{
-    public player CreatePlayer()
-    {
-        return new player { };
-    }
-}
-[Serializable]
-public struct player
+public class Player : MonoBehaviour
 {
     public bool puckPossesion;
 
@@ -26,16 +17,4 @@ public struct player
     public Animation currentAnimation;
 
     public int playerIndex;
-
 }
-public enum team
-{
-    teamRed,
-    teamBlue,
-}
-public enum dominantHand
-{
-    leftHand,
-    rightHand,
-}
-

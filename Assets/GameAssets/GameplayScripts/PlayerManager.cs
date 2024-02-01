@@ -1,25 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] BasicHockeyAi[] hockeyAi;
-    player[] players;
-    // Start is called before the first frame update
+    Player[] players;
+    private InputAction passAction;
+    [SerializeField]
+    InputActionAsset inputActions;
+
+    private void Awake()
+    {
+        players = new Player[2];
+        passAction = inputActions.FindActionMap("Testing").FindAction("Pass");
+    }
     void Start()
     {
+
+        //test = hockeyAi.Length;
         //grabs all the players in each hockey ai script
         for (var index = 0; index < hockeyAi.Length; index++)
         {
-            players[index] = hockeyAi[index].GetThisPlayer();
+
+            players[index] = hockeyAi[index].gameObject.GetComponent<Player>();
             players[index].playerIndex = index;
         }
     }
-    // Update is called once per frame
     void Update()
     {
-        
+        if (passAction.WasPressedThisFrame())
+        {
+            Debug.Log("passed");
+            hockeyAi[0].PassPuck(players[1]);
+        }
     }
-
+    #region Eanble and Disable 
+    private void OnEnable()
+    {
+        passAction.Enable();
+    }
+    private void OnDisable()
+    {
+        passAction.Disable();
+    }
+    #endregion
 }
