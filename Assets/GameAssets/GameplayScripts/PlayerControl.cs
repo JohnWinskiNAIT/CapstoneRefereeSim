@@ -179,10 +179,16 @@ public class PlayerControl : MonoBehaviour
 
     private void PlayerMovement()
     {
-        //Apply force.
-        //Vector3 test = transform.InverseTransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
-        //print(Vector2.Angle(new Vector2(1f, 0f), new Vector2(0.5f, 0.5f)));
-        print(Vector2.Angle(transform.forward, moveInput));
+        //Testing block. Ignore this right now.
+        Vector3 test1 = new Vector3(moveInput.x, 0, moveInput.y);
+        Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+        Vector3 test3 = test2 * test1; 
+
+        friend.transform.position = transform.position + (test3 * 2);
+        Debug.Log(Vector3.Angle(test3, rb.velocity));
+
+        //Add relative force.
+        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
