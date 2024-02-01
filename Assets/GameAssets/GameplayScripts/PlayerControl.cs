@@ -23,6 +23,9 @@ public class PlayerControl : MonoBehaviour
     private Vector2 moveInput, lookInput;
     public Vector3 cameraAngle { get; private set; }
 
+    [SerializeField]
+    GameObject friend;
+
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
@@ -73,9 +76,10 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        /*Vector3 test1 = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        Vector3 test2 = Vector3.Cross(transform.forward, new Vector3(moveInput.x, 0, -moveInput.y));
+        /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
+        Vector3 test2 = new Vector2(playe)
         Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
+        //Debug.Log(transform.forward);
     }
 
     //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
@@ -176,10 +180,9 @@ public class PlayerControl : MonoBehaviour
     private void PlayerMovement()
     {
         //Apply force.
-        //rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
-
-        //Test to check a handmade RelativeForce.
-        rb.AddForce(Vector3.Cross(new Vector3(moveInput.x, 0, moveInput.y), transform.forward) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        //Vector3 test = transform.InverseTransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
+        //print(Vector2.Angle(new Vector2(1f, 0f), new Vector2(0.5f, 0.5f)));
+        print(Vector2.Angle(transform.forward, moveInput));
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
