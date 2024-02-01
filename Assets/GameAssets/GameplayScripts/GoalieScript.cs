@@ -5,12 +5,12 @@ using UnityEngine;
 public class GoalieScript : MonoBehaviour
 {
     [SerializeField] bool letScore;
-    player goaliePlayer;
+    Player goaliePlayer;
     // Start is called before the first frame update
     void Start()
     {
         //goalies are players too
-        goaliePlayer = new player();
+        goaliePlayer = GetComponent<Player>();
     }
 
     // Update is called once per frame
