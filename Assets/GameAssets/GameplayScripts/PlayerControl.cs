@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField]
-    float maxSpeed, accelerationSpeed, breakingSpeed, storeInputDuration;
+    float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
     [SerializeField]
     float cameraSpeed, cameraMaxY, cameraMinY;
 
@@ -149,6 +149,14 @@ public class PlayerControl : MonoBehaviour
         {
             cameraAngle = new Vector3(cameraAngle.x + 360, cameraAngle.y);
         }
+        if (cameraAngle.x < 180 && cameraAngle.x > cameraMinY)
+        {
+            cameraAngle = new Vector3(cameraMinY, cameraAngle.y);
+        }
+        if (cameraAngle.x > 180 && cameraAngle.x < cameraMaxY)
+        {
+            cameraAngle = new Vector3(cameraMaxY, cameraAngle.y);
+        }
 
         if (cameraAngle.y > 360)
         {
@@ -182,19 +190,18 @@ public class PlayerControl : MonoBehaviour
         //Testing block. Ignore this right now.
         Vector3 test1 = new Vector3(moveInput.x, 0, moveInput.y);
         Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
-        Vector3 test3 = test2 * test1; 
+        test1 = test2 * test1;
 
-        friend.transform.position = transform.position + (test3 * 2);
-        Debug.Log(Vector3.Angle(test3, rb.velocity));
+        friend.transform.position = transform.position + (test1 * 2);
 
         //Add relative force.
         rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(test1.x, test1.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
-            rb.velocity = new Vector3(rb.velocity.normalized.x * maxSpeed, rb.velocity.y, rb.velocity.normalized.z * maxSpeed);
+            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
     }
 
