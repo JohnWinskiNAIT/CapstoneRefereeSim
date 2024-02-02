@@ -56,7 +56,8 @@ public class PlayerControl : MonoBehaviour
             PauseManager.instance.PauseGame();
         }
 
-        //Stored action stuff.
+        //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
+        //it runs a check to see if it's still being held.
         if (storedAction == null)
         {
             if (whistleAction.WasPressedThisFrame())
@@ -75,7 +76,14 @@ public class PlayerControl : MonoBehaviour
             StoredActionCheck();
         }
 
-
+        if (pauseAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
         Vector3 test2 = new Vector2(playe)
         Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
@@ -138,9 +146,32 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
+        CameraClamp();
+
+        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
+        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
+        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+        if (Mathf.Abs(rotateValue) > 180)
+        {
+            Debug.Log($"testingtesting, {rotateValue}");
+        }
+        if (rotateValue > 180)
+        {
+            rotateValue -= 360;
+        }
+        if (rotateValue < -180)
+        {
+            rotateValue += 360;
+        }
+        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
+    }
+
+    private void CameraClamp()
+    {
         // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
         cameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
 
+        //Full rotation logic + clamping the x angle to serialized values since it controls the up/down of the camera.
         if (cameraAngle.x > 360)
         {
             cameraAngle = new Vector3(cameraAngle.x - 360, cameraAngle.y);
@@ -166,23 +197,6 @@ public class PlayerControl : MonoBehaviour
         {
             cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y + 360);
         }
-
-        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
-        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
-        if (Mathf.Abs(rotateValue) > 180)
-        {
-            Debug.Log($"testingtesting, {rotateValue}");
-        }
-        if (rotateValue > 180)
-        {
-            rotateValue -= 360;
-        }
-        if (rotateValue < -180)
-        {
-            rotateValue += 360;
-        }
-        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
     private void PlayerMovement()
@@ -212,6 +226,7 @@ public class PlayerControl : MonoBehaviour
         lookAction.Enable();
         callAction.Enable();
         whistleAction.Enable();
+        pauseAction.Enable();
     }
 
     private void OnDisable()
@@ -220,6 +235,7 @@ public class PlayerControl : MonoBehaviour
         lookAction.Disable();
         callAction.Disable();
         whistleAction.Disable();
+        pauseAction.Disable();
     }
     #endregion
 }
