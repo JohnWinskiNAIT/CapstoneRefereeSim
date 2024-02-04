@@ -6,14 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] BasicHockeyAi[] hockeyAi;
-    Player[] players;
+    HockeyPlayer[] players;
     private InputAction passAction;
     [SerializeField]
     InputActionAsset inputActions;
 
     private void Awake()
     {
-        players = new Player[2];
+        players = new HockeyPlayer[2];
         passAction = inputActions.FindActionMap("Testing").FindAction("Pass");
     }
     void Start()
@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
         for (var index = 0; index < hockeyAi.Length; index++)
         {
 
-            players[index] = hockeyAi[index].gameObject.GetComponent<Player>();
+            players[index] = hockeyAi[index].gameObject.GetComponent<HockeyPlayer>();
             players[index].playerIndex = index;
         }
     }

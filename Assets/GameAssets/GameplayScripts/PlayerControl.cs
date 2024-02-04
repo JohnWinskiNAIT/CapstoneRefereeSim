@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField]
-    float maxSpeed, accelerationSpeed, breakingSpeed, storeInputDuration;
+    float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
     [SerializeField]
     float cameraSpeed, cameraMaxY, cameraMinY;
 
@@ -56,7 +56,8 @@ public class PlayerControl : MonoBehaviour
             PauseManager.instance.PauseGame();
         }
 
-        //Stored action stuff.
+        //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
+        //it runs a check to see if it's still being held.
         if (storedAction == null)
         {
             if (whistleAction.WasPressedThisFrame())
@@ -75,7 +76,14 @@ public class PlayerControl : MonoBehaviour
             StoredActionCheck();
         }
 
-
+        if (pauseAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
         Vector3 test2 = new Vector2(playe)
         Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
@@ -138,26 +146,7 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
-        // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
-        cameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
-
-        if (cameraAngle.x > 360)
-        {
-            cameraAngle = new Vector3(cameraAngle.x - 360, cameraAngle.y);
-        }
-        if (cameraAngle.x < 0)
-        {
-            cameraAngle = new Vector3(cameraAngle.x + 360, cameraAngle.y);
-        }
-
-        if (cameraAngle.y > 360)
-        {
-            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y - 360);
-        }
-        if (cameraAngle.y < 0)
-        {
-            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y + 360);
-        }
+        CameraClamp();
 
         // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
         // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
@@ -177,18 +166,56 @@ public class PlayerControl : MonoBehaviour
         transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
+    private void CameraClamp()
+    {
+        // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
+        cameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
+
+        //Full rotation logic + clamping the x angle to serialized values since it controls the up/down of the camera.
+        if (cameraAngle.x > 360)
+        {
+            cameraAngle = new Vector3(cameraAngle.x - 360, cameraAngle.y);
+        }
+        if (cameraAngle.x < 0)
+        {
+            cameraAngle = new Vector3(cameraAngle.x + 360, cameraAngle.y);
+        }
+        if (cameraAngle.x < 180 && cameraAngle.x > cameraMinY)
+        {
+            cameraAngle = new Vector3(cameraMinY, cameraAngle.y);
+        }
+        if (cameraAngle.x > 180 && cameraAngle.x < cameraMaxY)
+        {
+            cameraAngle = new Vector3(cameraMaxY, cameraAngle.y);
+        }
+
+        if (cameraAngle.y > 360)
+        {
+            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y - 360);
+        }
+        if (cameraAngle.y < 0)
+        {
+            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y + 360);
+        }
+    }
+
     private void PlayerMovement()
     {
-        //Apply force.
-        //Vector3 test = transform.InverseTransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
-        //print(Vector2.Angle(new Vector2(1f, 0f), new Vector2(0.5f, 0.5f)));
-        print(Vector2.Angle(transform.forward, moveInput));
+        //Testing block. Ignore this right now.
+        Vector3 test1 = new Vector3(moveInput.x, 0, moveInput.y);
+        Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+        test1 = test2 * test1;
+
+        friend.transform.position = transform.position + (test1 * 2);
+
+        //Add relative force.
+        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(test1.x, test1.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
-            rb.velocity = new Vector3(rb.velocity.normalized.x * maxSpeed, rb.velocity.y, rb.velocity.normalized.z * maxSpeed);
+            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
     }
 
@@ -199,6 +226,7 @@ public class PlayerControl : MonoBehaviour
         lookAction.Enable();
         callAction.Enable();
         whistleAction.Enable();
+        pauseAction.Enable();
     }
 
     private void OnDisable()
@@ -207,6 +235,7 @@ public class PlayerControl : MonoBehaviour
         lookAction.Disable();
         callAction.Disable();
         whistleAction.Disable();
+        pauseAction.Disable();
     }
     #endregion
 }
