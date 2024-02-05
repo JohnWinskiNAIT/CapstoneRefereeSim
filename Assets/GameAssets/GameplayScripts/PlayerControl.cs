@@ -159,10 +159,6 @@ public class PlayerControl : MonoBehaviour
         // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
         // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
         float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
-        if (Mathf.Abs(rotateValue) > 180)
-        {
-            Debug.Log($"testingtesting, {rotateValue}");
-        }
         if (rotateValue > 180)
         {
             rotateValue -= 360;
@@ -209,22 +205,23 @@ public class PlayerControl : MonoBehaviour
 
     private void PlayerMovement()
     {
-        //Testing block. Ignore this right now.
-        Vector3 test1 = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
-        test1 = test2 * test1;
+        //Determines the angle between where the player's velocity is going and the player's input.
+        Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
+        Quaternion angleCheck = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+        horizontalCheck = angleCheck * horizontalCheck;
 
-        if (friend != null)
+        //Add an object over a GameObject friend parameter to have it display where the player is moving.
+        /*if (friend != null)
         {
-            friend.transform.position = transform.position + (test1 * 2);
-        }
+            friend.transform.position = transform.position + (horizontalCheck * 2);
+        }*/
 
         //Add relative force.
         rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(test1.x, test1.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(horizontalCheck.x, horizontalCheck.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }

@@ -81,14 +81,20 @@ public class PlayerUIManager : MonoBehaviour
         if (wheelTestAction.IsPressed())
         {
             Cursor.lockState = CursorLockMode.None;
-            selectionWheel.SetActive(true);
-            wheelOpen = true;
+            if (!selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(true);
+                wheelOpen = true;
+            }
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
-            selectionWheel.SetActive(false);
-            wheelOpen = false;
+            if (selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(false);
+                wheelOpen = false;
+            }
         }
     }
 
