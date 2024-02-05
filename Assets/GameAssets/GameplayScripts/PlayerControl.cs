@@ -206,7 +206,10 @@ public class PlayerControl : MonoBehaviour
         Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
         test1 = test2 * test1;
 
-        friend.transform.position = transform.position + (test1 * 2);
+        if (friend != null)
+        {
+            friend.transform.position = transform.position + (test1 * 2);
+        }
 
         //Add relative force.
         rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
