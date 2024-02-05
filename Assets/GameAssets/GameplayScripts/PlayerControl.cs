@@ -23,6 +23,8 @@ public class PlayerControl : MonoBehaviour
     private Vector2 moveInput, lookInput;
     public Vector3 cameraAngle { get; private set; }
 
+    private PlayerUIManager uiManager;
+
     [SerializeField]
     GameObject friend;
 
@@ -34,6 +36,8 @@ public class PlayerControl : MonoBehaviour
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
+
+        uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
     }
 
     private void Start()
@@ -46,48 +50,49 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Getting Vector2 inputs for move and look.
-        moveInput = moveAction.ReadValue<Vector2>();
-        lookInput = lookAction.ReadValue<Vector2>();
-
-        //Call pausemanager when pause is pressed.
-        if (pauseAction.WasPressedThisFrame())
+        //Cannot move if selection wheel is open.
+        if (!uiManager.wheelOpen)
         {
-            PauseManager.instance.PauseGame();
-        }
+            // Getting Vector2 inputs for move and look.
+            moveInput = moveAction.ReadValue<Vector2>();
+            lookInput = lookAction.ReadValue<Vector2>();
 
-        //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
-        //it runs a check to see if it's still being held.
-        if (storedAction == null)
-        {
-            if (whistleAction.WasPressedThisFrame())
+            //Call pausemanager when pause is pressed.
+            /*if (pauseAction.WasPressedThisFrame())
             {
-                storedAction = whistleAction;
-                storeTimestamp = Time.time;
-            }
-            if (callAction.WasPressedThisFrame())
+                PauseManager.instance.PauseGame();
+            }*/
+
+            //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
+            //it runs a check to see if it's still being held.
+            if (storedAction == null)
             {
-                storedAction = callAction;
-                storeTimestamp = Time.time;
+                if (whistleAction.WasPressedThisFrame())
+                {
+                    storedAction = whistleAction;
+                    storeTimestamp = Time.time;
+                }
+                if (callAction.WasPressedThisFrame())
+                {
+                    storedAction = callAction;
+                    storeTimestamp = Time.time;
+                }
             }
+            else
+            {
+                StoredActionCheck();
+            }
+
+            /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
+            Vector3 test2 = new Vector2(playe)
+            Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
+            //Debug.Log(transform.forward);
         }
         else
         {
-            StoredActionCheck();
+            moveInput = Vector2.zero;
+            lookInput = Vector2.zero;
         }
-
-        if (pauseAction.IsPressed())
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
-        Vector3 test2 = new Vector2(playe)
-        Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
-        //Debug.Log(transform.forward);
     }
 
     //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
@@ -138,10 +143,13 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!uiManager.wheelOpen)
+        {
         //Do all movement-related changes in here.
         PlayerMovement();
 
         //Camera logic might need to be determined here then visuals performed in late update.
+        }
     }
 
     private void LateUpdate()

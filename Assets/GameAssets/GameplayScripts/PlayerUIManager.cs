@@ -9,7 +9,7 @@ public class PlayerUIManager : MonoBehaviour
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
-    InputAction whistleAction, callAction;
+    InputAction whistleAction, callAction, wheelTestAction;
 
     [SerializeField]
     PlayerControl tempPlayerControl;
@@ -19,7 +19,13 @@ public class PlayerUIManager : MonoBehaviour
     Image inputStoreRadial;
     [SerializeField]
     RectTransform leftSideStore, rightSideStore;
+    [SerializeField]
+    GameObject selectionWheel;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
+
+    //Reference to the gameobjects/images that will denote the selection wheel.
+
+    public bool wheelOpen;
 
     //Number that the final anchor point offset for making a call or whistle will be.
     [SerializeField]
@@ -31,11 +37,16 @@ public class PlayerUIManager : MonoBehaviour
     {
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
+        wheelTestAction = inputActions.FindActionMap("Gameplay").FindAction("WheelTest");
+
+        // getting the anchors for the sideObjects
         leftSideBL = leftSideStore.anchorMin;
         leftSideTR = leftSideStore.anchorMax;
         rightSideBL = rightSideStore.anchorMin;
         rightSideTR = rightSideStore.anchorMax;
         chargingVectorOffset = new Vector3(chargingCornerOffset, 0, 0);
+
+        //getting the 
     }
 
     // Visual effects are performed in this update.
@@ -64,5 +75,30 @@ public class PlayerUIManager : MonoBehaviour
             leftSideStore.anchorMin = leftSideBL;
             leftSideStore.anchorMax = leftSideTR;
         }
+
+
+        // Lockstate
+        if (wheelTestAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+            selectionWheel.SetActive(true);
+            wheelOpen = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            selectionWheel.SetActive(false);
+            wheelOpen = false;
+        }
+    }
+
+    private void OnEnable()
+    {
+        wheelTestAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        wheelTestAction.Disable();
     }
 }
