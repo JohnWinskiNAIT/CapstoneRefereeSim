@@ -208,29 +208,25 @@ public class PlayerControlTest : MonoBehaviour
 
     private void PlayerMovement()
     {
-        //Testing block. Ignore this right now.
-        Vector3 test1 = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion test2 = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
-        test1 = test2 * test1;
+        Vector3 camAngle = cam.transform.localRotation.eulerAngles;
 
-        if (friend != null)
-        {
-            friend.transform.position = transform.position + (test1 * 2);
-        }
+        //Determines the angle between where the player's velocity is going and the player's input.
+        Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
+        Quaternion angleCheck = Quaternion.AngleAxis(camAngle.y, Vector3.up);
+        horizontalCheck = angleCheck * horizontalCheck;
 
         //Add relative force.
         //rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
         //rb.AddForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
+        
 
-        Vector3 camAngle = cam.transform.localRotation.eulerAngles;
-
-        rb.AddForce(new Vector3(camAngle.x * moveInput.x, 0, camAngle.y * moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(test1.x, test1.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(horizontalCheck.x, horizontalCheck.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
