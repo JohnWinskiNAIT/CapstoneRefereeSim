@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +21,12 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     RectTransform leftSideStore, rightSideStore;
     [SerializeField]
-    GameObject selectionWheel;
+    GameObject selectionWheel, optionPrefab;
+    Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
+
+    [SerializeField]
+    WheelInformation wheelInfo;
 
     //Reference to the gameobjects/images that will denote the selection wheel.
 
@@ -47,6 +52,8 @@ public class PlayerUIManager : MonoBehaviour
         chargingVectorOffset = new Vector3(chargingCornerOffset, 0, 0);
 
         //getting the 
+        wheelOpen = false;
+        wheelGlow = selectionWheel.transform.Find("WheelGlow").GetComponent<Image>();
     }
 
     // Visual effects are performed in this update.
@@ -96,6 +103,33 @@ public class PlayerUIManager : MonoBehaviour
                 wheelOpen = false;
             }
         }
+
+        // Most of this is for testing, but debugAngle
+        if (wheelOpen)
+        {
+            Vector2 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
+            float debugAngle;
+            if (GameUtilities.CursorPercentage().x < 0.5f)
+            {
+                debugAngle = 360 - Vector2.Angle(Vector2.up, mouseCheck);
+            }
+            else
+            {
+                debugAngle = Vector2.Angle(Vector2.up, mouseCheck);
+            }
+
+            //
+            float segments = 360 / wheelInfo.numberOfOptions;
+            Debug.Log(segments);
+            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            {
+                if (debugAngle > segments * i && debugAngle < segments * (i + 1))
+                {
+                    wheelGlow.fillAmount = segments / 360;
+                    wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
+                }
+            }
+        }
     }
 
     private void OnEnable()
@@ -106,5 +140,13 @@ public class PlayerUIManager : MonoBehaviour
     private void OnDisable()
     {
         wheelTestAction.Disable();
+    }
+
+    [Serializable]
+    public struct WheelInformation
+    {
+        public int numberOfOptions;
+        public Image[] optionImages;
+        public string[] optionText;
     }
 }
