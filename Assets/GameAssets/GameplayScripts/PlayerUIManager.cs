@@ -29,7 +29,9 @@ public class PlayerUIManager : MonoBehaviour
     WheelInformation wheelInfo;
 
     //Reference to the gameobjects/images that will denote the selection wheel.
-
+    [SerializeField]
+    GameObject wheelNotch;
+    GameObject[] currentNotches;
     public bool wheelOpen;
 
     //Number that the final anchor point offset for making a call or whistle will be.
