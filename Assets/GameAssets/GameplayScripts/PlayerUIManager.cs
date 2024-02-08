@@ -30,8 +30,8 @@ public class PlayerUIManager : MonoBehaviour
 
     //Reference to the gameobjects/images that will denote the selection wheel.
     [SerializeField]
-    GameObject wheelNotchObj;
-    GameObject[] currentNotches;
+    GameObject wheelNotchObj, iconObj;
+    GameObject[] currentNotches, currentIcons;
     public bool wheelOpen;
 
     //Number that the final anchor point offset for making a call or whistle will be.
@@ -96,6 +96,7 @@ public class PlayerUIManager : MonoBehaviour
             {
                 selectionWheel.SetActive(true);
                 GenerateNotches();
+                //GenerateIcons();
                 wheelOpen = true;
             }
         }
@@ -105,7 +106,7 @@ public class PlayerUIManager : MonoBehaviour
             if (selectionWheel.activeSelf)
             {
                 selectionWheel.SetActive(false);
-                RemoveNotches();
+                RemoveWheelElements();
                 wheelOpen = false;
             }
         }
@@ -152,7 +153,21 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    private void RemoveNotches()
+    private void GenerateIcons()
+    {
+        currentIcons = new GameObject[wheelInfo.numberOfOptions];
+        float notchGap = (Screen.height / 2f) * 0.6f;
+        float segments = 360 / wheelInfo.numberOfOptions;
+        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        {
+            currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
+            Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
+            currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
+            //set the image for each icon
+        }
+    }
+
+    private void RemoveWheelElements()
     {
         if (currentNotches.Length > 0)
         {

@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87324405, g: 1, b: 0.63584906, a: 0.27450982}
+  m_Color: {r: 0.30334598, g: 0.7529412, b: 0.21568626, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1324,7 +1324,7 @@ MonoBehaviour:
   selectionWheel: {fileID: 2136186174}
   optionPrefab: {fileID: 0}
   wheelInfo:
-    numberOfOptions: 3
+    numberOfOptions: 5
     optionImages: []
     optionText: []
   wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
