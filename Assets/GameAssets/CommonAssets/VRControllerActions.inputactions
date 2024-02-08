@@ -1,5 +1,5 @@
 {
-    "name": "InputActions",
+    "name": "VRControllerActions",
     "maps": [
         {
             "name": "Gameplay",
@@ -49,22 +49,13 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "WheelTest",
-                    "type": "Button",
-                    "id": "3173bec9-c74e-4938-833a-544f9882ed5c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "a5c09368-40c9-4702-b878-60f622b16e83",
-                    "path": "<Mouse>/delta",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -75,7 +66,7 @@
                 {
                     "name": "",
                     "id": "46e566f0-f2b7-47f7-8b20-8b5c9c6acdaf",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -86,7 +77,7 @@
                 {
                     "name": "",
                     "id": "7023ca8f-aa6f-4b79-9664-1bf2af5aa115",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -97,7 +88,7 @@
                 {
                     "name": "",
                     "id": "a7f917ea-768a-4ccd-a462-930dc2de5e37",
-                    "path": "<Keyboard>/f",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -106,68 +97,13 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "94efc917-50db-493e-aa51-d847d2e743d8",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "97e8003a-72ee-4f51-b89a-50a091248cbe",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "b16be467-d209-4015-91e4-1af3c345b8ee",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "1d85c85d-e228-43ec-a4f3-bb14f75350e0",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "e1291cc6-3393-449f-980b-6c09a12d0881",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
-                    "id": "4377253d-1cb6-405b-8e96-e3acddcf7ef9",
-                    "path": "<Keyboard>/r",
+                    "id": "192cd16b-cb10-4676-a719-7d80dc0886d0",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WheelTest",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class PlayerUIManager : MonoBehaviour
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
-    InputAction whistleAction, callAction;
+    InputAction whistleAction, callAction, wheelTestAction;
 
     [SerializeField]
     PlayerControl tempPlayerControl;
@@ -19,7 +20,19 @@ public class PlayerUIManager : MonoBehaviour
     Image inputStoreRadial;
     [SerializeField]
     RectTransform leftSideStore, rightSideStore;
+    [SerializeField]
+    GameObject selectionWheel, optionPrefab;
+    Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
+
+    [SerializeField]
+    WheelInformation wheelInfo;
+
+    //Reference to the gameobjects/images that will denote the selection wheel.
+    [SerializeField]
+    GameObject wheelNotchObj, iconObj;
+    GameObject[] currentNotches, currentIcons;
+    public bool wheelOpen;
 
     //Number that the final anchor point offset for making a call or whistle will be.
     [SerializeField]
@@ -31,11 +44,20 @@ public class PlayerUIManager : MonoBehaviour
     {
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
+        wheelTestAction = inputActions.FindActionMap("Gameplay").FindAction("WheelTest");
+
+        // getting the anchors for the sideObjects
         leftSideBL = leftSideStore.anchorMin;
         leftSideTR = leftSideStore.anchorMax;
         rightSideBL = rightSideStore.anchorMin;
         rightSideTR = rightSideStore.anchorMax;
         chargingVectorOffset = new Vector3(chargingCornerOffset, 0, 0);
+
+        //getting the 
+        wheelOpen = false;
+        wheelGlow = selectionWheel.transform.Find("WheelGlow").GetComponent<Image>();
+
+        currentNotches = new GameObject[0];
     }
 
     // Visual effects are performed in this update.
@@ -64,5 +86,114 @@ public class PlayerUIManager : MonoBehaviour
             leftSideStore.anchorMin = leftSideBL;
             leftSideStore.anchorMax = leftSideTR;
         }
+
+
+        // Lockstate
+        if (wheelTestAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+            if (!selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(true);
+                GenerateNotches();
+                //GenerateIcons();
+                wheelOpen = true;
+            }
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            if (selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(false);
+                RemoveWheelElements();
+                wheelOpen = false;
+            }
+        }
+
+        // Most of this is for testing, but debugAngle
+        if (wheelOpen)
+        {
+            Vector2 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
+            float debugAngle;
+            if (GameUtilities.CursorPercentage().x < 0.5f)
+            {
+                debugAngle = 360 - Vector2.Angle(Vector2.up, mouseCheck);
+            }
+            else
+            {
+                debugAngle = Vector2.Angle(Vector2.up, mouseCheck);
+            }
+
+            //
+            float segments = 360 / wheelInfo.numberOfOptions;
+            Debug.Log(segments);
+            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            {
+                if (debugAngle > segments * i && debugAngle < segments * (i + 1))
+                {
+                    wheelGlow.fillAmount = segments / 360;
+                    wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
+                }
+            }
+        }
+    }
+
+    private void GenerateNotches()
+    {
+        currentNotches = new GameObject[wheelInfo.numberOfOptions];
+        float notchGap = (Screen.height / 2f) * 0.6f;
+        float segments = 360 / wheelInfo.numberOfOptions;
+        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        {
+            currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
+            Vector2 position = new Vector2(Mathf.Sin((segments * i) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i) * Mathf.Deg2Rad) * notchGap);
+            currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
+            currentNotches[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90 - segments * i);
+        }
+    }
+
+    private void GenerateIcons()
+    {
+        currentIcons = new GameObject[wheelInfo.numberOfOptions];
+        float notchGap = (Screen.height / 2f) * 0.6f;
+        float segments = 360 / wheelInfo.numberOfOptions;
+        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        {
+            currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
+            Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
+            currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
+            //set the image for each icon
+        }
+    }
+
+    private void RemoveWheelElements()
+    {
+        if (currentNotches.Length > 0)
+        {
+            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            {
+                Destroy(currentNotches[i]);
+            }
+        }
+        currentNotches = new GameObject[0];
+    }
+
+    private void OnEnable()
+    {
+        wheelTestAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        wheelTestAction.Disable();
+    }
+
+    [Serializable]
+    public struct WheelInformation
+    {
+        public int numberOfOptions;
+        public Image[] optionImages;
+        public string[] optionText;
     }
 }

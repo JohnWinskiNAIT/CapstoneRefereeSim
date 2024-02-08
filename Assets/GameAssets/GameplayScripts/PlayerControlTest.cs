@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControlTest : MonoBehaviour
 {
     [SerializeField]
     InputActionAsset inputActions;
@@ -23,10 +23,10 @@ public class PlayerControl : MonoBehaviour
     private Vector2 moveInput, lookInput;
     public Vector3 cameraAngle { get; private set; }
 
-    private PlayerUIManager uiManager;
-
     [SerializeField]
     GameObject friend;
+
+    GameObject cam;
 
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
@@ -36,8 +36,6 @@ public class PlayerControl : MonoBehaviour
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
-
-        uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
     }
 
     private void Start()
@@ -45,54 +43,55 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
+
+        cam = GetComponentInChildren<Camera>().gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Cannot move if selection wheel is open.
-        if (!uiManager.wheelOpen)
+        // Getting Vector2 inputs for move and look.
+        moveInput = moveAction.ReadValue<Vector2>();
+        lookInput = lookAction.ReadValue<Vector2>();
+
+        //Call pausemanager when pause is pressed.
+        if (pauseAction.WasPressedThisFrame())
         {
-            // Getting Vector2 inputs for move and look.
-            moveInput = moveAction.ReadValue<Vector2>();
-            lookInput = lookAction.ReadValue<Vector2>();
+            PauseManager.instance.PauseGame();
+        }
 
-            //Call pausemanager when pause is pressed.
-            /*if (pauseAction.WasPressedThisFrame())
+        //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
+        //it runs a check to see if it's still being held.
+        if (storedAction == null)
+        {
+            if (whistleAction.WasPressedThisFrame())
             {
-                PauseManager.instance.PauseGame();
-            }*/
-
-            //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
-            //it runs a check to see if it's still being held.
-            if (storedAction == null)
-            {
-                if (whistleAction.WasPressedThisFrame())
-                {
-                    storedAction = whistleAction;
-                    storeTimestamp = Time.time;
-                }
-                if (callAction.WasPressedThisFrame())
-                {
-                    storedAction = callAction;
-                    storeTimestamp = Time.time;
-                }
+                storedAction = whistleAction;
+                storeTimestamp = Time.time;
             }
-            else
+            if (callAction.WasPressedThisFrame())
             {
-                StoredActionCheck();
+                storedAction = callAction;
+                storeTimestamp = Time.time;
             }
-
-            /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
-            Vector3 test2 = new Vector2(playe)
-            Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
-            //Debug.Log(transform.forward);
         }
         else
         {
-            moveInput = Vector2.zero;
-            lookInput = Vector2.zero;
+            StoredActionCheck();
         }
+
+        if (pauseAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
+        Vector3 test2 = new Vector2(playe)
+        Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
+        //Debug.Log(transform.forward);
     }
 
     //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
@@ -143,13 +142,13 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!uiManager.wheelOpen)
-        {
         //Do all movement-related changes in here.
         PlayerMovement();
 
         //Camera logic might need to be determined here then visuals performed in late update.
-        }
+
+        Debug.Log(cam.transform.localRotation.eulerAngles);
+
     }
 
     private void LateUpdate()
@@ -159,6 +158,10 @@ public class PlayerControl : MonoBehaviour
         // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
         // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
         float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+        if (Mathf.Abs(rotateValue) > 180)
+        {
+            Debug.Log($"testingtesting, {rotateValue}");
+        }
         if (rotateValue > 180)
         {
             rotateValue -= 360;
@@ -205,19 +208,21 @@ public class PlayerControl : MonoBehaviour
 
     private void PlayerMovement()
     {
+        Vector3 camAngle = cam.transform.localRotation.eulerAngles;
+
         //Determines the angle between where the player's velocity is going and the player's input.
         Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion angleCheck = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+        Quaternion angleCheck = Quaternion.AngleAxis(camAngle.y, Vector3.up);
         horizontalCheck = angleCheck * horizontalCheck;
 
-        //Add an object over a GameObject friend parameter to have it display where the player is moving.
-        /*if (friend != null)
-        {
-            friend.transform.position = transform.position + (horizontalCheck * 2);
-        }*/
-
         //Add relative force.
-        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        //rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        //rb.AddForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        
+
+        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);

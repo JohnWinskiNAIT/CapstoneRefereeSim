@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 public class BasicHockeyAi : MonoBehaviour
 {
     private NavMeshAgent agent;
-    [SerializeField] Player hockeyPlayer;
-    [SerializeField] Player targetPlayer;
+    [SerializeField] HockeyPlayer hockeyPlayer;
+    [SerializeField] HockeyPlayer targetPlayer;
     Vector3 destination, movementVector;
 
 
@@ -22,7 +22,7 @@ public class BasicHockeyAi : MonoBehaviour
 
     void Start()
     {
-        hockeyPlayer = GetComponent<Player>();
+        hockeyPlayer = GetComponent<HockeyPlayer>();
         maxDestinations = destinationList.Count;
         agent = GetComponent<NavMeshAgent>();
         agent.destination = destinationList[currentDestinationIndicator];
@@ -48,7 +48,7 @@ public class BasicHockeyAi : MonoBehaviour
         }
     }
     //basic groundwork for a pass method
-    public void PassPuck(Player inputPlayer)
+    public void PassPuck(HockeyPlayer inputPlayer)
     {
         if (hockeyPlayer.puckPossesion)
         {
