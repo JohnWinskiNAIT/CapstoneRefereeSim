@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowPath : MonoBehaviour
 {
-    public Vector2[] path = new Vector2[0];
+    public Vector3[] path = new Vector3[0];
     // Start is called before the first frame update
     void Start()
     {
@@ -12,11 +12,11 @@ public class FollowPath : MonoBehaviour
     }
 
     // Update is called once per frame
-    private IEnumerator StartFollowingPath(Vector2[] pathToFollow)
+    private IEnumerator StartFollowingPath(Vector3[] pathToFollow)
     {
         foreach (var point in  pathToFollow)
         {
-            while (Vector2.Distance(a: transform.position, b: point) > 0.1f)
+            while (Vector3.Distance(a: transform.position, b: point) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(current: transform.position, target: point, maxDistanceDelta: Time.deltaTime * 1);
 
