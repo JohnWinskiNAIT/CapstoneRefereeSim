@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     float cameraSpeed, cameraMaxY, cameraMinY;
 
-    private InputAction moveAction, lookAction, callAction, whistleAction, pauseAction;
+    private InputAction moveAction, lookAction, callAction, pauseAction, whistleAction;
     public InputAction storedAction { get; private set; }
 
     private float storeTimestamp;
@@ -58,10 +58,10 @@ public class PlayerControl : MonoBehaviour
             lookInput = lookAction.ReadValue<Vector2>();
 
             //Call pausemanager when pause is pressed.
-            /*if (pauseAction.WasPressedThisFrame())
+            if (pauseAction.WasPressedThisFrame())
             {
                 PauseManager.instance.PauseGame();
-            }*/
+            }
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
             //it runs a check to see if it's still being held.
