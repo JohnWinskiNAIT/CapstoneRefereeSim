@@ -30,7 +30,7 @@ public class PlayerUIManager : MonoBehaviour
 
     //Reference to the gameobjects/images that will denote the selection wheel.
     [SerializeField]
-    GameObject wheelNotch;
+    GameObject wheelNotchObj;
     GameObject[] currentNotches;
     public bool wheelOpen;
 
@@ -56,6 +56,8 @@ public class PlayerUIManager : MonoBehaviour
         //getting the 
         wheelOpen = false;
         wheelGlow = selectionWheel.transform.Find("WheelGlow").GetComponent<Image>();
+
+        currentNotches = new GameObject[0];
     }
 
     // Visual effects are performed in this update.
@@ -93,6 +95,7 @@ public class PlayerUIManager : MonoBehaviour
             if (!selectionWheel.activeSelf)
             {
                 selectionWheel.SetActive(true);
+                GenerateNotches();
                 wheelOpen = true;
             }
         }
@@ -102,6 +105,7 @@ public class PlayerUIManager : MonoBehaviour
             if (selectionWheel.activeSelf)
             {
                 selectionWheel.SetActive(false);
+                RemoveNotches();
                 wheelOpen = false;
             }
         }
@@ -132,6 +136,32 @@ public class PlayerUIManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void GenerateNotches()
+    {
+        currentNotches = new GameObject[wheelInfo.numberOfOptions];
+        float notchGap = (Screen.height / 2f) * 0.6f;
+        float segments = 360 / wheelInfo.numberOfOptions;
+        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        {
+            currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
+            Vector2 position = new Vector2(Mathf.Sin((segments * i) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i) * Mathf.Deg2Rad) * notchGap);
+            currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
+            currentNotches[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90 - segments * i);
+        }
+    }
+
+    private void RemoveNotches()
+    {
+        if (currentNotches.Length > 0)
+        {
+            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            {
+                Destroy(currentNotches[i]);
+            }
+        }
+        currentNotches = new GameObject[0];
     }
 
     private void OnEnable()
