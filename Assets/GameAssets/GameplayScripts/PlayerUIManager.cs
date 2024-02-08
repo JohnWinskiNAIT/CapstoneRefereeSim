@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
+    //Very stupid but just made because typing in 360 each time will make it an int unless you include the f affix, and this makes it more readable.
+    const float totalFill = 360f;
+
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
@@ -20,8 +25,12 @@ public class PlayerUIManager : MonoBehaviour
     Image inputStoreRadial;
     [SerializeField]
     RectTransform leftSideStore, rightSideStore;
+
+    //Wheel related references.
     [SerializeField]
-    GameObject selectionWheel, optionPrefab;
+    GameObject selectionWheel;
+    [SerializeField]
+    TextMeshProUGUI wheelText;
     Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
 
@@ -58,6 +67,7 @@ public class PlayerUIManager : MonoBehaviour
         wheelGlow = selectionWheel.transform.Find("WheelGlow").GetComponent<Image>();
 
         currentNotches = new GameObject[0];
+        currentIcons = new GameObject[0];
     }
 
     // Visual effects are performed in this update.
@@ -96,7 +106,7 @@ public class PlayerUIManager : MonoBehaviour
             {
                 selectionWheel.SetActive(true);
                 GenerateNotches();
-                //GenerateIcons();
+                GenerateIcons();
                 wheelOpen = true;
             }
         }
@@ -111,39 +121,52 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
 
-        // Most of this is for testing, but debugAngle
+        // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
         {
+            //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
             Vector2 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
-            float debugAngle;
-            if (GameUtilities.CursorPercentage().x < 0.5f)
+            //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
+            Vector2 magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            if (magnitudeCheck.magnitude > Screen.height / 5)
             {
-                debugAngle = 360 - Vector2.Angle(Vector2.up, mouseCheck);
+                float debugAngle;
+                if (GameUtilities.CursorPercentage().x < 0.5f)
+                {
+                    debugAngle = totalFill - Vector2.Angle(Vector2.up, mouseCheck);
+                }
+                else
+                {
+                    debugAngle = Vector2.Angle(Vector2.up, mouseCheck);
+                }
+
+                //
+                float segments = totalFill / wheelInfo.numberOfOptions;
+
+                for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+                {
+                    if (debugAngle > segments * i && debugAngle < segments * (i + 1))
+                    {
+                        wheelGlow.fillAmount = segments / totalFill;
+                        wheelText.text = wheelInfo.optionText[i];
+                        wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
+                    }
+                }
             }
             else
             {
-                debugAngle = Vector2.Angle(Vector2.up, mouseCheck);
-            }
-
-            //
-            float segments = 360 / wheelInfo.numberOfOptions;
-            Debug.Log(segments);
-            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
-            {
-                if (debugAngle > segments * i && debugAngle < segments * (i + 1))
-                {
-                    wheelGlow.fillAmount = segments / 360;
-                    wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
-                }
+                wheelGlow.fillAmount = 0;
+                wheelText.text = "None";
             }
         }
     }
 
+    //Creates notches and rotates them dynamically according to the amount of segments in the selection wheel.
     private void GenerateNotches()
     {
         currentNotches = new GameObject[wheelInfo.numberOfOptions];
         float notchGap = (Screen.height / 2f) * 0.6f;
-        float segments = 360 / wheelInfo.numberOfOptions;
+        float segments = totalFill / wheelInfo.numberOfOptions;
         for (int i = 0; i < wheelInfo.numberOfOptions; i++)
         {
             currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
@@ -153,16 +176,18 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    //Creates icons dynamically according to the amount of segments in the selection wheel.
     private void GenerateIcons()
     {
         currentIcons = new GameObject[wheelInfo.numberOfOptions];
         float notchGap = (Screen.height / 2f) * 0.6f;
-        float segments = 360 / wheelInfo.numberOfOptions;
+        float segments = totalFill / wheelInfo.numberOfOptions;
         for (int i = 0; i < wheelInfo.numberOfOptions; i++)
         {
-            currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
+            currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
-            currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
+            currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
+            currentIcons[i].GetComponent<Image>().sprite = wheelInfo.optionImages[i];
             //set the image for each icon
         }
     }
@@ -177,6 +202,14 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
         currentNotches = new GameObject[0];
+        if (currentIcons.Length > 0)
+        {
+            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            {
+                Destroy(currentIcons[i]);
+            }
+        }
+        currentIcons = new GameObject[0];
     }
 
     private void OnEnable()
@@ -193,7 +226,7 @@ public class PlayerUIManager : MonoBehaviour
     public struct WheelInformation
     {
         public int numberOfOptions;
-        public Image[] optionImages;
+        public Sprite[] optionImages;
         public string[] optionText;
     }
 }

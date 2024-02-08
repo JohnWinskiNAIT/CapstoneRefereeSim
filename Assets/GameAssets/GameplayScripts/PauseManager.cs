@@ -16,7 +16,7 @@ public class PauseManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = new PauseManager();
+            instance = gameObject.GetComponent<PauseManager>();
         }
         else
         {
@@ -26,6 +26,6 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
-
+        Debug.Log("bababooie");
     }
 }
