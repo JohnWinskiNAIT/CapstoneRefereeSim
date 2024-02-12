@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour
             hockeyAi[0].PassPuck(players[1]);
         }
     }
-    #region Eanble and Disable 
+    #region Enable and Disable 
     private void OnEnable()
     {
         passAction.Enable();

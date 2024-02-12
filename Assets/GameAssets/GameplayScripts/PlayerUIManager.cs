@@ -108,6 +108,7 @@ public class PlayerUIManager : MonoBehaviour
                 GenerateNotches();
                 GenerateIcons();
                 wheelOpen = true;
+                tempPlayerControl.SetPlayerControl(false);
             }
         }
         else
@@ -118,6 +119,7 @@ public class PlayerUIManager : MonoBehaviour
                 selectionWheel.SetActive(false);
                 RemoveWheelElements();
                 wheelOpen = false;
+                tempPlayerControl.SetPlayerControl(true);
             }
         }
 
