@@ -44,6 +44,7 @@ public class PlayerControlTest : MonoBehaviour
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
 
+                                                            //*************************************//
         cam = GetComponentInChildren<Camera>().gameObject;
     }
 
@@ -147,6 +148,8 @@ public class PlayerControlTest : MonoBehaviour
 
         //Camera logic might need to be determined here then visuals performed in late update.
 
+
+                                                    //*************************************//
         Debug.Log(cam.transform.localRotation.eulerAngles);
 
     }
@@ -206,7 +209,7 @@ public class PlayerControlTest : MonoBehaviour
         }
     }
 
-    private void PlayerMovement()
+    private void PlayerMovement()   //*************************************////*************************************//
     {
         Vector3 camAngle = cam.transform.localRotation.eulerAngles;
 
@@ -220,7 +223,6 @@ public class PlayerControlTest : MonoBehaviour
         //rb.AddForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         
-
         rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
 
