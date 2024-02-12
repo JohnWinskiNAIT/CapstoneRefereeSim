@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
     public Vector3 cameraAngle { get; private set; }
 
     private PlayerUIManager uiManager;
+    private bool controllable;
 
     [SerializeField]
     GameObject friend;
@@ -38,6 +39,7 @@ public class PlayerControl : MonoBehaviour
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
 
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
+        controllable = true;
     }
 
     private void Start()
@@ -51,7 +53,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         //Cannot move if selection wheel is open.
-        if (!uiManager.wheelOpen)
+        if (controllable)
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
@@ -92,6 +94,7 @@ public class PlayerControl : MonoBehaviour
         {
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
+            storedAction = null;
         }
     }
 
@@ -116,6 +119,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //Public function for UI to check how long the action has been stored for as a time (t) value.
     public float StoredActionStatus()
     {
         float returnValue;
@@ -139,6 +143,7 @@ public class PlayerControl : MonoBehaviour
     private void WhistleActivate()
     {
         //Unfinished.
+        GameplayEvents.EndPlay.Invoke();
     }
 
     private void FixedUpdate()
@@ -228,6 +233,12 @@ public class PlayerControl : MonoBehaviour
     }
 
     #region Enable and Disable
+    
+    public void SetPlayerControl(bool change)
+    {
+        controllable = change;
+    }
+    
     private void OnEnable()
     {
         moveAction.Enable();
