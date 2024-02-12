@@ -25,6 +25,7 @@ public class PlayerCamera : MonoBehaviour
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         GameplayEvents.EndPlay.AddListener(EndPlay);
+        currentMode = CameraModes.Normal;
     }
 
     // Update is called once per frame

@@ -24,10 +24,18 @@ public class PlayerControl : MonoBehaviour
     public Vector3 cameraAngle { get; private set; }
 
     private PlayerUIManager uiManager;
-    private bool controllable;
+    private PlayerState playerState;
+    private Vector3 autoskateDestination;
 
     [SerializeField]
-    GameObject friend;
+    GameObject waypointParent;
+
+    private enum PlayerState
+    {
+        Control,
+        Lockout,
+        Autoskate
+    }
 
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
@@ -39,7 +47,9 @@ public class PlayerControl : MonoBehaviour
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
 
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
-        controllable = true;
+        playerState = PlayerState.Control;
+
+        GameplayEvents.EndPlay.AddListener(EndPlay);
     }
 
     private void Start()
@@ -53,7 +63,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         //Cannot move if selection wheel is open.
-        if (controllable)
+        if (playerState == PlayerState.Control)
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
@@ -95,6 +105,11 @@ public class PlayerControl : MonoBehaviour
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
             storedAction = null;
+        }
+
+        if (playerState == PlayerState.Autoskate)
+        {
+
         }
     }
 
@@ -148,12 +163,18 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!uiManager.wheelOpen)
+        if (playerState == PlayerState.Control)
         {
-        //Do all movement-related changes in here.
-        PlayerMovement();
+            //Do all movement-related changes in here.
+            PlayerMovement();
 
-        //Camera logic might need to be determined here then visuals performed in late update.
+            //Camera logic might need to be determined here then visuals performed in late update.
+        }
+
+        if (playerState == PlayerState.Autoskate)
+        {
+            //Logic for auto movement goes here
+            AutoskateMovement();
         }
     }
 
@@ -232,11 +253,17 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void AutoskateMovement()
+    {
+        Vector3 direction = autoskateDestination - transform.position;
+        rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+    }
+
     #region Enable and Disable
     
-    public void SetPlayerControl(bool change)
+    public void SetPlayerControl(int setState)
     {
-        controllable = change;
+        playerState = (PlayerState)setState;
     }
     
     private void OnEnable()
@@ -256,5 +283,14 @@ public class PlayerControl : MonoBehaviour
         whistleAction.Disable();
         pauseAction.Disable();
     }
+    #endregion
+
+    #region EventListeners
+    private void EndPlay()
+    {
+        SetPlayerControl((int)PlayerState.Autoskate);
+        autoskateDestination = waypointParent.transform.GetChild(0).position;
+    }
+
     #endregion
 }
