@@ -38,7 +38,7 @@ public class MenuControls : MonoBehaviour
                 if (mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
                 {
                     col = mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a -= Time.deltaTime;
+                    col.a -= Time.deltaTime * 5f;
                     mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
                 }
             }
@@ -59,7 +59,7 @@ public class MenuControls : MonoBehaviour
                 time = 6.0f;
             }
             mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, offScreen.position, 0.01f);
-            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, onScreen.position, 0.01f);
+            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, onScreen.position, 0.1f);
             fadeOn = true;
         }
         if (!fade && fadeOn)
@@ -73,7 +73,7 @@ public class MenuControls : MonoBehaviour
                 if (optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
                 {
                     col = optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a -= Time.deltaTime;
+                    col.a -= Time.deltaTime * 5f;
                     optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
                 }
             }
@@ -93,7 +93,7 @@ public class MenuControls : MonoBehaviour
                 fadeOn = false;
                 time = 3.0f;
             }
-            mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, onScreen.position, 0.01f);
+            mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, onScreen.position, 0.1f);
             optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, offScreen.position, 0.01f);
         }
     }
