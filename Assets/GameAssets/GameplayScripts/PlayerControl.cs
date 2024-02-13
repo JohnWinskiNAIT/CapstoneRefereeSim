@@ -30,6 +30,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     GameObject waypointParent;
 
+    Camera cam;
+
     private enum PlayerState
     {
         Control,
@@ -50,6 +52,7 @@ public class PlayerControl : MonoBehaviour
         playerState = PlayerState.Control;
 
         GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
     }
 
     private void Start()
@@ -57,6 +60,8 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
+
+        cam = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
@@ -109,7 +114,8 @@ public class PlayerControl : MonoBehaviour
 
         if (playerState == PlayerState.Autoskate)
         {
-
+            AutoskateMovement();
+            AutoskateCheck();
         }
     }
 
@@ -243,7 +249,7 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddRelativeForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -253,10 +259,26 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //Add force towards the autoskate destination and avoid exceeding speed limit.
     private void AutoskateMovement()
     {
         Vector3 direction = autoskateDestination - transform.position;
         rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
+        if (capTest.magnitude > maxSpeed)
+        {
+            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
+        }
+    }
+
+    //If close enough to autoskate destination, invoke event to continue progress.
+    private void AutoskateCheck()
+    {
+        if ((autoskateDestination - transform.position).magnitude < 3f)
+        {
+            GameplayEvents.CutsceneTrigger.Invoke(1);
+        }
     }
 
     #region Enable and Disable
@@ -289,7 +311,15 @@ public class PlayerControl : MonoBehaviour
     private void EndPlay()
     {
         SetPlayerControl((int)PlayerState.Autoskate);
-        autoskateDestination = waypointParent.transform.GetChild(0).position;
+        GameplayEvents.CutsceneTrigger.Invoke(0);
+    }
+
+    private void CutsceneListener(int progress)
+    {
+        if (waypointParent.transform.GetChild(progress) != null)
+        {
+            autoskateDestination = waypointParent.transform.GetChild(progress).position;
+        }
     }
 
     #endregion
