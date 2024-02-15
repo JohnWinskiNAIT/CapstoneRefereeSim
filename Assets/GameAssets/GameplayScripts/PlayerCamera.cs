@@ -25,6 +25,7 @@ public class PlayerCamera : MonoBehaviour
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
         currentMode = CameraModes.Normal;
     }
 
@@ -56,7 +57,12 @@ public class PlayerCamera : MonoBehaviour
 
     private void EndPlay()
     {
-        CameraToPoint(0);
+        currentMode = CameraModes.FocusingOnPoint;
+    }
+
+    private void CutsceneCallback(int progress)
+    {
+        CameraToPoint(progress);
     }
 
     private void CameraToPoint(int intendedPoint)
