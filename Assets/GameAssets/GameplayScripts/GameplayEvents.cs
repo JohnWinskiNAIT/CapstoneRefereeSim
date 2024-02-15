@@ -8,4 +8,5 @@ static public class GameplayEvents
     public static UnityEvent EndPlay = new UnityEvent();
     static UnityEvent<bool> SetPause = new UnityEvent<bool>();
     public static UnityEvent<int> CutsceneTrigger = new UnityEvent<int>();
+    public static UnityEvent<bool> OpenWheel = new UnityEvent<bool>();
 }

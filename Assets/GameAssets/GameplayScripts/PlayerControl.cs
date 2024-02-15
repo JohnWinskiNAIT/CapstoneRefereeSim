@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -42,6 +44,11 @@ public class PlayerControl : MonoBehaviour
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
+        if (XRGeneralSettings.Instance?.Manager?.activeLoader == null)
+        {
+            Debug.Log("YIPEE");
+        }
+
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
@@ -62,6 +69,10 @@ public class PlayerControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         cam = GetComponentInChildren<Camera>();
+        if (XRGeneralSettings.Instance?.Manager?.activeLoader == null)
+        {
+
+        }
     }
 
     // Update is called once per frame
