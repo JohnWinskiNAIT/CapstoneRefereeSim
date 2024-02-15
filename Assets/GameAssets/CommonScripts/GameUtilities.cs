@@ -15,6 +15,8 @@ public static class GameUtilities
     static public bool VREnabled()
     {
         return XRGeneralSettings.Instance?.Manager?.activeLoader;
+
+        // if (GameUtilities.VREnabled) {...Code}
     }
 
 }
