@@ -10,6 +10,8 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField]
     InputActionAsset inputActions;
+    [SerializeField]
+    Camera cam;
     private Rigidbody rb;
 
     [SerializeField]
@@ -188,20 +190,27 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraClamp();
+        if (GameUtilities.VREnabled())
+        {
 
-        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
-        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
-        if (rotateValue > 180)
-        {
-            rotateValue -= 360;
         }
-        if (rotateValue < -180)
+        else
         {
-            rotateValue += 360;
+            CameraClamp();
+
+            // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
+            // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
+            float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+            if (rotateValue > 180)
+            {
+                rotateValue -= 360;
+            }
+            if (rotateValue < -180)
+            {
+                rotateValue += 360;
+            }
+            transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
         }
-        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
     private void CameraClamp()
@@ -241,7 +250,18 @@ public class PlayerControl : MonoBehaviour
     {
         //Determines the angle between where the player's velocity is going and the player's input.
         Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion angleCheck = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+
+        //If VR active, usees camera Y instead of player Y.
+        Quaternion angleCheck;
+        if (GameUtilities.VREnabled())
+        {
+            angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
+        }
+        else
+        {
+            angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
+        }
+
         horizontalCheck = angleCheck * horizontalCheck;
 
         //Add an object over a GameObject friend parameter to have it display where the player is moving.
