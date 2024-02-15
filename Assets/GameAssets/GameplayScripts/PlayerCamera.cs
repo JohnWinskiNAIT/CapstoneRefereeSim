@@ -24,7 +24,9 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadCameraPoints);
+        GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
+
         currentMode = CameraModes.Normal;
     }
 
@@ -54,9 +56,14 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    private void EndPlay()
+    private void LoadCameraPoints(CutsceneData cutsceneData)
     {
-        CameraToPoint(0);
+        focusPointParent = cutsceneData.cameraParent;
+    }
+
+    private void CutsceneCallback(int progress)
+    {
+        CameraToPoint(progress);
     }
 
     private void CameraToPoint(int intendedPoint)
@@ -67,6 +74,14 @@ public class PlayerCamera : MonoBehaviour
         }
         savedAngle = transform.rotation.eulerAngles;
         nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(intendedPoint).position - transform.position, Vector3.up).eulerAngles;
+        if (savedAngle.x > 180)
+        {
+            savedAngle.x -= 360;
+        }
+        if (savedAngle.y > 180)
+        {
+            savedAngle.y -= 360;
+        }
         turnTimer = 0;
     }
 
@@ -79,6 +94,10 @@ public class PlayerCamera : MonoBehaviour
             transform.rotation = Quaternion.Euler(currentAngle);
 
             turnTimer += Time.deltaTime;
+        }
+        else
+        {
+            GameplayManager.Instance.cameraDone = true;
         }
     }
 }

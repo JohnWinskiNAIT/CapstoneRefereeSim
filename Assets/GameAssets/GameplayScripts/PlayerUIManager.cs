@@ -68,6 +68,9 @@ public class PlayerUIManager : MonoBehaviour
 
         currentNotches = new GameObject[0];
         currentIcons = new GameObject[0];
+
+        GameplayEvents.OpenWheel.AddListener(ToggleWheel);
+        ToggleWheel(false);
     }
 
     // Visual effects are performed in this update.
@@ -99,29 +102,14 @@ public class PlayerUIManager : MonoBehaviour
 
 
         // Lockstate
-        if (wheelTestAction.IsPressed())
+        /*if (wheelTestAction.IsPressed())
         {
-            Cursor.lockState = CursorLockMode.None;
-            if (!selectionWheel.activeSelf)
-            {
-                selectionWheel.SetActive(true);
-                GenerateNotches();
-                GenerateIcons();
-                wheelOpen = true;
-                tempPlayerControl.SetPlayerControl(1);
-            }
+            ToggleWheel(true);
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            if (selectionWheel.activeSelf)
-            {
-                selectionWheel.SetActive(false);
-                RemoveWheelElements();
-                wheelOpen = false;
-                tempPlayerControl.SetPlayerControl(0);
-            }
-        }
+            ToggleWheel(false);
+        }*/
 
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
@@ -162,6 +150,34 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
     }
+    
+    public void ToggleWheel(bool enable)
+    {
+        if (enable)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            if (!selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(true);
+                GenerateNotches();
+                GenerateIcons();
+                wheelOpen = true;
+                tempPlayerControl.SetPlayerControl(1);
+            }
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            if (selectionWheel.activeSelf)
+            {
+                selectionWheel.SetActive(false);
+                RemoveWheelElements();
+                wheelOpen = false;
+                tempPlayerControl.SetPlayerControl(0);
+            }
+        }
+    }
+
 
     //Creates notches and rotates them dynamically according to the amount of segments in the selection wheel.
     private void GenerateNotches()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -27,7 +29,6 @@ public class PlayerControl : MonoBehaviour
     private PlayerState playerState;
     private Vector3 autoskateDestination;
 
-    [SerializeField]
     GameObject waypointParent;
 
     private enum PlayerState
@@ -40,6 +41,11 @@ public class PlayerControl : MonoBehaviour
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
+        if (!GameUtilities.VREnabled())
+        {
+            Debug.Log("YIPEE");
+        }
+
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
@@ -49,7 +55,8 @@ public class PlayerControl : MonoBehaviour
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
         playerState = PlayerState.Control;
 
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
+        GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
     }
 
     private void Start()
@@ -109,7 +116,8 @@ public class PlayerControl : MonoBehaviour
 
         if (playerState == PlayerState.Autoskate)
         {
-
+            AutoskateMovement();
+            AutoskateCheck();
         }
     }
 
@@ -243,7 +251,7 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -253,10 +261,31 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //Add force towards the autoskate destination and avoid exceeding speed limit.
     private void AutoskateMovement()
     {
         Vector3 direction = autoskateDestination - transform.position;
-        rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        if ((autoskateDestination - transform.position).magnitude > 2f)
+        {
+            rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        }
+
+
+        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
+        if (capTest.magnitude > maxSpeed || (autoskateDestination - transform.position).magnitude < 4f)
+        {
+            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
+        }
+    }
+
+    //If close enough to autoskate destination, invoke event to continue progress.
+    private void AutoskateCheck()
+    {
+        if ((autoskateDestination - transform.position).magnitude < 3f)
+        {
+            GameplayManager.Instance.moveDone = true;
+        }
     }
 
     #region Enable and Disable
@@ -286,10 +315,22 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region EventListeners
-    private void EndPlay()
+
+    private void CutsceneListener(int progress)
     {
-        SetPlayerControl((int)PlayerState.Autoskate);
-        autoskateDestination = waypointParent.transform.GetChild(0).position;
+        if (waypointParent.transform.GetChild(progress) != null)
+        {
+            autoskateDestination = waypointParent.transform.GetChild(progress).position;
+        }
+        if (playerState != PlayerState.Autoskate)
+        {
+            playerState = PlayerState.Autoskate;
+        }
+    }
+
+    private void LoadWaypoints(CutsceneData cutsceneData)
+    {
+        waypointParent = cutsceneData.waypointParent;
     }
 
     #endregion
