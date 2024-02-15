@@ -8,6 +8,8 @@ public class PlayerControlTest : MonoBehaviour
 {
     [SerializeField]
     InputActionAsset inputActions;
+    [SerializeField]
+    Camera cam;
     private Rigidbody rb;
 
     [SerializeField]
@@ -15,7 +17,7 @@ public class PlayerControlTest : MonoBehaviour
     [SerializeField]
     float cameraSpeed, cameraMaxY, cameraMinY;
 
-    private InputAction moveAction, lookAction, callAction, whistleAction, pauseAction;
+    private InputAction moveAction, lookAction, callAction, pauseAction, whistleAction;
     public InputAction storedAction { get; private set; }
 
     private float storeTimestamp;
@@ -23,19 +25,38 @@ public class PlayerControlTest : MonoBehaviour
     private Vector2 moveInput, lookInput;
     public Vector3 cameraAngle { get; private set; }
 
-    [SerializeField]
-    GameObject friend;
+    private PlayerUIManager uiManager;
+    private PlayerState playerState;
+    private Vector3 autoskateDestination;
 
-    GameObject cam;
+    GameObject waypointParent;
+
+    private enum PlayerState
+    {
+        Control,
+        Lockout,
+        Autoskate
+    }
 
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
+        if (!GameUtilities.VREnabled())
+        {
+            Debug.Log("VR UnEnabled");
+        }
+
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
+
+        uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
+        playerState = PlayerState.Control;
+
+        GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
+        GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
     }
 
     private void Start()
@@ -43,56 +64,61 @@ public class PlayerControlTest : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
-
-                                                            //*************************************//
-        cam = GetComponentInChildren<Camera>().gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Getting Vector2 inputs for move and look.
-        moveInput = moveAction.ReadValue<Vector2>();
-        lookInput = lookAction.ReadValue<Vector2>();
-
-        //Call pausemanager when pause is pressed.
-        if (pauseAction.WasPressedThisFrame())
+        //Cannot move if selection wheel is open.
+        if (playerState == PlayerState.Control)
         {
-            PauseManager.instance.PauseGame();
-        }
+            // Getting Vector2 inputs for move and look.
+            moveInput = moveAction.ReadValue<Vector2>();
+            lookInput = lookAction.ReadValue<Vector2>();
 
-        //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
-        //it runs a check to see if it's still being held.
-        if (storedAction == null)
-        {
-            if (whistleAction.WasPressedThisFrame())
+            //Call pausemanager when pause is pressed.
+            if (pauseAction.WasPressedThisFrame())
             {
-                storedAction = whistleAction;
-                storeTimestamp = Time.time;
+                PauseManager.instance.PauseGame();
             }
-            if (callAction.WasPressedThisFrame())
+
+            //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
+            //it runs a check to see if it's still being held.
+            if (storedAction == null)
             {
-                storedAction = callAction;
-                storeTimestamp = Time.time;
+                if (whistleAction.WasPressedThisFrame())
+                {
+                    storedAction = whistleAction;
+                    storeTimestamp = Time.time;
+                }
+                if (callAction.WasPressedThisFrame())
+                {
+                    storedAction = callAction;
+                    storeTimestamp = Time.time;
+                }
             }
+            else
+            {
+                StoredActionCheck();
+            }
+
+            /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
+            Vector3 test2 = new Vector2(playe)
+            Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
+            //Debug.Log(transform.forward);
         }
         else
         {
-            StoredActionCheck();
+            moveInput = Vector2.zero;
+            lookInput = Vector2.zero;
+            storedAction = null;
         }
 
-        if (pauseAction.IsPressed())
+        if (playerState == PlayerState.Autoskate)
         {
-            Cursor.lockState = CursorLockMode.None;
+            AutoskateMovement();
+            AutoskateCheck();
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
-        Vector3 test2 = new Vector2(playe)
-        Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
-        //Debug.Log(transform.forward);
     }
 
     //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
@@ -116,6 +142,7 @@ public class PlayerControlTest : MonoBehaviour
         }
     }
 
+    //Public function for UI to check how long the action has been stored for as a time (t) value.
     public float StoredActionStatus()
     {
         float returnValue;
@@ -139,41 +166,49 @@ public class PlayerControlTest : MonoBehaviour
     private void WhistleActivate()
     {
         //Unfinished.
+        GameplayEvents.EndPlay.Invoke();
     }
 
     private void FixedUpdate()
     {
-        //Do all movement-related changes in here.
-        PlayerMovement();
+        if (playerState == PlayerState.Control)
+        {
+            //Do all movement-related changes in here.
+            PlayerMovement();
 
-        //Camera logic might need to be determined here then visuals performed in late update.
+            //Camera logic might need to be determined here then visuals performed in late update.
+        }
 
-
-                                                    //*************************************//
-        Debug.Log(cam.transform.localRotation.eulerAngles);
-
+        if (playerState == PlayerState.Autoskate)
+        {
+            //Logic for auto movement goes here
+            AutoskateMovement();
+        }
     }
 
     private void LateUpdate()
     {
-        CameraClamp();
+        if (GameUtilities.VREnabled())
+        {
 
-        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
-        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
-        if (Mathf.Abs(rotateValue) > 180)
-        {
-            Debug.Log($"testingtesting, {rotateValue}");
         }
-        if (rotateValue > 180)
+        else
         {
-            rotateValue -= 360;
+            CameraClamp();
+
+            // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
+            // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
+            float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+            if (rotateValue > 180)
+            {
+                rotateValue -= 360;
+            }
+            if (rotateValue < -180)
+            {
+                rotateValue += 360;
+            }
+            transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
         }
-        if (rotateValue < -180)
-        {
-            rotateValue += 360;
-        }
-        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
     private void CameraClamp()
@@ -209,22 +244,32 @@ public class PlayerControlTest : MonoBehaviour
         }
     }
 
-    private void PlayerMovement()   //*************************************////*************************************//
+    private void PlayerMovement()
     {
-        Vector3 camAngle = cam.transform.localRotation.eulerAngles;
-
         //Determines the angle between where the player's velocity is going and the player's input.
         Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion angleCheck = Quaternion.AngleAxis(camAngle.y, Vector3.up);
+
+        //If VR active, usees camera Y instead of player Y.
+        Quaternion angleCheck;
+        if (GameUtilities.VREnabled())
+        {
+            angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
+        }
+        else
+        {
+            angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
+        }
+
         horizontalCheck = angleCheck * horizontalCheck;
 
+        //Add an object over a GameObject friend parameter to have it display where the player is moving.
+        /*if (friend != null)
+        {
+            friend.transform.position = transform.position + (horizontalCheck * 2);
+        }*/
+
         //Add relative force.
-        //rb.AddRelativeForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
-        //rb.AddForce(new Vector3(moveInput.x, 0, moveInput.y) * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
-
-        
         rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
-
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -234,7 +279,40 @@ public class PlayerControlTest : MonoBehaviour
         }
     }
 
+    //Add force towards the autoskate destination and avoid exceeding speed limit.
+    private void AutoskateMovement()
+    {
+        Vector3 direction = autoskateDestination - transform.position;
+
+        if ((autoskateDestination - transform.position).magnitude > 2f)
+        {
+            rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        }
+
+
+        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
+        if (capTest.magnitude > maxSpeed || (autoskateDestination - transform.position).magnitude < 4f)
+        {
+            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
+        }
+    }
+
+    //If close enough to autoskate destination, invoke event to continue progress.
+    private void AutoskateCheck()
+    {
+        if ((autoskateDestination - transform.position).magnitude < 3f)
+        {
+            GameplayManager.Instance.moveDone = true;
+        }
+    }
+
     #region Enable and Disable
+
+    public void SetPlayerControl(int setState)
+    {
+        playerState = (PlayerState)setState;
+    }
+
     private void OnEnable()
     {
         moveAction.Enable();
@@ -252,5 +330,26 @@ public class PlayerControlTest : MonoBehaviour
         whistleAction.Disable();
         pauseAction.Disable();
     }
+    #endregion
+
+    #region EventListeners
+
+    private void CutsceneListener(int progress)
+    {
+        if (waypointParent.transform.GetChild(progress) != null)
+        {
+            autoskateDestination = waypointParent.transform.GetChild(progress).position;
+        }
+        if (playerState != PlayerState.Autoskate)
+        {
+            playerState = PlayerState.Autoskate;
+        }
+    }
+
+    private void LoadWaypoints(CutsceneData cutsceneData)
+    {
+        waypointParent = cutsceneData.waypointParent;
+    }
+
     #endregion
 }
