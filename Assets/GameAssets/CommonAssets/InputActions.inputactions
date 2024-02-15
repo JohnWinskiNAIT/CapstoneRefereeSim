@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Call",
+                    "name": "Call/Select",
                     "type": "Button",
                     "id": "93164b72-6600-4203-ae16-0a774230c623",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Whistle",
+                    "name": "Whistle/Cancel",
                     "type": "Button",
                     "id": "37190c95-319c-4689-aa4c-c18fab6a5ee9",
                     "expectedControlType": "Button",
@@ -79,7 +79,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Call",
+                    "action": "Call/Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -90,7 +90,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Whistle",
+                    "action": "Whistle/Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -65,10 +65,17 @@ public class GameplayManager : MonoBehaviour
             ProgressCutscene();
         }
     }
+
+    private struct PlayInformation
+    {
+        float penaltyTimestamp;
+        Tuple<int, int> involvedPlayerIds;
+        int penaltyID;
+    }
 }
 
 [Serializable]
-public class CutsceneData
+public struct CutsceneData
 {
     public int numberOfPoints;
     public GameObject waypointParent;

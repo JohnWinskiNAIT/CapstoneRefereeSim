@@ -1713,6 +1713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  cam: {fileID: 51658058}
   maxSpeed: 25
   accelerationSpeed: 1200
   breakingModifier: 0.965
