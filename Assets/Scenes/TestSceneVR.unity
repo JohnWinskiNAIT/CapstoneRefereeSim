@@ -2531,8 +2531,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 7314ca20e6766b84aa0db1c0acbfd429, type: 3}
   cam: {fileID: 2058135579}
-  maxSpeed: 25
-  accelerationSpeed: 1200
+  maxSpeed: 15
+  accelerationSpeed: 500
   breakingModifier: 0.965
   storeInputDuration: 2
   cameraSpeed: 100
