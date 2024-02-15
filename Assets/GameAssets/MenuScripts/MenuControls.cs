@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MenuControls : MonoBehaviour
 {
@@ -12,13 +13,17 @@ public class MenuControls : MonoBehaviour
     [SerializeField]
     bool fade, fadeOn;
     Color col;
-    float time;
+    [SerializeField] float time;
     private void Start()
     {
         optionsPanel.transform.position = offScreen.position;
-        time = 3.0f;
+        time = 1.0f;
         optionsButtons = optionsPanel.GetComponentsInChildren<Button>();
         mainMenuButtons = mainMenuPanel.GetComponentsInChildren<Button>();
+        foreach(Button button in optionsButtons)
+        {
+            button.interactable = false;
+        }
         for (int i = 0; i < mainMenuButtons.Length; i++)
         {
             mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0);
@@ -27,10 +32,12 @@ public class MenuControls : MonoBehaviour
     }
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape) && fade) 
+        {
+            fade = false;
+        }
         if (fade)
         {
-            time = 3.0f;
-            time -= Time.deltaTime;
             optionsPanel.SetActive(true);
             for (int i = 0; i < mainMenuButtons.Length; i++)
             {
@@ -44,28 +51,33 @@ public class MenuControls : MonoBehaviour
             }
             for (int i = 0; i < optionsButtons.Length; i++)
             {
-                optionsButtons[i].interactable = true;
                 if (optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
                 {
                     col = optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a += Time.deltaTime;
+                    col.a += Time.deltaTime * 0.5f;
                     optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
                 }
             }
 
-            if (time <= 0)
+            if (time > 0 && !fadeOn)
             {
-                mainMenuPanel.SetActive(false);
-                time = 6.0f;
+                time -= Time.deltaTime;
+                if(time <= 0)
+                {
+                    for (int i = 0; i < optionsButtons.Length; i++)
+                    {
+                        optionsButtons[i].interactable = true;
+                    }
+                    mainMenuPanel.SetActive(false);
+                    time = 1.0f;
+                    fadeOn = true;
+                }
             }
             mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, offScreen.position, 0.01f);
             optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, onScreen.position, 0.1f);
-            fadeOn = true;
         }
         if (!fade && fadeOn)
         {
-            time = 3.0f;
-            time -= Time.deltaTime;
             mainMenuPanel.SetActive(true);
             for (int i = 0; i < optionsButtons.Length; i++)
             {
@@ -79,22 +91,29 @@ public class MenuControls : MonoBehaviour
             }
             for (int i = 0; i < mainMenuButtons.Length; i++)
             {
-                mainMenuButtons[i].interactable = true;
                 if (mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
                 {
                     col = mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a += Time.deltaTime;
+                    col.a += Time.deltaTime * 0.8f;
                     mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
                 }
             }
-            if (time <= 0)
+            if (time > 0 && fadeOn)
             {
-                optionsPanel.SetActive(false);
-                fadeOn = false;
-                time = 3.0f;
+                time -= Time.deltaTime;
+                if (time <= 0)
+                {
+                    for (int i = 0; i < mainMenuButtons.Length; i++)
+                    {
+                        mainMenuButtons[i].interactable = true;
+                    }
+                    optionsPanel.SetActive(false);
+                    time = 1.0f;
+                    fadeOn = false;
+                }
             }
             mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, onScreen.position, 0.1f);
-            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, offScreen.position, 0.01f);
+            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, offScreen.position, 0.1f);
         }
     }
     public void Glow(GameObject callingObject)
@@ -109,5 +128,13 @@ public class MenuControls : MonoBehaviour
     public void Options()
     {
         fade = !fade;
+    }
+    public void Exit()
+    {
+        Application.Quit(0);
+    }
+    public void Play()
+    {
+        SceneManager.LoadScene("TestSceneA");
     }
 }
