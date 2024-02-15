@@ -24,8 +24,9 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadCameraPoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
+
         currentMode = CameraModes.Normal;
     }
 
@@ -55,9 +56,9 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    private void EndPlay()
+    private void LoadCameraPoints(CutsceneData cutsceneData)
     {
-        currentMode = CameraModes.FocusingOnPoint;
+        focusPointParent = cutsceneData.cameraParent;
     }
 
     private void CutsceneCallback(int progress)

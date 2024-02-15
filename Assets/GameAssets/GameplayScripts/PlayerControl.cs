@@ -29,10 +29,7 @@ public class PlayerControl : MonoBehaviour
     private PlayerState playerState;
     private Vector3 autoskateDestination;
 
-    [SerializeField]
     GameObject waypointParent;
-
-    Camera cam;
 
     private enum PlayerState
     {
@@ -44,7 +41,7 @@ public class PlayerControl : MonoBehaviour
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
-        if (XRGeneralSettings.Instance?.Manager?.activeLoader == null)
+        if (!GameUtilities.VREnabled())
         {
             Debug.Log("YIPEE");
         }
@@ -58,7 +55,7 @@ public class PlayerControl : MonoBehaviour
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
         playerState = PlayerState.Control;
 
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
     }
 
@@ -67,12 +64,6 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
-
-        cam = GetComponentInChildren<Camera>();
-        if (XRGeneralSettings.Instance?.Manager?.activeLoader == null)
-        {
-
-        }
     }
 
     // Update is called once per frame
@@ -319,11 +310,6 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region EventListeners
-    private void EndPlay()
-    {
-        SetPlayerControl((int)PlayerState.Autoskate);
-        GameplayEvents.CutsceneTrigger.Invoke(0);
-    }
 
     private void CutsceneListener(int progress)
     {
@@ -331,6 +317,11 @@ public class PlayerControl : MonoBehaviour
         {
             autoskateDestination = waypointParent.transform.GetChild(progress).position;
         }
+    }
+
+    private void LoadWaypoints(CutsceneData cutsceneData)
+    {
+        waypointParent = cutsceneData.waypointParent;
     }
 
     #endregion
