@@ -45,7 +45,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!GameUtilities.VREnabled())
         {
-            Debug.Log("YIPEE");
+            Debug.Log("VR UnEnabled");
         }
 
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
