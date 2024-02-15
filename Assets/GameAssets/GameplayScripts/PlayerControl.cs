@@ -251,7 +251,7 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddRelativeForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -265,10 +265,15 @@ public class PlayerControl : MonoBehaviour
     private void AutoskateMovement()
     {
         Vector3 direction = autoskateDestination - transform.position;
-        rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        if ((autoskateDestination - transform.position).magnitude > 2f)
+        {
+            rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        }
+
 
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed)
+        if (capTest.magnitude > maxSpeed || (autoskateDestination - transform.position).magnitude < 4f)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
@@ -279,7 +284,7 @@ public class PlayerControl : MonoBehaviour
     {
         if ((autoskateDestination - transform.position).magnitude < 3f)
         {
-            GameplayEvents.CutsceneTrigger.Invoke(1);
+            GameplayManager.Instance.moveDone = true;
         }
     }
 
@@ -316,6 +321,10 @@ public class PlayerControl : MonoBehaviour
         if (waypointParent.transform.GetChild(progress) != null)
         {
             autoskateDestination = waypointParent.transform.GetChild(progress).position;
+        }
+        if (playerState != PlayerState.Autoskate)
+        {
+            playerState = PlayerState.Autoskate;
         }
     }
 

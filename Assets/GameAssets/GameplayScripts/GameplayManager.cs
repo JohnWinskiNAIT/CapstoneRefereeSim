@@ -10,7 +10,11 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     CutsceneData playEndCutscene;
 
+    CutsceneData currentCutscene;
+
     int cutsceneStatus;
+
+    public bool cameraDone, moveDone;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +35,7 @@ public class GameplayManager : MonoBehaviour
     public void EndPlay()
     {
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
+        currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
     }
@@ -38,7 +43,27 @@ public class GameplayManager : MonoBehaviour
     public void ProgressCutscene()
     {
         cutsceneStatus++;
-        GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+        if (cutsceneStatus < currentCutscene.numberOfPoints)
+        {
+            GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+        }
+        else
+        {
+            if (currentCutscene.wheelOpen)
+            {
+                GameplayEvents.OpenWheel.Invoke(true);
+            }
+        }
+        moveDone = false;
+        cameraDone = false;
+    }
+
+    private void Update()
+    {
+        if (moveDone && cameraDone)
+        {
+            ProgressCutscene();
+        }
     }
 }
 
@@ -48,4 +73,5 @@ public class CutsceneData
     public int numberOfPoints;
     public GameObject waypointParent;
     public GameObject cameraParent;
+    public bool wheelOpen;
 }

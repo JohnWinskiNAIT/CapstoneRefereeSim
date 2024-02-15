@@ -68,6 +68,9 @@ public class PlayerUIManager : MonoBehaviour
 
         currentNotches = new GameObject[0];
         currentIcons = new GameObject[0];
+
+        GameplayEvents.OpenWheel.AddListener(ToggleWheel);
+        ToggleWheel(false);
     }
 
     // Visual effects are performed in this update.
@@ -99,14 +102,14 @@ public class PlayerUIManager : MonoBehaviour
 
 
         // Lockstate
-        if (wheelTestAction.IsPressed())
+        /*if (wheelTestAction.IsPressed())
         {
             ToggleWheel(true);
         }
         else
         {
             ToggleWheel(false);
-        }
+        }*/
 
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)

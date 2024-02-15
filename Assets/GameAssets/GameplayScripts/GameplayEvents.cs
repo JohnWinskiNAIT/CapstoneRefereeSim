@@ -11,4 +11,5 @@ static public class GameplayEvents
     public static UnityEvent<bool> OpenWheel = new UnityEvent<bool>();
 
     public static UnityEvent<CutsceneData> LoadCutscene = new UnityEvent<CutsceneData>();
+    public static UnityEvent EndCutscene = new UnityEvent();
 }

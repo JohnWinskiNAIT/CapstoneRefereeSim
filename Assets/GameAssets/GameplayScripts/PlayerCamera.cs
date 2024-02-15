@@ -74,6 +74,14 @@ public class PlayerCamera : MonoBehaviour
         }
         savedAngle = transform.rotation.eulerAngles;
         nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(intendedPoint).position - transform.position, Vector3.up).eulerAngles;
+        if (savedAngle.x > 180)
+        {
+            savedAngle.x -= 360;
+        }
+        if (savedAngle.y > 180)
+        {
+            savedAngle.y -= 360;
+        }
         turnTimer = 0;
     }
 
@@ -86,6 +94,10 @@ public class PlayerCamera : MonoBehaviour
             transform.rotation = Quaternion.Euler(currentAngle);
 
             turnTimer += Time.deltaTime;
+        }
+        else
+        {
+            GameplayManager.Instance.cameraDone = true;
         }
     }
 }
