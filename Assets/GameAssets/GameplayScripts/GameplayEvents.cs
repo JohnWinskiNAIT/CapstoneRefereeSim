@@ -12,4 +12,5 @@ static public class GameplayEvents
 
     public static UnityEvent<CutsceneData> LoadCutscene = new UnityEvent<CutsceneData>();
     public static UnityEvent EndCutscene = new UnityEvent();
+    public static UnityEvent InitializePlay = new UnityEvent();
 }

@@ -140,8 +140,12 @@ public class PlayerUIManager : MonoBehaviour
                         wheelGlow.fillAmount = segments / totalFill;
                         wheelText.text = wheelInfo.optionText[i];
                         wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
-                        
+
                         //Input to choose a penalty.
+                        if (callSelectAction.WasPressedThisFrame())
+                        {
+
+                        }
                     }
                 }
             }

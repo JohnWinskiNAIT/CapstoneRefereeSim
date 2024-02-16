@@ -50,8 +50,8 @@ public class PlayerControl : MonoBehaviour
 
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
-        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
-        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
+        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
+        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
 
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
@@ -163,11 +163,13 @@ public class PlayerControl : MonoBehaviour
     private void CallActivate()
     {
         //Unfinished.
+        GameplayManager.Instance.SetCallTimer();
     }
 
     private void WhistleActivate()
     {
         //Unfinished.
+        GameplayManager.Instance.SetCallTimer();
         GameplayEvents.EndPlay.Invoke();
     }
 

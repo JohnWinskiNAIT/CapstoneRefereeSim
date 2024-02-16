@@ -1,3 +1,4 @@
+using Oculus.VoiceSDK.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,10 +17,13 @@ public class GameplayManager : MonoBehaviour
     PlayInformation currentPlayInfo;
 
     int cutsceneStatus;
-    float playTimer, stoppedTimestamp;
+    float playTimer, callTimestamp;
 
     public bool cameraDone, moveDone;
     bool playOngoing, penaltyOccured;
+
+    [SerializeField]
+    GameObject playTest;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,6 +38,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         GameplayEvents.EndPlay.AddListener(EndPlay);
+        StartPlay();
     }
 
     // Update is called once per frame
@@ -42,13 +47,25 @@ public class GameplayManager : MonoBehaviour
         if (playOngoing)
         {
             playOngoing = false;
-            stoppedTimestamp = playTimer;
-            Debug.Log($"Difference: {stoppedTimestamp - currentPlayInfo.penaltyTimer}");
+            Debug.Log($"Difference: {callTimestamp - currentPlayInfo.penaltyTimer}");
         }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+    }
+
+    public void SetCallTimer()
+    {
+        if (callTimestamp == 0)
+        {
+            callTimestamp = playTimer;
+        }
+    }
+
+    public void ConfirmChoice()
+    {
+
     }
 
     public void ProgressCutscene()
@@ -88,12 +105,21 @@ public class GameplayManager : MonoBehaviour
         if (playTimer > currentPlayInfo.penaltyTimer && !penaltyOccured)
         {
             penaltyOccured = true;
+            playTest.SetActive(true);
+
         }
 
         if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
         {
             playOngoing = false;
         }
+    }
+
+    private void StartPlay()
+    {
+        InitiatePlayInformation();
+        playTimer = 0;
+        playOngoing = true;
     }
 
     //Creates the PlayInformation struct, and fills it.
