@@ -2222,6 +2222,7 @@ RectTransform:
   - {fileID: 1439535751}
   - {fileID: 2136186175}
   - {fileID: 947787293}
+  - {fileID: 1210182196}
   m_Father: {fileID: 698313453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2250,26 +2251,107 @@ MonoBehaviour:
   wheelText: {fileID: 25094315}
   wheelInfo:
     numberOfOptions: 7
-    optionImages:
-    - {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
-    - {fileID: 21300000, guid: 2a647333a9c874f4cbf9606accbfa931, type: 3}
-    - {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
-    - {fileID: 21300000, guid: 46014dcf57c50e44aac3aa16cdd58a78, type: 3}
-    - {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
-    - {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
-    - {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
-    optionText:
-    - Cross Check
-    - Elbowing
-    - Head Contact
-    - Back Check
-    - Holding
-    - Interference
-    - Tripping
+    options:
+    - optionImage: {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
+      optionText: Head Contact
+      optionType: 0
+    - optionImage: {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
+      optionText: Cross Check
+      optionType: 2
+    - optionImage: {fileID: 21300000, guid: 2a647333a9c874f4cbf9606accbfa931, type: 3}
+      optionText: Hooking
+      optionType: 7
+    - optionImage: {fileID: 21300000, guid: 46014dcf57c50e44aac3aa16cdd58a78, type: 3}
+      optionText: Blind Check
+      optionType: 3
+    - optionImage: {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
+      optionText: Tripping
+      optionType: 1
+    - optionImage: {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
+      optionText: Holding
+      optionType: 4
+    - optionImage: {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
+      optionText: Interference
+      optionType: 5
   wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
   iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
   wheelOpen: 0
   chargingCornerOffset: 0.45
+--- !u!1 &1210182195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1210182196}
+  - component: {fileID: 1210182198}
+  - component: {fileID: 1210182197}
+  m_Layer: 5
+  m_Name: PenaltyOccurance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1210182196
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210182195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1119031681}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.8, y: 0.7}
+  m_AnchorMax: {x: 0.98, y: 0.96}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1210182197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210182195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1210182198
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210182195}
+  m_CullTransparentMesh: 1
 --- !u!1 &1298140302
 GameObject:
   m_ObjectHideFlags: 0
@@ -3389,6 +3471,7 @@ MonoBehaviour:
     wheelOpen: 1
   cameraDone: 0
   moveDone: 0
+  playTest: {fileID: 1210182195}
 --- !u!4 &1986925677
 Transform:
   m_ObjectHideFlags: 0

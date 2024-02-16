@@ -26,6 +26,7 @@ public class PlayerCamera : MonoBehaviour
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         GameplayEvents.LoadCutscene.AddListener(LoadCameraPoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
+        GameplayEvents.InitializePlay.AddListener(ResetCamera);
 
         currentMode = CameraModes.Normal;
     }
@@ -35,7 +36,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (GameUtilities.VREnabled())
         {
-
+            //Does not need to include anything? If we want a method of turning aside from turning 180 degrees, however, we will put it here.
         }
         else
         {
@@ -90,6 +91,11 @@ public class PlayerCamera : MonoBehaviour
             savedAngle.y -= 360;
         }
         turnTimer = 0;
+    }
+
+    private void ResetCamera()
+    {
+        currentMode = CameraModes.Normal;
     }
 
     private void FocusCamera()

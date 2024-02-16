@@ -1,3 +1,4 @@
+using Oculus.VoiceSDK.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,10 +17,13 @@ public class GameplayManager : MonoBehaviour
     PlayInformation currentPlayInfo;
 
     int cutsceneStatus;
-    float playTimer;
+    float playTimer, callTimestamp;
 
     public bool cameraDone, moveDone;
-    bool penaltyOccured;
+    bool playOngoing, penaltyOccured;
+
+    [SerializeField]
+    GameObject playTest;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,15 +38,44 @@ public class GameplayManager : MonoBehaviour
         }
 
         GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.InitializePlay.AddListener(StartPlay);
+
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     // Update is called once per frame
     public void EndPlay()
     {
+        if (playOngoing)
+        {
+            playOngoing = false;
+            Debug.Log($"Difference: {callTimestamp - currentPlayInfo.penaltyTimer}");
+        }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+    }
+
+    public void SetCallTimer()
+    {
+        if (callTimestamp == 0)
+        {
+            callTimestamp = playTimer;
+        }
+    }
+
+    public void ConfirmChoice(PenaltyType choice)
+    {
+        if (choice == currentPlayInfo.penaltyType)
+        {
+            Debug.Log("True");
+        }
+        else
+        {
+            Debug.Log("False");
+        }
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     public void ProgressCutscene()
@@ -57,6 +90,7 @@ public class GameplayManager : MonoBehaviour
             if (currentCutscene.wheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true);
+                Debug.Log($"{currentPlayInfo.penaltyType}");
             }
         }
         moveDone = false;
@@ -69,24 +103,42 @@ public class GameplayManager : MonoBehaviour
         {
             ProgressCutscene();
         }
-        playTimer += Time.deltaTime;
-        PlayCheck();
+
+        if (playOngoing)
+        {
+            playTimer += Time.deltaTime;
+            PlayCheck();
+        }
     }
 
     private void PlayCheck()
     {
-        if (playTimer > currentPlayInfo.penaltyTimestamp && !penaltyOccured)
+        if (playTimer > currentPlayInfo.penaltyTimer && !penaltyOccured)
         {
             penaltyOccured = true;
+            playTest.SetActive(true);
+
         }
+
+        if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
+        {
+            playOngoing = false;
+        }
+    }
+
+    private void StartPlay()
+    {
+        InitiatePlayInformation();
+        playTimer = 0;
+        playOngoing = true;
     }
 
     //Creates the PlayInformation struct, and fills it.
     private void InitiatePlayInformation()
     {
         currentPlayInfo = new PlayInformation();
-        currentPlayInfo.penaltyTimestamp = Random.Range(0, 50f);
-        currentPlayInfo.playStop = Random.Range(0, 15f);
+        currentPlayInfo.penaltyTimer = Random.Range(15f, 50f);
+        currentPlayInfo.stopTimer = Random.Range(0, 15f);
         //Replace this random range with a reference to a list of all players in the scene.
         int player1 = Random.Range(0, 30);
         int player2 = Random.Range(0, 30);
@@ -102,9 +154,10 @@ public class GameplayManager : MonoBehaviour
     private struct PlayInformation
     {
         //Penalty Timestamp denotes when the penalty will occur. Playstop indicates an additional timer added onto the Timestamp before the play will end (unless ended with whistle).
-        public float penaltyTimestamp, playStop;
+        public float penaltyTimer, stopTimer;
         //This contains the ID on the playerlist for the two players who will be involved in this incident.
         public int offenderId, affectedId;
+        //What type of penalty it is is stored here.
         public PenaltyType penaltyType;
     }
 }
