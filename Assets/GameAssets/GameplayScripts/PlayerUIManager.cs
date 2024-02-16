@@ -70,6 +70,7 @@ public class PlayerUIManager : MonoBehaviour
         currentIcons = new GameObject[0];
 
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
+        GameplayEvents.InitializePlay.AddListener(ResetUI);
         ToggleWheel(false);
     }
 
@@ -99,7 +100,6 @@ public class PlayerUIManager : MonoBehaviour
             leftSideStore.anchorMin = leftSideBL;
             leftSideStore.anchorMax = leftSideTR;
         }
-
 
         // Lockstate
         /*if (wheelTestAction.IsPressed())
@@ -138,13 +138,13 @@ public class PlayerUIManager : MonoBehaviour
                     if (mouseAngle > segments * i && mouseAngle < segments * (i + 1))
                     {
                         wheelGlow.fillAmount = segments / totalFill;
-                        wheelText.text = wheelInfo.optionText[i];
+                        wheelText.text = wheelInfo.options[i].optionText;
                         wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
 
                         //Input to choose a penalty.
                         if (callSelectAction.WasPressedThisFrame())
                         {
-
+                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionType);
                         }
                     }
                 }
@@ -184,7 +184,6 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-
     //Creates notches and rotates them dynamically according to the amount of segments in the selection wheel.
     private void GenerateNotches()
     {
@@ -211,7 +210,7 @@ public class PlayerUIManager : MonoBehaviour
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
             currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
-            currentIcons[i].GetComponent<Image>().sprite = wheelInfo.optionImages[i];
+            currentIcons[i].GetComponent<Image>().sprite = wheelInfo.options[i].optionImage;
             //set the image for each icon
         }
     }
@@ -236,6 +235,11 @@ public class PlayerUIManager : MonoBehaviour
         currentIcons = new GameObject[0];
     }
 
+    private void ResetUI()
+    {
+        ToggleWheel(false);
+    }
+
     private void OnEnable()
     {
         wheelTestAction.Enable();
@@ -250,7 +254,14 @@ public class PlayerUIManager : MonoBehaviour
     public struct WheelInformation
     {
         public int numberOfOptions;
-        public Sprite[] optionImages;
-        public string[] optionText;
+        public Option[] options;
+
+        [Serializable]
+        public struct Option
+        {
+            public Sprite optionImage;
+            public string optionText;
+            public PenaltyType optionType;
+        }
     }
 }

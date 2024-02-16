@@ -38,7 +38,9 @@ public class GameplayManager : MonoBehaviour
         }
 
         GameplayEvents.EndPlay.AddListener(EndPlay);
-        StartPlay();
+        GameplayEvents.InitializePlay.AddListener(StartPlay);
+
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     // Update is called once per frame
@@ -63,9 +65,17 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public void ConfirmChoice()
+    public void ConfirmChoice(PenaltyType choice)
     {
-
+        if (choice == currentPlayInfo.penaltyType)
+        {
+            Debug.Log("True");
+        }
+        else
+        {
+            Debug.Log("False");
+        }
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     public void ProgressCutscene()
@@ -80,6 +90,7 @@ public class GameplayManager : MonoBehaviour
             if (currentCutscene.wheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true);
+                Debug.Log($"{currentPlayInfo.penaltyType}");
             }
         }
         moveDone = false;

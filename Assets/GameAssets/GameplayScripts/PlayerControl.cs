@@ -59,6 +59,7 @@ public class PlayerControl : MonoBehaviour
 
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
+        GameplayEvents.InitializePlay.AddListener(ResetPlayer);
     }
 
     private void Start()
@@ -308,6 +309,12 @@ public class PlayerControl : MonoBehaviour
         {
             GameplayManager.Instance.moveDone = true;
         }
+    }
+
+    private void ResetPlayer()
+    {
+        playerState = PlayerState.Control;
+        transform.position = Vector3.zero;
     }
 
     #region Enable and Disable
