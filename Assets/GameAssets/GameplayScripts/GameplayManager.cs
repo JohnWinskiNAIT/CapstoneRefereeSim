@@ -16,10 +16,10 @@ public class GameplayManager : MonoBehaviour
     PlayInformation currentPlayInfo;
 
     int cutsceneStatus;
-    float playTimer;
+    float playTimer, stoppedTimestamp;
 
     public bool cameraDone, moveDone;
-    bool penaltyOccured;
+    bool playOngoing, penaltyOccured;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,6 +39,12 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     public void EndPlay()
     {
+        if (playOngoing)
+        {
+            playOngoing = false;
+            stoppedTimestamp = playTimer;
+            Debug.Log($"Difference: {stoppedTimestamp - currentPlayInfo.penaltyTimer}");
+        }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
@@ -69,15 +75,24 @@ public class GameplayManager : MonoBehaviour
         {
             ProgressCutscene();
         }
-        playTimer += Time.deltaTime;
-        PlayCheck();
+
+        if (playOngoing)
+        {
+            playTimer += Time.deltaTime;
+            PlayCheck();
+        }
     }
 
     private void PlayCheck()
     {
-        if (playTimer > currentPlayInfo.penaltyTimestamp && !penaltyOccured)
+        if (playTimer > currentPlayInfo.penaltyTimer && !penaltyOccured)
         {
             penaltyOccured = true;
+        }
+
+        if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
+        {
+            playOngoing = false;
         }
     }
 
@@ -85,8 +100,8 @@ public class GameplayManager : MonoBehaviour
     private void InitiatePlayInformation()
     {
         currentPlayInfo = new PlayInformation();
-        currentPlayInfo.penaltyTimestamp = Random.Range(0, 50f);
-        currentPlayInfo.playStop = Random.Range(0, 15f);
+        currentPlayInfo.penaltyTimer = Random.Range(15f, 50f);
+        currentPlayInfo.stopTimer = Random.Range(0, 15f);
         //Replace this random range with a reference to a list of all players in the scene.
         int player1 = Random.Range(0, 30);
         int player2 = Random.Range(0, 30);
@@ -102,9 +117,10 @@ public class GameplayManager : MonoBehaviour
     private struct PlayInformation
     {
         //Penalty Timestamp denotes when the penalty will occur. Playstop indicates an additional timer added onto the Timestamp before the play will end (unless ended with whistle).
-        public float penaltyTimestamp, playStop;
+        public float penaltyTimer, stopTimer;
         //This contains the ID on the playerlist for the two players who will be involved in this incident.
         public int offenderId, affectedId;
+        //What type of penalty it is is stored here.
         public PenaltyType penaltyType;
     }
 }
