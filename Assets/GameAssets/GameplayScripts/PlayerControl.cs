@@ -31,6 +31,10 @@ public class PlayerControl : MonoBehaviour
     private PlayerState playerState;
     private Vector3 autoskateDestination;
 
+    /// <summary>
+    /// ////////////////////bool isInMenu;
+    /// </summary>
+
     GameObject waypointParent;
 
     private enum PlayerState
