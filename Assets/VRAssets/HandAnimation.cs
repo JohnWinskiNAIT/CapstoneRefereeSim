@@ -14,10 +14,10 @@ public class HandAnimation : MonoBehaviour
     {
         float gripValue = gripReference.action.ReadValue<float>();
         handAnimator.SetFloat("Grip", gripValue);
-        Debug.Log(gripValue);
+        //Debug.Log(gripValue);
 
         float triggerValue = triggerReference.action.ReadValue<float>();
         handAnimator.SetFloat("Trigger", triggerValue);
-        Debug.Log(triggerValue);
+        //Debug.Log(triggerValue);
     }
 }
