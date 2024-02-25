@@ -32,7 +32,8 @@ public class PlayerControl : MonoBehaviour
     private Vector3 autoskateDestination;
 
     /// <summary>
-    /// ////////////////////bool isInMenu;
+    /// ////////////////////bool isInMenu; maybe this should e covered in state?
+    /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
     /// </summary>
 
     GameObject waypointParent;
