@@ -781,28 +781,15 @@ MonoBehaviour:
   rightSideStore: {fileID: 422155900}
   selectionWheel: {fileID: 321973000}
   wheelText: {fileID: 939085753}
+  wheelWorldspaceTrans: {fileID: 0}
   wheelInfo:
     numberOfOptions: 7
-    optionImages:
-    - {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
-    - {fileID: 21300000, guid: 2a647333a9c874f4cbf9606accbfa931, type: 3}
-    - {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
-    - {fileID: 21300000, guid: 46014dcf57c50e44aac3aa16cdd58a78, type: 3}
-    - {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
-    - {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
-    - {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
-    optionText:
-    - Cross Check
-    - Elbowing
-    - Head Contact
-    - Back Check
-    - Holding
-    - Interference
-    - Tripping
+    options: []
   wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
   iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
   wheelOpen: 0
   chargingCornerOffset: 0.45
+  isVR: 0
 --- !u!114 &232085248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,6 +2307,7 @@ MonoBehaviour:
   cameraSpeed: 1
   cameraMaxY: 295
   cameraMinY: 45
+  isVREnabled: 0
 --- !u!54 &1133629327
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2529,7 +2517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5daf302738e32fa4a85e6db4ac248767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 7314ca20e6766b84aa0db1c0acbfd429, type: 3}
+  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
   cam: {fileID: 2058135579}
   maxSpeed: 15
   accelerationSpeed: 500
@@ -2538,6 +2526,7 @@ MonoBehaviour:
   cameraSpeed: 100
   cameraMaxY: 295
   cameraMinY: 45
+  isVREnabled: 0
 --- !u!1 &1353660874
 GameObject:
   m_ObjectHideFlags: 0
@@ -4682,6 +4671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 7314ca20e6766b84aa0db1c0acbfd429, type: 3}
+  cam: {fileID: 0}
   maxSpeed: 2
   accelerationSpeed: 20
   breakingModifier: 0.5
@@ -4689,7 +4679,6 @@ MonoBehaviour:
   cameraSpeed: 1
   cameraMaxY: 0
   cameraMinY: 0
-  friend: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
