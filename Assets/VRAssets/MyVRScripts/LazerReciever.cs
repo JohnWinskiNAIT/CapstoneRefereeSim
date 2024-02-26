@@ -9,6 +9,11 @@ public class LazerReciever : MonoBehaviour
     bool isActivated;
     Button button;
 
+    private void Start()
+    {
+        button = GetComponentInParent<Button>();
+    }
+
     private void Update()
     {
         PointedAtUpdate();
@@ -24,7 +29,7 @@ public class LazerReciever : MonoBehaviour
 
     public void Activate()
     {
-        Debug.Log($"Is being Activated");
+        //Debug.Log($"Is being Activated");
 
         //button.clickable.clicked += true;
 
@@ -35,5 +40,7 @@ public class LazerReciever : MonoBehaviour
         //button.onClick.GetPersistentMethodName(0);
 
         Debug.Log($"{button.onClick.GetPersistentMethodName(0)}"); 
+
+        button.onClick.Invoke();
     }
 }

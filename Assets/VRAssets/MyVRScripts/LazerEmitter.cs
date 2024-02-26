@@ -8,14 +8,10 @@ public class LazerEmitter : MonoBehaviour
     bool hitSomething = false;
     Vector3 hitPos;
 
-    bool isActivating = false;
+    public bool isHeldDown = false;
     LazerReciever reciever;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // See Order of Execution for Event Functions for information on FixedUpdate() and Update() related to physics queries
     void FixedUpdate()
@@ -38,7 +34,7 @@ public class LazerEmitter : MonoBehaviour
             hitPos = hit.point;
             reciever = hit.transform.gameObject.GetComponent<LazerReciever>();
 
-            Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
+            //Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
         }
         else
         {
@@ -46,19 +42,44 @@ public class LazerEmitter : MonoBehaviour
             hitPos = Vector3.zero;
             reciever = null;
 
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
         }
     }
 
+    public void Activate()
+    {
+        isHeldDown = true;
+        //Debug.Log("LazerActivation");
+        if (isHeldDown && reciever!=null)
+        {
+            reciever.Activate();
+        }
+    }
+
+    public void Deactivate()
+    {
+        //Debug.Log("LazerDeactivation");
+        isHeldDown = false;
+    }
+
+
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if (isHeldDown)
+        {
+            Gizmos.color = Color.green;
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+        }
 
         Gizmos.DrawLine(transform.position, transform.TransformDirection(Vector3.forward) * 100);
 
         if ( hitSomething )
         {
-            Gizmos.DrawSphere(hitPos, 2);
+            Gizmos.DrawSphere(hitPos, 1);
         }
     }
 }
