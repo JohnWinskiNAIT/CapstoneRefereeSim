@@ -31,6 +31,8 @@ public class PlayerControl : MonoBehaviour
     private PlayerState playerState;
     private Vector3 autoskateDestination, savedVelocity;
 
+    public bool isVREnabled;
+
     /// <summary>
     /// ////////////////////bool isInMenu; maybe this should e covered in state?
     /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
@@ -48,7 +50,9 @@ public class PlayerControl : MonoBehaviour
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
-        if (!GameUtilities.VREnabled())
+        isVREnabled = GameUtilities.VREnabled();
+
+        if (!isVREnabled)
         {
             Debug.Log("VR UnEnabled");
         }
@@ -70,6 +74,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
+        uiManager.isVR = isVREnabled;
+
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
@@ -217,7 +223,7 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (GameUtilities.VREnabled())
+        if (isVREnabled)
         {
 
         }
@@ -280,7 +286,7 @@ public class PlayerControl : MonoBehaviour
 
         //If VR active, usees camera Y instead of player Y.
         Quaternion angleCheck;
-        if (GameUtilities.VREnabled())
+        if (isVREnabled)
         {
             angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
         }
