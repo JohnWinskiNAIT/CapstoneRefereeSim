@@ -1721,6 +1721,7 @@ MonoBehaviour:
   cameraSpeed: 100
   cameraMaxY: 295
   cameraMinY: 45
+  isVREnabled: 0
 --- !u!4 &698313453
 Transform:
   m_ObjectHideFlags: 0
@@ -2249,6 +2250,7 @@ MonoBehaviour:
   rightSideStore: {fileID: 1107081530}
   selectionWheel: {fileID: 2136186174}
   wheelText: {fileID: 25094315}
+  wheelWorldspaceTrans: {fileID: 0}
   wheelInfo:
     numberOfOptions: 7
     options:
@@ -2277,6 +2279,7 @@ MonoBehaviour:
   iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
   wheelOpen: 0
   chargingCornerOffset: 0.45
+  isVR: 0
 --- !u!1 &1210182195
 GameObject:
   m_ObjectHideFlags: 0

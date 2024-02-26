@@ -20,7 +20,7 @@ public class GameplayManager : MonoBehaviour
     float playTimer, callTimestamp;
 
     public bool cameraDone, moveDone;
-    bool playOngoing, penaltyOccured;
+    bool playOngoing, penaltyOccured, penaltyCall;
 
     [SerializeField]
     GameObject playTest;
@@ -110,6 +110,12 @@ public class GameplayManager : MonoBehaviour
             PlayCheck();
         }
     }
+    
+    public void CallPrep()
+    {
+        Debug.Log($"Difference: {callTimestamp - currentPlayInfo.penaltyTimer}");
+        penaltyCall = true;
+    }
 
     private void PlayCheck()
     {
@@ -123,6 +129,7 @@ public class GameplayManager : MonoBehaviour
         if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
         {
             playOngoing = false;
+            GameplayEvents.EndPlay.Invoke();
         }
     }
 
@@ -149,6 +156,10 @@ public class GameplayManager : MonoBehaviour
         currentPlayInfo.offenderId = player1;
         currentPlayInfo.affectedId = player2;
         currentPlayInfo.penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length);
+        penaltyCall = false;
+        callTimestamp = 0;
+
+        playTest.SetActive(false);
     }
 
     private struct PlayInformation

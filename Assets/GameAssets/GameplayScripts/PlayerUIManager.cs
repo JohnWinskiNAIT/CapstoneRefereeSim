@@ -28,11 +28,13 @@ public class PlayerUIManager : MonoBehaviour
 
     //Wheel related references.
     [SerializeField]
-    GameObject selectionWheel;
+    GameObject selectionWheel;  //the object parent of all the canvases
     [SerializeField]
     TextMeshProUGUI wheelText;
     Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
+
+    [SerializeField] Transform wheelWorldspaceTrans;
 
     [SerializeField]
     WheelInformation wheelInfo;
@@ -47,6 +49,10 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     float chargingCornerOffset;
     Vector3 chargingVectorOffset;
+
+    public bool isVR;  //gets set to true/false by playerControl
+    Vector2 mouseCheck = new Vector2();
+    Vector2 magnitudeCheck = new Vector2();
 
     //Affirming the inputs + default anchor corners
     private void Awake()
@@ -114,10 +120,24 @@ public class PlayerUIManager : MonoBehaviour
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
         {
-            //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
-            Vector2 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
-            //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
-            Vector2 magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            if (isVR)
+            {
+
+
+
+            }
+            else    //We will need to expand this out AGAIN when we want to do the controller joystick thing
+                    //we could do it in an Enum. ControlType {Mouse, Controller, VRHands}
+            {
+                //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
+                mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
+
+                //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
+                magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            }
+
+
+
             if (magnitudeCheck.magnitude > Screen.height / 5)
             {
                 float mouseAngle;
@@ -156,7 +176,7 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
     }
-    
+
     public void ToggleWheel(bool enable)
     {
         if (enable)
