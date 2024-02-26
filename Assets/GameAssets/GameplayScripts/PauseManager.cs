@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
+    [SerializeField]
+    float pauseTransitionTime;
+
+    [SerializeField]
+    RectTransform pauseMenu;
+
     public static PauseManager instance;
 
+    bool paused;
+    float pauseTimer;
     //Reference UI parent this needs to enable and disable along with individual parts it needs to control.
 
 
@@ -26,15 +34,23 @@ public class PauseManager : MonoBehaviour
         GameplayEvents.SetPause.AddListener(PauseGame);
     }
 
+    private void Update()
+    {
+        if (paused && pauseTimer < pauseTransitionTime)
+        {
+            pauseTimer += Time.deltaTime;
+        }
+
+        if (!paused && pauseTimer > 0)
+        {
+            pauseTimer -= Time.deltaTime;
+        }
+
+        pauseMenu.anchorMax = Vector3.Slerp(Vector3.zero, Vector3.zero, 0);
+    }
+
     public void PauseGame(bool pausing)
     {
-        if (pausing)
-        {
-
-        }
-        else
-        {
-
-        }
+        paused = pausing;
     }
 }

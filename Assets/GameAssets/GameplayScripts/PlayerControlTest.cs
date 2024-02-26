@@ -79,7 +79,7 @@ public class PlayerControlTest : MonoBehaviour
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
             {
-                PauseManager.instance.PauseGame();
+                GameplayEvents.SetPause.Invoke(true);
             }
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
