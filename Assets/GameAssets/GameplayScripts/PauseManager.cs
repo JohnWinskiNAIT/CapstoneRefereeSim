@@ -22,10 +22,19 @@ public class PauseManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        GameplayEvents.SetPause.AddListener(PauseGame);
     }
 
-    public void PauseGame()
+    public void PauseGame(bool pausing)
     {
-        Debug.Log("bababooie");
+        if (pausing)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 }

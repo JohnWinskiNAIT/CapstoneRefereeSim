@@ -29,7 +29,7 @@ public class PlayerControl : MonoBehaviour
 
     private PlayerUIManager uiManager;
     private PlayerState playerState;
-    private Vector3 autoskateDestination;
+    private Vector3 autoskateDestination, savedVelocity;
 
     /// <summary>
     /// ////////////////////bool isInMenu; maybe this should e covered in state?
@@ -65,6 +65,7 @@ public class PlayerControl : MonoBehaviour
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
+        GameplayEvents.SetPause.AddListener(PausePlayer);
     }
 
     private void Start()
@@ -87,7 +88,7 @@ public class PlayerControl : MonoBehaviour
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
             {
-                PauseManager.instance.PauseGame();
+                GameplayEvents.SetPause.Invoke(true);
             }
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
@@ -170,6 +171,8 @@ public class PlayerControl : MonoBehaviour
     {
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
+        GameplayManager.Instance.CallPrep();
+        storedAction = null;
     }
 
     private void WhistleActivate()
@@ -177,6 +180,22 @@ public class PlayerControl : MonoBehaviour
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
         GameplayEvents.EndPlay.Invoke();
+        storedAction = null;
+    }
+
+    private void PausePlayer(bool pausing)
+    {
+        if (pausing)
+        {
+            playerState = PlayerState.Lockout;
+            savedVelocity = rb.velocity;
+            rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            playerState = PlayerState.Control;
+            rb.velocity = savedVelocity;
+        }
     }
 
     private void FixedUpdate()
