@@ -12,6 +12,7 @@ public class PauseManager : MonoBehaviour
 
     public static PauseManager instance;
 
+    Vector3 speed = Vector3.zero;
     bool paused;
     float pauseTimer;
     //Reference UI parent this needs to enable and disable along with individual parts it needs to control.
@@ -45,8 +46,8 @@ public class PauseManager : MonoBehaviour
         {
             pauseTimer -= Time.deltaTime;
         }
-
-        pauseMenu.anchorMax = Vector3.Slerp(Vector3.zero, Vector3.zero, 0);
+        pauseMenu.anchorMax = Vector3.SmoothDamp(new Vector3(0, 1), new Vector3(1, 1), ref speed, pauseTransitionTime);
+        pauseMenu.anchorMin = Vector3.SmoothDamp(new Vector3(-1, 0), new Vector3(0, 0), ref speed, pauseTransitionTime);
     }
 
     public void PauseGame(bool pausing)
