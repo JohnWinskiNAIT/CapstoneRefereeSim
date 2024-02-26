@@ -16,7 +16,7 @@ public class HockeyTools : MonoBehaviour
     {
         
     }
-    [MenuItem("HockeyMenu/Draw Player Path", priority = 0)]
+    // [MenuItem("HockeyMenu/Draw Player Path", priority = 0)]
 
     static void DrawPlayerPath()
     {
