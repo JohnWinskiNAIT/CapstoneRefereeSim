@@ -3,117 +3,103 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Oculus.Interaction.DebugTree;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class MenuControls : MonoBehaviour
 {
-    [SerializeField] Button[] mainMenuButtons;
-    [SerializeField] Button[] optionsButtons;
-    [SerializeField] GameObject optionsPanel, mainMenuPanel;
+    [SerializeField] Button[] onScreenButtons;
+    [SerializeField] Button[] offScreenButtons;
+    [SerializeField] GameObject offScreenPanel, onScreenPanel;
     [SerializeField] Transform offScreen, onScreen;
     [SerializeField]
     bool fade, fadeOn;
+    [SerializeField]
+    int menu;
+    [SerializeField]
+    GameObject[] panels;
+    int previousPanel;
     Color col;
     [SerializeField] float time;
     private void Start()
     {
-        optionsPanel.transform.position = offScreen.position;
+        offScreenPanel.transform.position = offScreen.position;
         time = 1.0f;
-        optionsButtons = optionsPanel.GetComponentsInChildren<Button>();
-        mainMenuButtons = mainMenuPanel.GetComponentsInChildren<Button>();
-        foreach(Button button in optionsButtons)
+        onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
+        offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
+        foreach(Button button in offScreenButtons)
         {
             button.interactable = false;
         }
-        for (int i = 0; i < mainMenuButtons.Length; i++)
+        for (int i = 0; i < onScreenButtons.Length; i++)
         {
-            mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0);
+            onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0);
         }
-        mainMenuButtons[0].Select();
+        onScreenButtons[0].Select();
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && fade) 
+        if(fade)
         {
-            fade = false;
+            MenuSwitcher(menu);
         }
-        if (fade)
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            optionsPanel.SetActive(true);
-            for (int i = 0; i < mainMenuButtons.Length; i++)
-            {
-                mainMenuButtons[i].interactable = false;
-                if (mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
-                {
-                    col = mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a -= Time.deltaTime * 5f;
-                    mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                }
-            }
-            for (int i = 0; i < optionsButtons.Length; i++)
-            {
-                if (optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
-                {
-                    col = optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a += Time.deltaTime * 0.5f;
-                    optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                }
-            }
+            fade = true;
+        }
 
-            if (time > 0 && !fadeOn)
-            {
-                time -= Time.deltaTime;
-                if(time <= 0)
-                {
-                    for (int i = 0; i < optionsButtons.Length; i++)
-                    {
-                        optionsButtons[i].interactable = true;
-                    }
-                    mainMenuPanel.SetActive(false);
-                    time = 1.0f;
-                    fadeOn = true;
-                }
-            }
-            mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, offScreen.position, 0.01f);
-            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, onScreen.position, 0.1f);
-        }
-        if (!fade && fadeOn)
+    }
+    public void menuSelector(int thismenu)
+    {
+        menu = thismenu;
+        fade = true;
+    }
+    public void MenuSwitcher(int switchToMenu)
+    {
+        for(int j = 0; j < panels.Length; j++)
         {
-            mainMenuPanel.SetActive(true);
-            for (int i = 0; i < optionsButtons.Length; i++)
+            if (j == switchToMenu)
             {
-                optionsButtons[i].interactable = false;
-                if (optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
+                offScreenPanel = panels[j];
+                offScreenPanel.SetActive(true);
+                for (int i = 0; i < onScreenButtons.Length; i++)
                 {
-                    col = optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a -= Time.deltaTime * 5f;
-                    optionsButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                }
-            }
-            for (int i = 0; i < mainMenuButtons.Length; i++)
-            {
-                if (mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
-                {
-                    col = mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                    col.a += Time.deltaTime * 0.8f;
-                    mainMenuButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                }
-            }
-            if (time > 0 && fadeOn)
-            {
-                time -= Time.deltaTime;
-                if (time <= 0)
-                {
-                    for (int i = 0; i < mainMenuButtons.Length; i++)
+                    onScreenButtons[i].interactable = false;
+                    if (onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
                     {
-                        mainMenuButtons[i].interactable = true;
+                        col = onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
+                        col.a -= Time.deltaTime * 5f;
+                        onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
                     }
-                    optionsPanel.SetActive(false);
-                    time = 1.0f;
-                    fadeOn = false;
                 }
+                for (int i = 0; i < offScreenButtons.Length; i++)
+                {
+                    if (offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
+                    {
+                        col = offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
+                        col.a += Time.deltaTime * 0.5f;
+                        offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
+                    }
+                }
+
+                if (time > 0 && !fadeOn)
+                {
+                    time -= Time.deltaTime;
+                    if (time <= 0)
+                    {
+                        for (int i = 0; i < offScreenButtons.Length; i++)
+                        {
+                            offScreenButtons[i].interactable = true;
+                        }
+                        onScreenPanel.SetActive(false);
+                        time = 1.0f;
+                        fadeOn = true;
+                        fade = false;
+                    }
+                }
+                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.01f);
+                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.1f);
             }
-            mainMenuPanel.transform.position = Vector3.Lerp(mainMenuPanel.transform.position, onScreen.position, 0.1f);
-            optionsPanel.transform.position = Vector3.Lerp(optionsPanel.transform.position, offScreen.position, 0.1f);
         }
     }
     public void Glow(GameObject callingObject)
@@ -124,10 +110,6 @@ public class MenuControls : MonoBehaviour
     public void NoGlow(GameObject callingObject)
     {
         callingObject.GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0);
-    }
-    public void Options()
-    {
-        fade = !fade;
     }
     public void Exit()
     {
