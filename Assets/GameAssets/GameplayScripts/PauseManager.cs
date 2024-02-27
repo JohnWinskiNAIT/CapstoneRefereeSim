@@ -46,8 +46,9 @@ public class PauseManager : MonoBehaviour
         {
             pauseTimer -= Time.deltaTime;
         }
-        pauseMenu.anchorMax = Vector3.SmoothDamp(new Vector3(0, 1), new Vector3(1, 1), ref speed, pauseTransitionTime);
-        pauseMenu.anchorMin = Vector3.SmoothDamp(new Vector3(-1, 0), new Vector3(0, 0), ref speed, pauseTransitionTime);
+
+        pauseMenu.anchorMax = Vector3.Lerp(new Vector3(0, 1), new Vector3(1, 1), pauseTimer / pauseTransitionTime);
+        pauseMenu.anchorMin = Vector3.Lerp(new Vector3(-1, 0), new Vector3(0, 0), pauseTimer / pauseTransitionTime);
     }
 
     public void PauseGame(bool pausing)

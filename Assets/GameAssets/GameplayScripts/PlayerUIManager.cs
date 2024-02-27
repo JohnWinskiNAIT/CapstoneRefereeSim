@@ -28,13 +28,15 @@ public class PlayerUIManager : MonoBehaviour
 
     //Wheel related references.
     [SerializeField]
-    GameObject selectionWheel;  //the object parent of all the canvases
+    GameObject selectionWheel;  
     [SerializeField]
     TextMeshProUGUI wheelText;
     Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
 
     [SerializeField] Transform wheelWorldspaceTrans;
+
+    [SerializeField] Canvas playerUICanvas;
 
     [SerializeField]
     WheelInformation wheelInfo;
@@ -53,6 +55,8 @@ public class PlayerUIManager : MonoBehaviour
     public bool isVR;  //gets set to true/false by playerControl
     Vector2 mouseCheck = new Vector2();
     Vector2 magnitudeCheck = new Vector2();
+    [SerializeField] GameObject VRPointer;
+
 
     //Affirming the inputs + default anchor corners
     private void Awake()
@@ -78,6 +82,11 @@ public class PlayerUIManager : MonoBehaviour
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
         GameplayEvents.InitializePlay.AddListener(ResetUI);
         ToggleWheel(false);
+    }
+
+    private void Start()
+    {
+
     }
 
     // Visual effects are performed in this update.
@@ -122,13 +131,19 @@ public class PlayerUIManager : MonoBehaviour
         {
             if (isVR)
             {
+                playerUICanvas.renderMode = RenderMode.WorldSpace;
+                playerUICanvas.transform.SetPositionAndRotation(wheelWorldspaceTrans.position, wheelWorldspaceTrans.rotation);
 
+                mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
 
+                //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
+                magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
             }
             else    //We will need to expand this out AGAIN when we want to do the controller joystick thing
                     //we could do it in an Enum. ControlType {Mouse, Controller, VRHands}
             {
+                playerUICanvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
                 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
 
