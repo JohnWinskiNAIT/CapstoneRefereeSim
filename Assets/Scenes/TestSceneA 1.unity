@@ -1511,7 +1511,7 @@ MonoBehaviour:
   isVrActive: 0
   canvasWorldTrans: {fileID: 1575186043}
   canvasScreenTrans: {fileID: 1752710956}
-  cam: {fileID: 0}
+  cam: {fileID: 51658058}
 --- !u!1 &782968857
 GameObject:
   m_ObjectHideFlags: 0
