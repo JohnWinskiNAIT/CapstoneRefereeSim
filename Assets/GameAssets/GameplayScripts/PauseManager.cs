@@ -12,7 +12,7 @@ public class PauseManager : MonoBehaviour
 
     public static PauseManager instance;
 
-    Vector3 speed = Vector3.zero;
+    float speed = 0;
     bool paused;
     float pauseTimer;
     //Reference UI parent this needs to enable and disable along with individual parts it needs to control.
@@ -37,22 +37,39 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        if (paused && pauseTimer < pauseTransitionTime)
+        if (paused)
         {
-            pauseTimer += Time.deltaTime;
+            pauseTimer = Mathf.SmoothDamp(pauseTimer, 1, ref speed, pauseTransitionTime);
+            if (pauseTimer > 0.998f)
+            {
+                pauseTimer = 1;
+            }
         }
 
         if (!paused && pauseTimer > 0)
         {
-            pauseTimer -= Time.deltaTime;
+            pauseTimer = Mathf.SmoothDamp(pauseTimer, 0, ref speed, pauseTransitionTime);
+            if (pauseTimer <= 0.002f)
+            {
+                pauseTimer = 0;
+                GameplayEvents.SetPause.Invoke(false);
+            }
         }
 
-        pauseMenu.anchorMax = Vector3.Lerp(new Vector3(0, 1), new Vector3(1, 1), pauseTimer / pauseTransitionTime);
-        pauseMenu.anchorMin = Vector3.Lerp(new Vector3(-1, 0), new Vector3(0, 0), pauseTimer / pauseTransitionTime);
+        pauseMenu.anchorMax = Vector3.Lerp(new Vector3(0, 1), new Vector3(1, 1), pauseTimer);
+        pauseMenu.anchorMin = Vector3.Lerp(new Vector3(-1, 0), new Vector3(0, 0), pauseTimer);
     }
 
     public void PauseGame(bool pausing)
     {
         paused = pausing;
+        if (pausing)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }
