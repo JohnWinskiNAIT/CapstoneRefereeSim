@@ -8,9 +8,9 @@ public class PlayerAnimationSounds : MonoBehaviour
     private AudioClip skateSound, brakeSound;
 
     [SerializeField]
-    private float brakeThreshold;
+    private float moveThreshold;
 
-    private AudioSource audioPlayer;
+    private AudioSource continousPlayer, singlePlayer;
 
     PlayerControl playerControl;
     Rigidbody rb;
@@ -18,7 +18,7 @@ public class PlayerAnimationSounds : MonoBehaviour
 
     private void Start()
     {
-        audioPlayer = GetComponent<AudioSource>();
+        singlePlayer = GetComponent<AudioSource>();
         playerControl = GetComponent<PlayerControl>();
         rb = GetComponent<Rigidbody>();
         canBreak = true;
@@ -26,12 +26,13 @@ public class PlayerAnimationSounds : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocity.magnitude > brakeThreshold)
+        //Check to make sure the player is moving while this check occurs and they won't just repeatedly spam the sound in place.
+        if (rb.velocity.magnitude > moveThreshold)
         {
             if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.inputAngle.x, playerControl.inputAngle.z)) > 120 && canBreak)
             {
-                audioPlayer.clip = brakeSound;
-                audioPlayer.Play();
+                singlePlayer.clip = brakeSound;
+                singlePlayer.Play();
                 canBreak = false;
             }
             if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.inputAngle.x, playerControl.inputAngle.z)) < 80 && !canBreak)
@@ -39,5 +40,8 @@ public class PlayerAnimationSounds : MonoBehaviour
                 canBreak = true;
             }
         }
+
+        //Controls the volume and makes sure that the skating sound is only playing while in motion.
+
     }
 }
