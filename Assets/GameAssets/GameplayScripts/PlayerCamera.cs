@@ -24,40 +24,49 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadCameraPoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
+        GameplayEvents.InitializePlay.AddListener(ResetCamera);
+
         currentMode = CameraModes.Normal;
     }
 
     // Update is called once per frame
     private void LateUpdate()
     {
-        switch (currentMode)
+        if (GameUtilities.VREnabled())
         {
-            case CameraModes.Normal:
-                // == ROTATION ==
-                //Determine new values to rotate to.
-                //float xChange = transform.rotation.eulerAngles.x - playerControls.cameraAngle.x;
-                //float yChange = transform.rotation.eulerAngles.y - playerControls.cameraAngle.y;
+            //Does not need to include anything? If we want a method of turning aside from turning 180 degrees, however, we will put it here.
+        }
+        else
+        {
+            switch (currentMode)
+            {
+                case CameraModes.Normal:
+                    // == ROTATION ==
+                    //Determine new values to rotate to.
+                    //float xChange = transform.rotation.eulerAngles.x - playerControls.cameraAngle.x;
+                    //float yChange = transform.rotation.eulerAngles.y - playerControls.cameraAngle.y;
 
-                //Debug.Log($"Angle 1: {transform.rotation.eulerAngles.x} Angle 2: {playerControls.cameraAngle.y}");
+                    //Debug.Log($"Angle 1: {transform.rotation.eulerAngles.x} Angle 2: {playerControls.cameraAngle.y}");
 
-                //Setting the rotation from euler atm.
-                //transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
+                    //Setting the rotation from euler atm.
+                    //transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
 
-                transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
-                break;
-            case CameraModes.FocusingOnPoint:
-                FocusCamera();
-                break;
-            default:
-                break;
+                    transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
+                    break;
+                case CameraModes.FocusingOnPoint:
+                    FocusCamera();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    private void EndPlay()
+    private void LoadCameraPoints(CutsceneData cutsceneData)
     {
-        currentMode = CameraModes.FocusingOnPoint;
+        focusPointParent = cutsceneData.cameraParent;
     }
 
     private void CutsceneCallback(int progress)
@@ -73,7 +82,20 @@ public class PlayerCamera : MonoBehaviour
         }
         savedAngle = transform.rotation.eulerAngles;
         nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(intendedPoint).position - transform.position, Vector3.up).eulerAngles;
+        if (savedAngle.x > 180)
+        {
+            savedAngle.x -= 360;
+        }
+        if (savedAngle.y > 180)
+        {
+            savedAngle.y -= 360;
+        }
         turnTimer = 0;
+    }
+
+    private void ResetCamera()
+    {
+        currentMode = CameraModes.Normal;
     }
 
     private void FocusCamera()
@@ -85,6 +107,10 @@ public class PlayerCamera : MonoBehaviour
             transform.rotation = Quaternion.Euler(currentAngle);
 
             turnTimer += Time.deltaTime;
+        }
+        else
+        {
+            GameplayManager.Instance.cameraDone = true;
         }
     }
 }

@@ -15,7 +15,7 @@ public class PlayerUIManager : MonoBehaviour
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
-    InputAction whistleAction, callAction, wheelTestAction;
+    InputAction whistleCancelAction, callSelectAction, wheelTestAction;
 
     [SerializeField]
     PlayerControl tempPlayerControl;
@@ -28,11 +28,15 @@ public class PlayerUIManager : MonoBehaviour
 
     //Wheel related references.
     [SerializeField]
-    GameObject selectionWheel;
+    GameObject selectionWheel;  
     [SerializeField]
     TextMeshProUGUI wheelText;
     Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
+
+    [SerializeField] Transform wheelWorldspaceTrans;
+
+    [SerializeField] Canvas playerUICanvas;
 
     [SerializeField]
     WheelInformation wheelInfo;
@@ -48,11 +52,17 @@ public class PlayerUIManager : MonoBehaviour
     float chargingCornerOffset;
     Vector3 chargingVectorOffset;
 
+    public bool isVR;  //gets set to true/false by playerControl
+    Vector2 mouseCheck = new Vector2();
+    Vector2 magnitudeCheck = new Vector2();
+    [SerializeField] GameObject VRPointer;
+
+
     //Affirming the inputs + default anchor corners
     private void Awake()
     {
-        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
-        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
+        callSelectAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
+        whistleCancelAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         wheelTestAction = inputActions.FindActionMap("Gameplay").FindAction("WheelTest");
 
         // getting the anchors for the sideObjects
@@ -68,6 +78,15 @@ public class PlayerUIManager : MonoBehaviour
 
         currentNotches = new GameObject[0];
         currentIcons = new GameObject[0];
+
+        GameplayEvents.OpenWheel.AddListener(ToggleWheel);
+        GameplayEvents.InitializePlay.AddListener(ResetUI);
+        ToggleWheel(false);
+    }
+
+    private void Start()
+    {
+
     }
 
     // Visual effects are performed in this update.
@@ -76,12 +95,12 @@ public class PlayerUIManager : MonoBehaviour
         if (tempPlayerControl.storedAction != null)
         {
             inputStoreRadial.fillAmount = tempPlayerControl.StoredActionStatus();
-            if (tempPlayerControl.storedAction == whistleAction)
+            if (tempPlayerControl.storedAction == whistleCancelAction)
             {
                 rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
             }
-            if (tempPlayerControl.storedAction == callAction)
+            if (tempPlayerControl.storedAction == callSelectAction)
             {
                 leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
@@ -97,34 +116,53 @@ public class PlayerUIManager : MonoBehaviour
             leftSideStore.anchorMax = leftSideTR;
         }
 
-
         // Lockstate
-        if (wheelTestAction.IsPressed())
+        /*if (wheelTestAction.IsPressed())
         {
             ToggleWheel(true);
         }
         else
         {
             ToggleWheel(false);
-        }
+        }*/
 
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
         {
-            //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
-            Vector2 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
-            //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
-            Vector2 magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            if (isVR)
+            {
+                playerUICanvas.renderMode = RenderMode.WorldSpace;
+                playerUICanvas.transform.SetPositionAndRotation(wheelWorldspaceTrans.position, wheelWorldspaceTrans.rotation);
+
+                mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
+
+                //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
+                magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+
+            }
+            else    //We will need to expand this out AGAIN when we want to do the controller joystick thing
+                    //we could do it in an Enum. ControlType {Mouse, Controller, VRHands}
+            {
+                playerUICanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
+                mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
+
+                //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
+                magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            }
+
+
+
             if (magnitudeCheck.magnitude > Screen.height / 5)
             {
-                float debugAngle;
+                float mouseAngle;
                 if (GameUtilities.CursorPercentage().x < 0.5f)
                 {
-                    debugAngle = totalFill - Vector2.Angle(Vector2.up, mouseCheck);
+                    mouseAngle = totalFill - Vector2.Angle(Vector2.up, mouseCheck);
                 }
                 else
                 {
-                    debugAngle = Vector2.Angle(Vector2.up, mouseCheck);
+                    mouseAngle = Vector2.Angle(Vector2.up, mouseCheck);
                 }
 
                 //
@@ -132,11 +170,17 @@ public class PlayerUIManager : MonoBehaviour
 
                 for (int i = 0; i < wheelInfo.numberOfOptions; i++)
                 {
-                    if (debugAngle > segments * i && debugAngle < segments * (i + 1))
+                    if (mouseAngle > segments * i && mouseAngle < segments * (i + 1))
                     {
                         wheelGlow.fillAmount = segments / totalFill;
-                        wheelText.text = wheelInfo.optionText[i];
+                        wheelText.text = wheelInfo.options[i].optionText;
                         wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
+
+                        //Input to choose a penalty.
+                        if (callSelectAction.WasPressedThisFrame())
+                        {
+                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionType);
+                        }
                     }
                 }
             }
@@ -147,7 +191,7 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
     }
-    
+
     public void ToggleWheel(bool enable)
     {
         if (enable)
@@ -175,7 +219,6 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-
     //Creates notches and rotates them dynamically according to the amount of segments in the selection wheel.
     private void GenerateNotches()
     {
@@ -202,7 +245,7 @@ public class PlayerUIManager : MonoBehaviour
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
             currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
-            currentIcons[i].GetComponent<Image>().sprite = wheelInfo.optionImages[i];
+            currentIcons[i].GetComponent<Image>().sprite = wheelInfo.options[i].optionImage;
             //set the image for each icon
         }
     }
@@ -227,6 +270,11 @@ public class PlayerUIManager : MonoBehaviour
         currentIcons = new GameObject[0];
     }
 
+    private void ResetUI()
+    {
+        ToggleWheel(false);
+    }
+
     private void OnEnable()
     {
         wheelTestAction.Enable();
@@ -241,7 +289,14 @@ public class PlayerUIManager : MonoBehaviour
     public struct WheelInformation
     {
         public int numberOfOptions;
-        public Sprite[] optionImages;
-        public string[] optionText;
+        public Option[] options;
+
+        [Serializable]
+        public struct Option
+        {
+            public Sprite optionImage;
+            public string optionText;
+            public PenaltyType optionType;
+        }
     }
 }

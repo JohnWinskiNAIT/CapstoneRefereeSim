@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField]
     InputActionAsset inputActions;
+    [SerializeField]
+    Camera cam;
     private Rigidbody rb;
 
     [SerializeField]
@@ -25,12 +29,16 @@ public class PlayerControl : MonoBehaviour
 
     private PlayerUIManager uiManager;
     private PlayerState playerState;
-    private Vector3 autoskateDestination;
+    private Vector3 autoskateDestination, savedVelocity;
 
-    [SerializeField]
+    public bool isVREnabled;
+
+    /// <summary>
+    /// ////////////////////bool isInMenu; maybe this should e covered in state?
+    /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
+    /// </summary>
+
     GameObject waypointParent;
-
-    Camera cam;
 
     private enum PlayerState
     {
@@ -42,26 +50,35 @@ public class PlayerControl : MonoBehaviour
     // Makes sure to get all actions on Awake as opposed to start, otherwise OnEnable goes first.
     void Awake()
     {
+        isVREnabled = GameUtilities.VREnabled();
+
+        if (!isVREnabled)
+        {
+            Debug.Log("VR UnEnabled");
+        }
+
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
-        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call");
-        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle");
+        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
+        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
 
         uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
         playerState = PlayerState.Control;
 
-        GameplayEvents.EndPlay.AddListener(EndPlay);
+        GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
+        GameplayEvents.InitializePlay.AddListener(ResetPlayer);
+        GameplayEvents.SetPause.AddListener(PausePlayer);
     }
 
     private void Start()
     {
+        uiManager.isVR = isVREnabled;
+
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
-
-        cam = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
@@ -77,7 +94,7 @@ public class PlayerControl : MonoBehaviour
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
             {
-                PauseManager.instance.PauseGame();
+                GameplayEvents.SetPause.Invoke(true);
             }
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
@@ -159,12 +176,32 @@ public class PlayerControl : MonoBehaviour
     private void CallActivate()
     {
         //Unfinished.
+        GameplayManager.Instance.SetCallTimer();
+        GameplayManager.Instance.CallPrep();
+        storedAction = null;
     }
 
     private void WhistleActivate()
     {
         //Unfinished.
+        GameplayManager.Instance.SetCallTimer();
         GameplayEvents.EndPlay.Invoke();
+        storedAction = null;
+    }
+
+    private void PausePlayer(bool pausing)
+    {
+        if (pausing)
+        {
+            playerState = PlayerState.Lockout;
+            savedVelocity = rb.velocity;
+            rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            playerState = PlayerState.Control;
+            rb.velocity = savedVelocity;
+        }
     }
 
     private void FixedUpdate()
@@ -186,20 +223,27 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraClamp();
+        if (isVREnabled)
+        {
 
-        // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
-        // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-        float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
-        if (rotateValue > 180)
-        {
-            rotateValue -= 360;
         }
-        if (rotateValue < -180)
+        else
         {
-            rotateValue += 360;
+            CameraClamp();
+
+            // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
+            // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
+            float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+            if (rotateValue > 180)
+            {
+                rotateValue -= 360;
+            }
+            if (rotateValue < -180)
+            {
+                rotateValue += 360;
+            }
+            transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
         }
-        transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
     }
 
     private void CameraClamp()
@@ -239,7 +283,18 @@ public class PlayerControl : MonoBehaviour
     {
         //Determines the angle between where the player's velocity is going and the player's input.
         Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
-        Quaternion angleCheck = Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up);
+
+        //If VR active, usees camera Y instead of player Y.
+        Quaternion angleCheck;
+        if (isVREnabled)
+        {
+            angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
+        }
+        else
+        {
+            angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
+        }
+
         horizontalCheck = angleCheck * horizontalCheck;
 
         //Add an object over a GameObject friend parameter to have it display where the player is moving.
@@ -249,7 +304,7 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddRelativeForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -263,10 +318,15 @@ public class PlayerControl : MonoBehaviour
     private void AutoskateMovement()
     {
         Vector3 direction = autoskateDestination - transform.position;
-        rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+
+        if ((autoskateDestination - transform.position).magnitude > 2f)
+        {
+            rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        }
+
 
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed)
+        if (capTest.magnitude > maxSpeed || (autoskateDestination - transform.position).magnitude < 4f)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
@@ -277,8 +337,14 @@ public class PlayerControl : MonoBehaviour
     {
         if ((autoskateDestination - transform.position).magnitude < 3f)
         {
-            GameplayEvents.CutsceneTrigger.Invoke(1);
+            GameplayManager.Instance.moveDone = true;
         }
+    }
+
+    private void ResetPlayer()
+    {
+        playerState = PlayerState.Control;
+        transform.position = Vector3.zero;
     }
 
     #region Enable and Disable
@@ -308,11 +374,6 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region EventListeners
-    private void EndPlay()
-    {
-        SetPlayerControl((int)PlayerState.Autoskate);
-        GameplayEvents.CutsceneTrigger.Invoke(0);
-    }
 
     private void CutsceneListener(int progress)
     {
@@ -320,6 +381,15 @@ public class PlayerControl : MonoBehaviour
         {
             autoskateDestination = waypointParent.transform.GetChild(progress).position;
         }
+        if (playerState != PlayerState.Autoskate)
+        {
+            playerState = PlayerState.Autoskate;
+        }
+    }
+
+    private void LoadWaypoints(CutsceneData cutsceneData)
+    {
+        waypointParent = cutsceneData.waypointParent;
     }
 
     #endregion
