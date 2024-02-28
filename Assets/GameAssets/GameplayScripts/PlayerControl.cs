@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 moveInput, lookInput;
     public Vector3 cameraAngle { get; private set; }
+    public Vector3 inputAngle { get; private set; }
 
     private PlayerUIManager uiManager;
     private PlayerState playerState;
@@ -282,7 +283,7 @@ public class PlayerControl : MonoBehaviour
     private void PlayerMovement()
     {
         //Determines the angle between where the player's velocity is going and the player's input.
-        Vector3 horizontalCheck = new Vector3(moveInput.x, 0, moveInput.y);
+        inputAngle = new Vector3(moveInput.x, 0, moveInput.y);
 
         //If VR active, usees camera Y instead of player Y.
         Quaternion angleCheck;
@@ -295,7 +296,7 @@ public class PlayerControl : MonoBehaviour
             angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
         }
 
-        horizontalCheck = angleCheck * horizontalCheck;
+        inputAngle = angleCheck * inputAngle;
 
         //Add an object over a GameObject friend parameter to have it display where the player is moving.
         /*if (friend != null)
@@ -304,11 +305,11 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddForce(horizontalCheck * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(inputAngle * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(horizontalCheck.x, horizontalCheck.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(inputAngle.x, inputAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
