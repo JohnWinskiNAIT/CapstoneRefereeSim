@@ -24,6 +24,8 @@ public class GameplayManager : MonoBehaviour
 
     bool freezeManager;
 
+    public GameObject playerUI;
+
     [SerializeField]
     GameObject playTest;
 
