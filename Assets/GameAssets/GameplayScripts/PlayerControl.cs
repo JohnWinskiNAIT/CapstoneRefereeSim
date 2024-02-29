@@ -9,6 +9,10 @@ using UnityEngine.XR.Management;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField]
+    LazerEmitter emitter;
+    Canvas canvas;
+
+    [SerializeField]
     InputActionAsset inputActions;
     [SerializeField]
     Camera cam;
@@ -63,8 +67,6 @@ public class PlayerControl : MonoBehaviour
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
-
-        uiManager = transform.Find("PlayerUI").GetComponent<PlayerUIManager>();
         playerState = PlayerState.Control;
 
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
@@ -75,7 +77,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
-        uiManager.isVR = isVREnabled;
+        uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
+        uiManager.isVREnabled = isVREnabled;
 
         rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;

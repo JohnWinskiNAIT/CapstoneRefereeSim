@@ -95,7 +95,7 @@ public class stinkyMerged : MonoBehaviour
 
     private void EvanStart()
     {
-        uiManager.isVR = isVREnabled;
+        uiManager.isVREnabled = isVREnabled;
         canvas = canvasParent.GetComponentInChildren<Canvas>();
     }
 

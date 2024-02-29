@@ -34,9 +34,11 @@ public class PlayerUIManager : MonoBehaviour
     Image wheelGlow;
     Vector3 leftSideBL, leftSideTR, rightSideBL, rightSideTR;
 
-    [SerializeField] Transform wheelWorldspaceTrans;
+    [SerializeField]
+    Transform wheelWorldspaceTrans;
 
-    [SerializeField] Canvas playerUICanvas;
+    [SerializeField]
+    Canvas playerUICanvas;
 
     [SerializeField]
     WheelInformation wheelInfo;
@@ -52,7 +54,7 @@ public class PlayerUIManager : MonoBehaviour
     float chargingCornerOffset;
     Vector3 chargingVectorOffset;
 
-    public bool isVR;  //gets set to true/false by playerControl
+    public bool isVREnabled;  //gets set to true/false by playerControl
     Vector2 mouseCheck = new Vector2();
     Vector2 magnitudeCheck = new Vector2();
     [SerializeField] GameObject VRPointer;
@@ -116,6 +118,18 @@ public class PlayerUIManager : MonoBehaviour
             leftSideStore.anchorMax = leftSideTR;
         }
 
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (isVREnabled)
+            {
+                isVREnabled = false;
+            }
+            else
+            {
+                isVREnabled = true;
+            }
+        }
+
         // Lockstate
         /*if (wheelTestAction.IsPressed())
         {
@@ -129,10 +143,11 @@ public class PlayerUIManager : MonoBehaviour
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
         {
-            if (isVR)
+            if (isVREnabled)
             {
                 playerUICanvas.renderMode = RenderMode.WorldSpace;
                 playerUICanvas.transform.SetPositionAndRotation(wheelWorldspaceTrans.position, wheelWorldspaceTrans.rotation);
+                playerUICanvas.transform.localScale = wheelWorldspaceTrans.localScale;
 
                 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
 
@@ -144,6 +159,8 @@ public class PlayerUIManager : MonoBehaviour
                     //we could do it in an Enum. ControlType {Mouse, Controller, VRHands}
             {
                 playerUICanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                playerUICanvas.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+                playerUICanvas.transform.localScale = Vector3.one;
                 //Uses a utility method to check the percentage of the screen the cursor is on for determining angels.
                 mouseCheck = GameUtilities.CursorPercentage() - new Vector2(0.5f, 0.5f);
 
@@ -174,7 +191,7 @@ public class PlayerUIManager : MonoBehaviour
                     {
                         wheelGlow.fillAmount = segments / totalFill;
                         wheelText.text = wheelInfo.options[i].optionText;
-                        wheelGlow.transform.rotation = Quaternion.Euler(0, 0, -i * segments);
+                        wheelGlow.transform.rotation = Quaternion.Euler(0, playerUICanvas.transform.eulerAngles.y, -i * segments);
 
                         //Input to choose a penalty.
                         if (callSelectAction.WasPressedThisFrame())
