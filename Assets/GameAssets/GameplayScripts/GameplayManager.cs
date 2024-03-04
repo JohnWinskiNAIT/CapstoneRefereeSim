@@ -22,6 +22,10 @@ public class GameplayManager : MonoBehaviour
     public bool cameraDone, moveDone;
     bool playOngoing, penaltyOccured, penaltyCall;
 
+    bool freezeManager;
+
+    public GameObject playerUI;
+
     [SerializeField]
     GameObject playTest;
 
@@ -39,6 +43,7 @@ public class GameplayManager : MonoBehaviour
 
         GameplayEvents.EndPlay.AddListener(EndPlay);
         GameplayEvents.InitializePlay.AddListener(StartPlay);
+        GameplayEvents.SetPause.AddListener(PauseGame);
 
         GameplayEvents.InitializePlay.Invoke();
     }
@@ -55,6 +60,11 @@ public class GameplayManager : MonoBehaviour
         currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+    }
+
+    public void PauseGame(bool pauseBool)
+    {
+        freezeManager = pauseBool;
     }
 
     public void SetCallTimer()
@@ -99,15 +109,18 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        if (moveDone && cameraDone)
+        if (!freezeManager)
         {
-            ProgressCutscene();
-        }
+            if (moveDone && cameraDone)
+            {
+                ProgressCutscene();
+            }
 
-        if (playOngoing)
-        {
-            playTimer += Time.deltaTime;
-            PlayCheck();
+            if (playOngoing)
+            {
+                playTimer += Time.deltaTime;
+                PlayCheck();
+            }
         }
     }
     
