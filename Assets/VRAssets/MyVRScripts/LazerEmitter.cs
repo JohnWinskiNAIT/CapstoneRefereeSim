@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,11 +7,12 @@ using UnityEngine;
 public class LazerEmitter : MonoBehaviour
 {
     bool hitSomething = false;
-    Vector3 hitPos;
+    public Vector3 hitPos;
 
     public bool isHeldDown = false;
     LazerReciever reciever;
 
+    [SerializeField] GameObject cursor;
 
 
     // See Order of Execution for Event Functions for information on FixedUpdate() and Update() related to physics queries
@@ -33,7 +35,10 @@ public class LazerEmitter : MonoBehaviour
             hitSomething = true;
             hitPos = hit.point;
             reciever = hit.transform.gameObject.GetComponent<LazerReciever>();
-
+            if ( reciever != null )
+            {
+                reciever.PointedAt(hitPos);
+            }
             //Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
         }
         else
@@ -43,6 +48,21 @@ public class LazerEmitter : MonoBehaviour
             reciever = null;
 
             //Debug.Log("Did not Hit");
+        }
+
+        CursorUpdate();
+    }
+
+    private void CursorUpdate()
+    {
+        if (hitSomething)
+        {
+            cursor.SetActive(true);
+            cursor.transform.position = hitPos;
+        }
+        else
+        {
+            cursor.SetActive(false);
         }
     }
 
@@ -61,8 +81,6 @@ public class LazerEmitter : MonoBehaviour
         //Debug.Log("LazerDeactivation");
         isHeldDown = false;
     }
-
-
 
     private void OnDrawGizmos()
     {

@@ -49,7 +49,6 @@ public class stinkycontroller : MonoBehaviour
         CanvasUpdate();
 
     }
-
     public void CanvasUpdate()
     {
         if (isVrActive)
