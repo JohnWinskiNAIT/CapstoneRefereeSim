@@ -5,29 +5,33 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Oculus.Interaction.DebugTree;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using System.Collections.Generic;
+using System;
 
 public class MenuControls : MonoBehaviour
 {
-    [SerializeField] Button[] onScreenButtons;
-    [SerializeField] Button[] offScreenButtons;
-    [SerializeField] GameObject offScreenPanel, onScreenPanel;
-    [SerializeField] Transform offScreen, onScreen;
-    [SerializeField]
-    bool fade, fadeOn;
-    [SerializeField]
-    int menu;
     [SerializeField]
     GameObject[] panels;
+    [SerializeField] Transform offScreen, onScreen;
+    Button[] onScreenButtons;
+    Button[] offScreenButtons;
+    GameObject offScreenPanel, onScreenPanel;
+    List<GameObject> previousOnScreen;
+    bool fade, fadeOn, canEscape;
+    int menu;
     int previousPanel;
-    Color col;
-    [SerializeField] float time;
+    float time;
     private void Start()
     {
+        previousOnScreen = new List<GameObject>();
+        canEscape = false;
+        offScreenPanel = panels[menu + 1];
+        onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
         time = 1.0f;
         onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
         offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
-        foreach(Button button in offScreenButtons)
+        foreach (Button button in offScreenButtons)
         {
             button.interactable = false;
         }
@@ -39,49 +43,65 @@ public class MenuControls : MonoBehaviour
     }
     private void Update()
     {
-        if(fade)
+        if (fade)
         {
+            canEscape = false;
+            fadeOn = false;
+            for (int i = 0; i < onScreenButtons.Length; i++)
+            {
+                onScreenButtons[i].interactable = false;
+            }
             MenuSwitcher(menu);
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (!fade && fadeOn)
         {
-            fade = true;
+            onScreenPanel = GameObject.FindGameObjectWithTag("MenuPanel");
+            if (previousOnScreen.Count > 0)
+            {
+                offScreenPanel = previousOnScreen[previousOnScreen.Count - 1];
+            }
+            else
+            {
+                int index = Array.IndexOf(panels, onScreenPanel);
+                offScreenPanel = panels[index + 1];
+            }
+            ButtonUpdater();
         }
-
+        if (Input.GetKeyDown(KeyCode.Escape) && canEscape && onScreenPanel != panels[0])
+        {
+            MenuSelector(previousPanel);
+            previousOnScreen.Remove(offScreenPanel);
+        }
     }
-    public void menuSelector(int thismenu)
+    public void MenuSelector(int thismenu)
     {
+        canEscape = false;
+        if(thismenu == 0)
+        {
+            previousPanel = 1;
+            previousOnScreen.Add(onScreenPanel);
+        }
+        if (thismenu == 1)
+        {
+            previousPanel = 0;
+            previousOnScreen.Add(onScreenPanel);
+        }
+        else if (thismenu >= 2)
+        {
+            previousPanel = 1;
+            previousOnScreen.Add(onScreenPanel);
+        }
         menu = thismenu;
         fade = true;
     }
     public void MenuSwitcher(int switchToMenu)
     {
-        for(int j = 0; j < panels.Length; j++)
+        for (int j = 0; j < panels.Length; j++)
         {
             if (j == switchToMenu)
             {
                 offScreenPanel = panels[j];
                 offScreenPanel.SetActive(true);
-                for (int i = 0; i < onScreenButtons.Length; i++)
-                {
-                    onScreenButtons[i].interactable = false;
-                    if (onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a > 0)
-                    {
-                        col = onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                        col.a -= Time.deltaTime * 5f;
-                        onScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                    }
-                }
-                for (int i = 0; i < offScreenButtons.Length; i++)
-                {
-                    if (offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color.a < 1)
-                    {
-                        col = offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color;
-                        col.a += Time.deltaTime * 0.5f;
-                        offScreenButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = col;
-                    }
-                }
-
                 if (time > 0 && !fadeOn)
                 {
                     time -= Time.deltaTime;
@@ -92,15 +112,21 @@ public class MenuControls : MonoBehaviour
                             offScreenButtons[i].interactable = true;
                         }
                         onScreenPanel.SetActive(false);
-                        time = 1.0f;
                         fadeOn = true;
+                        time = 1.0f;
                         fade = false;
                     }
                 }
-                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.01f);
-                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.1f);
+                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.075f);
+                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.075f);
             }
         }
+    }
+    void ButtonUpdater()
+    {
+        onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
+        offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
+        canEscape = true;
     }
     public void Glow(GameObject callingObject)
     {
