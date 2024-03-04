@@ -8,23 +8,45 @@ public class LazerReciever : MonoBehaviour
     bool isPointedAt = false;    //is the raycast looking at it
     bool isActivated;
     Button button;
+    Vector3 hitPos = Vector3.zero;
+    Vector3 center;
+    Vector3 distFromCenter;
+    Vector2 distFromCenterSimplified;
+
+    GameObject cursorRepresentative;
 
     private void Start()
     {
+        center = transform.position;
         button = GetComponentInParent<Button>();
     }
 
     private void Update()
     {
-        PointedAtUpdate();
+
     }
 
-    public void PointedAtUpdate()
+    public void PointedAt(Vector3 hitPosition)
     {
+        hitPos = hitPosition;
+
         if (isPointedAt)
         {
             Debug.Log($"Is being pointed at");
         }
+    }
+
+    public Vector3 DistFromCenter()
+    {
+        distFromCenter = hitPos - center;
+        return distFromCenter;
+    }
+
+    public Vector2 DistFromCenter2D()
+    {
+        cursorRepresentative.transform.position = hitPos;
+        //distFromCenterSimplified = new Vector2(distFromCenter.);
+        return distFromCenterSimplified;
     }
 
     public void Activate()
