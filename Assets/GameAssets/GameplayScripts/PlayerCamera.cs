@@ -12,6 +12,7 @@ public class PlayerCamera : MonoBehaviour
     float turnDuration;
 
     float turnTimer;
+    int currentPoint;
     Vector3 savedAngle, nextAngle;
     CameraModes currentMode;
 
@@ -80,8 +81,13 @@ public class PlayerCamera : MonoBehaviour
         {
             currentMode = CameraModes.FocusingOnPoint;
         }
+
         savedAngle = transform.rotation.eulerAngles;
-        nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(intendedPoint).position - transform.position, Vector3.up).eulerAngles;
+        currentPoint = intendedPoint;
+        nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(currentPoint).position - transform.position, Vector3.up).eulerAngles;
+
+        Debug.Log(nextAngle);
+
         if (savedAngle.x > 180)
         {
             savedAngle.x -= 360;
@@ -106,10 +112,13 @@ public class PlayerCamera : MonoBehaviour
             Vector3 currentAngle = Vector3.Lerp(savedAngle, nextAngle, turnProgress);
             transform.rotation = Quaternion.Euler(currentAngle);
 
+            nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(currentPoint).position - transform.position, Vector3.up).eulerAngles;
             turnTimer += Time.deltaTime;
         }
         else
         {
+            turnTimer = turnDuration;
+            transform.rotation = Quaternion.Euler(nextAngle);
             GameplayManager.Instance.cameraDone = true;
         }
     }
