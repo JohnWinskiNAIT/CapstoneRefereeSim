@@ -61,6 +61,8 @@ public class SplineGeneratorTest : MonoBehaviour
 
             splineKnots[i] = new BezierKnot();
             splineKnots[i].Position = nextPosition;
+            splineKnots[i].Rotation = Quaternion.identity;
+            //
         }
 
         spline.Clear();
@@ -71,6 +73,7 @@ public class SplineGeneratorTest : MonoBehaviour
         }
 
         spline.Closed = true;
+        spline.SetTangentMode(TangentMode.AutoSmooth);
     }
 
     // Update is called once per frame
