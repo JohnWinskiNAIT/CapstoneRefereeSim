@@ -352,12 +352,12 @@ public class PlayerControl : MonoBehaviour
     }
 
     #region Enable and Disable
-    
+
     public void SetPlayerControl(int setState)
     {
         playerState = (PlayerState)setState;
     }
-    
+
     private void OnEnable()
     {
         moveAction.Enable();
