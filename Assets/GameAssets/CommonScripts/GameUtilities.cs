@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Management;
 
-public static class GameUtilities
+public class GameUtilities
 {
-    //Static class to help with regularly used features in other scripts.
+    //Class of Static Methods to help with regularly used features in other scripts.
+
+    public static InputActionAsset[] actionMapList = new InputActionAsset[4];
 
     static public Vector2 CursorPercentage()
     {
@@ -27,4 +32,11 @@ public static class GameUtilities
         // if (GameUtilities.VREnabled) {...Code}
     }
 
+    static public void SetInputActions(InputActionAsset keyboard, InputActionAsset controller, InputActionAsset vrLeft, InputActionAsset vrRight)
+    {
+        actionMapList[0] = keyboard;
+        actionMapList[1] = controller;
+        actionMapList[2] = vrLeft;
+        actionMapList[3] = vrRight;
+    }
 }

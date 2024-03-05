@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour
     LazerEmitter emitter;
     Canvas canvas;
 
+
+
     [SerializeField]
     InputActionAsset inputActions;
     [SerializeField]
@@ -61,6 +63,9 @@ public class PlayerControl : MonoBehaviour
         {
             Debug.Log("VR UnEnabled");
         }
+
+        /// Depending on what options the player selects
+        /// inputActions = 
 
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
