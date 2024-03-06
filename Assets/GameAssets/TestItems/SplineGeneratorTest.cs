@@ -14,7 +14,7 @@ public class SplineGeneratorTest : MonoBehaviour
     [SerializeField]
     int pointCount;
     [SerializeField]
-    float minimumMagnitude, maximumMagnitude;
+    float minimumMagnitude, maximumMagnitude, angleThreshold;
     
     float splineAreaMaxX, splineAreaMinX, splineAreaMaxZ, splineAreaMinZ;
 
@@ -67,9 +67,16 @@ public class SplineGeneratorTest : MonoBehaviour
         {
             Vector3 lastPosition = nextPosition;
 
-            while ((nextPosition - lastPosition).magnitude < minimumMagnitude)
+            int rep = 0;
+            while ((nextPosition - lastPosition).magnitude < minimumMagnitude || (nextPosition - lastPosition).magnitude > maximumMagnitude)
             {
                 nextPosition = new Vector3(Random.Range(splineAreaMinX, splineAreaMaxX), 0, Random.Range(splineAreaMinZ, splineAreaMaxZ));
+
+                rep++;
+                if (rep > 100)
+                {
+                    break;
+                }
             }
 
             splineKnots[i] = new BezierKnot();
@@ -98,6 +105,40 @@ public class SplineGeneratorTest : MonoBehaviour
 
         spline.Closed = true;
         spline.SetTangentMode(TangentMode.AutoSmooth);
+        AngleCheck(spline);
+    }
+
+    void AngleCheck(Spline spline)
+    {
+        float4 currentFloat = spline[0].Rotation.value;
+        Quaternion lastRotation = new Quaternion(currentFloat.x, currentFloat.y, currentFloat.z, currentFloat.w);
+        Quaternion currentRotation;
+
+        for (int i = 1; i < spline.Count; i++)
+        {
+            currentFloat = spline[i].Rotation.value;
+            currentRotation = new Quaternion(currentFloat.x, currentFloat.y, currentFloat.z, currentFloat.w);
+
+            int rep = 0;
+            while (Mathf.Abs(Quaternion.Angle(currentRotation, lastRotation)) > angleThreshold)
+            {
+                BezierKnot newKnot = new BezierKnot();
+                newKnot.Position = new Vector3(Random.Range(splineAreaMinX, splineAreaMaxX), 0, Random.Range(splineAreaMinZ, splineAreaMaxZ));
+                spline.SetKnot(i, newKnot);
+                spline.SetTangentMode(TangentMode.AutoSmooth);
+
+                currentFloat = spline[i].Rotation.value;
+                currentRotation = new Quaternion(currentFloat.x, currentFloat.y, currentFloat.z, currentFloat.w);
+
+                rep++;
+                if (rep > 100)
+                {
+                    break;
+                }
+            }
+
+            lastRotation = currentRotation;
+        }
     }
 
     // Update is called once per frame
