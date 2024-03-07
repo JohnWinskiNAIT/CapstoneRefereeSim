@@ -123,7 +123,16 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                StoredActionCheck();
+
+                if (isVREnabled)
+                {
+
+                }
+                else
+                {
+                    StoredActionCheck();
+                }
+                
             }
 
             /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
