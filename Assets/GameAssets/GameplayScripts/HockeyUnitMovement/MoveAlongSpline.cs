@@ -9,12 +9,12 @@ public class MoveAlongSpline : MonoBehaviour
     public GameObject childObject;
     public float speed = 1f;
     float distancePercentage = 0f;
-
+    Vector3 distanceVector;
     float splineLength;
 
     GameObject otherObjectReference;
     Vector3 otherObjectPosition;
-    Vector3 distanceVector;
+    Vector3 distanceVectorMine;
     Vector3 distanceVectorNormalized;
     Vector3 targetPosition;
     // Start is called before the first frame update
@@ -41,18 +41,21 @@ public class MoveAlongSpline : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(direction, transform.up);
 
 
-        //if (otherObjectReference != null)
-        //{
-        //    otherObjectPosition = otherObjectReference.transform.position;
-        //    OffsettObject(otherObjectPosition);
-        //}
+        if (otherObjectReference != null)
+        {
+            otherObjectPosition = otherObjectReference.transform.position;
+            distanceVector = childObject.transform.position - otherObjectPosition;
+            OffsettObject(otherObjectPosition);
+        }
     }
     void OffsettObject(Vector3 other)
     {
+        if (distanceVectorMine.magnitude > 3f) { }
         Vector3 distanceVector = childObject.transform.position - other;
         Vector3 distanceVectorNormalized = distanceVector.normalized;
         //Vector3 targetPosition += (distanceVectorNormalized);
-        childObject.transform.localPosition = distanceVectorNormalized * (3.75f - distanceVector.magnitude);
+        //childObject.transform.localPosition = distanceVector * (3.75f -distanceVector.magnitude);
+        childObject.transform.localPosition = distanceVector * (3.75f - distanceVector.magnitude);
 
         Debug.Log(distanceVector.magnitude);
     }
