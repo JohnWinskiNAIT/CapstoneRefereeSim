@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     float cameraSpeed, cameraMaxY, cameraMinY;
 
     private InputAction moveAction, lookAction, callAction, pauseAction, whistleAction;
-    public InputAction storedAction { get; private set; }
+    public InputAction heldAction { get; private set; }
 
     private float storeTimestamp;
 
@@ -108,22 +108,31 @@ public class PlayerControl : MonoBehaviour
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
             //it runs a check to see if it's still being held.
-            if (storedAction == null)
+            if (heldAction == null)
             {
                 if (whistleAction.WasPressedThisFrame())
                 {
-                    storedAction = whistleAction;
+                    heldAction = whistleAction;
                     storeTimestamp = Time.time;
                 }
                 if (callAction.WasPressedThisFrame())
                 {
-                    storedAction = callAction;
+                    heldAction = callAction;
                     storeTimestamp = Time.time;
                 }
             }
             else
             {
-                StoredActionCheck();
+
+                if (isVREnabled)
+                {
+
+                }
+                else
+                {
+                    StoredActionCheck();
+                }
+                
             }
 
             /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -135,7 +144,7 @@ public class PlayerControl : MonoBehaviour
         {
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
-            storedAction = null;
+            heldAction = null;
         }
 
         if (playerState == PlayerState.Autoskate)
@@ -149,17 +158,17 @@ public class PlayerControl : MonoBehaviour
     //If true, check if it's been held for long enough and use the appropriate method if so.
     private void StoredActionCheck()
     {
-        if (!storedAction.IsPressed())
+        if (!heldAction.IsPressed())
         {
-            storedAction = null;
+            heldAction = null;
         }
         if (Time.time > storeTimestamp + storeInputDuration)
         {
-            if (storedAction == whistleAction)
+            if (heldAction == whistleAction)
             {
                 WhistleActivate();
             }
-            if (storedAction == callAction)
+            if (heldAction == callAction)
             {
                 CallActivate();
             }
@@ -170,7 +179,7 @@ public class PlayerControl : MonoBehaviour
     public float StoredActionStatus()
     {
         float returnValue;
-        if (storedAction == null)
+        if (heldAction == null)
         {
             returnValue = 0f;
         }
@@ -187,7 +196,7 @@ public class PlayerControl : MonoBehaviour
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
         GameplayManager.Instance.CallPrep();
-        storedAction = null;
+        heldAction = null;
     }
 
     private void WhistleActivate()
@@ -195,7 +204,7 @@ public class PlayerControl : MonoBehaviour
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
         GameplayEvents.EndPlay.Invoke();
-        storedAction = null;
+        heldAction = null;
     }
 
     private void PausePlayer(bool pausing)

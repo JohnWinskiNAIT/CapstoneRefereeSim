@@ -94,15 +94,15 @@ public class PlayerUIManager : MonoBehaviour
     // Visual effects are performed in this update.
     private void Update()
     {
-        if (tempPlayerControl.storedAction != null)
+        if (tempPlayerControl.heldAction != null)
         {
             inputStoreRadial.fillAmount = tempPlayerControl.StoredActionStatus();
-            if (tempPlayerControl.storedAction == whistleCancelAction)
+            if (tempPlayerControl.heldAction == whistleCancelAction)
             {
                 rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
             }
-            if (tempPlayerControl.storedAction == callSelectAction)
+            if (tempPlayerControl.heldAction == callSelectAction)
             {
                 leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
