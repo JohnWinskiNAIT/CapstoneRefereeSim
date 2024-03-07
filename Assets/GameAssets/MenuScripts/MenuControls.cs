@@ -75,24 +75,27 @@ public class MenuControls : MonoBehaviour
     }
     public void MenuSelector(int thismenu)
     {
-        canEscape = false;
-        if(thismenu == 0)
+        if (!fade)
         {
-            previousPanel = 1;
-            previousOnScreen.Add(onScreenPanel);
+            canEscape = false;
+            if (thismenu == 0)
+            {
+                previousPanel = 1;
+                previousOnScreen.Add(onScreenPanel);
+            }
+            if (thismenu == 1)
+            {
+                previousPanel = 0;
+                previousOnScreen.Add(onScreenPanel);
+            }
+            else if (thismenu >= 2)
+            {
+                previousPanel = 1;
+                previousOnScreen.Add(onScreenPanel);
+            }
+            menu = thismenu;
+            fade = true;
         }
-        if (thismenu == 1)
-        {
-            previousPanel = 0;
-            previousOnScreen.Add(onScreenPanel);
-        }
-        else if (thismenu >= 2)
-        {
-            previousPanel = 1;
-            previousOnScreen.Add(onScreenPanel);
-        }
-        menu = thismenu;
-        fade = true;
     }
     public void MenuSwitcher(int switchToMenu)
     {

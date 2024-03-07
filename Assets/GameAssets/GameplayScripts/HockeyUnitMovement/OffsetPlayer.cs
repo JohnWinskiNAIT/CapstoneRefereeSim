@@ -27,9 +27,8 @@ public class OffsetPlayer : MonoBehaviour
     void OffsettObject(Vector3 other)
     {
         Vector3 distanceVector = transform.position - other;
-        Vector3 distanceVectorNormalized = distanceVector.normalized;
-        //Vector3 targetPosition += (distanceVectorNormalized);
-        transform.localPosition = distanceVectorNormalized * -(distanceVector.magnitude);
+        distanceVectorNormalized = distanceVector.normalized;
+        transform.position = distanceVectorNormalized * distanceVector.magnitude;
 
         Debug.Log(distanceVector.magnitude);
     }
