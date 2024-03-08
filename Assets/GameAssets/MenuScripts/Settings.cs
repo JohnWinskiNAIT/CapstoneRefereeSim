@@ -2,12 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-static class Settings
+using UnityEngine.Audio;
+public class Settings:MonoBehaviour
 {
-    [SerializeField] static Slider volumeSlider;
+    [SerializeField] Slider volumeSlider;
+    [SerializeField] AudioMixer audioMixer;
 
-    public static void ChangeVolume()
+    public void ChangeMasterVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+         audioMixer.SetFloat("Master", Mathf.Log10(volumeSlider.value)*20);
+    }
+    public void ChangeSFXVolume()
+    {
+        audioMixer.SetFloat("SFX", Mathf.Log10(volumeSlider.value) * 20);
+    }
+    public void ChangeAmbientVolume()
+    {
+        audioMixer.SetFloat("Ambient", Mathf.Log10(volumeSlider.value) * 20);
     }
 }
