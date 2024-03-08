@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-static class Settings
+public class Settings:MonoBehaviour
 {
-    [SerializeField] static Slider volumeSlider;
+    [SerializeField] Slider volumeSlider;
+    [SerializeField] float volume = 0;
 
-    public static void ChangeVolume()
+    public void ChangeVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        volume = volumeSlider.value;
     }
 }
