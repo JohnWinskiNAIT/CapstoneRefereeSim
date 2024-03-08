@@ -69,8 +69,7 @@ public class MenuControls : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape) && canEscape && onScreenPanel != panels[0])
         {
-            MenuSelector(previousPanel);
-            previousOnScreen.Remove(offScreenPanel);
+            Previous();
         }
     }
     public void MenuSelector(int thismenu)
@@ -124,6 +123,11 @@ public class MenuControls : MonoBehaviour
                 offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.075f);
             }
         }
+    }
+    public void Previous()
+    {
+        MenuSelector(previousPanel);
+        previousOnScreen.Remove(offScreenPanel);
     }
     void ButtonUpdater()
     {
