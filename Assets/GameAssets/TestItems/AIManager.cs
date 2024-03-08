@@ -15,8 +15,6 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     float ignoreTimer;
 
-    bool playerCall;
-
     // Start is called before the first frame update
     private void Awake()
     {
@@ -30,14 +28,42 @@ public class AIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        playerCall = false;
     }
 
     private void Update()
     {
-        if (puckObject.GetComponent<PuckManager>().ignoredTime > )
+        if (puckObject.GetComponent<PuckManager>().ignoredTime > ignoreTimer)
         {
+            GameObject redirectPlayer = null;
+            float distance = float.PositiveInfinity;
 
+            for (int i = 0; i < leftTeamPlayers.Count; i++)
+            {
+                if ((leftTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
+                {
+                    redirectPlayer = leftTeamPlayers[i];
+                    distance = (redirectPlayer.transform.position - puckObject.transform.position).magnitude;
+                }
+            }
+            if (redirectPlayer != null)
+            {
+                Debug.Log("Test");
+                redirectPlayer.GetComponent<ZoneAIController>().DeclarePosition(puckObject.transform.position);
+            }
+            for (int i = 0; i < rightTeamPlayers.Count; i++)
+            {
+                if ((leftTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
+                {
+                    redirectPlayer = rightTeamPlayers[i];
+                    distance = (redirectPlayer.transform.position - puckObject.transform.position).magnitude;
+                }
+            }
+            if (redirectPlayer != null)
+            {
+                redirectPlayer.GetComponent<ZoneAIController>().DeclarePosition(puckObject.transform.position);
+            }
+
+            puckObject.GetComponent<PuckManager>().ResetTime();
         }
     }
 

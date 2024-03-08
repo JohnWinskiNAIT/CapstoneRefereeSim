@@ -8,7 +8,7 @@ public class ZoneAIController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField]
-    float checkThreshold, positionXResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
+    float checkThreshold, positionZResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
     [SerializeField]
     int passChance;
 
@@ -26,6 +26,7 @@ public class ZoneAIController : MonoBehaviour
 
     public GameObject[] teammates;
 
+    Vector3 startPosition;
     Vector3 nextPosition;
     GameObject carryingPuck;
 
@@ -43,9 +44,16 @@ public class ZoneAIController : MonoBehaviour
         Right
     }
 
+    private void Awake()
+    {
+        GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = transform.position;
+
         rb = GetComponent<Rigidbody>();
         /*zones = new GameObject[zonesParent.transform.childCount];
         for (int i = 0; i < zones.Length; i++)
@@ -132,7 +140,7 @@ public class ZoneAIController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        if (rb.velocity.magnitude != 0)
+        if (rb.velocity.magnitude != 0 && rb.velocity.normalized != Vector3.forward)
         {
             transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
         }
@@ -147,7 +155,7 @@ public class ZoneAIController : MonoBehaviour
             returnValue = true;
         }
 
-        if (Mathf.Abs(nextPosition.x - primaryZone.transform.position.x) > positionXResetThreshold)
+        if (Mathf.Abs(nextPosition.z - primaryZone.transform.position.z) > positionZResetThreshold)
         {
             returnValue = true;
         }
@@ -204,7 +212,6 @@ public class ZoneAIController : MonoBehaviour
                 {
                     target = Random.Range(0, teammates.Length);
                     reps++;
-
                 }
                 PassPuck(teammates[target]);
             }
@@ -245,6 +252,16 @@ public class ZoneAIController : MonoBehaviour
         else
         {
             AIManager.Instance.rightTeamPlayers.Add(gameObject);
+        }
+    }
+
+    void InitializeForPlay()
+    {
+        transform.position = startPosition;
+        puckTimer = 0f;
+        if (carryingPuck != null)
+        {
+            carryingPuck = null;
         }
     }
 

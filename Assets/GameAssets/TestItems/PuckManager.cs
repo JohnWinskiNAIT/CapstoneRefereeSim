@@ -6,7 +6,7 @@ public class PuckManager : MonoBehaviour
 {
     public GameObject Owner { get; private set; }
     private Rigidbody rb;
-    public ZoneAIController.AITeam? OwnerTeam {get; private set;}
+    public ZoneAIController.AITeam? OwnerTeam { get; private set; }
     Vector3 savedVelocity;
 
     public float ignoredTime { get; private set; }
@@ -14,21 +14,17 @@ public class PuckManager : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        AIManagerCallback();
+    }
+
+    private void AIManagerCallback()
+    {
+        AIManager.Instance.PuckCallback(gameObject);
     }
 
     private void Update()
     {
         savedVelocity = rb.velocity;
-    }
-
-    public void ChangePosession(GameObject posession)
-    {
-        if (Owner != null)
-        {
-            Owner.GetComponent<ZoneAIController>().LosePuck();
-        }
-        Owner = posession;
-        OwnerTeam = posession.GetComponent<ZoneAIController>().aiTeam;
 
         if (Owner == null)
         {
@@ -40,10 +36,25 @@ public class PuckManager : MonoBehaviour
         }
     }
 
+    public void ChangePosession(GameObject posession)
+    {
+        if (Owner != null)
+        {
+            Owner.GetComponent<ZoneAIController>().LosePuck();
+        }
+        Owner = posession;
+        OwnerTeam = posession.GetComponent<ZoneAIController>().aiTeam;
+    }
+
     public void LoseOwner()
     {
         Owner = null;
         OwnerTeam = null;
+    }
+
+    public void ResetTime()
+    {
+        ignoredTime = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
