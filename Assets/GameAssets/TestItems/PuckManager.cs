@@ -8,7 +8,8 @@ public class PuckManager : MonoBehaviour
     private Rigidbody rb;
     public ZoneAIController.AITeam? OwnerTeam {get; private set;}
     Vector3 savedVelocity;
-    Vector3 lastPosition;
+
+    public float ignoredTime { get; private set; }
 
     private void Start()
     {
@@ -28,6 +29,15 @@ public class PuckManager : MonoBehaviour
         }
         Owner = posession;
         OwnerTeam = posession.GetComponent<ZoneAIController>().aiTeam;
+
+        if (Owner == null)
+        {
+            ignoredTime += Time.deltaTime;
+        }
+        else
+        {
+            ignoredTime = 0;
+        }
     }
 
     public void LoseOwner()

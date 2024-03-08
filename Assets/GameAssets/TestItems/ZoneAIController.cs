@@ -8,7 +8,7 @@ public class ZoneAIController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField]
-    float checkThreshold, positionXResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed;
+    float checkThreshold, positionXResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
     [SerializeField]
     int passChance;
 
@@ -29,7 +29,7 @@ public class ZoneAIController : MonoBehaviour
     Vector3 nextPosition;
     GameObject carryingPuck;
 
-    float puckTimer;
+    float puckTimer, lockoutTimer;
 
     public enum AIType
     {
@@ -55,9 +55,18 @@ public class ZoneAIController : MonoBehaviour
         if (aiType == AIType.Forward)
         {
             primaryZone = zonesParent.transform.GetChild(0).gameObject;
+            if (aiTeam == AITeam.Left)
+            {
+                advanceZone = zonesParent.transform.GetChild(2).gameObject;
+            }
+            else
+            {
+                advanceZone = zonesParent.transform.GetChild(1).gameObject;
+            }
         }
         else
         {
+            advanceZone = zonesParent.transform.GetChild(0).gameObject;
             if (aiTeam == AITeam.Left)
             {
                 primaryZone = zonesParent.transform.GetChild(1).gameObject;
@@ -96,6 +105,11 @@ public class ZoneAIController : MonoBehaviour
             Vector3 finalOffset = transform.rotation * puckOffset;
             carryingPuck.transform.position = transform.position + finalOffset;
             PuckCheck();
+        }
+
+        if (lockoutTimer > 0)
+        {
+            lockoutTimer -= Time.deltaTime;
         }
     }
 
@@ -144,12 +158,36 @@ public class ZoneAIController : MonoBehaviour
     void GetNextPosition()
     {
         Transform primaryTransform = primaryZone.transform;
+        Transform advanceTransform = advanceZone.transform;
 
-        float newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
-        float newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+        float newX = 0;
+        float newZ = 0;
+        if (carryingPuck == null)
+        {
+            newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
+            newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+        }
+        else
+        {
+            if (advanceTransform.position.z > primaryZone.transform.position.x)
+            {
+                newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, advanceTransform.position.x + advanceTransform.localScale.x / 2);
+                newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, advanceTransform.position.z + advanceTransform.localScale.z / 2);
+            }
+            else
+            {
+                newX = Random.Range(advanceTransform.position.x - advanceTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
+                newZ = Random.Range(advanceTransform.position.z - advanceTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+            }
+        }
 
         nextPosition = new Vector3(newX, 0, newZ);
         //Debug.Log(nextPosition);
+    }
+
+    public void DeclarePosition(Vector3 newPosition)
+    {
+        nextPosition = newPosition;
     }
 
     void PuckCheck()
@@ -157,27 +195,22 @@ public class ZoneAIController : MonoBehaviour
         puckTimer += Time.deltaTime;
         if (puckTimer >= passDelay)
         {
-            if (Random.Range(1, passChance + 1) == 1)
+            if (Random.Range(0, passChance) == 0)
             {
-                List<GameObject> teammates;
-                if (aiTeam == AITeam.Left)
-                {
-                    teammates = AIManager.Instance.leftTeamPlayers;
-                }
-                else
-                {
-                    teammates = AIManager.Instance.rightTeamPlayers;
-                }
-
-                int target = Random.Range(0, teammates.Count);
+                int target = Random.Range(0, teammates.Length);
                 int reps = 0;
 
                 while (AIManager.Instance.leftTeamPlayers[target] == gameObject && reps < 10)
                 {
-                    target = Random.Range(0, AIManager.Instance.leftTeamPlayers.Count);
+                    target = Random.Range(0, teammates.Length);
                     reps++;
+
                 }
                 PassPuck(teammates[target]);
+            }
+            else
+            {
+                puckTimer = 0f;
             }
         }
     }
@@ -186,8 +219,9 @@ public class ZoneAIController : MonoBehaviour
     {
         if (carryingPuck != null)
         {
-            carryingPuck.GetComponent<Rigidbody>().isKinematic = false;
+            carryingPuck.GetComponent<Rigidbody>().isKinematic = false; 
             carryingPuck = null;
+            puckTimer = 0f;
         }
     }
 
@@ -197,8 +231,8 @@ public class ZoneAIController : MonoBehaviour
         carryingPuck.GetComponent<Rigidbody>().isKinematic = false;
         carryingPuck.GetComponent<Rigidbody>().AddForce(passVector.normalized * passSpeed, ForceMode.Impulse);
         carryingPuck.GetComponent<PuckManager>().LoseOwner();
+        lockoutTimer = lockoutTime;
         carryingPuck = null;
-
         puckTimer = 0f;
     }
 
@@ -216,7 +250,7 @@ public class ZoneAIController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<PuckManager>() != null && other.GetComponentInParent<PuckManager>().OwnerTeam != aiTeam)
+        if (other.GetComponentInParent<PuckManager>() != null && other.GetComponentInParent<PuckManager>().OwnerTeam != aiTeam && lockoutTimer <= 0)
         {
             carryingPuck = other.transform.parent.gameObject;
             carryingPuck.GetComponent<PuckManager>().ChangePosession(gameObject);

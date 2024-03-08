@@ -10,6 +10,13 @@ public class AIManager : MonoBehaviour
 
     public List<GameObject> rightTeamPlayers { get; private set; }
 
+    private GameObject puckObject;
+
+    [SerializeField]
+    float ignoreTimer;
+
+    bool playerCall;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -23,5 +30,19 @@ public class AIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        playerCall = false;
+    }
+
+    private void Update()
+    {
+        if (puckObject.GetComponent<PuckManager>().ignoredTime > )
+        {
+
+        }
+    }
+
+    public void PuckCallback(GameObject puck)
+    {
+        puckObject = puck;
     }
 }
