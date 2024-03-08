@@ -11,6 +11,8 @@ public class ZoneAIController : MonoBehaviour
     float checkThreshold, positionZResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
     [SerializeField]
     int passChance;
+    [SerializeField]
+    Material[] teamMaterials;
 
     [SerializeField]
     AIType aiType;
@@ -51,7 +53,6 @@ public class ZoneAIController : MonoBehaviour
     {
         GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
         GameplayEvents.SetPause.AddListener(PauseAI);
-        startPosition = transform.position;
     }
 
     // Start is called before the first frame update
@@ -90,6 +91,16 @@ public class ZoneAIController : MonoBehaviour
         GetNextPosition();
         ManagerCallback();
         aiActive = true;
+    }
+
+    public void SetupAIAttributes(AIType typeOfPlayer, AITeam playerTeam, GameObject zoneParentObject, Vector3 baseSpawn)
+    {
+        aiType = typeOfPlayer;
+        aiTeam = playerTeam;
+        zonesParent = zoneParentObject;
+        startPosition = baseSpawn;
+
+        GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
 
     // Update is called once per frame
