@@ -28,9 +28,12 @@ public class ZoneAIController : MonoBehaviour
 
     Vector3 startPosition;
     Vector3 nextPosition;
+    Vector3 savedVelocity;
     GameObject carryingPuck;
 
     float puckTimer, lockoutTimer;
+
+    bool aiActive;
 
     public enum AIType
     {
@@ -47,13 +50,13 @@ public class ZoneAIController : MonoBehaviour
     private void Awake()
     {
         GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
+        GameplayEvents.SetPause.AddListener(PauseAI);
+        startPosition = transform.position;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
-
         rb = GetComponent<Rigidbody>();
         /*zones = new GameObject[zonesParent.transform.childCount];
         for (int i = 0; i < zones.Length; i++)
@@ -86,46 +89,53 @@ public class ZoneAIController : MonoBehaviour
         }
         GetNextPosition();
         ManagerCallback();
+        aiActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (teammates.Length == 0)
+        if (aiActive)
         {
-            if (aiTeam == AITeam.Left && AIManager.Instance.leftTeamPlayers.Count > 0)
+            if (teammates.Length == 0)
             {
-                teammates = AIManager.Instance.leftTeamPlayers.ToArray();
+                if (aiTeam == AITeam.Left && AIManager.Instance.leftTeamPlayers.Count > 0)
+                {
+                    teammates = AIManager.Instance.leftTeamPlayers.ToArray();
+                }
+                if (aiTeam == AITeam.Right && AIManager.Instance.rightTeamPlayers.Count > 0)
+                {
+                    teammates = AIManager.Instance.rightTeamPlayers.ToArray();
+                }
             }
-            if (aiTeam == AITeam.Right && AIManager.Instance.rightTeamPlayers.Count > 0)
+
+            if (PositionCheck())
             {
-                teammates = AIManager.Instance.rightTeamPlayers.ToArray();
+                GetNextPosition();
             }
-        }
 
-        if (PositionCheck())
-        {
-            GetNextPosition();
-        }
+            if (carryingPuck != null)
+            {
+                Vector3 finalOffset = transform.rotation * puckOffset;
+                carryingPuck.transform.position = transform.position + finalOffset;
+                PuckCheck();
+            }
 
-        if (carryingPuck != null)
-        {
-            Vector3 finalOffset = transform.rotation * puckOffset;
-            carryingPuck.transform.position = transform.position + finalOffset;
-            PuckCheck();
-        }
-
-        if (lockoutTimer > 0)
-        {
-            lockoutTimer -= Time.deltaTime;
+            if (lockoutTimer > 0)
+            {
+                lockoutTimer -= Time.deltaTime;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (nextPosition != null)
+        if (aiActive)
         {
-            AIMovement();
+            if (nextPosition != null)
+            {
+                AIMovement();
+            }
         }
     }
 
@@ -262,6 +272,22 @@ public class ZoneAIController : MonoBehaviour
         if (carryingPuck != null)
         {
             carryingPuck = null;
+        }
+        nextPosition = transform.position;
+    }
+
+    void PauseAI(bool pausing)
+    {
+        if (pausing)
+        {
+            savedVelocity = rb.velocity;
+            rb.velocity = Vector3.zero;
+            aiActive = false;
+        }
+        else
+        {
+            rb.velocity = savedVelocity;
+            aiActive = true;
         }
     }
 

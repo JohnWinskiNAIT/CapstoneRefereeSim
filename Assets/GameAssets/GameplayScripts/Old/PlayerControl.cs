@@ -34,6 +34,8 @@ public class PlayerControl : MonoBehaviour
     public Vector3 cameraAngle { get; private set; }
     public Vector3 inputAngle { get; private set; }
 
+    Vector3 basePosition;
+
     private PlayerUIManager uiManager;
     private PlayerState playerState;
     private Vector3 autoskateDestination, savedVelocity;
@@ -78,6 +80,8 @@ public class PlayerControl : MonoBehaviour
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
         GameplayEvents.SetPause.AddListener(PausePlayer);
+
+        basePosition = transform.position;
     }
 
     private void Start()
@@ -362,7 +366,7 @@ public class PlayerControl : MonoBehaviour
     private void ResetPlayer()
     {
         playerState = PlayerState.Control;
-        transform.position = Vector3.zero;
+        transform.position = basePosition;
     }
 
     #region Enable and Disable
