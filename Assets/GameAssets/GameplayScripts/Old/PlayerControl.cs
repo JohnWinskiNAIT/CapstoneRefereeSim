@@ -179,6 +179,42 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //VR STORED ACTION METHOD
+    private void VRStoredActionCheck()
+    {
+        GameObject vrRightHand = new GameObject();
+        float vrMagnitude = 1f;
+        //enum currentAction;
+
+        /*if (currentAction == null)
+        *{
+        *   if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
+            {
+                currentAction = enum.Whistle;
+            }    
+            else if (vrLeftHand.transform.position.y >= yMagnitude)
+            {
+                currentAction = enum.PenaltyCall;
+            }
+        *}
+        *
+        */
+
+        //Add an "and" to this alongside currentAction being Whistle
+        if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
+        {
+            storeTimestamp += Time.deltaTime;
+            if (storeTimestamp > 0f)
+            {
+
+            }
+        }
+        else
+        {
+            storeTimestamp = 0f;
+        }
+    }
+
     //Public function for UI to check how long the action has been stored for as a time (t) value.
     public float StoredActionStatus()
     {
