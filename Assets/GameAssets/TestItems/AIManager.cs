@@ -7,6 +7,7 @@ public class AIManager : MonoBehaviour
     static public AIManager Instance { get; private set; }
 
     public List<GameObject> leftTeamPlayers { get; private set; }
+
     public List<GameObject> rightTeamPlayers { get; private set; }
 
     // Start is called before the first frame update
