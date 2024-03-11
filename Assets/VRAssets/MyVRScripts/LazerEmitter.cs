@@ -39,7 +39,7 @@ public class LazerEmitter : MonoBehaviour
             {
                 reciever.PointedAt(hitPos);
             }
-            //Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
+            Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
         }
         else
         {
@@ -47,7 +47,7 @@ public class LazerEmitter : MonoBehaviour
             hitPos = Vector3.zero;
             reciever = null;
 
-            //Debug.Log("Did not Hit");
+            Debug.Log("Did not Hit");
         }
 
         CursorUpdate();

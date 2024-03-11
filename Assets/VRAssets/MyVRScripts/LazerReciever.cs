@@ -70,16 +70,6 @@ public class LazerReciever : MonoBehaviour
 
     public void Activate()
     {
-        //Debug.Log($"Is being Activated");
-
-        //button.clickable.clicked += true;
-
-        //m_OnClick.m_PersistentCalls.m_Calls;
-
-        //m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-
-        //button.onClick.GetPersistentMethodName(0);
-
         Debug.Log($"{button.onClick.GetPersistentMethodName(0)}"); 
 
         button.onClick.Invoke();
