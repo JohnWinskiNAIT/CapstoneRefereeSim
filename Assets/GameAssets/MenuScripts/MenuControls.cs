@@ -28,7 +28,7 @@ public class MenuControls : MonoBehaviour
         offScreenPanel = panels[menu + 1];
         onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
-        time = 1.0f;
+        time = 1.5f;
         onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
         offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
         foreach (Button button in offScreenButtons)
@@ -52,6 +52,10 @@ public class MenuControls : MonoBehaviour
                 onScreenButtons[i].interactable = false;
             }
             MenuSwitcher(menu);
+            if (time > 0 && !fadeOn)
+            {
+                time -= Time.deltaTime;
+            }
         }
         if (!fade && fadeOn)
         {
@@ -104,23 +108,19 @@ public class MenuControls : MonoBehaviour
             {
                 offScreenPanel = panels[j];
                 offScreenPanel.SetActive(true);
-                if (time > 0 && !fadeOn)
+                if (time <= 0)
                 {
-                    time -= Time.deltaTime;
-                    if (time <= 0)
+                    for (int i = 0; i < offScreenButtons.Length; i++)
                     {
-                        for (int i = 0; i < offScreenButtons.Length; i++)
-                        {
-                            offScreenButtons[i].interactable = true;
-                        }
-                        onScreenPanel.SetActive(false);
-                        fadeOn = true;
-                        time = 1.0f;
-                        fade = false;
+                        offScreenButtons[i].interactable = true;
                     }
+                    onScreenPanel.SetActive(false);
+                    fadeOn = true;
+                    time = 1.5f;
+                    fade = false;
                 }
-                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.075f);
-                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.075f);
+                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.095f);
+                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.1f);
             }
         }
     }
