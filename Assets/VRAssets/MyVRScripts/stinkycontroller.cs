@@ -66,5 +66,4 @@ public class stinkycontroller : MonoBehaviour
             canvasParent.transform.localScale = new Vector3(canvasScreenTrans.lossyScale.x, canvasScreenTrans.lossyScale.y, canvasScreenTrans.lossyScale.z);
         }
     }
-
 }
