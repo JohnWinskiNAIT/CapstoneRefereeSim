@@ -222,12 +222,23 @@ public class GameplayManager : MonoBehaviour
 }
 
 [Serializable]
-public struct CutsceneData
+public class CutsceneData
 {
     public int numberOfPoints;
     public GameObject waypointParent;
     public GameObject cameraParent;
     public bool wheelOpen;
+
+    Vector3[] waypoints;
+    Vector3[] cameraPoints;
+    public PointType[] pointTypes;
+
+    public enum PointType
+    {
+        Movement,
+        WheelOpen,
+        PuckdropInput
+    }
 }
 
 public enum PenaltyType

@@ -11,17 +11,14 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     LazerEmitter emitter;
     Canvas canvas;
-
-
-
     [SerializeField]
     InputActionAsset inputActions;
     [SerializeField]
     Camera cam;
+
     private Rigidbody rb;
 
-    [SerializeField]
-    float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
+    public float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
     [SerializeField]
     float cameraSpeed, cameraMaxY, cameraMinY;
 
@@ -37,8 +34,8 @@ public class PlayerControl : MonoBehaviour
     Vector3 basePosition;
 
     private PlayerUIManager uiManager;
-    private PlayerState playerState;
-    private Vector3 autoskateDestination, savedVelocity;
+    public PlayerState playerState { get; private set; }
+    private Vector3 savedVelocity;
 
     public bool isVREnabled;
 
@@ -49,7 +46,7 @@ public class PlayerControl : MonoBehaviour
 
     GameObject waypointParent;
 
-    private enum PlayerState
+    public enum PlayerState
     {
         Control,
         Lockout,
@@ -66,6 +63,8 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("VR UnEnabled");
         }
 
+        rb = GetComponent<Rigidbody>();
+
         /// Depending on what options the player selects
         /// inputActions = 
 
@@ -76,8 +75,6 @@ public class PlayerControl : MonoBehaviour
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         playerState = PlayerState.Control;
 
-        GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
-        GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
         GameplayEvents.SetPause.AddListener(PausePlayer);
 
@@ -89,7 +86,6 @@ public class PlayerControl : MonoBehaviour
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         uiManager.isVREnabled = isVREnabled;
 
-        rb = GetComponent<Rigidbody>();
         cameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -139,9 +135,9 @@ public class PlayerControl : MonoBehaviour
                 
             }
 
-            /*Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
-            Vector3 test2 = new Vector2(playe)
-            Debug.Log(Vector3.Angle(Vector3.forward, test2));*/
+            //Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
+            //Vector3 test2 = new Vector2(playe)
+            //Debug.Log(Vector3.Angle(Vector3.forward, test2));
             //Debug.Log(transform.forward);
         }
         else
@@ -149,12 +145,6 @@ public class PlayerControl : MonoBehaviour
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
             heldAction = null;
-        }
-
-        if (playerState == PlayerState.Autoskate)
-        {
-            AutoskateMovement();
-            AutoskateCheck();
         }
     }
 
@@ -271,12 +261,6 @@ public class PlayerControl : MonoBehaviour
 
             //Camera logic might need to be determined here then visuals performed in late update.
         }
-
-        if (playerState == PlayerState.Autoskate)
-        {
-            //Logic for auto movement goes here
-            AutoskateMovement();
-        }
     }
 
     private void LateUpdate()
@@ -372,37 +356,18 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //Add force towards the autoskate destination and avoid exceeding speed limit.
-    private void AutoskateMovement()
-    {
-        Vector3 direction = autoskateDestination - transform.position;
-
-        if ((autoskateDestination - transform.position).magnitude > 2f)
-        {
-            rb.AddForce(direction.normalized * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
-        }
-
-
-        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || (autoskateDestination - transform.position).magnitude < 4f)
-        {
-            rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
-        }
-    }
-
     //If close enough to autoskate destination, invoke event to continue progress.
-    private void AutoskateCheck()
-    {
-        if ((autoskateDestination - transform.position).magnitude < 3f)
-        {
-            GameplayManager.Instance.moveDone = true;
-        }
-    }
 
-    private void ResetPlayer()
+    public void PlayerAutoskate(bool toggle)
     {
-        playerState = PlayerState.Control;
-        transform.position = basePosition;
+        if (toggle)
+        {
+            playerState = PlayerState.Autoskate;
+        }
+        else
+        {
+            playerState = PlayerState.Control;
+        }
     }
 
     #region Enable and Disable
@@ -433,21 +398,15 @@ public class PlayerControl : MonoBehaviour
 
     #region EventListeners
 
-    private void CutsceneListener(int progress)
+    private void ResetPlayer()
     {
-        if (waypointParent.transform.GetChild(progress) != null)
+        if (rb.isKinematic)
         {
-            autoskateDestination = waypointParent.transform.GetChild(progress).position;
+            rb.isKinematic = false;
         }
-        if (playerState != PlayerState.Autoskate)
-        {
-            playerState = PlayerState.Autoskate;
-        }
-    }
 
-    private void LoadWaypoints(CutsceneData cutsceneData)
-    {
-        waypointParent = cutsceneData.waypointParent;
+        playerState = PlayerState.Control;
+        transform.position = basePosition;
     }
 
     #endregion
