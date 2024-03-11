@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   focusPointParent: {fileID: 271113437}
-  turnDuration: 1.6
+  camSpeed: 80
 --- !u!1 &56680605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1218,7 @@ Transform:
   m_GameObject: {fileID: 271113437}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3085,7 +3085,7 @@ Transform:
   m_GameObject: {fileID: 622836552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56, y: 6.25, z: 0}
+  m_LocalPosition: {x: 56, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3265,6 +3265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698313453}
   - component: {fileID: 698313452}
+  - component: {fileID: 698313457}
   - component: {fileID: 698313455}
   - component: {fileID: 698313454}
   - component: {fileID: 698313456}
@@ -3455,6 +3456,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &698313457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698313451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738f9753e22b75743a5d9d06c88a6fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &722407190
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,7 +4148,7 @@ Transform:
   m_GameObject: {fileID: 1021783559}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 6.25, z: 0}
+  m_LocalPosition: {x: 30, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6458,7 +6471,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1564419572}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1430517111}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1564419572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7624,6 +7649,7 @@ MonoBehaviour:
     waypointParent: {fileID: 533896286}
     cameraParent: {fileID: 271113437}
     wheelOpen: 1
+    pointTypes: 
   cameraDone: 0
   moveDone: 0
   playerUI: {fileID: 1119031677}

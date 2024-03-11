@@ -13,6 +13,7 @@ public class PuckManager : MonoBehaviour
 
     private void Start()
     {
+        GameplayEvents.InitializePlay.AddListener(InitializePuck);
         rb = GetComponent<Rigidbody>();
         AIManagerCallback();
     }
@@ -64,5 +65,12 @@ public class PuckManager : MonoBehaviour
             rb.velocity = savedVelocity;
             rb.velocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal);
         }
+    }
+
+    private void InitializePuck()
+    {
+        LoseOwner();
+        ResetTime();
+        transform.position = Vector3.zero;
     }
 }

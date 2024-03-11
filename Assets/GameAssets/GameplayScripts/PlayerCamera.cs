@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerCamera : MonoBehaviour
 {
     PlayerControl playerControls;
     [SerializeField]
     GameObject focusPointParent;
+    Transform[] focusPoints;
 
     [SerializeField]
-    float turnDuration;
+    float camSpeed;
 
     float turnTimer;
     int currentPoint;
@@ -68,6 +71,12 @@ public class PlayerCamera : MonoBehaviour
     private void LoadCameraPoints(CutsceneData cutsceneData)
     {
         focusPointParent = cutsceneData.cameraParent;
+
+        focusPoints = new Transform[focusPointParent.transform.childCount];
+        for (int i = 0; i < focusPointParent.transform.childCount; i++)
+        {
+            focusPoints[i] = focusPointParent.transform.GetChild(i);
+        }
     }
 
     private void CutsceneCallback(int progress)
@@ -84,7 +93,7 @@ public class PlayerCamera : MonoBehaviour
 
         savedAngle = transform.rotation.eulerAngles;
         currentPoint = intendedPoint;
-        nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(currentPoint).position - transform.position, Vector3.up).eulerAngles;
+        nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position, Vector3.up).eulerAngles;
 
         Debug.Log(nextAngle);
 
@@ -106,19 +115,22 @@ public class PlayerCamera : MonoBehaviour
 
     private void FocusCamera()
     {
-        float turnProgress = turnTimer / turnDuration;
-        if (turnProgress < 1)
-        {
-            Vector3 currentAngle = Vector3.Lerp(savedAngle, nextAngle, turnProgress);
-            transform.rotation = Quaternion.Euler(currentAngle);
+        Quaternion lerpTest1 = transform.rotation;
+        Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position);
 
-            nextAngle = Quaternion.LookRotation(focusPointParent.transform.GetChild(currentPoint).position - transform.position, Vector3.up).eulerAngles;
+        if (Quaternion.Angle(lerpTest1, lerpTest2) > 1f )
+        {
+            float step = camSpeed * Time.deltaTime;
+
+            //transform.rotation = Quaternion.Euler(currentAngle);
+            transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
+
+            nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position, Vector3.up).eulerAngles;
             turnTimer += Time.deltaTime;
         }
         else
         {
-            turnTimer = turnDuration;
-            transform.rotation = Quaternion.Euler(nextAngle);
+            transform.rotation = lerpTest2;
             GameplayManager.Instance.cameraDone = true;
         }
     }
