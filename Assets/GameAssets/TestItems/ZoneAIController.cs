@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZoneAIController : MonoBehaviour
@@ -7,29 +8,34 @@ public class ZoneAIController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField]
-    float checkThreshold, positionXResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay;
+    float checkThreshold, positionZResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
     [SerializeField]
     int passChance;
+    [SerializeField]
+    Material[] teamMaterials;
 
     [SerializeField]
     AIType aiType;
-    [SerializeField]
-    AITeam aiTeam;
+    public AITeam aiTeam;
     [SerializeField]
     Vector3 puckOffset;
 
     [SerializeField]
     GameObject zonesParent;
     //Id 0 = center, Id 1 = left, Id 2 = right
-    GameObject[] zones;
     GameObject primaryZone;
+    GameObject advanceZone;
 
-    GameObject[] teammates;
+    public GameObject[] teammates;
 
+    Vector3 startPosition;
     Vector3 nextPosition;
+    Vector3 savedVelocity;
     GameObject carryingPuck;
 
-    float puckTimer;
+    float puckTimer, lockoutTimer;
+
+    bool aiActive;
 
     public enum AIType
     {
@@ -41,6 +47,12 @@ public class ZoneAIController : MonoBehaviour
     {
         Left,
         Right
+    }
+
+    private void Awake()
+    {
+        GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
+        GameplayEvents.SetPause.AddListener(PauseAI);
     }
 
     // Start is called before the first frame update
@@ -55,9 +67,18 @@ public class ZoneAIController : MonoBehaviour
         if (aiType == AIType.Forward)
         {
             primaryZone = zonesParent.transform.GetChild(0).gameObject;
+            if (aiTeam == AITeam.Left)
+            {
+                advanceZone = zonesParent.transform.GetChild(2).gameObject;
+            }
+            else
+            {
+                advanceZone = zonesParent.transform.GetChild(1).gameObject;
+            }
         }
         else
         {
+            advanceZone = zonesParent.transform.GetChild(0).gameObject;
             if (aiTeam == AITeam.Left)
             {
                 primaryZone = zonesParent.transform.GetChild(1).gameObject;
@@ -69,41 +90,63 @@ public class ZoneAIController : MonoBehaviour
         }
         GetNextPosition();
         ManagerCallback();
+        aiActive = true;
+    }
+
+    public void SetupAIAttributes(AIType typeOfPlayer, AITeam playerTeam, GameObject zoneParentObject, Vector3 baseSpawn)
+    {
+        aiType = typeOfPlayer;
+        aiTeam = playerTeam;
+        zonesParent = zoneParentObject;
+        startPosition = baseSpawn;
+
+        GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (teammates == null)
+        if (aiActive)
         {
-            if (aiTeam == AITeam.Left && AIManager.Instance.leftTeamPlayers.Count > 0)
+            if (teammates.Length == 0)
             {
-                teammates = AIManager.Instance.leftTeamPlayers.ToArray();
+                if (aiTeam == AITeam.Left && AIManager.Instance.leftTeamPlayers.Count > 0)
+                {
+                    teammates = AIManager.Instance.leftTeamPlayers.ToArray();
+                }
+                if (aiTeam == AITeam.Right && AIManager.Instance.rightTeamPlayers.Count > 0)
+                {
+                    teammates = AIManager.Instance.rightTeamPlayers.ToArray();
+                }
             }
-            if (aiTeam == AITeam.Right && AIManager.Instance.rightTeamPlayers.Count > 0)
+
+            if (PositionCheck())
             {
-                teammates = AIManager.Instance.rightTeamPlayers.ToArray();
+                GetNextPosition();
             }
-        }
 
-        if (PositionCheck())
-        {
-            GetNextPosition();
-        }
+            if (carryingPuck != null)
+            {
+                Vector3 finalOffset = transform.rotation * puckOffset;
+                carryingPuck.transform.position = transform.position + finalOffset;
+                PuckCheck();
+            }
 
-        if (carryingPuck != null)
-        {
-            Vector3 finalOffset = transform.rotation * puckOffset;
-            carryingPuck.transform.position = transform.position + finalOffset;
-            PuckCheck();
+            if (lockoutTimer > 0)
+            {
+                lockoutTimer -= Time.deltaTime;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (nextPosition != null)
+        if (aiActive)
         {
-            AIMovement();
+            if (nextPosition != null)
+            {
+                AIMovement();
+            }
         }
     }
 
@@ -118,7 +161,10 @@ public class ZoneAIController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+        if (rb.velocity.magnitude != 0 && rb.velocity.normalized != Vector3.forward)
+        {
+            transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+        }
     }
 
     bool PositionCheck()
@@ -130,7 +176,7 @@ public class ZoneAIController : MonoBehaviour
             returnValue = true;
         }
 
-        if (Mathf.Abs(nextPosition.x - primaryZone.transform.position.x) > positionXResetThreshold)
+        if (Mathf.Abs(nextPosition.z - primaryZone.transform.position.z) > positionZResetThreshold)
         {
             returnValue = true;
         }
@@ -141,12 +187,36 @@ public class ZoneAIController : MonoBehaviour
     void GetNextPosition()
     {
         Transform primaryTransform = primaryZone.transform;
+        Transform advanceTransform = advanceZone.transform;
 
-        float newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
-        float newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+        float newX = 0;
+        float newZ = 0;
+        if (carryingPuck == null)
+        {
+            newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
+            newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+        }
+        else
+        {
+            if (advanceTransform.position.z > primaryZone.transform.position.x)
+            {
+                newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, advanceTransform.position.x + advanceTransform.localScale.x / 2);
+                newZ = Random.Range(primaryTransform.position.z - primaryTransform.localScale.z / 2, advanceTransform.position.z + advanceTransform.localScale.z / 2);
+            }
+            else
+            {
+                newX = Random.Range(advanceTransform.position.x - advanceTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
+                newZ = Random.Range(advanceTransform.position.z - advanceTransform.localScale.z / 2, primaryTransform.position.z + primaryTransform.localScale.z / 2);
+            }
+        }
 
         nextPosition = new Vector3(newX, 0, newZ);
-        Debug.Log(nextPosition);
+        //Debug.Log(nextPosition);
+    }
+
+    public void DeclarePosition(Vector3 newPosition)
+    {
+        nextPosition = newPosition;
     }
 
     void PuckCheck()
@@ -154,50 +224,87 @@ public class ZoneAIController : MonoBehaviour
         puckTimer += Time.deltaTime;
         if (puckTimer >= passDelay)
         {
-
-        }
-        if (Random.Range(1, passChance + 1) == 1)
-        {
-            List<GameObject> teammates;
-            if (aiTeam == AITeam.Left)
+            if (Random.Range(0, passChance) == 0)
             {
-                teammates = AIManager.Instance.leftTeamPlayers;
+                int target = Random.Range(0, teammates.Length);
+                int reps = 0;
+
+                while (AIManager.Instance.leftTeamPlayers[target] == gameObject && reps < 10)
+                {
+                    target = Random.Range(0, teammates.Length);
+                    reps++;
+                }
+                PassPuck(teammates[target]);
             }
             else
             {
-                teammates = AIManager.Instance.rightTeamPlayers;
+                puckTimer = 0f;
             }
-
-            int target = Random.Range(0, teammates.Count);
-            int reps = 0;
-
-            while (AIManager.Instance.leftTeamPlayers[target] == gameObject && reps < 10)
-            {
-                target = Random.Range(0, AIManager.Instance.leftTeamPlayers.Count);
-                reps++;
-            }
-            PassPuck(teammates[target]);
         }
     }
 
     public void LosePuck()
     {
-        carryingPuck = null;
+        if (carryingPuck != null)
+        {
+            carryingPuck.GetComponent<Rigidbody>().isKinematic = false; 
+            carryingPuck = null;
+            puckTimer = 0f;
+        }
     }
 
     void PassPuck(GameObject target)
     {
-        
+        Vector3 passVector = target.transform.position - carryingPuck.transform.position;
+        carryingPuck.GetComponent<Rigidbody>().isKinematic = false;
+        carryingPuck.GetComponent<Rigidbody>().AddForce(passVector.normalized * passSpeed, ForceMode.Impulse);
+        carryingPuck.GetComponent<PuckManager>().LoseOwner();
+        lockoutTimer = lockoutTime;
+        carryingPuck = null;
+        puckTimer = 0f;
     }
 
     void ManagerCallback()
     {
-        AIManager.Instance.leftTeamPlayers.Add(gameObject);
+        if (aiTeam == AITeam.Left)
+        {
+            AIManager.Instance.leftTeamPlayers.Add(gameObject);
+        }
+        else
+        {
+            AIManager.Instance.rightTeamPlayers.Add(gameObject);
+        }
+    }
+
+    void InitializeForPlay()
+    {
+        transform.position = startPosition;
+        puckTimer = 0f;
+        if (carryingPuck != null)
+        {
+            carryingPuck = null;
+        }
+        nextPosition = transform.position;
+    }
+
+    void PauseAI(bool pausing)
+    {
+        if (pausing)
+        {
+            savedVelocity = rb.velocity;
+            rb.velocity = Vector3.zero;
+            aiActive = false;
+        }
+        else
+        {
+            rb.velocity = savedVelocity;
+            aiActive = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<PuckManager>() != null && other.GetComponentInParent<PuckManager>().Owner != gameObject)
+        if (other.GetComponentInParent<PuckManager>() != null && other.GetComponentInParent<PuckManager>().OwnerTeam != aiTeam && lockoutTimer <= 0)
         {
             carryingPuck = other.transform.parent.gameObject;
             carryingPuck.GetComponent<PuckManager>().ChangePosession(gameObject);

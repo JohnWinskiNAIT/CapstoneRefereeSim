@@ -26,6 +26,15 @@ public class GameplayManager : MonoBehaviour
     public GameObject playerUI;
 
     [SerializeField]
+    bool[] enabledPlayers;
+    [SerializeField]
+    PlayerSetup[] setupInformation;
+    [SerializeField]
+    GameObject zoneParent;
+
+    [SerializeField]
+    GameObject playerPrefab;
+    [SerializeField]
     GameObject playTest;
 
     // Start is called before the first frame update
@@ -45,6 +54,25 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.SetPause.AddListener(PauseGame);
 
         GameplayEvents.InitializePlay.Invoke();
+    }
+
+    private void Start()
+    {
+        GeneratePlayers();
+    }
+
+    void GeneratePlayers()
+    {
+        GameObject createdPlayer;
+        for (int i = 0; i < enabledPlayers.Length; i++)
+        {
+            if (enabledPlayers[i])
+            {
+                createdPlayer = Instantiate(playerPrefab, null);
+                createdPlayer.transform.position = setupInformation[i].startingPosition;
+                createdPlayer.GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].startingPosition);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -182,6 +210,14 @@ public class GameplayManager : MonoBehaviour
         public int offenderId, affectedId;
         //What type of penalty it is is stored here.
         public PenaltyType penaltyType;
+    }
+
+    [Serializable]
+    private struct PlayerSetup
+    {
+        public ZoneAIController.AITeam team;
+        public ZoneAIController.AIType type;
+        public Vector3 startingPosition;
     }
 }
 

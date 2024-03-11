@@ -34,6 +34,8 @@ public class PlayerControl : MonoBehaviour
     public Vector3 cameraAngle { get; private set; }
     public Vector3 inputAngle { get; private set; }
 
+    Vector3 basePosition;
+
     private PlayerUIManager uiManager;
     private PlayerState playerState;
     private Vector3 autoskateDestination, savedVelocity;
@@ -78,6 +80,8 @@ public class PlayerControl : MonoBehaviour
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
         GameplayEvents.SetPause.AddListener(PausePlayer);
+
+        basePosition = transform.position;
     }
 
     private void Start()
@@ -172,6 +176,42 @@ public class PlayerControl : MonoBehaviour
             {
                 CallActivate();
             }
+        }
+    }
+
+    //VR STORED ACTION METHOD
+    private void VRStoredActionCheck()
+    {
+        GameObject vrRightHand = new GameObject();
+        float vrMagnitude = 1f;
+        //enum currentAction;
+
+        /*if (currentAction == null)
+        *{
+        *   if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
+            {
+                currentAction = enum.Whistle;
+            }    
+            else if (vrLeftHand.transform.position.y >= yMagnitude)
+            {
+                currentAction = enum.PenaltyCall;
+            }
+        *}
+        *
+        */
+
+        //Add an "and" to this alongside currentAction being Whistle
+        if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
+        {
+            storeTimestamp += Time.deltaTime;
+            if (storeTimestamp > 0f)
+            {
+
+            }
+        }
+        else
+        {
+            storeTimestamp = 0f;
         }
     }
 
@@ -362,7 +402,7 @@ public class PlayerControl : MonoBehaviour
     private void ResetPlayer()
     {
         playerState = PlayerState.Control;
-        transform.position = Vector3.zero;
+        transform.position = basePosition;
     }
 
     #region Enable and Disable
