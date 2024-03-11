@@ -464,9 +464,10 @@ GameObject:
   - component: {fileID: 181140426}
   - component: {fileID: 181140425}
   - component: {fileID: 181140424}
+  - component: {fileID: 181140427}
   m_Layer: 0
   m_Name: AIDefense2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,6 +493,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 1
   aiTeam: 0
   puckOffset: {x: 0, y: 0, z: 3}
@@ -542,6 +544,18 @@ Transform:
   - {fileID: 585842062}
   m_Father: {fileID: 1276501007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181140427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181140423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10031da8e04cd14f9668bf73beb8cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &210555253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1651,7 +1665,7 @@ GameObject:
   - component: {fileID: 626072133}
   m_Layer: 0
   m_Name: AIForwardB1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1677,6 +1691,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 1
   puckOffset: {x: 0, y: 0, z: 3}
@@ -2254,9 +2269,10 @@ GameObject:
   - component: {fileID: 1084757240}
   - component: {fileID: 1084757239}
   - component: {fileID: 1084757238}
+  - component: {fileID: 1084757241}
   m_Layer: 0
   m_Name: AIForward2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2282,6 +2298,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 0
   puckOffset: {x: 0, y: 0, z: 3}
@@ -2332,6 +2349,18 @@ Transform:
   - {fileID: 445388300}
   m_Father: {fileID: 1276501007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1084757241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084757237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10031da8e04cd14f9668bf73beb8cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1088669356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,7 +3416,7 @@ GameObject:
   - component: {fileID: 1652891377}
   m_Layer: 0
   m_Name: AIForwardB2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3413,6 +3442,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 1
   puckOffset: {x: 0, y: 0, z: 3}
@@ -3476,7 +3506,7 @@ GameObject:
   - component: {fileID: 1656569436}
   m_Layer: 0
   m_Name: AIForwardB3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3502,6 +3532,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 1
   puckOffset: {x: 0, y: 0, z: 3}
@@ -3563,9 +3594,10 @@ GameObject:
   - component: {fileID: 1711103598}
   - component: {fileID: 1711103597}
   - component: {fileID: 1711103596}
+  - component: {fileID: 1711103599}
   m_Layer: 0
   m_Name: AIDefense1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3591,6 +3623,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 1
   aiTeam: 0
   puckOffset: {x: 0, y: 0, z: 3}
@@ -3641,6 +3674,18 @@ Transform:
   - {fileID: 1280651552}
   m_Father: {fileID: 1276501007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1711103599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711103595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10031da8e04cd14f9668bf73beb8cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717364779
 GameObject:
   m_ObjectHideFlags: 0
@@ -3984,7 +4029,7 @@ GameObject:
   - component: {fileID: 1777167796}
   m_Layer: 0
   m_Name: AIDefenseB2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4010,6 +4055,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 1
   aiTeam: 1
   puckOffset: {x: 0, y: 0, z: 3}
@@ -4176,9 +4222,10 @@ GameObject:
   - component: {fileID: 1817684593}
   - component: {fileID: 1817684592}
   - component: {fileID: 1817684591}
+  - component: {fileID: 1817684594}
   m_Layer: 0
   m_Name: AIForward1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4204,6 +4251,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 0
   puckOffset: {x: 0, y: 0, z: 3}
@@ -4254,6 +4302,18 @@ Transform:
   - {fileID: 1717364780}
   m_Father: {fileID: 1276501007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817684594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817684590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10031da8e04cd14f9668bf73beb8cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1869408469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4508,9 +4568,10 @@ GameObject:
   - component: {fileID: 2016401998}
   - component: {fileID: 2016401997}
   - component: {fileID: 2016401996}
+  - component: {fileID: 2016401999}
   m_Layer: 0
   m_Name: AIForward3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4536,6 +4597,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 0
   aiTeam: 0
   puckOffset: {x: 0, y: 0, z: 3}
@@ -4586,6 +4648,18 @@ Transform:
   - {fileID: 1626469504}
   m_Father: {fileID: 1276501007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2016401999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016401995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10031da8e04cd14f9668bf73beb8cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053814086
 GameObject:
   m_ObjectHideFlags: 0
@@ -4757,7 +4831,7 @@ GameObject:
   - component: {fileID: 2140746024}
   m_Layer: 0
   m_Name: AIDefenseB1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4783,6 +4857,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   passChance: 12
+  teamMaterials: []
   aiType: 1
   aiTeam: 1
   puckOffset: {x: 0, y: 0, z: 3}
