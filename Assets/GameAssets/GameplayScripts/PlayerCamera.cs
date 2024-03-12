@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,17 +13,16 @@ public class PlayerCamera : MonoBehaviour
     PlayerControl playerControls;
     [SerializeField]
     GameObject focusPointParent;
-    Transform[] focusPoints;
+    Vector3[] focusPoints;
 
     [SerializeField]
     float camSpeed;
 
     float turnTimer;
     int currentPoint;
-    Vector3 savedAngle, nextAngle;
-    CameraModes currentMode;
+    public CameraModes CurrentMode { get; private set; }
 
-    private enum CameraModes
+    public enum CameraModes
     {
         Normal,
         FocusingOnPoint
@@ -35,41 +35,26 @@ public class PlayerCamera : MonoBehaviour
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
         GameplayEvents.InitializePlay.AddListener(ResetCamera);
 
-        currentMode = CameraModes.Normal;
+        CurrentMode = CameraModes.Normal;
     }
 
     // Update is called once per frame
     private void LateUpdate()
     {
-        if (GameUtilities.VREnabled())
+        if (CurrentMode == CameraModes.Normal)
         {
-            //Does not need to include anything? If we want a method of turning aside from turning 180 degrees, however, we will put it here.
+            playerCam.transform.rotation = Quaternion.Euler(playerControls.CameraAngle.x, playerControls.CameraAngle.y, 0);
         }
-        else
+        if (CurrentMode == CameraModes.FocusingOnPoint)
         {
-            switch (currentMode)
-            {
-                case CameraModes.Normal:
-                    playerCam.transform.rotation = Quaternion.Euler(playerControls.CameraAngle.x, playerControls.CameraAngle.y, 0);
-                    break;
-                case CameraModes.FocusingOnPoint:
-                    FocusCamera();
-                    break;
-                default:
-                    break;
-            }
+            FocusCamera();
         }
     }
 
     private void LoadCameraPoints(CutsceneData cutsceneData)
     {
-        focusPointParent = cutsceneData.cameraParent;
-
-        focusPoints = new Transform[focusPointParent.transform.childCount];
-        for (int i = 0; i < focusPointParent.transform.childCount; i++)
-        {
-            focusPoints[i] = focusPointParent.transform.GetChild(i);
-        }
+        focusPoints = cutsceneData.cameraPoints;
+        currentPoint = 0;
     }
 
     private void CutsceneCallback(int progress)
@@ -79,37 +64,48 @@ public class PlayerCamera : MonoBehaviour
 
     private void CameraToPoint(int intendedPoint)
     {
-        if (currentMode != CameraModes.FocusingOnPoint)
+        if (CurrentMode != CameraModes.FocusingOnPoint)
         {
-            currentMode = CameraModes.FocusingOnPoint;
+            CurrentMode = CameraModes.FocusingOnPoint;
         }
 
-        savedAngle = playerCam.transform.rotation.eulerAngles;
+        //savedAngle = playerCam.transform.rotation.eulerAngles;
         currentPoint = intendedPoint;
-        nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position, Vector3.up).eulerAngles;
+        //nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position, Vector3.up).eulerAngles;
 
-        Debug.Log(nextAngle);
+        //Debug.Log(nextAngle);
 
-        if (savedAngle.x > 180)
-        {
-            savedAngle.x -= 360;
-        }
-        if (savedAngle.y > 180)
-        {
-            savedAngle.y -= 360;
-        }
-        turnTimer = 0;
+        //if (savedAngle.x > 180)
+        //{
+        //    savedAngle.x -= 360;
+        //}
+        //if (savedAngle.y > 180)
+        //{
+        //    savedAngle.y -= 360;
+        //}
+        //turnTimer = 0;
+    }
+        
+    public void SetState(CameraModes newMode)
+    {
+        CurrentMode = newMode;
     }
 
-    private void ResetCamera()
+    public void SetState(CameraModes newMode, Vector3[] cameraPoints)
     {
-        currentMode = CameraModes.Normal;
+        CurrentMode = newMode;
+        focusPoints = cameraPoints;
+    }
+
+    public void ResetCamera()
+    {
+        CurrentMode = CameraModes.Normal;
     }
 
     private void FocusCamera()
     {
         Quaternion lerpTest1 = playerCam.transform.rotation;
-        Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position);
+        Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint] - playerCam.transform.position);
 
         if (Quaternion.Angle(lerpTest1, lerpTest2) > 1f )
         {
@@ -118,7 +114,7 @@ public class PlayerCamera : MonoBehaviour
             //transform.rotation = Quaternion.Euler(currentAngle);
             playerCam.transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
 
-            nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position, Vector3.up).eulerAngles;
+            //nextAngle = Quaternion.LookRotation(focusPoints[currentPoint] - transform.position, Vector3.up).eulerAngles;
             turnTimer += Time.deltaTime;
         }
         else

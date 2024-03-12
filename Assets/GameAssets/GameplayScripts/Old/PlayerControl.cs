@@ -44,8 +44,6 @@ public class PlayerControl : MonoBehaviour
     /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
     /// </summary>
 
-    GameObject waypointParent;
-
     public enum PlayerState
     {
         Control,
@@ -172,7 +170,7 @@ public class PlayerControl : MonoBehaviour
     //VR STORED ACTION METHOD
     private void VRStoredActionCheck()
     {
-        GameObject vrRightHand = new GameObject();
+        GameObject vrRightHand = new();
         float vrMagnitude = 1f;
         //enum currentAction;
 
@@ -349,7 +347,7 @@ public class PlayerControl : MonoBehaviour
         rb.AddForce(InputAngle * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
-        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
+        Vector2 capTest = new(rb.velocity.x, rb.velocity.z);
         if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(InputAngle.x, InputAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
@@ -358,23 +356,11 @@ public class PlayerControl : MonoBehaviour
 
     //If close enough to autoskate destination, invoke event to continue progress.
 
-    public void PlayerAutoskate(bool toggle)
-    {
-        if (toggle)
-        {
-            CurrentPlayerState = PlayerState.Autoskate;
-        }
-        else
-        {
-            CurrentPlayerState = PlayerState.Control;
-        }
-    }
-
     #region Enable and Disable
 
-    public void SetPlayerControl(int setState)
+    public void SetPlayerControl(PlayerState setState)
     {
-        CurrentPlayerState = (PlayerState)setState;
+        CurrentPlayerState = setState;
     }
 
     private void OnEnable()
