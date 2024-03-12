@@ -1151,7 +1151,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 9
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &202328586
 GameObject:
@@ -1163,7 +1175,6 @@ GameObject:
   m_Component:
   - component: {fileID: 202328587}
   - component: {fileID: 202328588}
-  - component: {fileID: 202328589}
   - component: {fileID: 202328590}
   m_Layer: 5
   m_Name: Slider
@@ -1245,26 +1256,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &202328589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202328586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSlider: {fileID: 599481501}
-  SFXSlider: {fileID: 230891953}
-  ambientSlider: {fileID: 202328588}
-  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  myVolumes:
-    masterVolume: 0
-    SFXvolume: 0
-    ambientVolume: 0
 --- !u!114 &202328590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,7 +1273,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 202328589}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeAmbientVolume
           m_Mode: 1
@@ -1298,7 +1289,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 202328589}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeAmbientVolume
           m_Mode: 1
@@ -1396,7 +1387,6 @@ GameObject:
   m_Component:
   - component: {fileID: 230891952}
   - component: {fileID: 230891953}
-  - component: {fileID: 230891954}
   - component: {fileID: 230891955}
   m_Layer: 5
   m_Name: Slider
@@ -1478,26 +1468,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &230891954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230891951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSlider: {fileID: 599481501}
-  SFXSlider: {fileID: 230891953}
-  ambientSlider: {fileID: 202328588}
-  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  myVolumes:
-    masterVolume: 0
-    SFXvolume: 0
-    ambientVolume: 0
 --- !u!114 &230891955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,7 +1485,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 230891954}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeSFXVolume
           m_Mode: 1
@@ -1531,7 +1501,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 230891954}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeSFXVolume
           m_Mode: 1
@@ -1626,7 +1596,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &273085692
 GameObject:
@@ -4224,7 +4206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 599481500}
   - component: {fileID: 599481501}
-  - component: {fileID: 599481502}
   - component: {fileID: 599481503}
   m_Layer: 5
   m_Name: Slider
@@ -4306,26 +4287,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &599481502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 599481499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSlider: {fileID: 599481501}
-  SFXSlider: {fileID: 230891953}
-  ambientSlider: {fileID: 202328588}
-  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  myVolumes:
-    masterVolume: 0
-    SFXvolume: 0
-    ambientVolume: 0
 --- !u!114 &599481503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4343,7 +4304,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 599481502}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeMasterVolume
           m_Mode: 1
@@ -4359,7 +4320,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 599481502}
+        - m_Target: {fileID: 1497799555}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeMasterVolume
           m_Mode: 1
@@ -4454,7 +4415,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &617035638
 GameObject:
@@ -7584,7 +7557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 56.984253, y: 0}
+  m_AnchoredPosition: {x: 56.98426, y: 0}
   m_SizeDelta: {x: -113.854126, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1105601146
@@ -7888,7 +7861,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1109489353
 GameObject:
@@ -8600,7 +8585,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1164655199
 GameObject:
@@ -9744,7 +9741,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1410373064
 GameObject:
@@ -10697,6 +10706,7 @@ GameObject:
   - component: {fileID: 1497799551}
   - component: {fileID: 1497799550}
   - component: {fileID: 1497799554}
+  - component: {fileID: 1497799555}
   m_Layer: 5
   m_Name: MainScreen
   m_TagString: Untagged
@@ -10814,6 +10824,23 @@ MonoBehaviour:
   - {fileID: 1627226066}
   offScreen: {fileID: 1359426017}
   onScreen: {fileID: 1974692131}
+--- !u!114 &1497799555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497799549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSlider: {fileID: 599481501}
+  SFXSlider: {fileID: 230891953}
+  ambientSlider: {fileID: 202328588}
+  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
+  penaltyUIContainer: {fileID: 321978695}
 --- !u!1 &1512376667
 GameObject:
   m_ObjectHideFlags: 0
@@ -11245,7 +11272,6 @@ GameObject:
   - component: {fileID: 1620070871}
   - component: {fileID: 1620070873}
   - component: {fileID: 1620070872}
-  - component: {fileID: 1620070874}
   m_Layer: 5
   m_Name: AudioContainer
   m_TagString: MenuPanel
@@ -11311,18 +11337,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620070870}
   m_CullTransparentMesh: 1
---- !u!114 &1620070874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620070870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10bacef3574b40b4b97810e08cab0f33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1622651878
 GameObject:
   m_ObjectHideFlags: 0
@@ -11790,7 +11804,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1646488690
 GameObject:
@@ -13390,7 +13416,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1829743877
 GameObject:
@@ -13688,7 +13726,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1877612612
 GameObject:
@@ -13773,7 +13823,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1884933024
 GameObject:
@@ -14756,7 +14818,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1497799555}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: TogglePenalty
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &2032160420
 GameObject:

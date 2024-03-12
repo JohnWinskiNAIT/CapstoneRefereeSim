@@ -14,7 +14,11 @@ public class MenuControls : MonoBehaviour
     GameObject[] panels;
     [SerializeField] Transform offScreen, onScreen;
     Button[] onScreenButtons;
+    Slider[] onScreenSliders;
+    Toggle[] onScreenToggles;
     Button[] offScreenButtons;
+    Slider[] offScreenSliders;
+    Toggle[] offScreenToggles;
     GameObject offScreenPanel, onScreenPanel;
     List<GameObject> previousOnScreen;
     bool fade, fadeOn, canEscape;
@@ -29,11 +33,18 @@ public class MenuControls : MonoBehaviour
         onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
         time = 1.5f;
-        onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
-        offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
+        ButtonUpdater();
         foreach (Button button in offScreenButtons)
         {
             button.interactable = false;
+        }
+        foreach(Slider slider in offScreenSliders)
+        {
+            slider.interactable = false;
+        }
+        foreach(Toggle toggle in offScreenToggles)
+        {
+            toggle.interactable = false;
         }
         for (int i = 0; i < onScreenButtons.Length; i++)
         {
@@ -50,6 +61,14 @@ public class MenuControls : MonoBehaviour
             for (int i = 0; i < onScreenButtons.Length; i++)
             {
                 onScreenButtons[i].interactable = false;
+            }
+            for(int i = 0; i < onScreenSliders.Length; i++)
+            {
+                onScreenSliders[i].interactable = false;
+            }
+            for (int i = 0; i < onScreenToggles.Length; i++)
+            {
+                onScreenToggles[i].interactable = false;
             }
             MenuSwitcher(menu);
             if (time > 0 && !fadeOn)
@@ -114,6 +133,14 @@ public class MenuControls : MonoBehaviour
                     {
                         offScreenButtons[i].interactable = true;
                     }
+                    for(int i = 0; i < offScreenSliders.Length; i++)
+                    {
+                        offScreenSliders[i].interactable = true;
+                    }
+                    for(int i = 0; i < offScreenToggles.Length; i++)
+                    {
+                        offScreenToggles[i].interactable = true;
+                    }
                     onScreenPanel.SetActive(false);
                     fadeOn = true;
                     time = 1.5f;
@@ -132,7 +159,11 @@ public class MenuControls : MonoBehaviour
     void ButtonUpdater()
     {
         onScreenButtons = onScreenPanel.GetComponentsInChildren<Button>();
+        onScreenSliders = onScreenPanel.GetComponentsInChildren<Slider>();
+        onScreenToggles = onScreenPanel.GetComponentsInChildren<Toggle>();
         offScreenButtons = offScreenPanel.GetComponentsInChildren<Button>();
+        offScreenSliders = offScreenPanel.GetComponentsInChildren<Slider>();
+        offScreenToggles = offScreenPanel.GetComponentsInChildren<Toggle>();
         canEscape = true;
     }
     public void Glow(GameObject callingObject)
