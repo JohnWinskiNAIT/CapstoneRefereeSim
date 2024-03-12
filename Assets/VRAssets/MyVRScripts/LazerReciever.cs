@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI ;
 
+#nullable enable
 public class LazerReciever : MonoBehaviour
 {
     bool isPointedAt = false;    //is the raycast looking at it
@@ -17,7 +18,9 @@ public class LazerReciever : MonoBehaviour
     Vector2 hitPos2D;
 
     [SerializeField] GameObject cursorParent;
-    [SerializeField] GameObject bottLeftBound;  //empty that wont move, just there to tell us where the bounds are in 2D
+
+    [SerializeField] GameObject? bottLeftBound;  //empty that wont move, just there to tell us where the bounds are in 2D
+
     Vector3 bottLeftPos;    //just to shorten the code writing.
     Vector2 bottLeftPos2D;  //just in case there is any weird z axis shenanigans. 
 
@@ -25,7 +28,7 @@ public class LazerReciever : MonoBehaviour
     {
         coll = GetComponent<Collider>();
         center = transform.position;
-        bottLeftPos = bottLeftBound.transform.localPosition;
+        if (bottLeftBound != null) bottLeftPos = bottLeftBound.transform.localPosition;
         bottLeftPos2D = new Vector2(bottLeftPos.x, bottLeftPos.y);
         button = GetComponentInParent<Button>();
     }
