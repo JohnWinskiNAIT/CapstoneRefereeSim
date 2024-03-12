@@ -11,6 +11,7 @@ public class PlayerUIManager : MonoBehaviour
 {
     //Very stupid but just made because typing in 360 each time will make it an int unless you include the f affix, and this makes it more readable.
     const float totalFill = 360f;
+    const float screenScaleDenominator = 1280f;
 
     //Used to compare InputActions.
     [SerializeField]
@@ -240,12 +241,14 @@ public class PlayerUIManager : MonoBehaviour
     private void GenerateNotches()
     {
         currentNotches = new GameObject[wheelInfo.numberOfOptions];
-        float notchGap = (Screen.height / 2f) * 0.6f;
+        float notchGap = (Screen.height / 2f) * 0.65f;
         float segments = totalFill / wheelInfo.numberOfOptions;
+        float notchScale = (Screen.width / screenScaleDenominator);
         for (int i = 0; i < wheelInfo.numberOfOptions; i++)
         {
             currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
             Vector2 position = new Vector2(Mathf.Sin((segments * i) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i) * Mathf.Deg2Rad) * notchGap);
+            currentNotches[i].transform.localScale = new Vector3(notchScale, 1f, 1f);
             currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
             currentNotches[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90 - segments * i);
         }
@@ -257,10 +260,12 @@ public class PlayerUIManager : MonoBehaviour
         currentIcons = new GameObject[wheelInfo.numberOfOptions];
         float notchGap = (Screen.height / 2f) * 0.6f;
         float segments = totalFill / wheelInfo.numberOfOptions;
+        float iconScale = 1f * (Screen.width / screenScaleDenominator);
         for (int i = 0; i < wheelInfo.numberOfOptions; i++)
         {
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new Vector2(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
+            currentIcons[i].transform.localScale = new Vector3(iconScale, iconScale, iconScale);
             currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
             currentIcons[i].GetComponent<Image>().sprite = wheelInfo.options[i].optionImage;
             //set the image for each icon
