@@ -12,6 +12,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     CutsceneData playEndCutscene;
 
+    [SerializeField]
+    FaceoffData[] rinkfaceOffs;
+
+
     CutsceneData currentCutscene;
     PlayInformation currentPlayInfo;
 
@@ -183,9 +187,11 @@ public class GameplayManager : MonoBehaviour
     //Creates the PlayInformation struct, and fills it.
     private void InitiatePlayInformation()
     {
-        currentPlayInfo = new PlayInformation();
-        currentPlayInfo.penaltyTimer = Random.Range(15f, 50f);
-        currentPlayInfo.stopTimer = Random.Range(0, 15f);
+        currentPlayInfo = new()
+        {
+            penaltyTimer = Random.Range(15f, 50f),
+            stopTimer = Random.Range(0, 15f)
+        };
         //Replace this random range with a reference to a list of all players in the scene.
         int player1 = Random.Range(0, 30);
         int player2 = Random.Range(0, 30);
@@ -229,8 +235,8 @@ public class CutsceneData
     public GameObject cameraParent;
     public bool wheelOpen;
 
-    Vector3[] waypoints;
-    Vector3[] cameraPoints;
+    public Vector3[] waypoints;
+    public Vector3[] cameraPoints;
     public PointType[] pointTypes;
 
     public enum PointType
@@ -239,6 +245,15 @@ public class CutsceneData
         WheelOpen,
         PuckdropInput
     }
+}
+
+public class FaceoffData
+{
+    public int faceoffId;
+    public string faceoffName;
+    Vector3 unscaledOffset;
+
+    //float circleMagnitude;
 }
 
 public enum PenaltyType

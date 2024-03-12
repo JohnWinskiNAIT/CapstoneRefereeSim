@@ -23,18 +23,18 @@ public class PlayerControl : MonoBehaviour
     float cameraSpeed, cameraMaxY, cameraMinY;
 
     private InputAction moveAction, lookAction, callAction, pauseAction, whistleAction;
-    public InputAction heldAction { get; private set; }
+    public InputAction HeldAction { get; private set; }
 
     private float storeTimestamp;
 
     private Vector2 moveInput, lookInput;
-    public Vector3 cameraAngle { get; private set; }
-    public Vector3 inputAngle { get; private set; }
+    public Vector3 CameraAngle { get; private set; }
+    public Vector3 InputAngle { get; private set; }
 
     Vector3 basePosition;
 
     private PlayerUIManager uiManager;
-    public PlayerState playerState { get; private set; }
+    public PlayerState CurrentPlayerState { get; private set; }
     private Vector3 savedVelocity;
 
     public bool isVREnabled;
@@ -43,8 +43,6 @@ public class PlayerControl : MonoBehaviour
     /// ////////////////////bool isInMenu; maybe this should e covered in state?
     /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
     /// </summary>
-
-    GameObject waypointParent;
 
     public enum PlayerState
     {
@@ -73,7 +71,7 @@ public class PlayerControl : MonoBehaviour
         callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
-        playerState = PlayerState.Control;
+        CurrentPlayerState = PlayerState.Control;
 
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
         GameplayEvents.SetPause.AddListener(PausePlayer);
@@ -86,7 +84,7 @@ public class PlayerControl : MonoBehaviour
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         uiManager.isVREnabled = isVREnabled;
 
-        cameraAngle = Vector3.zero;
+        CameraAngle = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -94,7 +92,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         //Cannot move if selection wheel is open.
-        if (playerState == PlayerState.Control)
+        if (CurrentPlayerState == PlayerState.Control)
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
@@ -108,16 +106,16 @@ public class PlayerControl : MonoBehaviour
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
             //it runs a check to see if it's still being held.
-            if (heldAction == null)
+            if (HeldAction == null)
             {
                 if (whistleAction.WasPressedThisFrame())
                 {
-                    heldAction = whistleAction;
+                    HeldAction = whistleAction;
                     storeTimestamp = Time.time;
                 }
                 if (callAction.WasPressedThisFrame())
                 {
-                    heldAction = callAction;
+                    HeldAction = callAction;
                     storeTimestamp = Time.time;
                 }
             }
@@ -144,7 +142,7 @@ public class PlayerControl : MonoBehaviour
         {
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
-            heldAction = null;
+            HeldAction = null;
         }
     }
 
@@ -152,17 +150,17 @@ public class PlayerControl : MonoBehaviour
     //If true, check if it's been held for long enough and use the appropriate method if so.
     private void StoredActionCheck()
     {
-        if (!heldAction.IsPressed())
+        if (!HeldAction.IsPressed())
         {
-            heldAction = null;
+            HeldAction = null;
         }
         if (Time.time > storeTimestamp + storeInputDuration)
         {
-            if (heldAction == whistleAction)
+            if (HeldAction == whistleAction)
             {
                 WhistleActivate();
             }
-            if (heldAction == callAction)
+            if (HeldAction == callAction)
             {
                 CallActivate();
             }
@@ -172,7 +170,7 @@ public class PlayerControl : MonoBehaviour
     //VR STORED ACTION METHOD
     private void VRStoredActionCheck()
     {
-        GameObject vrRightHand = new GameObject();
+        GameObject vrRightHand = new();
         float vrMagnitude = 1f;
         //enum currentAction;
 
@@ -209,7 +207,7 @@ public class PlayerControl : MonoBehaviour
     public float StoredActionStatus()
     {
         float returnValue;
-        if (heldAction == null)
+        if (HeldAction == null)
         {
             returnValue = 0f;
         }
@@ -226,7 +224,7 @@ public class PlayerControl : MonoBehaviour
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
         GameplayManager.Instance.CallPrep();
-        heldAction = null;
+        HeldAction = null;
     }
 
     private void WhistleActivate()
@@ -234,27 +232,27 @@ public class PlayerControl : MonoBehaviour
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
         GameplayEvents.EndPlay.Invoke();
-        heldAction = null;
+        HeldAction = null;
     }
 
     private void PausePlayer(bool pausing)
     {
         if (pausing)
         {
-            playerState = PlayerState.Lockout;
+            CurrentPlayerState = PlayerState.Lockout;
             savedVelocity = rb.velocity;
             rb.velocity = Vector3.zero;
         }
         else
         {
-            playerState = PlayerState.Control;
+            CurrentPlayerState = PlayerState.Control;
             rb.velocity = savedVelocity;
         }
     }
 
     private void FixedUpdate()
     {
-        if (playerState == PlayerState.Control)
+        if (CurrentPlayerState == PlayerState.Control)
         {
             //Do all movement-related changes in here.
             PlayerMovement();
@@ -275,7 +273,7 @@ public class PlayerControl : MonoBehaviour
 
             // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
             // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-            float rotateValue = (cameraAngle.y - transform.rotation.eulerAngles.y);
+            float rotateValue = (CameraAngle.y - transform.rotation.eulerAngles.y);
             if (rotateValue > 180)
             {
                 rotateValue -= 360;
@@ -291,40 +289,40 @@ public class PlayerControl : MonoBehaviour
     private void CameraClamp()
     {
         // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
-        cameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
+        CameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
 
         //Full rotation logic + clamping the x angle to serialized values since it controls the up/down of the camera.
-        if (cameraAngle.x > 360)
+        if (CameraAngle.x > 360)
         {
-            cameraAngle = new Vector3(cameraAngle.x - 360, cameraAngle.y);
+            CameraAngle = new Vector3(CameraAngle.x - 360, CameraAngle.y);
         }
-        if (cameraAngle.x < 0)
+        if (CameraAngle.x < 0)
         {
-            cameraAngle = new Vector3(cameraAngle.x + 360, cameraAngle.y);
+            CameraAngle = new Vector3(CameraAngle.x + 360, CameraAngle.y);
         }
-        if (cameraAngle.x < 180 && cameraAngle.x > cameraMinY)
+        if (CameraAngle.x < 180 && CameraAngle.x > cameraMinY)
         {
-            cameraAngle = new Vector3(cameraMinY, cameraAngle.y);
+            CameraAngle = new Vector3(cameraMinY, CameraAngle.y);
         }
-        if (cameraAngle.x > 180 && cameraAngle.x < cameraMaxY)
+        if (CameraAngle.x > 180 && CameraAngle.x < cameraMaxY)
         {
-            cameraAngle = new Vector3(cameraMaxY, cameraAngle.y);
+            CameraAngle = new Vector3(cameraMaxY, CameraAngle.y);
         }
 
-        if (cameraAngle.y > 360)
+        if (CameraAngle.y > 360)
         {
-            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y - 360);
+            CameraAngle = new Vector3(CameraAngle.x, CameraAngle.y - 360);
         }
-        if (cameraAngle.y < 0)
+        if (CameraAngle.y < 0)
         {
-            cameraAngle = new Vector3(cameraAngle.x, cameraAngle.y + 360);
+            CameraAngle = new Vector3(CameraAngle.x, CameraAngle.y + 360);
         }
     }
 
     private void PlayerMovement()
     {
         //Determines the angle between where the player's velocity is going and the player's input.
-        inputAngle = new Vector3(moveInput.x, 0, moveInput.y);
+        InputAngle = new Vector3(moveInput.x, 0, moveInput.y);
 
         //If VR active, usees camera Y instead of player Y.
         Quaternion angleCheck;
@@ -337,7 +335,7 @@ public class PlayerControl : MonoBehaviour
             angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
         }
 
-        inputAngle = angleCheck * inputAngle;
+        InputAngle = angleCheck * InputAngle;
 
         //Add an object over a GameObject friend parameter to have it display where the player is moving.
         /*if (friend != null)
@@ -346,11 +344,11 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddForce(inputAngle * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(InputAngle * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
-        Vector2 capTest = new Vector2(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(inputAngle.x, inputAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
+        Vector2 capTest = new(rb.velocity.x, rb.velocity.z);
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(InputAngle.x, InputAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
@@ -358,23 +356,11 @@ public class PlayerControl : MonoBehaviour
 
     //If close enough to autoskate destination, invoke event to continue progress.
 
-    public void PlayerAutoskate(bool toggle)
-    {
-        if (toggle)
-        {
-            playerState = PlayerState.Autoskate;
-        }
-        else
-        {
-            playerState = PlayerState.Control;
-        }
-    }
-
     #region Enable and Disable
 
-    public void SetPlayerControl(int setState)
+    public void SetPlayerControl(PlayerState setState)
     {
-        playerState = (PlayerState)setState;
+        CurrentPlayerState = setState;
     }
 
     private void OnEnable()
@@ -405,7 +391,7 @@ public class PlayerControl : MonoBehaviour
             rb.isKinematic = false;
         }
 
-        playerState = PlayerState.Control;
+        CurrentPlayerState = PlayerState.Control;
         transform.position = basePosition;
     }
 

@@ -29,13 +29,13 @@ public class PlayerAnimationSounds : MonoBehaviour
         //Check to make sure the player is moving while this check occurs and they won't just repeatedly spam the sound in place.
         if (rb.velocity.magnitude > moveThreshold)
         {
-            if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.inputAngle.x, playerControl.inputAngle.z)) > 120 && canBreak)
+            if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.InputAngle.x, playerControl.InputAngle.z)) > 120 && canBreak)
             {
                 singlePlayer.clip = brakeSound;
                 singlePlayer.Play();
                 canBreak = false;
             }
-            if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.inputAngle.x, playerControl.inputAngle.z)) < 80 && !canBreak)
+            if (Vector2.Angle(new Vector2(rb.velocity.x, rb.velocity.z), new Vector2(playerControl.InputAngle.x, playerControl.InputAngle.z)) < 80 && !canBreak)
             {
                 canBreak = true;
             }
