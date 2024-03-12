@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -960,6 +960,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161241979}
   m_CullTransparentMesh: 1
+--- !u!1 &164708507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 164708508}
+  m_Layer: 0
+  m_Name: ControllerSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &164708508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164708507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185613849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,6 +1164,7 @@ GameObject:
   - component: {fileID: 202328587}
   - component: {fileID: 202328588}
   - component: {fileID: 202328589}
+  - component: {fileID: 202328590}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -1212,19 +1244,7 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 202328589}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: ChangeAmbientVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &202328589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,7 +1261,55 @@ MonoBehaviour:
   SFXSlider: {fileID: 230891953}
   ambientSlider: {fileID: 202328588}
   audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  test: 0
+  myVolumes:
+    masterVolume: 0
+    SFXvolume: 0
+    ambientVolume: 0
+--- !u!114 &202328590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202328586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 202328589}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeAmbientVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 202328589}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeAmbientVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &227053092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1397,7 @@ GameObject:
   - component: {fileID: 230891952}
   - component: {fileID: 230891953}
   - component: {fileID: 230891954}
+  - component: {fileID: 230891955}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -1408,19 +1477,7 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 230891954}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: ChangeSFXVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &230891954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,7 +1494,55 @@ MonoBehaviour:
   SFXSlider: {fileID: 230891953}
   ambientSlider: {fileID: 202328588}
   audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  test: 0
+  myVolumes:
+    masterVolume: 0
+    SFXvolume: 0
+    ambientVolume: 0
+--- !u!114 &230891955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230891951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 230891954}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeSFXVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 230891954}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeSFXVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &261578381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4120,6 +4225,7 @@ GameObject:
   - component: {fileID: 599481500}
   - component: {fileID: 599481501}
   - component: {fileID: 599481502}
+  - component: {fileID: 599481503}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -4199,19 +4305,7 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 599481502}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: ChangeMasterVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &599481502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4228,7 +4322,55 @@ MonoBehaviour:
   SFXSlider: {fileID: 230891953}
   ambientSlider: {fileID: 202328588}
   audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  test: 0
+  myVolumes:
+    masterVolume: 0
+    SFXvolume: 0
+    ambientVolume: 0
+--- !u!114 &599481503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599481499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 599481502}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeMasterVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 599481502}
+          m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+          m_MethodName: ChangeMasterVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &604533625
 GameObject:
   m_ObjectHideFlags: 0
@@ -11667,7 +11809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1646488691
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15122,14 +15264,14 @@ RectTransform:
   m_GameObject: {fileID: 2110768868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2826086, y: 1.17, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 161241980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0097075, y: -117.98}
+  m_AnchoredPosition: {x: -1, y: -190}
   m_SizeDelta: {x: 1920.8, y: 844.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110768870
@@ -15152,9 +15294,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f7cd31b2398e5194abec21aacdc1916d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77abcd999419e6d4eb876bbd08ac57f7, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -15771,3 +15913,4 @@ SceneRoots:
   - {fileID: 914071405}
   - {fileID: 1974692131}
   - {fileID: 1359426017}
+  - {fileID: 164708508}
