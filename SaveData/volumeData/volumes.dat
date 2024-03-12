@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<VolumeData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <masterVolume>0.0481200963</masterVolume>
+  <SFXvolume>0.126339182</SFXvolume>
+  <ambientVolume>0.6002636</ambientVolume>
+</VolumeData>
