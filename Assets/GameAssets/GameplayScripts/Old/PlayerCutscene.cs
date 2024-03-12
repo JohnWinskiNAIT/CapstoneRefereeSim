@@ -6,9 +6,11 @@ using static PlayerControl;
 
 public class PlayerCutscene : MonoBehaviour
 {
+    Vector3[] waypoints;
     private Vector3 autoskateDestination;
 
     PlayerControl controls;
+    PlayerCamera cam;
     GameObject waypointParent;
     Rigidbody rb;
 
@@ -18,13 +20,14 @@ public class PlayerCutscene : MonoBehaviour
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         controls = GetComponent<PlayerControl>();
+        cam = GetComponent<PlayerCamera>();
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controls.playerState == PlayerState.Autoskate)
+        if (controls.CurrentPlayerState == PlayerState.Autoskate)
         {
             AutoskateCheck();
         }
@@ -42,7 +45,7 @@ public class PlayerCutscene : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (controls.playerState == PlayerState.Autoskate)
+        if (controls.CurrentPlayerState == PlayerState.Autoskate)
         {
             //Logic for auto movement goes here
             AutoskateMovement();
@@ -71,11 +74,11 @@ public class PlayerCutscene : MonoBehaviour
     {
         rb.isKinematic = false;
 
-        if (waypointParent.transform.GetChild(progress) != null)
+        if (progress < waypoints.Length)
         {
-            autoskateDestination = waypointParent.transform.GetChild(progress).position;
+            autoskateDestination = waypoints[progress];
         }
-        if (controls.playerState != PlayerState.Autoskate)
+        if (controls.CurrentPlayerState != PlayerState.Autoskate)
         {
             controls.PlayerAutoskate(true);
         }
@@ -84,5 +87,6 @@ public class PlayerCutscene : MonoBehaviour
     private void LoadWaypoints(CutsceneData cutsceneData)
     {
         waypointParent = cutsceneData.waypointParent;
+        waypoints = cutsceneData.waypoints;
     }
 }

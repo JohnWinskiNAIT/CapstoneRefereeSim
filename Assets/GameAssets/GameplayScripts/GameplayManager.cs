@@ -229,8 +229,8 @@ public class CutsceneData
     public GameObject cameraParent;
     public bool wheelOpen;
 
-    Vector3[] waypoints;
-    Vector3[] cameraPoints;
+    public Vector3[] waypoints;
+    public Vector3[] cameraPoints;
     public PointType[] pointTypes;
 
     public enum PointType

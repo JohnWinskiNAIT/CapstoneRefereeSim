@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField]
+    GameObject playerCam;
+
     PlayerControl playerControls;
     [SerializeField]
     GameObject focusPointParent;
@@ -47,17 +50,7 @@ public class PlayerCamera : MonoBehaviour
             switch (currentMode)
             {
                 case CameraModes.Normal:
-                    // == ROTATION ==
-                    //Determine new values to rotate to.
-                    //float xChange = transform.rotation.eulerAngles.x - playerControls.cameraAngle.x;
-                    //float yChange = transform.rotation.eulerAngles.y - playerControls.cameraAngle.y;
-
-                    //Debug.Log($"Angle 1: {transform.rotation.eulerAngles.x} Angle 2: {playerControls.cameraAngle.y}");
-
-                    //Setting the rotation from euler atm.
-                    //transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
-
-                    transform.rotation = Quaternion.Euler(playerControls.cameraAngle.x, playerControls.cameraAngle.y, 0);
+                    playerCam.transform.rotation = Quaternion.Euler(playerControls.CameraAngle.x, playerControls.CameraAngle.y, 0);
                     break;
                 case CameraModes.FocusingOnPoint:
                     FocusCamera();
@@ -91,9 +84,9 @@ public class PlayerCamera : MonoBehaviour
             currentMode = CameraModes.FocusingOnPoint;
         }
 
-        savedAngle = transform.rotation.eulerAngles;
+        savedAngle = playerCam.transform.rotation.eulerAngles;
         currentPoint = intendedPoint;
-        nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position, Vector3.up).eulerAngles;
+        nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position, Vector3.up).eulerAngles;
 
         Debug.Log(nextAngle);
 
@@ -115,22 +108,22 @@ public class PlayerCamera : MonoBehaviour
 
     private void FocusCamera()
     {
-        Quaternion lerpTest1 = transform.rotation;
-        Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position);
+        Quaternion lerpTest1 = playerCam.transform.rotation;
+        Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position);
 
         if (Quaternion.Angle(lerpTest1, lerpTest2) > 1f )
         {
             float step = camSpeed * Time.deltaTime;
 
             //transform.rotation = Quaternion.Euler(currentAngle);
-            transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
+            playerCam.transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
 
             nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - transform.position, Vector3.up).eulerAngles;
             turnTimer += Time.deltaTime;
         }
         else
         {
-            transform.rotation = lerpTest2;
+            playerCam.transform.rotation = lerpTest2;
             GameplayManager.Instance.cameraDone = true;
         }
     }

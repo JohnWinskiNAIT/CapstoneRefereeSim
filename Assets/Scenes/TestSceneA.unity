@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5605057}
   m_Layer: 0
-  m_Name: WaypointParents
+  m_Name: PlayEndParents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 200
-  m_fontStyle: 0
+  m_fontStyle: 4
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -414,9 +414,8 @@ GameObject:
   - component: {fileID: 51658059}
   - component: {fileID: 51658058}
   - component: {fileID: 51658057}
-  - component: {fileID: 51658060}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,20 +495,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 698313453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &51658060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51658056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91fd36c37e556a84097d514e230423a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusPointParent: {fileID: 271113437}
-  camSpeed: 80
 --- !u!1 &56680605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,6 +1242,7 @@ Transform:
   m_Children:
   - {fileID: 1021783560}
   - {fileID: 622836553}
+  - {fileID: 1769651636}
   m_Father: {fileID: 5605057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &280171182
@@ -2687,6 +2673,7 @@ Transform:
   m_Children:
   - {fileID: 1396532534}
   - {fileID: 1622056943}
+  - {fileID: 766079677}
   m_Father: {fileID: 5605057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544726538
@@ -3300,6 +3287,7 @@ GameObject:
   - component: {fileID: 698313452}
   - component: {fileID: 698313457}
   - component: {fileID: 698313455}
+  - component: {fileID: 698313458}
   - component: {fileID: 698313454}
   - component: {fileID: 698313456}
   m_Layer: 0
@@ -3501,6 +3489,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738f9753e22b75743a5d9d06c88a6fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &698313458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698313451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fd36c37e556a84097d514e230423a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCam: {fileID: 51658056}
+  focusPointParent: {fileID: 271113437}
+  camSpeed: 80
 --- !u!1 &722407190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,6 +3610,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &766079676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766079677}
+  m_Layer: 0
+  m_Name: Waypoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &766079677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766079676}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 30, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 533896287}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &782968857
 GameObject:
   m_ObjectHideFlags: 0
@@ -7079,6 +7113,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727267925}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1769651635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1769651636}
+  m_Layer: 0
+  m_Name: FocusPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1769651636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769651635}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 56, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 271113438}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795710519
 GameObject:
   m_ObjectHideFlags: 0
@@ -7679,11 +7744,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playEndCutscene:
-    numberOfPoints: 2
+    numberOfPoints: 3
     waypointParent: {fileID: 533896286}
     cameraParent: {fileID: 271113437}
     wheelOpen: 1
-    pointTypes: 
+    waypoints:
+    - {x: 30, y: 0, z: 0}
+    - {x: 30, y: 0, z: 0}
+    - {x: 30, y: 0, z: 0}
+    cameraPoints:
+    - {x: 30, y: 8, z: 0}
+    - {x: 45, y: 8, z: 0}
+    - {x: 45, y: 8, z: 0}
+    pointTypes: 000000000000000001000000
   cameraDone: 0
   moveDone: 0
   playerUI: {fileID: 1119031677}

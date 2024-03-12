@@ -95,15 +95,15 @@ public class PlayerUIManager : MonoBehaviour
     // Visual effects are performed in this update.
     private void Update()
     {
-        if (tempPlayerControl.heldAction != null)
+        if (tempPlayerControl.HeldAction != null)
         {
             inputStoreRadial.fillAmount = tempPlayerControl.StoredActionStatus();
-            if (tempPlayerControl.heldAction == whistleCancelAction)
+            if (tempPlayerControl.HeldAction == whistleCancelAction)
             {
                 rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
             }
-            if (tempPlayerControl.heldAction == callSelectAction)
+            if (tempPlayerControl.HeldAction == callSelectAction)
             {
                 leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
                 leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
@@ -268,7 +268,6 @@ public class PlayerUIManager : MonoBehaviour
             currentIcons[i].transform.localScale = new Vector3(iconScale, iconScale, iconScale);
             currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
             currentIcons[i].GetComponent<Image>().sprite = wheelInfo.options[i].optionImage;
-            //set the image for each icon
         }
     }
 
