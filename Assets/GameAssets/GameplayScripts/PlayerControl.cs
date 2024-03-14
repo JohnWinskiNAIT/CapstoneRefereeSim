@@ -84,7 +84,7 @@ public class PlayerControl : MonoBehaviour
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         uiManager.isVREnabled = isVREnabled;
 
-        CameraAngle = Vector3.zero;
+        CameraAngle = cam.transform.rotation.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -352,6 +352,11 @@ public class PlayerControl : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
+    }
+
+    public void SetCamAngles(Vector3 camAngles)
+    {
+        CameraAngle = camAngles;
     }
 
     //If close enough to autoskate destination, invoke event to continue progress.

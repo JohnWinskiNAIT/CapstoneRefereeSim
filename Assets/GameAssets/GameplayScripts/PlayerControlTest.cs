@@ -348,7 +348,7 @@ public class PlayerControlTest : MonoBehaviour
 
     private void LoadWaypoints(CutsceneData cutsceneData)
     {
-        waypointParent = cutsceneData.waypointParent;
+        //waypointParent = cutsceneData.waypointParent;
     }
 
     #endregion
