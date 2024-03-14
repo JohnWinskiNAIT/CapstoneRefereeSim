@@ -13,7 +13,6 @@ public struct SettingsData
 [Serializable]
 public struct PenaltyData
 {
-    public string penaltyName;
-    public Sprite penaltyIcon;
+    public string PenaltyName;
     public bool isEnabled;
 }
