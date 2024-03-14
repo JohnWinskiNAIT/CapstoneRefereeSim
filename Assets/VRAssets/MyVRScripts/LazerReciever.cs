@@ -28,7 +28,9 @@ public class LazerReciever : MonoBehaviour
     {
         coll = GetComponent<Collider>();
         center = transform.position;
+
         if (bottLeftBound != null) bottLeftPos = bottLeftBound.transform.localPosition;
+
         bottLeftPos2D = new Vector2(bottLeftPos.x, bottLeftPos.y);
         button = GetComponentInParent<Button>();
     }
@@ -72,9 +74,8 @@ public class LazerReciever : MonoBehaviour
 
 
     public void Activate()
-    {
-        Debug.Log($"{button.onClick.GetPersistentMethodName(0)}"); 
-
+    {   //Makes the button react as if it has been clicked. Runs all the OnClick() events  in the Button component
+        Debug.Log($"{button.onClick.GetPersistentMethodName(0)}");  //returns name of the method we are calling
         button.onClick.Invoke();
     }
 }
