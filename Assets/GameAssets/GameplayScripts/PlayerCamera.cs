@@ -11,6 +11,8 @@ public class PlayerCamera : MonoBehaviour
     GameObject playerCam;
 
     PlayerControl playerControls;
+    [SerializeField]
+    GameObject focusPointParent;
     Vector3[] focusPoints;
 
     [SerializeField]
@@ -32,7 +34,6 @@ public class PlayerCamera : MonoBehaviour
         GameplayEvents.LoadCutscene.AddListener(LoadCameraPoints);
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneCallback);
         GameplayEvents.InitializePlay.AddListener(ResetCamera);
-        GameplayEvents.EndCutscene.AddListener(CutsceneEndCallback);
 
         CurrentMode = CameraModes.Normal;
     }
@@ -48,23 +49,17 @@ public class PlayerCamera : MonoBehaviour
         {
             FocusCamera();
         }
-
     }
 
     private void LoadCameraPoints(CutsceneData cutsceneData)
     {
         focusPoints = cutsceneData.cameraPoints;
+        currentPoint = 0;
     }
 
     private void CutsceneCallback(int progress)
     {
         CameraToPoint(progress);
-    }
-
-    private void CutsceneEndCallback()
-    {
-        playerControls.SetCamAngles(playerCam.transform.rotation.eulerAngles);
-        CurrentMode = CameraModes.Normal;
     }
 
     private void CameraToPoint(int intendedPoint)
@@ -73,7 +68,22 @@ public class PlayerCamera : MonoBehaviour
         {
             CurrentMode = CameraModes.FocusingOnPoint;
         }
+
+        //savedAngle = playerCam.transform.rotation.eulerAngles;
         currentPoint = intendedPoint;
+        //nextAngle = Quaternion.LookRotation(focusPoints[currentPoint].position - playerCam.transform.position, Vector3.up).eulerAngles;
+
+        //Debug.Log(nextAngle);
+
+        //if (savedAngle.x > 180)
+        //{
+        //    savedAngle.x -= 360;
+        //}
+        //if (savedAngle.y > 180)
+        //{
+        //    savedAngle.y -= 360;
+        //}
+        //turnTimer = 0;
     }
         
     public void SetState(CameraModes newMode)
@@ -89,7 +99,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void ResetCamera()
     {
-        //CurrentMode = CameraModes.Normal;
+        CurrentMode = CameraModes.Normal;
     }
 
     private void FocusCamera()

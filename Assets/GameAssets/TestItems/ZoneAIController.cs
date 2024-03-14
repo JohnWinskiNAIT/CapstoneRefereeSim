@@ -52,8 +52,6 @@ public class ZoneAIController : MonoBehaviour
     private void Awake()
     {
         GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
-        GameplayEvents.LoadCutscene.AddListener(CutsceneStartCallback);
-        GameplayEvents.EndCutscene.AddListener(CutsceneEndCallback);
         GameplayEvents.SetPause.AddListener(PauseAI);
     }
 
@@ -92,6 +90,7 @@ public class ZoneAIController : MonoBehaviour
         }
         GetNextPosition();
         ManagerCallback();
+        aiActive = true;
     }
 
     public void SetupAIAttributes(AIType typeOfPlayer, AITeam playerTeam, GameObject zoneParentObject, Vector3 baseSpawn)
@@ -301,16 +300,6 @@ public class ZoneAIController : MonoBehaviour
             rb.velocity = savedVelocity;
             aiActive = true;
         }
-    }
-
-    private void CutsceneStartCallback(CutsceneData data)
-    {
-        aiActive = false;
-    }
-
-    private void CutsceneEndCallback()
-    {
-        aiActive = true;
     }
 
     private void OnTriggerEnter(Collider other)

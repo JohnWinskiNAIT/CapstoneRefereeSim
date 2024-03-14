@@ -10,10 +10,11 @@ public class GameplayManager : MonoBehaviour
     static public GameplayManager Instance;
 
     [SerializeField]
-    CutsceneData playEndCutscene, puckDropCutscene;
+    CutsceneData playEndCutscene;
 
     [SerializeField]
     FaceoffData[] rinkfaceOffs;
+
 
     CutsceneData currentCutscene;
     PlayInformation currentPlayInfo;
@@ -55,13 +56,13 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.EndPlay.AddListener(EndPlay);
         GameplayEvents.InitializePlay.AddListener(StartPlay);
         GameplayEvents.SetPause.AddListener(PauseGame);
+
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     private void Start()
     {
         GeneratePlayers();
-        GameplayEvents.InitializePlay.Invoke();
-
     }
 
     void GeneratePlayers()
@@ -124,32 +125,29 @@ public class GameplayManager : MonoBehaviour
         if (cutsceneStatus < currentCutscene.numberOfPoints)
         {
             GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
-            if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
+        }
+        else
+        {
+            if (currentCutscene.wheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true);
                 Debug.Log($"{currentPlayInfo.penaltyType}");
             }
-
-            moveDone = false;
-            cameraDone = false;
         }
-        else
-        {
-            GameplayEvents.EndCutscene.Invoke();
-            currentCutscene = null;
-        }
+        moveDone = false;
+        cameraDone = false;
     }
 
     private void Update()
     {
         if (!freezeManager)
         {
-            if (moveDone && cameraDone && currentCutscene != null)
+            if (moveDone && cameraDone)
             {
                 ProgressCutscene();
             }
 
-            if (playOngoing && currentCutscene == null)
+            if (playOngoing)
             {
                 playTimer += Time.deltaTime;
                 PlayCheck();
@@ -182,13 +180,8 @@ public class GameplayManager : MonoBehaviour
     private void StartPlay()
     {
         InitiatePlayInformation();
-        GameplayEvents.LoadCutscene.Invoke(puckDropCutscene);
-        currentCutscene = puckDropCutscene;
-        cutsceneStatus = 0;
-        
         playTimer = 0;
         playOngoing = true;
-        GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
     }
 
     //Creates the PlayInformation struct, and fills it.
@@ -237,10 +230,10 @@ public class GameplayManager : MonoBehaviour
 [Serializable]
 public class CutsceneData
 {
-    public int numberOfPoints
-    {
-        get { return waypoints.Length; }
-    }
+    public int numberOfPoints;
+    public GameObject waypointParent;
+    public GameObject cameraParent;
+    public bool wheelOpen;
 
     public Vector3[] waypoints;
     public Vector3[] cameraPoints;

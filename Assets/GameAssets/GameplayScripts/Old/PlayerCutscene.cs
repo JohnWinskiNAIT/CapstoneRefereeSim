@@ -6,11 +6,8 @@ using static PlayerControl;
 
 public class PlayerCutscene : MonoBehaviour
 {
-    const float snapThreshold = 2f;
-
     Vector3[] waypoints, cameraPoints;
     private Vector3 autoskateDestination;
-    Vector3 basePosition;
 
     PlayerControl controls;
     PlayerCamera cam;
@@ -20,11 +17,8 @@ public class PlayerCutscene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        basePosition = transform.position;
-
         GameplayEvents.CutsceneTrigger.AddListener(CutsceneListener);
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
-        GameplayEvents.EndCutscene.AddListener(CutsceneEndCallback);
         controls = GetComponent<PlayerControl>();
         cam = GetComponent<PlayerCamera>();
         rb = GetComponent<Rigidbody>();
@@ -41,17 +35,24 @@ public class PlayerCutscene : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (controls.CurrentPlayerState == PlayerState.Autoskate && !GameplayManager.Instance.moveDone)
+        if (controls.CurrentPlayerState == PlayerState.Autoskate)
         {
             //Logic for auto movement goes here
             AutoskateMovement();
         }
     }
 
+    #region Cutscene Camera Methods
+    private void ActivateCamera()
+    {
+        cam.SetState(PlayerCamera.CameraModes.FocusingOnPoint, cameraPoints);
+    }
+    #endregion
+
     #region Cutscene Movement Methods
     private void AutoskateCheck()
     {
-        if ((autoskateDestination - transform.position).magnitude < snapThreshold)
+        if ((autoskateDestination - transform.position).magnitude < 4f)
         {
             GameplayManager.Instance.moveDone = true;
             transform.position = autoskateDestination;
@@ -78,6 +79,11 @@ public class PlayerCutscene : MonoBehaviour
     }
     #endregion
 
+    private void ResetPlayer()
+    {
+        //Reset camera and rb/transform here.
+    }
+
     private void CutsceneListener(int progress)
     {
         rb.isKinematic = false;
@@ -86,22 +92,15 @@ public class PlayerCutscene : MonoBehaviour
         {
             autoskateDestination = waypoints[progress];
         }
-    }
-
-    private void LoadWaypoints(CutsceneData cutsceneData)
-    {
-        waypoints = cutsceneData.waypoints;
-        cameraPoints = cutsceneData.cameraPoints;
-
         if (controls.CurrentPlayerState != PlayerState.Autoskate)
         {
             controls.SetPlayerControl(PlayerState.Autoskate);
         }
     }
 
-    private void CutsceneEndCallback()
+    private void LoadWaypoints(CutsceneData cutsceneData)
     {
-        controls.SetPlayerControl(PlayerState.Control);
-        rb.isKinematic = false;
+        waypoints = cutsceneData.waypoints;
+        cameraPoints = cutsceneData.cameraPoints;
     }
 }
