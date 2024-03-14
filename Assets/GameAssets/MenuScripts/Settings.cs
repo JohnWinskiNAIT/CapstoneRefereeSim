@@ -41,7 +41,7 @@ public class Settings : MonoBehaviour
     }
     public void TogglePenalty(int index)
     {
-        mySettings.penalties[index].isEnabled = !mySettings.penalties[index].isEnabled;
+        mySettings.penalties[index].isEnabled = myPenaltyToggles[index].isOn;
         SaveSettings();
     }
     public void ChangeMasterVolume()

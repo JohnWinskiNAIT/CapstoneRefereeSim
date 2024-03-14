@@ -10,11 +10,11 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossCheck</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>BlindCheck</PenaltyName>
@@ -30,11 +30,11 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HighStick</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Tripping</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
