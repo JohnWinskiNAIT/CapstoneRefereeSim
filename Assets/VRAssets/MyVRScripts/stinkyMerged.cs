@@ -457,7 +457,7 @@ public class stinkyMerged : MonoBehaviour
 
     private void LoadWaypoints(CutsceneData cutsceneData)
     {
-        waypointParent = cutsceneData.waypointParent;
+        //waypointParent = cutsceneData.waypointParent;
     }
 
     #endregion
