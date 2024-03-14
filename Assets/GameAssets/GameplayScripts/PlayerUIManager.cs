@@ -16,8 +16,6 @@ public class PlayerUIManager : MonoBehaviour
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
-    [SerializeField]
-    WheelData[] penaltyData;
     InputAction whistleCancelAction, callSelectAction, wheelTestAction;
 
     [SerializeField]
@@ -321,17 +319,5 @@ public class PlayerUIManager : MonoBehaviour
             public string optionText;
             public PenaltyType optionType;
         }
-
-        public void SetUpWheel()
-        {
-            //Settings.mySettings.penalties[]
-        }
-    }
-
-    [Serializable]
-    private struct WheelData
-    {
-        public string penaltyId;
-        public Sprite penaltyIcon;
     }
 }

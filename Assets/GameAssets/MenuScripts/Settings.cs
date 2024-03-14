@@ -24,7 +24,7 @@ public class Settings : MonoBehaviour
         mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
         for (int i = 0; i < mySettings.penalties.Length; i++)
         {
-            mySettings.penalties[i].penaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
+            mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
         }
         filePath = rootPath + "settingsData\\settings.dat";
         LoadSettings();
