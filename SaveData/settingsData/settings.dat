@@ -45,6 +45,38 @@
       <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
+      <PenaltyName>CrossCheck</PenaltyName>
+      <isEnabled>false</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>BlindCheck</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Holding</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Interference</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>HighStick</PenaltyName>
+      <isEnabled>false</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Tripping</PenaltyName>
+      <isEnabled>false</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Hooking</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Slashing</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
       <PenaltyName>Hand Pass</PenaltyName>
       <isEnabled>true</isEnabled>
     </PenaltyData>
