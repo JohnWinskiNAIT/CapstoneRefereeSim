@@ -10,10 +10,6 @@ public class OffsetPlayer : MonoBehaviour
     Vector3 distanceVectorNormalized;
     Vector3 targetPosition;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

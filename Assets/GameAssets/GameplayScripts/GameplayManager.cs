@@ -13,7 +13,8 @@ public class GameplayManager : MonoBehaviour
     CutsceneData playEndCutscene, puckDropCutscene;
 
     [SerializeField]
-    FaceoffData[] rinkfaceOffs;
+    FaceoffData[] rinkFaceoffs;
+    public FaceoffData CurrentFaceoff { get; private set; }
 
     CutsceneData currentCutscene;
     PlayInformation currentPlayInfo;
@@ -59,9 +60,16 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        SelectFaceoff();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
+    }
 
+    void ResetForNextPlay()
+    {
+        SelectFaceoff();
+        //UpdatePlayers();
+        GameplayEvents.InitializePlay.Invoke();
     }
 
     void GeneratePlayers()
@@ -72,10 +80,18 @@ public class GameplayManager : MonoBehaviour
             if (enabledPlayers[i])
             {
                 createdPlayer = Instantiate(playerPrefab, null);
-                createdPlayer.transform.position = setupInformation[i].startingPosition;
-                createdPlayer.GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].startingPosition);
+                createdPlayer.transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
+                createdPlayer.GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset);
             }
         }
+    }
+
+    void SelectFaceoff()
+    {
+        int selectedId = Random.Range(0, rinkFaceoffs.Length);
+        // for or while loop here to check if the selectedId is enabled
+
+        CurrentFaceoff = rinkFaceoffs[selectedId];
     }
 
     // Update is called once per frame
@@ -121,7 +137,7 @@ public class GameplayManager : MonoBehaviour
     public void ProgressCutscene()
     {
         cutsceneStatus++;
-        if (cutsceneStatus < currentCutscene.numberOfPoints)
+        if (cutsceneStatus < currentCutscene.NumberOfPoints)
         {
             GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
             if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
@@ -230,14 +246,15 @@ public class GameplayManager : MonoBehaviour
     {
         public ZoneAIController.AITeam team;
         public ZoneAIController.AIType type;
-        public Vector3 startingPosition;
+        public Vector3 centrePosition;
+        public Vector3 otherPosition;
     }
 }
 
 [Serializable]
 public class CutsceneData
 {
-    public int numberOfPoints
+    public int NumberOfPoints
     {
         get { return waypoints.Length; }
     }
@@ -254,11 +271,13 @@ public class CutsceneData
     }
 }
 
+[Serializable]
 public class FaceoffData
 {
     public int faceoffId;
     public string faceoffName;
-    Vector3 unscaledOffset;
+    public Vector3 unscaledOffset;
+    public bool isCentre;
 
     //float circleMagnitude;
 }

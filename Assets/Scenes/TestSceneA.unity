@@ -275,7 +275,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 144
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -815,7 +815,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3802,7 +3802,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4500,29 +4500,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
-  penaltyData:
-  - penaltyId: HeadContact
-    penaltyIcon: {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
-  - penaltyId: SlewFoot
-    penaltyIcon: {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
-  - penaltyId: CrossCheck
-    penaltyIcon: {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
-  - penaltyId: BlindCheck
-    penaltyIcon: {fileID: 21300000, guid: fb84205c0ecf23e42913bebd9585cc0a, type: 3}
-  - penaltyId: Holding
-    penaltyIcon: {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
-  - penaltyId: Interference
-    penaltyIcon: {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
-  - penaltyId: HighStick
-    penaltyIcon: {fileID: 21300000, guid: fb84205c0ecf23e42913bebd9585cc0a, type: 3}
-  - penaltyId: Tripping
-    penaltyIcon: {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
-  - penaltyId: Hooking
-    penaltyIcon: {fileID: 21300000, guid: fb84205c0ecf23e42913bebd9585cc0a, type: 3}
-  - penaltyId: Hand Pass
-    penaltyIcon: {fileID: 21300000, guid: fb84205c0ecf23e42913bebd9585cc0a, type: 3}
-  - penaltyId: Slashing
-    penaltyIcon: {fileID: 21300000, guid: fb84205c0ecf23e42913bebd9585cc0a, type: 3}
   tempPlayerControl: {fileID: 698313452}
   inputStoreRadial: {fileID: 1439535752}
   leftSideStore: {fileID: 519493058}
@@ -7581,7 +7558,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7785,6 +7762,43 @@ MonoBehaviour:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 8, z: 0}
     pointTypes: 000000000000000000000000
+  rinkFaceoffs:
+  - faceoffId: 0
+    faceoffName: centre
+    unscaledOffset: {x: 0, y: 0, z: 0}
+    isCentre: 1
+  - faceoffId: 1
+    faceoffName: centreTopLeft
+    unscaledOffset: {x: 27.5, y: 0, z: 27.5}
+    isCentre: 0
+  - faceoffId: 2
+    faceoffName: centreTopRight
+    unscaledOffset: {x: 27.5, y: 0, z: -27.5}
+    isCentre: 0
+  - faceoffId: 3
+    faceoffName: centerBottomLeft
+    unscaledOffset: {x: -27.5, y: 0, z: 27.5}
+    isCentre: 0
+  - faceoffId: 4
+    faceoffName: centerBottomRight
+    unscaledOffset: {x: -27.5, y: 0, z: -27.5}
+    isCentre: 0
+  - faceoffId: 5
+    faceoffName: cornerTopLeft
+    unscaledOffset: {x: 29.35, y: 0, z: 56.7}
+    isCentre: 0
+  - faceoffId: 6
+    faceoffName: cornerTopRight
+    unscaledOffset: {x: 29.35, y: 0, z: -56.7}
+    isCentre: 0
+  - faceoffId: 7
+    faceoffName: cornerBottomLeft
+    unscaledOffset: {x: -29.35, y: 0, z: 56.7}
+    isCentre: 0
+  - faceoffId: 8
+    faceoffName: cornerBottomRight
+    unscaledOffset: {x: -29.35, y: 0, z: -56.7}
+    isCentre: 0
   cameraDone: 0
   moveDone: 0
   playerUI: {fileID: 1119031677}
@@ -7792,34 +7806,44 @@ MonoBehaviour:
   setupInformation:
   - team: 0
     type: 0
-    startingPosition: {x: 0, y: 0, z: 10}
+    centrePosition: {x: 0, y: 0, z: 10}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 0
     type: 0
-    startingPosition: {x: 22, y: 0, z: 5}
+    centrePosition: {x: 22, y: 0, z: 5}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 0
     type: 0
-    startingPosition: {x: -22, y: 0, z: 5}
+    centrePosition: {x: -22, y: 0, z: 5}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 0
     type: 1
-    startingPosition: {x: 27, y: 0, z: 27}
+    centrePosition: {x: 27, y: 0, z: 27}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 0
     type: 1
-    startingPosition: {x: -27, y: 0, z: 27}
+    centrePosition: {x: -27, y: 0, z: 27}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 1
     type: 0
-    startingPosition: {x: 0, y: 0, z: -10}
+    centrePosition: {x: 0, y: 0, z: -10}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 1
     type: 0
-    startingPosition: {x: 22, y: 0, z: -5}
+    centrePosition: {x: 22, y: 0, z: -5}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 1
     type: 0
-    startingPosition: {x: -22, y: 0, z: -5}
+    centrePosition: {x: -22, y: 0, z: -5}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 1
     type: 1
-    startingPosition: {x: 27, y: 0, z: -27}
+    centrePosition: {x: 27, y: 0, z: -27}
+    otherPosition: {x: 0, y: 0, z: 0}
   - team: 1
     type: 1
-    startingPosition: {x: -27, y: 0, z: -27}
+    centrePosition: {x: -27, y: 0, z: -27}
+    otherPosition: {x: 0, y: 0, z: 0}
   zoneParent: {fileID: 982893559}
   playerPrefab: {fileID: 2851081034928759604, guid: dd6b0523d27fec449ac260b7e78f6f26, type: 3}
   playTest: {fileID: 1210182195}
