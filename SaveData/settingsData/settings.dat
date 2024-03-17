@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <scenarios>4</scenarios>
+  <screenMode>0</screenMode>
   <masterVolume>0.0001</masterVolume>
   <SFXvolume>0.0001</SFXvolume>
   <ambientVolume>0.0001</ambientVolume>
+  <lastMasterVolume>0</lastMasterVolume>
+  <lastSFXvolume>0</lastSFXvolume>
+  <lastAmbientVolume>0</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
@@ -14,7 +19,7 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossCheck</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>BlindCheck</PenaltyName>
@@ -30,11 +35,11 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HighStick</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Tripping</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
@@ -49,4 +54,54 @@
       <isEnabled>true</isEnabled>
     </PenaltyData>
   </penalties>
+  <startingPos>
+    <StartingPosData>
+      <posName>BlueCenter</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueLeftW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueRightW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueRightD</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueLeftD</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueGoalie</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedCenter</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedRightW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedLeftW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedRightD</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedLeftD</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedGoalie</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+  </startingPos>
 </SettingsData>
