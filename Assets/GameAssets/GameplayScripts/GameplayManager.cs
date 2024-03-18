@@ -12,6 +12,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     CutsceneData playEndCutscene, puckDropCutscene;
 
+    CutsceneData offsetPuckDropCutscene;
+
     [SerializeField]
     FaceoffData[] rinkFaceoffs;
     public FaceoffData CurrentFaceoff { get; private set; }

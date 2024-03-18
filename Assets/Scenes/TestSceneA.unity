@@ -7766,38 +7766,56 @@ MonoBehaviour:
   - faceoffId: 0
     faceoffName: centre
     unscaledOffset: {x: 0, y: 0, z: 0}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 1
   - faceoffId: 1
     faceoffName: centreTopLeft
     unscaledOffset: {x: 27.5, y: 0, z: 27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 2
     faceoffName: centreTopRight
     unscaledOffset: {x: 27.5, y: 0, z: -27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 3
     faceoffName: centerBottomLeft
     unscaledOffset: {x: -27.5, y: 0, z: 27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 4
     faceoffName: centerBottomRight
     unscaledOffset: {x: -27.5, y: 0, z: -27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 5
     faceoffName: cornerTopLeft
     unscaledOffset: {x: 29.35, y: 0, z: 56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 6
     faceoffName: cornerTopRight
     unscaledOffset: {x: 29.35, y: 0, z: -56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 7
     faceoffName: cornerBottomLeft
     unscaledOffset: {x: -29.35, y: 0, z: 56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   - faceoffId: 8
     faceoffName: cornerBottomRight
     unscaledOffset: {x: -29.35, y: 0, z: -56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
     isCentre: 0
   cameraDone: 0
   moveDone: 0
@@ -7819,11 +7837,11 @@ MonoBehaviour:
   - team: 0
     type: 1
     centrePosition: {x: 27, y: 0, z: 27}
-    otherPosition: {x: 11, y: 0, z: 9}
+    otherPosition: {x: 13, y: 0, z: 11}
   - team: 0
     type: 1
     centrePosition: {x: -27, y: 0, z: 27}
-    otherPosition: {x: -11, y: 0, z: 9}
+    otherPosition: {x: -13, y: 0, z: 11}
   - team: 1
     type: 0
     centrePosition: {x: 0, y: 0, z: -10}
@@ -7839,11 +7857,11 @@ MonoBehaviour:
   - team: 1
     type: 1
     centrePosition: {x: 27, y: 0, z: -27}
-    otherPosition: {x: 11, y: 0, z: -9}
+    otherPosition: {x: 13, y: 0, z: -11}
   - team: 1
     type: 1
     centrePosition: {x: -27, y: 0, z: -27}
-    otherPosition: {x: -11, y: 0, z: -9}
+    otherPosition: {x: -13, y: 0, z: -11}
   zoneParent: {fileID: 982893559}
   playerPrefab: {fileID: 2851081034928759604, guid: dd6b0523d27fec449ac260b7e78f6f26, type: 3}
   playTest: {fileID: 1210182195}
