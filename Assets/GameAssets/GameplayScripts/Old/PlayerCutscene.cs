@@ -100,6 +100,7 @@ public class PlayerCutscene : MonoBehaviour
 
         if (cutsceneData.pointTypes[0] == CutsceneData.PointType.Teleport)
         {
+            //Debug.Log(waypoints[0]);
             transform.position = waypoints[0];
         }
     }

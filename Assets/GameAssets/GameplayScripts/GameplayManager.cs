@@ -23,6 +23,7 @@ public class GameplayManager : MonoBehaviour
 
     int cutsceneStatus;
     float playTimer, callTimestamp;
+    float? activationTime;
 
     public bool cameraDone, moveDone;
     bool playOngoing, penaltyOccured, penaltyCall;
@@ -63,6 +64,8 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        offsetPuckDropCutscene = new();
+
         SelectFaceoff();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
@@ -153,6 +156,8 @@ public class GameplayManager : MonoBehaviour
         {
             Debug.Log("False");
         }
+
+        SelectFaceoff();
         GameplayEvents.InitializePlay.Invoke();
     }
 
@@ -203,11 +208,17 @@ public class GameplayManager : MonoBehaviour
 
     private void PlayCheck()
     {
+        if (playTimer > currentPlayInfo.penaltyTimer - 10f && activationTime == null)
+        {
+            Vector3 distance = currentPlayers[currentPlayInfo.offenderId].transform.position - currentPlayers[currentPlayInfo.affectedId].transform.position;
+            Debug.Log(distance.magnitude);
+            activationTime = distance.magnitude;
+        }
+
         if (playTimer > currentPlayInfo.penaltyTimer && !penaltyOccured)
         {
             penaltyOccured = true;
             playTest.SetActive(true);
-
         }
 
         if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
@@ -219,14 +230,16 @@ public class GameplayManager : MonoBehaviour
 
     private void StartPlay()
     {
-        SelectFaceoff();
         UpdatePlayers();
         InitiatePlayInformation();
-        offsetPuckDropCutscene = puckDropCutscene;
+        offsetPuckDropCutscene.OverwriteCutscene(puckDropCutscene);
         offsetPuckDropCutscene.PuckDrop(CurrentFaceoff.unscaledOffset);
         GameplayEvents.LoadCutscene.Invoke(offsetPuckDropCutscene);
         currentCutscene = offsetPuckDropCutscene;
         cutsceneStatus = 0;
+        activationTime = null;
+
+        //Debug.Log(CurrentFaceoff.faceoffName);
         
         playTimer = 0;
         playOngoing = true;
@@ -242,11 +255,15 @@ public class GameplayManager : MonoBehaviour
             stopTimer = Random.Range(0, 15f)
         };
         //Replace this random range with a reference to a list of all players in the scene.
-        int player1 = Random.Range(0, 30);
-        int player2 = Random.Range(0, 30);
-        while (player2 ==  player1)
+        int player1 = Random.Range(0, currentPlayers.Length / 2);
+        while (!enabledPlayers[player1])
         {
-            player2 = Random.Range(0, 30);
+            player1 = Random.Range(0, currentPlayers.Length / 2);
+        }
+        int player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
+        while (!enabledPlayers[player2])
+        {
+            player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
         }
         currentPlayInfo.offenderId = player1;
         currentPlayInfo.affectedId = player2;
@@ -280,6 +297,7 @@ public class GameplayManager : MonoBehaviour
 [Serializable]
 public class CutsceneData
 {
+
     public int NumberOfPoints
     {
         get { return waypoints.Length; }
@@ -304,6 +322,16 @@ public class CutsceneData
             }
             waypoints[i] += puckPosition;
         }
+    }
+
+    public void OverwriteCutscene(CutsceneData overwritingData)
+    {
+        waypoints = new Vector3[overwritingData.NumberOfPoints];
+        Array.Copy(overwritingData.waypoints, waypoints, overwritingData.waypoints.Length);
+        cameraPoints = new Vector3[overwritingData.NumberOfPoints];
+        Array.Copy(overwritingData.cameraPoints, cameraPoints, overwritingData.cameraPoints.Length);
+        pointTypes = new PointType[overwritingData.NumberOfPoints];
+        Array.Copy(overwritingData.pointTypes, pointTypes, overwritingData.pointTypes.Length);
     }
 
     public enum PointType
