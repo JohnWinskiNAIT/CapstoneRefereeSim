@@ -90,6 +90,9 @@ public class Settings : MonoBehaviour
         }
         else
         {
+            masterSlider.value = 1;
+            SFXSlider.value = 1;
+            ambientSlider.value = 1;
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
                 mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
@@ -113,6 +116,8 @@ public class Settings : MonoBehaviour
             if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
             {
                 mySettings.lastMasterVolume = masterSlider.value;
+                mySettings.lastSFXvolume = SFXSlider.value;
+                mySettings.lastAmbientVolume = ambientSlider.value;
             }
             masterSlider.value = 0.0001f;
             ChangeMasterVolume();
