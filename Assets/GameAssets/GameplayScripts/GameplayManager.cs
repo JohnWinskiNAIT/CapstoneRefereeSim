@@ -12,8 +12,11 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     CutsceneData playEndCutscene, puckDropCutscene;
 
+    CutsceneData offsetPuckDropCutscene;
+
     [SerializeField]
-    FaceoffData[] rinkfaceOffs;
+    FaceoffData[] rinkFaceoffs;
+    public FaceoffData CurrentFaceoff { get; private set; }
 
     CutsceneData currentCutscene;
     PlayInformation currentPlayInfo;
@@ -25,6 +28,7 @@ public class GameplayManager : MonoBehaviour
     bool playOngoing, penaltyOccured, penaltyCall;
 
     bool freezeManager;
+    GameObject[] currentPlayers;
 
     public GameObject playerUI;
 
@@ -59,23 +63,57 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        SelectFaceoff();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
-
     }
 
     void GeneratePlayers()
     {
-        GameObject createdPlayer;
+        currentPlayers = new GameObject[enabledPlayers.Length];
         for (int i = 0; i < enabledPlayers.Length; i++)
         {
             if (enabledPlayers[i])
             {
-                createdPlayer = Instantiate(playerPrefab, null);
-                createdPlayer.transform.position = setupInformation[i].startingPosition;
-                createdPlayer.GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].startingPosition);
+                currentPlayers[i] = Instantiate(playerPrefab, null);
+                if (CurrentFaceoff.isCentre)
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
+                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset);
+                }
+                else
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
+                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset);
+                }
             }
         }
+    }
+
+    void UpdatePlayers()
+    {
+        for (int i = 0; i < currentPlayers.Length; i++)
+        {
+            if (currentPlayers[i] != null)
+            {
+                if (CurrentFaceoff.isCentre)
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
+                }
+                else
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
+                }
+            }
+        }
+    }
+
+    void SelectFaceoff()
+    {
+        int selectedId = Random.Range(0, rinkFaceoffs.Length);
+        // for or while loop here to check if the selectedId is enabled
+
+        CurrentFaceoff = rinkFaceoffs[selectedId];
     }
 
     // Update is called once per frame
@@ -121,7 +159,7 @@ public class GameplayManager : MonoBehaviour
     public void ProgressCutscene()
     {
         cutsceneStatus++;
-        if (cutsceneStatus < currentCutscene.numberOfPoints)
+        if (cutsceneStatus < currentCutscene.NumberOfPoints)
         {
             GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
             if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
@@ -181,9 +219,13 @@ public class GameplayManager : MonoBehaviour
 
     private void StartPlay()
     {
+        SelectFaceoff();
+        UpdatePlayers();
         InitiatePlayInformation();
-        GameplayEvents.LoadCutscene.Invoke(puckDropCutscene);
-        currentCutscene = puckDropCutscene;
+        offsetPuckDropCutscene = puckDropCutscene;
+        offsetPuckDropCutscene.PuckDrop(CurrentFaceoff.unscaledOffset);
+        GameplayEvents.LoadCutscene.Invoke(offsetPuckDropCutscene);
+        currentCutscene = offsetPuckDropCutscene;
         cutsceneStatus = 0;
         
         playTimer = 0;
@@ -230,14 +272,15 @@ public class GameplayManager : MonoBehaviour
     {
         public ZoneAIController.AITeam team;
         public ZoneAIController.AIType type;
-        public Vector3 startingPosition;
+        public Vector3 centrePosition;
+        public Vector3 otherPosition;
     }
 }
 
 [Serializable]
 public class CutsceneData
 {
-    public int numberOfPoints
+    public int NumberOfPoints
     {
         get { return waypoints.Length; }
     }
@@ -246,21 +289,41 @@ public class CutsceneData
     public Vector3[] cameraPoints;
     public PointType[] pointTypes;
 
+    public void PuckDrop(Vector3 puckPosition)
+    {
+        for (int i = 0; i < cameraPoints.Length; i++)
+        {
+            cameraPoints[i] = new(puckPosition.x, cameraPoints[i].y, puckPosition.z);
+        }
+
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            if (puckPosition.x < 0)
+            {
+                waypoints[i] = new(waypoints[i].x * -1, waypoints[i].y, waypoints[i].z);
+            }
+            waypoints[i] += puckPosition;
+        }
+    }
+
     public enum PointType
     {
         Movement,
         WheelOpen,
-        PuckdropInput
+        PuckdropInput,
+        Teleport
     }
 }
 
+[Serializable]
 public class FaceoffData
 {
     public int faceoffId;
     public string faceoffName;
-    Vector3 unscaledOffset;
-
-    //float circleMagnitude;
+    public Vector3 unscaledOffset;
+    public Vector3 playerOffset1;
+    public Vector3 playerOffset2;
+    public bool isCentre;
 }
 
 public enum PenaltyType

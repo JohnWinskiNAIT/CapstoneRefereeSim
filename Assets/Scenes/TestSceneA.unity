@@ -275,7 +275,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.45
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -815,7 +815,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3802,7 +3802,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7558,7 +7558,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.2
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7755,48 +7755,113 @@ MonoBehaviour:
   puckDropCutscene:
     waypoints:
     - {x: -6, y: 0, z: 0}
-    - {x: -10, y: 0, z: 0}
+    - {x: -6, y: 0, z: 0}
     - {x: -39, y: 0, z: 0}
     cameraPoints:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 8, z: 0}
-    pointTypes: 000000000000000000000000
+    pointTypes: 030000000000000000000000
+  rinkFaceoffs:
+  - faceoffId: 0
+    faceoffName: centre
+    unscaledOffset: {x: 0, y: 0, z: 0}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 1
+  - faceoffId: 1
+    faceoffName: centreTopLeft
+    unscaledOffset: {x: 27.5, y: 0, z: 27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 2
+    faceoffName: centreTopRight
+    unscaledOffset: {x: 27.5, y: 0, z: -27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 3
+    faceoffName: centerBottomLeft
+    unscaledOffset: {x: -27.5, y: 0, z: 27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 4
+    faceoffName: centerBottomRight
+    unscaledOffset: {x: -27.5, y: 0, z: -27.5}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 5
+    faceoffName: cornerTopLeft
+    unscaledOffset: {x: 29.35, y: 0, z: 56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 6
+    faceoffName: cornerTopRight
+    unscaledOffset: {x: 29.35, y: 0, z: -56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 7
+    faceoffName: cornerBottomLeft
+    unscaledOffset: {x: -29.35, y: 0, z: 56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
+  - faceoffId: 8
+    faceoffName: cornerBottomRight
+    unscaledOffset: {x: -29.35, y: 0, z: -56.7}
+    playerOffset1: {x: 0, y: 0, z: 0}
+    playerOffset2: {x: 0, y: 0, z: 0}
+    isCentre: 0
   cameraDone: 0
   moveDone: 0
   playerUI: {fileID: 1119031677}
-  enabledPlayers: 01000101010100010101
+  enabledPlayers: 01010101010101010101
   setupInformation:
   - team: 0
     type: 0
-    startingPosition: {x: 0, y: 0, z: 10}
+    centrePosition: {x: 0, y: 0, z: 10}
+    otherPosition: {x: 0, y: 0, z: 7}
   - team: 0
     type: 0
-    startingPosition: {x: 22, y: 0, z: 5}
+    centrePosition: {x: 22, y: 0, z: 5}
+    otherPosition: {x: 8, y: 0, z: 3}
   - team: 0
     type: 0
-    startingPosition: {x: -22, y: 0, z: 5}
+    centrePosition: {x: -22, y: 0, z: 5}
+    otherPosition: {x: -8, y: 0, z: 3}
   - team: 0
     type: 1
-    startingPosition: {x: 27, y: 0, z: 27}
+    centrePosition: {x: 27, y: 0, z: 27}
+    otherPosition: {x: 13, y: 0, z: 11}
   - team: 0
     type: 1
-    startingPosition: {x: -27, y: 0, z: 27}
+    centrePosition: {x: -27, y: 0, z: 27}
+    otherPosition: {x: -13, y: 0, z: 11}
   - team: 1
     type: 0
-    startingPosition: {x: 0, y: 0, z: -10}
+    centrePosition: {x: 0, y: 0, z: -10}
+    otherPosition: {x: 0, y: 0, z: -7}
   - team: 1
     type: 0
-    startingPosition: {x: 22, y: 0, z: -5}
+    centrePosition: {x: 22, y: 0, z: -5}
+    otherPosition: {x: 8, y: 0, z: -3}
   - team: 1
     type: 0
-    startingPosition: {x: -22, y: 0, z: -5}
+    centrePosition: {x: -22, y: 0, z: -5}
+    otherPosition: {x: -8, y: 0, z: -3}
   - team: 1
     type: 1
-    startingPosition: {x: 27, y: 0, z: -27}
+    centrePosition: {x: 27, y: 0, z: -27}
+    otherPosition: {x: 13, y: 0, z: -11}
   - team: 1
     type: 1
-    startingPosition: {x: -27, y: 0, z: -27}
+    centrePosition: {x: -27, y: 0, z: -27}
+    otherPosition: {x: -13, y: 0, z: -11}
   zoneParent: {fileID: 982893559}
   playerPrefab: {fileID: 2851081034928759604, guid: dd6b0523d27fec449ac260b7e78f6f26, type: 3}
   playTest: {fileID: 1210182195}

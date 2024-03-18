@@ -28,7 +28,7 @@ public class ZoneAIController : MonoBehaviour
 
     public GameObject[] teammates;
 
-    Vector3 startPosition;
+    //Vector3 startPosition;
     Vector3 nextPosition;
     Vector3 savedVelocity;
     GameObject carryingPuck;
@@ -99,7 +99,7 @@ public class ZoneAIController : MonoBehaviour
         aiType = typeOfPlayer;
         aiTeam = playerTeam;
         zonesParent = zoneParentObject;
-        startPosition = baseSpawn;
+        //startPosition = baseSpawn;
 
         GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
@@ -155,7 +155,7 @@ public class ZoneAIController : MonoBehaviour
     {
         Vector3 moveVector = nextPosition - transform.position;
 
-        rb.AddForce(moveVector.normalized * acceleration * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(moveVector.normalized * (acceleration * Time.deltaTime), ForceMode.Force);
 
         if (rb.velocity.magnitude > maxSpeed)
         {
@@ -190,8 +190,8 @@ public class ZoneAIController : MonoBehaviour
         Transform primaryTransform = primaryZone.transform;
         Transform advanceTransform = advanceZone.transform;
 
-        float newX = 0;
-        float newZ = 0;
+        float newX;
+        float newZ;
         if (carryingPuck == null)
         {
             newX = Random.Range(primaryTransform.position.x - primaryTransform.localScale.x / 2, primaryTransform.position.x + primaryTransform.localScale.x / 2);
@@ -279,7 +279,7 @@ public class ZoneAIController : MonoBehaviour
 
     void InitializeForPlay()
     {
-        transform.position = startPosition;
+        //transform.position = startPosition;
         puckTimer = 0f;
         if (carryingPuck != null)
         {

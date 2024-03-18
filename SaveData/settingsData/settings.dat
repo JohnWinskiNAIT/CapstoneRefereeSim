@@ -15,7 +15,39 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>CrossCheck</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>BlindCheck</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Holding</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Interference</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>HighStick</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Tripping</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Hooking</PenaltyName>
+      <isEnabled>true</isEnabled>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Slashing</PenaltyName>
+      <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossCheck</PenaltyName>

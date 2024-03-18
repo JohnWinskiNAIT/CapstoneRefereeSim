@@ -71,6 +71,6 @@ public class PuckManager : MonoBehaviour
     {
         LoseOwner();
         ResetTime();
-        transform.position = Vector3.zero;
+        transform.position = GameplayManager.Instance.CurrentFaceoff.unscaledOffset;
     }
 }

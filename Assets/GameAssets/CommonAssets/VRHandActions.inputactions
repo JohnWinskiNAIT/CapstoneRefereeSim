@@ -9,19 +9,19 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "961c1b80-acf8-4a03-89ec-edce9b19fc29",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
                     "name": "Look",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "552e3108-042c-46df-ad21-f2c05aff2b40",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Call/Select",
@@ -64,7 +64,7 @@
                 {
                     "name": "",
                     "id": "f994c8f1-6153-4a75-b96d-4b7eb209a75b",
-                    "path": "<OculusTouchController>{LeftHand}/thumbstickTouched",
+                    "path": "<XRController>{LeftHand}/thumbstick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -75,7 +75,7 @@
                 {
                     "name": "",
                     "id": "09f19d72-956e-466d-8726-26cb7e6893dd",
-                    "path": "<OculusTouchController>{RightHand}/thumbstickTouched",
+                    "path": "<XRController>{RightHand}/thumbstick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
