@@ -28,7 +28,7 @@ public class ZoneAIController : MonoBehaviour
 
     public GameObject[] teammates;
 
-    Vector3 startPosition;
+    //Vector3 startPosition;
     Vector3 nextPosition;
     Vector3 savedVelocity;
     GameObject carryingPuck;
@@ -99,7 +99,7 @@ public class ZoneAIController : MonoBehaviour
         aiType = typeOfPlayer;
         aiTeam = playerTeam;
         zonesParent = zoneParentObject;
-        startPosition = baseSpawn;
+        //startPosition = baseSpawn;
 
         GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
@@ -279,7 +279,7 @@ public class ZoneAIController : MonoBehaviour
 
     void InitializeForPlay()
     {
-        transform.position = startPosition;
+        //transform.position = startPosition;
         puckTimer = 0f;
         if (carryingPuck != null)
         {

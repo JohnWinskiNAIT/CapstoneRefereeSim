@@ -7802,48 +7802,48 @@ MonoBehaviour:
   cameraDone: 0
   moveDone: 0
   playerUI: {fileID: 1119031677}
-  enabledPlayers: 01000101010100010101
+  enabledPlayers: 01010101010101010101
   setupInformation:
   - team: 0
     type: 0
     centrePosition: {x: 0, y: 0, z: 10}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 0, y: 0, z: 7}
   - team: 0
     type: 0
     centrePosition: {x: 22, y: 0, z: 5}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 8, y: 0, z: 3}
   - team: 0
     type: 0
     centrePosition: {x: -22, y: 0, z: 5}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: -8, y: 0, z: 3}
   - team: 0
     type: 1
     centrePosition: {x: 27, y: 0, z: 27}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 11, y: 0, z: 9}
   - team: 0
     type: 1
     centrePosition: {x: -27, y: 0, z: 27}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: -11, y: 0, z: 9}
   - team: 1
     type: 0
     centrePosition: {x: 0, y: 0, z: -10}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 0, y: 0, z: -7}
   - team: 1
     type: 0
     centrePosition: {x: 22, y: 0, z: -5}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 8, y: 0, z: -3}
   - team: 1
     type: 0
     centrePosition: {x: -22, y: 0, z: -5}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: -8, y: 0, z: -3}
   - team: 1
     type: 1
     centrePosition: {x: 27, y: 0, z: -27}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: 11, y: 0, z: -9}
   - team: 1
     type: 1
     centrePosition: {x: -27, y: 0, z: -27}
-    otherPosition: {x: 0, y: 0, z: 0}
+    otherPosition: {x: -11, y: 0, z: -9}
   zoneParent: {fileID: 982893559}
   playerPrefab: {fileID: 2851081034928759604, guid: dd6b0523d27fec449ac260b7e78f6f26, type: 3}
   playTest: {fileID: 1210182195}

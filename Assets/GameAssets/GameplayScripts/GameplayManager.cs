@@ -26,6 +26,7 @@ public class GameplayManager : MonoBehaviour
     bool playOngoing, penaltyOccured, penaltyCall;
 
     bool freezeManager;
+    GameObject[] currentPlayers;
 
     public GameObject playerUI;
 
@@ -65,23 +66,42 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.InitializePlay.Invoke();
     }
 
-    void ResetForNextPlay()
-    {
-        SelectFaceoff();
-        //UpdatePlayers();
-        GameplayEvents.InitializePlay.Invoke();
-    }
-
     void GeneratePlayers()
     {
-        GameObject createdPlayer;
+        currentPlayers = new GameObject[enabledPlayers.Length];
         for (int i = 0; i < enabledPlayers.Length; i++)
         {
             if (enabledPlayers[i])
             {
-                createdPlayer = Instantiate(playerPrefab, null);
-                createdPlayer.transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
-                createdPlayer.GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset);
+                currentPlayers[i] = Instantiate(playerPrefab, null);
+                if (CurrentFaceoff.isCentre)
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
+                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset);
+                }
+                else
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
+                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset);
+                }
+            }
+        }
+    }
+
+    void UpdatePlayers()
+    {
+        for (int i = 0; i < currentPlayers.Length; i++)
+        {
+            if (currentPlayers[i] != null)
+            {
+                if (CurrentFaceoff.isCentre)
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
+                }
+                else
+                {
+                    currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
+                }
             }
         }
     }
@@ -197,6 +217,8 @@ public class GameplayManager : MonoBehaviour
 
     private void StartPlay()
     {
+        SelectFaceoff();
+        UpdatePlayers();
         InitiatePlayInformation();
         GameplayEvents.LoadCutscene.Invoke(puckDropCutscene);
         currentCutscene = puckDropCutscene;
@@ -277,9 +299,9 @@ public class FaceoffData
     public int faceoffId;
     public string faceoffName;
     public Vector3 unscaledOffset;
+    public Vector3 playerOffset1;
+    public Vector3 playerOffset2;
     public bool isCentre;
-
-    //float circleMagnitude;
 }
 
 public enum PenaltyType
