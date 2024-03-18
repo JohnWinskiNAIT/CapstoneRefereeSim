@@ -143,7 +143,7 @@ public class MenuControls : MonoBehaviour
                     }
                     onScreenPanel.SetActive(false);
                     fadeOn = true;
-                    time = 1f;
+                    time = 1.5f;
                     fade = false;
                 }
                 onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.095f);

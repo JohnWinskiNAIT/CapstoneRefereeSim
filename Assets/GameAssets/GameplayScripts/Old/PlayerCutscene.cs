@@ -6,7 +6,7 @@ using static PlayerControl;
 
 public class PlayerCutscene : MonoBehaviour
 {
-    const float snapThreshold = 0.5f;
+    const float snapThreshold = 2f;
 
     Vector3[] waypoints, cameraPoints;
     private Vector3 autoskateDestination;

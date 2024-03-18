@@ -23,12 +23,12 @@ public class Settings : MonoBehaviour
     public Image controllerImage;
     public Image keyBoardImage;
     Toggle[] myPenaltyToggles;
-    Toggle[] myStartingPosToggles;
+    public Toggle[] myStartingPosToggles;
     int scenarios;
     int screenMode;
     public int keyLayout;
     bool mute;
-    public SettingsData mySettings;
+    public static SettingsData mySettings;
     string filePath;
     string rootPath = "SaveData\\";
     private void Start()
@@ -79,12 +79,12 @@ public class Settings : MonoBehaviour
                 if (mySettings.screenMode == 0)
                 {
                     screenModeText.text = "Full Screen";
-                    Screen.fullScreen = true;
+                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
                 }
                 else
                 {
                     screenModeText.text = "Windowed";
-                    Screen.fullScreen = false;
+                    Screen.SetResolution(1280, 720, false);
                 }
             }
         }
@@ -113,8 +113,6 @@ public class Settings : MonoBehaviour
             if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
             {
                 mySettings.lastMasterVolume = masterSlider.value;
-                mySettings.lastSFXvolume = SFXSlider.value;
-                mySettings.lastAmbientVolume = ambientSlider.value;
             }
             masterSlider.value = 0.0001f;
             ChangeMasterVolume();
@@ -221,12 +219,12 @@ public class Settings : MonoBehaviour
         if (screenModeNum == 0)
         {
             screenModeText.text = "Full Screen";
-            Screen.fullScreen = true;
+            Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
         }
         else if (screenModeNum == 1)
         {
             screenModeText.text = "Windowed";
-            Screen.fullScreen = false;
+            Screen.SetResolution(1280, 720, false);
         }
         screenMode = screenModeNum;
         mySettings.screenMode = screenMode;
