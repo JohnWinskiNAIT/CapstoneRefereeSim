@@ -19,6 +19,7 @@ public class Settings : MonoBehaviour
     public GameObject startingPosContainer;
     public TMP_InputField scenarioField;
     public TMP_InputField screenModeText;
+    public TMP_Text muteText;
     public Image controllerImage;
     public Image keyBoardImage;
     Toggle[] myPenaltyToggles;
@@ -106,26 +107,17 @@ public class Settings : MonoBehaviour
     }
     public void Mute()
     {
-
         mute = !mute;
         if (mute)
         {
-            if (masterSlider.value > 0.0001f)
+            if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
             {
                 mySettings.lastMasterVolume = masterSlider.value;
             }
             masterSlider.value = 0.0001f;
             ChangeMasterVolume();
-            if (SFXSlider.value > 0.0001f)
-            {
-                mySettings.lastSFXvolume = SFXSlider.value;
-            }
             SFXSlider.value = 0.0001f;
             ChangeSFXVolume();
-            if (ambientSlider.value > 0.0001f)
-            {
-                mySettings.lastAmbientVolume = ambientSlider.value;
-            }
             ambientSlider.value = 0.0001f;
             ChangeAmbientVolume();
             SaveSettings();
@@ -243,6 +235,16 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.startingPos.Length; i++)
         {
             mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
+        }
+        if(masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
+        {
+            muteText.text = "Mute";
+            mute = false;
+        }
+        else
+        {
+            muteText.text = "Unmute";
+            mute = true;
         }
     }
     public void SaveSettings()

@@ -1460,7 +1460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1910.0001, y: 0}
+  m_AnchoredPosition: {x: -2348, y: -7}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &161241981
@@ -4959,7 +4959,7 @@ RectTransform:
   m_GameObject: {fileID: 587908590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.21, y: 1.17, z: 1.25}
+  m_LocalScale: {x: 1.2826086, y: 1.17, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 161241980}
@@ -7808,7 +7808,7 @@ GameObject:
   - component: {fileID: 961664764}
   - component: {fileID: 961664763}
   m_Layer: 5
-  m_Name: Controller
+  m_Name: Controls
   m_TagString: Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11524,7 +11524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Controller
+  m_text: Controls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f98b94c9637f50446bde93a11f243eef, type: 2}
   m_sharedMaterial: {fileID: 7822396208732381090, guid: f98b94c9637f50446bde93a11f243eef, type: 2}
@@ -12803,6 +12803,7 @@ MonoBehaviour:
   startingPosContainer: {fileID: 1627226066}
   scenarioField: {fileID: 1132175485}
   screenModeText: {fileID: 1727223510}
+  muteText: {fileID: 1022423671}
   controllerImage: {fileID: 2110768870}
   keyBoardImage: {fileID: 587908592}
   keyLayout: 0
