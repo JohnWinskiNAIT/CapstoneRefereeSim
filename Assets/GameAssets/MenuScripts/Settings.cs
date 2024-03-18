@@ -23,12 +23,12 @@ public class Settings : MonoBehaviour
     public Image controllerImage;
     public Image keyBoardImage;
     Toggle[] myPenaltyToggles;
-    Toggle[] myStartingPosToggles;
+    public Toggle[] myStartingPosToggles;
     int scenarios;
     int screenMode;
     public int keyLayout;
     bool mute;
-    public SettingsData mySettings;
+    public static SettingsData mySettings;
     string filePath;
     string rootPath = "SaveData\\";
     private void Start()
@@ -79,17 +79,20 @@ public class Settings : MonoBehaviour
                 if (mySettings.screenMode == 0)
                 {
                     screenModeText.text = "Full Screen";
-                    Screen.fullScreen = true;
+                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
                 }
                 else
                 {
                     screenModeText.text = "Windowed";
-                    Screen.fullScreen = false;
+                    Screen.SetResolution(1280, 720, false);
                 }
             }
         }
         else
         {
+            masterSlider.value = 1;
+            SFXSlider.value = 1;
+            ambientSlider.value = 1;
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
                 mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
@@ -221,12 +224,12 @@ public class Settings : MonoBehaviour
         if (screenModeNum == 0)
         {
             screenModeText.text = "Full Screen";
-            Screen.fullScreen = true;
+            Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
         }
         else if (screenModeNum == 1)
         {
             screenModeText.text = "Windowed";
-            Screen.fullScreen = false;
+            Screen.SetResolution(1280, 720, false);
         }
         screenMode = screenModeNum;
         mySettings.screenMode = screenMode;

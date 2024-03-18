@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>3</scenarios>
-  <screenMode>1</screenMode>
-  <masterVolume>0.350704372</masterVolume>
-  <SFXvolume>0.7564814</SFXvolume>
-  <ambientVolume>0.674892664</ambientVolume>
-  <lastMasterVolume>0.350704372</lastMasterVolume>
-  <lastSFXvolume>0.7564814</lastSFXvolume>
-  <lastAmbientVolume>0.674892664</lastAmbientVolume>
+  <scenarios>0</scenarios>
+  <screenMode>0</screenMode>
+  <masterVolume>1</masterVolume>
+  <SFXvolume>1</SFXvolume>
+  <ambientVolume>1</ambientVolume>
+  <lastMasterVolume>1</lastMasterVolume>
+  <lastSFXvolume>1</lastSFXvolume>
+  <lastAmbientVolume>1</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
@@ -16,38 +16,6 @@
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
       <isEnabled>false</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>CrossCheck</PenaltyName>
-      <isEnabled>false</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>BlindCheck</PenaltyName>
-      <isEnabled>true</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Holding</PenaltyName>
-      <isEnabled>false</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Interference</PenaltyName>
-      <isEnabled>true</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>HighStick</PenaltyName>
-      <isEnabled>false</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Tripping</PenaltyName>
-      <isEnabled>false</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Hooking</PenaltyName>
-      <isEnabled>true</isEnabled>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Slashing</PenaltyName>
-      <isEnabled>true</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossCheck</PenaltyName>
@@ -88,11 +56,35 @@
   </penalties>
   <startingPos>
     <StartingPosData>
-      <posName>BlueCenter</posName>
+      <posName>RedGoalie</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
-      <posName>BlueLeftW</posName>
+      <posName>RedLeftD</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedRightD</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedLeftW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedRightW</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueGoalie</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueLeftD</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueRightD</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
@@ -100,39 +92,7 @@
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
-      <posName>BlueRightD</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueLeftD</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueGoalie</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedCenter</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedRightW</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedLeftW</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedRightD</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedLeftD</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedGoalie</posName>
+      <posName>BlueLeftW</posName>
       <isEnabled>false</isEnabled>
     </StartingPosData>
   </startingPos>
