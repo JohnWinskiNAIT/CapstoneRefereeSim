@@ -11,12 +11,12 @@ public class RevealOnlyBttns : MonoBehaviour
         Button[] Button = FindObjectsOfType<Button>();
         Slider[] Slider = FindObjectsOfType<Slider>();
         Toggle[] Toggle = FindObjectsOfType<Toggle>();
-        
 
-        //for (int i = 0; i < Button.Length; i++)
-        //{
-        //    Button[i].gameObject.name = "Button";
-        //}
+
+        for (int i = 0; i < Button.Length; i++)
+        {
+            Button[i].gameObject.name = "Button";
+        }
 
         for (int i = 0; i < Slider.Length; i++)
         {
