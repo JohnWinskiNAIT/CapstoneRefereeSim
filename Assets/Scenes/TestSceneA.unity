@@ -7755,13 +7755,13 @@ MonoBehaviour:
   puckDropCutscene:
     waypoints:
     - {x: -6, y: 0, z: 0}
-    - {x: -10, y: 0, z: 0}
+    - {x: -6, y: 0, z: 0}
     - {x: -39, y: 0, z: 0}
     cameraPoints:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 8, z: 0}
-    pointTypes: 000000000000000000000000
+    pointTypes: 030000000000000000000000
   rinkFaceoffs:
   - faceoffId: 0
     faceoffName: centre

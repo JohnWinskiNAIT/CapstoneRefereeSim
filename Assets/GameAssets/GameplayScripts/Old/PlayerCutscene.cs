@@ -6,7 +6,7 @@ using static PlayerControl;
 
 public class PlayerCutscene : MonoBehaviour
 {
-    const float snapThreshold = 2f;
+    const float snapThreshold = 0.5f;
 
     Vector3[] waypoints, cameraPoints;
     private Vector3 autoskateDestination;
@@ -96,6 +96,11 @@ public class PlayerCutscene : MonoBehaviour
         if (controls.CurrentPlayerState != PlayerState.Autoskate)
         {
             controls.SetPlayerControl(PlayerState.Autoskate);
+        }
+
+        if (cutsceneData.pointTypes[0] == CutsceneData.PointType.Teleport)
+        {
+            transform.position = waypoints[0];
         }
     }
 

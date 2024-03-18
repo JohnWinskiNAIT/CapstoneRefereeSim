@@ -222,8 +222,10 @@ public class GameplayManager : MonoBehaviour
         SelectFaceoff();
         UpdatePlayers();
         InitiatePlayInformation();
-        GameplayEvents.LoadCutscene.Invoke(puckDropCutscene);
-        currentCutscene = puckDropCutscene;
+        offsetPuckDropCutscene = puckDropCutscene;
+        offsetPuckDropCutscene.PuckDrop(CurrentFaceoff.unscaledOffset);
+        GameplayEvents.LoadCutscene.Invoke(offsetPuckDropCutscene);
+        currentCutscene = offsetPuckDropCutscene;
         cutsceneStatus = 0;
         
         playTimer = 0;
@@ -287,11 +289,29 @@ public class CutsceneData
     public Vector3[] cameraPoints;
     public PointType[] pointTypes;
 
+    public void PuckDrop(Vector3 puckPosition)
+    {
+        for (int i = 0; i < cameraPoints.Length; i++)
+        {
+            cameraPoints[i] = new(puckPosition.x, cameraPoints[i].y, puckPosition.z);
+        }
+
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            if (puckPosition.x < 0)
+            {
+                waypoints[i] = new(waypoints[i].x * -1, waypoints[i].y, waypoints[i].z);
+            }
+            waypoints[i] += puckPosition;
+        }
+    }
+
     public enum PointType
     {
         Movement,
         WheelOpen,
-        PuckdropInput
+        PuckdropInput,
+        Teleport
     }
 }
 
