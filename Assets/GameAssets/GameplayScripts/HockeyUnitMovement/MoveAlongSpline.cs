@@ -41,13 +41,13 @@ public class MoveAlongSpline : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(direction, transform.up);
 
         #region offset shenanigans
-        if (otherObjectReference != null)
-        {
-            otherObjectPosition = otherObjectReference.transform.position;
-            distanceVector = childObject.transform.position - otherObjectPosition;
-            distanceVectorNormalized = distanceVector.normalized;
-            OffsettObject(otherObjectPosition);
-        }
+        //if (otherObjectReference != null)
+        //{
+        //    otherObjectPosition = otherObjectReference.transform.position;
+        //    distanceVector = childObject.transform.position - otherObjectPosition;
+        //    distanceVectorNormalized = distanceVector.normalized;
+        //    OffsettObject(otherObjectPosition);
+        //}
         #endregion
     }
     void OffsettObject(Vector3 other)
