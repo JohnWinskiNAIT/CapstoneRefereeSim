@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
     public GameSettingsContainer settingsContainer { get; private set; }
-
+    public SettingsData mySettings;
+    public string rootPath = "SaveData\\settingsData";
     public enum WindowedSettings
     {
         Fullscreen,
@@ -44,6 +46,12 @@ public class GameSettings : MonoBehaviour
     private void Awake()
     {
         //Logic to look for an external file with settings. If it exists, load them. If not, create a default.
+        mySettings = new SettingsData();
+        if (Directory.Exists(rootPath))
+        {
+            SaveManager.LoadData(rootPath + "\\settings.dat", ref mySettings);
+            LoadSettings();
+        }
     }
 
     private void DefaultSettings()
@@ -60,7 +68,6 @@ public class GameSettings : MonoBehaviour
 
         //Insert file loading logic here. This is placeholder so it compiles.
         loadedSettings = new GameSettingsContainer();
-
         settingsContainer = loadedSettings;
     }
 }
