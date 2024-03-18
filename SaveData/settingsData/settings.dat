@@ -2,20 +2,20 @@
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <scenarios>0</scenarios>
   <screenMode>0</screenMode>
-  <masterVolume>0.0001</masterVolume>
-  <SFXvolume>0.0001</SFXvolume>
-  <ambientVolume>0.0001</ambientVolume>
-  <lastMasterVolume>0</lastMasterVolume>
-  <lastSFXvolume>0</lastSFXvolume>
-  <lastAmbientVolume>0</lastAmbientVolume>
+  <masterVolume>1</masterVolume>
+  <SFXvolume>1</SFXvolume>
+  <ambientVolume>1</ambientVolume>
+  <lastMasterVolume>1</lastMasterVolume>
+  <lastSFXvolume>1</lastSFXvolume>
+  <lastAmbientVolume>1</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossCheck</PenaltyName>
@@ -81,7 +81,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueLeftD</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueRightD</posName>
@@ -93,7 +93,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueLeftW</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
   </startingPos>
 </SettingsData>
