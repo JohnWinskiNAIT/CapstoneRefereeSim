@@ -17,14 +17,14 @@ public class OffsetPlayer : MonoBehaviour
         if (otherObjectReference != null)
         {
             otherObjectPosition = otherObjectReference.transform.position;
+            distanceVector = transform.position - otherObjectPosition;
+            distanceVectorNormalized = distanceVector.normalized;
             OffsettObject(otherObjectPosition);
         }
     }
     void OffsettObject(Vector3 other)
     {
-        Vector3 distanceVector = transform.position - other;
-        distanceVectorNormalized = distanceVector.normalized;
-        transform.position = distanceVectorNormalized * distanceVector.magnitude;
+        transform.localPosition = distanceVectorNormalized * (distanceVector.magnitude / (distanceVector.magnitude * distanceVector.magnitude));
 
         Debug.Log(distanceVector.magnitude);
     }
