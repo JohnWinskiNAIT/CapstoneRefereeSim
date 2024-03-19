@@ -14,6 +14,19 @@ public struct SettingsData
     public float lastAmbientVolume;
     public PenaltyData[] penalties;
     public StartingPosData[] startingPos;
+
+    public int WhistleCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i= 0; i < penalties.Length; i++)
+            {
+                count++;
+            }
+            return count;
+        }
+    }
 }
 
 [Serializable]
@@ -21,6 +34,12 @@ public struct PenaltyData
 {
     public string PenaltyName;
     public bool isEnabled;
+    public bool isWhistle;
+
+    public Sprite RefereeSprite
+    {
+        get { return Resources.Load<Sprite>(Settings.RefereeSpritePath + PenaltyName); }
+    }
 }
 [Serializable]
 public struct StartingPosData

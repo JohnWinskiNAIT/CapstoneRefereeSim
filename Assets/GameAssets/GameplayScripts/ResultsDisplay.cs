@@ -13,7 +13,7 @@ public class ResultsDisplay : MonoBehaviour
     Tuple<Vector3, Vector3> startCorners, finalCorners;
 
     [SerializeField]
-    TextMeshProUGUI successText, timingText;
+    TextMeshProUGUI choiceText, actualText, timingText;
 
     [SerializeField]
     float transitionTime;
@@ -23,7 +23,9 @@ public class ResultsDisplay : MonoBehaviour
 
     public void InitiateResults()
     {
-        GameplayManager.Instance.
+        choiceText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
+        actualText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
+        timingText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyTimer.ToString();
     }
 
     // Update is called once per frame
