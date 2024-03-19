@@ -1,18 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PositionSerializer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //Object to convert to save data.
+    [SerializeField]
+    GameObject convertableObject;
 
-    // Update is called once per frame
-    void Update()
+    Vector3 objectPosition;
+    PositionData positionData;
+    int saveSlot;
+
+    const string FILEPATH = "SaveData\\PositionData";
+
+    //makes object data into float data for saving.
+    public void ConvertObject(GameObject[] passedObjects)
     {
-        
+        for (int i = 0; i < passedObjects.Length; i++)
+        {
+            convertableObject = passedObjects[i];
+            objectPosition = convertableObject.transform.position;
+            positionData.x[i] = objectPosition.x;
+            positionData.y[i] = objectPosition.y;
+            positionData.z[i] = objectPosition.z;
+        }
     }
+    public void loadPositionData()
+    {
+        PositionSaver.LoadPlayerData(FILEPATH + saveSlot, ref positionData);
+    }
+    public void savePositionData()
+    {
+        PositionSaver.SavePositionData(FILEPATH, ref positionData);
+    }
+}
+
+[Serializable]
+public struct PositionData
+{
+    public float[] x;
+    public float[] y;
+    public float[] z;
 }
