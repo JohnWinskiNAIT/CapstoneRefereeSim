@@ -6,21 +6,21 @@ using UnityEngine;
 
 public static class PositionSaver
 {
-    public static void SavePositionData(string path, ref PositionData positionData)
+    public static void SavePositionData(string path, ref List<HockeyPlayerPositionData> positionData)
     {
         Stream stream = File.Open(path, FileMode.Create);
-        XmlSerializer serializer = new XmlSerializer(typeof(PositionData));
+        XmlSerializer serializer = new XmlSerializer(typeof(List<HockeyPlayerPositionData>));
         serializer.Serialize(stream, positionData);
         stream.Close();
     }
 
-    public static void LoadPlayerData(string path, ref PositionData positionData)
+    public static void LoadPlayerData(string path, ref List<HockeyPlayerPositionData> positionData)
     {
         if (File.Exists(path))
         {
             Stream stream = File.Open(path, FileMode.Open);
-            XmlSerializer serializer = new XmlSerializer(typeof(PositionData));
-            positionData = (PositionData)serializer.Deserialize(stream);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<HockeyPlayerPositionData>));
+            positionData = (List<HockeyPlayerPositionData>)serializer.Deserialize(stream);
             stream.Close();
         }
     }
