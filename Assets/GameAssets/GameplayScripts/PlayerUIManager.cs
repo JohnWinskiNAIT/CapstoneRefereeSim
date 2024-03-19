@@ -60,6 +60,8 @@ public class PlayerUIManager : MonoBehaviour
     Vector2 magnitudeCheck = new();
     [SerializeField] GameObject VRPointer;
 
+    WheelInformation callInformation;
+    WheelInformation whistleInformation;
 
     //Affirming the inputs + default anchor corners
     private void Awake()
@@ -90,6 +92,18 @@ public class PlayerUIManager : MonoBehaviour
     private void Start()
     {
 
+    }
+
+    private void GenerateWheelInformation(bool isWhistle)
+    {
+        if (isWhistle)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     // Visual effects are performed in this update.
@@ -184,9 +198,9 @@ public class PlayerUIManager : MonoBehaviour
                 }
 
                 //
-                float segments = totalFill / wheelInfo.numberOfOptions;
+                float segments = totalFill / wheelInfo.NumberOfOptions;
 
-                for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+                for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
                 {
                     if (mouseAngle > segments * i && mouseAngle < segments * (i + 1))
                     {
@@ -240,11 +254,11 @@ public class PlayerUIManager : MonoBehaviour
     //Creates notches and rotates them dynamically according to the amount of segments in the selection wheel.
     private void GenerateNotches()
     {
-        currentNotches = new GameObject[wheelInfo.numberOfOptions];
+        currentNotches = new GameObject[wheelInfo.NumberOfOptions];
         float notchGap = (Screen.height / 2f) * 0.65f;
-        float segments = totalFill / wheelInfo.numberOfOptions;
+        float segments = totalFill / wheelInfo.NumberOfOptions;
         float notchScale = (Screen.width / screenScaleDenominator);
-        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
             Vector2 position = new(Mathf.Sin((segments * i) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i) * Mathf.Deg2Rad) * notchGap);
@@ -257,11 +271,11 @@ public class PlayerUIManager : MonoBehaviour
     //Creates icons dynamically according to the amount of segments in the selection wheel.
     private void GenerateIcons()
     {
-        currentIcons = new GameObject[wheelInfo.numberOfOptions];
+        currentIcons = new GameObject[wheelInfo.NumberOfOptions];
         float notchGap = (Screen.height / 2f) * 0.6f;
-        float segments = totalFill / wheelInfo.numberOfOptions;
+        float segments = totalFill / wheelInfo.NumberOfOptions;
         float iconScale = 1f * (Screen.width / screenScaleDenominator);
-        for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+        for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
@@ -275,7 +289,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (currentNotches.Length > 0)
         {
-            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
             {
                 Destroy(currentNotches[i]);
             }
@@ -283,7 +297,7 @@ public class PlayerUIManager : MonoBehaviour
         currentNotches = new GameObject[0];
         if (currentIcons.Length > 0)
         {
-            for (int i = 0; i < wheelInfo.numberOfOptions; i++)
+            for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
             {
                 Destroy(currentIcons[i]);
             }
@@ -309,7 +323,10 @@ public class PlayerUIManager : MonoBehaviour
     [Serializable]
     public struct WheelInformation
     {
-        public int numberOfOptions;
+        public int NumberOfOptions
+        {
+            get { return options.Length; }
+        }
         public Option[] options;
 
         [Serializable]
@@ -318,6 +335,11 @@ public class PlayerUIManager : MonoBehaviour
             public Sprite optionImage;
             public string optionText;
             public PenaltyType optionType;
+
+            Sprite OptionSprite
+            {
+                get { return OptionSprite; }
+            }
         }
     }
 }

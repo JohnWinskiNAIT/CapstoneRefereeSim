@@ -27,7 +27,7 @@ public class GameplayManager : MonoBehaviour
     float? activationTime;
 
     public bool cameraDone, moveDone;
-    bool playOngoing, penaltyOccured, penaltyCall;
+    bool playOngoing, penaltyOccured;
 
     bool freezeManager;
     GameObject[] currentPlayers;
@@ -169,7 +169,7 @@ public class GameplayManager : MonoBehaviour
         SelectFaceoff();
         gameplayState = GameState.Results;
         resultsUI.gameObject.SetActive(true);
-        GameplayEvents.InitializePlay.Invoke();
+        //GameplayEvents.InitializePlay.Invoke();
     }
 
     public void ProgressCutscene()
@@ -214,7 +214,6 @@ public class GameplayManager : MonoBehaviour
     public void CallPrep()
     {
         Debug.Log($"Difference: {callTimestamp - CurrentPlayInfo.penaltyTimer}");
-        penaltyCall = true;
     }
 
     private void PlayCheck()
@@ -281,7 +280,6 @@ public class GameplayManager : MonoBehaviour
             penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length)
         };
 
-        penaltyCall = false;
         callTimestamp = 0;
 
         playTest.SetActive(false);
@@ -365,6 +363,13 @@ public class FaceoffData
     public Vector3 playerOffset1;
     public Vector3 playerOffset2;
     public bool isCentre;
+}
+
+public class ResultData
+{
+    public float timerDifference;
+    public float chosenPenalty;
+    public float occuredPenalty;
 }
 
 public enum PenaltyType
