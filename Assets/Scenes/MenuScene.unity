@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 0.56078434}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.9528302, g: 0.4554408, b: 0.4554408, a: 0.5019608}
+    m_DisabledColor: {r: 0.6603774, g: 0.11629282, b: 0.11629282, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1086,7 +1086,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 146995398}
   toggleTransition: 1
   graphic: {fileID: 0}
@@ -1101,7 +1101,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3000,7 +3000,7 @@ GameObject:
   - component: {fileID: 393130745}
   - component: {fileID: 393130746}
   m_Layer: 5
-  m_Name: RedRightW
+  m_Name: RedForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4306,7 +4306,7 @@ GameObject:
   - component: {fileID: 529098041}
   - component: {fileID: 529098042}
   m_Layer: 5
-  m_Name: BlueRightD
+  m_Name: BlueDefense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6945,7 +6945,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 7
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7133,7 +7133,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 8
+          m_IntArgument: 6
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7435,7 +7435,7 @@ GameObject:
   - component: {fileID: 903785122}
   - component: {fileID: 903785123}
   m_Layer: 5
-  m_Name: RedLeftD
+  m_Name: RedDefense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7624,7 +7624,7 @@ GameObject:
   - component: {fileID: 944295623}
   - component: {fileID: 944295624}
   m_Layer: 5
-  m_Name: BlueLeftD
+  m_Name: BlueDefense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8738,7 +8738,7 @@ GameObject:
   - component: {fileID: 1072549914}
   - component: {fileID: 1072549915}
   m_Layer: 5
-  m_Name: BlueLeftW
+  m_Name: BlueForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10020,7 +10020,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10037,7 +10037,7 @@ GameObject:
   - component: {fileID: 1151662828}
   - component: {fileID: 1151662829}
   m_Layer: 5
-  m_Name: RedRightD
+  m_Name: RedDefense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12271,7 +12271,7 @@ GameObject:
   - component: {fileID: 1444803762}
   - component: {fileID: 1444803763}
   m_Layer: 5
-  m_Name: BlueGoalie
+  m_Name: BlueForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12294,7 +12294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24.586922, y: -466.293}
+  m_AnchoredPosition: {x: -30, y: -51}
   m_SizeDelta: {x: 13.929, y: 82.586}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1444803763
@@ -12672,17 +12672,6 @@ MonoBehaviour:
   keyBoardImage: {fileID: 587908592}
   myStartingPosToggles: []
   keyLayout: 0
-  mySettings:
-    scenarios: 0
-    screenMode: 0
-    masterVolume: 0
-    SFXvolume: 0
-    ambientVolume: 0
-    lastMasterVolume: 0
-    lastSFXvolume: 0
-    lastAmbientVolume: 0
-    penalties: []
-    startingPos: []
 --- !u!1 &1512376667
 GameObject:
   m_ObjectHideFlags: 0
@@ -13420,16 +13409,16 @@ RectTransform:
   m_Children:
   - {fileID: 2032160421}
   - {fileID: 1110374960}
-  - {fileID: 1890598398}
   - {fileID: 903785122}
   - {fileID: 1151662828}
   - {fileID: 2034208722}
   - {fileID: 393130745}
-  - {fileID: 1444803762}
+  - {fileID: 1890598398}
   - {fileID: 944295623}
   - {fileID: 529098041}
   - {fileID: 1815653838}
   - {fileID: 1072549914}
+  - {fileID: 1444803762}
   m_Father: {fileID: 1497799553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13653,7 +13642,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0, g: 0.034784555, b: 1, a: 0.56078434}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.45490196, g: 0.51065576, b: 0.9529412, a: 0.5019608}
+    m_DisabledColor: {r: 0.32781532, g: 0.35927588, b: 0.6132076, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -13667,7 +13656,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1634468366}
   toggleTransition: 1
   graphic: {fileID: 0}
@@ -13682,7 +13671,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 9
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -14414,7 +14403,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -14550,7 +14539,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15625,7 +15614,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 9
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15947,7 +15936,7 @@ GameObject:
   - component: {fileID: 1815653838}
   - component: {fileID: 1815653839}
   m_Layer: 5
-  m_Name: BlueRightW
+  m_Name: BlueForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16518,7 +16507,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -16535,7 +16524,7 @@ GameObject:
   - component: {fileID: 1890598398}
   - component: {fileID: 1890598400}
   m_Layer: 5
-  m_Name: RedGoalie
+  m_Name: RedForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16558,7 +16547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -27.486773, y: 280}
+  m_AnchoredPosition: {x: -30, y: 122}
   m_SizeDelta: {x: 13.928955, y: 82.58594}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1890598400
@@ -17717,7 +17706,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -18057,7 +18046,7 @@ GameObject:
   - component: {fileID: 2034208722}
   - component: {fileID: 2034208723}
   m_Layer: 5
-  m_Name: RedLeftW
+  m_Name: RedForward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

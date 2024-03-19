@@ -240,6 +240,10 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.startingPos.Length; i++)
         {
             mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
+            if(i == 4 || i == 9)
+            {
+                myStartingPosToggles[i].interactable = false;
+            }
         }
         if(masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
         {
