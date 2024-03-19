@@ -17,9 +17,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     FaceoffData[] rinkFaceoffs;
     public FaceoffData CurrentFaceoff { get; private set; }
+    GameState gameplayState;
 
     CutsceneData currentCutscene;
-    PlayInformation currentPlayInfo;
+    public PlayInformation CurrentPlayInfo { get; private set; }
 
     int cutsceneStatus;
     float playTimer, callTimestamp;
@@ -32,6 +33,7 @@ public class GameplayManager : MonoBehaviour
     GameObject[] currentPlayers;
 
     public GameObject playerUI;
+    public GameObject resultsUI;
 
     [SerializeField]
     bool[] enabledPlayers;
@@ -44,6 +46,12 @@ public class GameplayManager : MonoBehaviour
     GameObject playerPrefab;
     [SerializeField]
     GameObject playTest;
+
+    public enum GameState
+    {
+        Ice,
+        Results
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -66,6 +74,7 @@ public class GameplayManager : MonoBehaviour
     {
         offsetPuckDropCutscene = new();
 
+        gameplayState = GameState.Ice;
         SelectFaceoff();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
@@ -125,7 +134,7 @@ public class GameplayManager : MonoBehaviour
         if (playOngoing)
         {
             playOngoing = false;
-            Debug.Log($"Difference: {callTimestamp - currentPlayInfo.penaltyTimer}");
+            Debug.Log($"Difference: {callTimestamp - CurrentPlayInfo.penaltyTimer}");
         }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
@@ -148,7 +157,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ConfirmChoice(PenaltyType choice)
     {
-        if (choice == currentPlayInfo.penaltyType)
+        if (choice == CurrentPlayInfo.penaltyType)
         {
             Debug.Log("True");
         }
@@ -158,6 +167,8 @@ public class GameplayManager : MonoBehaviour
         }
 
         SelectFaceoff();
+        gameplayState = GameState.Results;
+        resultsUI.gameObject.SetActive(true);
         GameplayEvents.InitializePlay.Invoke();
     }
 
@@ -170,7 +181,7 @@ public class GameplayManager : MonoBehaviour
             if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true);
-                Debug.Log($"{currentPlayInfo.penaltyType}");
+                Debug.Log($"{CurrentPlayInfo.penaltyType}");
             }
 
             moveDone = false;
@@ -202,7 +213,7 @@ public class GameplayManager : MonoBehaviour
     
     public void CallPrep()
     {
-        Debug.Log($"Difference: {callTimestamp - currentPlayInfo.penaltyTimer}");
+        Debug.Log($"Difference: {callTimestamp - CurrentPlayInfo.penaltyTimer}");
         penaltyCall = true;
     }
 
@@ -221,7 +232,7 @@ public class GameplayManager : MonoBehaviour
             playTest.SetActive(true);
         }
 
-        if (playTimer > currentPlayInfo.penaltyTimer + currentPlayInfo.stopTimer)
+        if (playTimer > CurrentPlayInfo.penaltyTimer + CurrentPlayInfo.stopTimer)
         {
             playOngoing = false;
             GameplayEvents.EndPlay.Invoke();
@@ -249,7 +260,7 @@ public class GameplayManager : MonoBehaviour
     //Creates the PlayInformation struct, and fills it.
     private void InitiatePlayInformation()
     {
-        currentPlayInfo = new()
+        CurrentPlayInfo = new()
         {
             penaltyTimer = Random.Range(15f, 50f),
             stopTimer = Random.Range(0, 15f)
@@ -265,16 +276,16 @@ public class GameplayManager : MonoBehaviour
         {
             player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
         }
-        currentPlayInfo.offenderId = player1;
-        currentPlayInfo.affectedId = player2;
-        currentPlayInfo.penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length);
+        CurrentPlayInfo.offenderId = player1;
+        CurrentPlayInfo.affectedId = player2;
+        CurrentPlayInfo.penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length);
         penaltyCall = false;
         callTimestamp = 0;
 
         playTest.SetActive(false);
     }
 
-    private struct PlayInformation
+    public struct PlayInformation
     {
         //Penalty Timestamp denotes when the penalty will occur. Playstop indicates an additional timer added onto the Timestamp before the play will end (unless ended with whistle).
         public float penaltyTimer, stopTimer;

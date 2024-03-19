@@ -8,7 +8,7 @@ public class PlayerCutscene : MonoBehaviour
 {
     const float snapThreshold = 2f;
 
-    Vector3[] waypoints, cameraPoints;
+    Vector3[] waypoints;
     private Vector3 autoskateDestination;
     Vector3 basePosition;
 
