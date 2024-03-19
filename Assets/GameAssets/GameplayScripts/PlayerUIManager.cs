@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -91,19 +92,36 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
-
+        callInformation = GenerateWheelInformation(false);
+        whistleInformation = GenerateWheelInformation(true);
     }
 
-    private void GenerateWheelInformation(bool isWhistle)
+    private WheelInformation GenerateWheelInformation(bool isWhistle)
     {
+        WheelInformation info = new WheelInformation();
+        SettingsData settings = Settings.mySettings;
+        int optionsCounter = 0;
+
         if (isWhistle)
         {
-
+            info.options = new WheelInformation.Option[settings.WhistleCount];
         }
         else
         {
-
+            info.options = new WheelInformation.Option[settings.penalties.Length - settings.WhistleCount];
         }
+
+        for (int i = 0; i < settings.penalties.Length; i++)
+        {
+            if (!settings.penalties[i].isWhistle)
+            {
+                info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
+                info.options[optionsCounter].optionText = settings.penalties[i].PenaltyName;
+                info.options[optionsCounter].optionType = PenaltyType.HeadContact;
+                optionsCounter++;
+            }
+        }
+        return info;
     }
 
     // Visual effects are performed in this update.
@@ -336,10 +354,7 @@ public class PlayerUIManager : MonoBehaviour
             public string optionText;
             public PenaltyType optionType;
 
-            Sprite OptionSprite
-            {
-                get { return OptionSprite; }
-            }
+            public string optionId;
         }
     }
 }
