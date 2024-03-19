@@ -8,24 +8,30 @@ public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
     [SerializeField]
-    GameObject convertableObject;
+    GameObject[] convertableObject;
 
     Vector3 objectPosition;
-    PositionData positionData;
-    int saveSlot;
+    List<HockeyPlayerPositionData> positionData;
+    HockeyPlayerPositionData currentData;
 
+    int saveSlot;
+    int index = 0;
     const string FILEPATH = "SaveData\\PositionData";
 
     //makes object data into float data for saving.
-    public void ConvertObject(GameObject[] passedObjects)
+    public void FixedUpdate()
     {
-        for (int i = 0; i < passedObjects.Length; i++)
+        index++;
+        if (0 == 10 % index)
         {
-            convertableObject = passedObjects[i];
-            objectPosition = convertableObject.transform.position;
-            positionData.x[i] = objectPosition.x;
-            positionData.y[i] = objectPosition.y;
-            positionData.z[i] = objectPosition.z;
+            for (int i = 0; i < convertableObject.Length; i++)
+            {
+                objectPosition = convertableObject[i].transform.position;
+                currentData.x[i] = objectPosition.x;
+                currentData.y[i] = objectPosition.y;
+                currentData.z[i] = objectPosition.z;
+                positionData.Add(currentData);
+            }
         }
     }
     public void loadPositionData()
@@ -39,7 +45,7 @@ public class PositionSerializer : MonoBehaviour
 }
 
 [Serializable]
-public struct PositionData
+public struct HockeyPlayerPositionData
 {
     public float[] x;
     public float[] y;
