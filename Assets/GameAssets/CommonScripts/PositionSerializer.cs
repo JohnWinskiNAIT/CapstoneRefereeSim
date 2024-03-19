@@ -34,7 +34,7 @@ public class PositionSerializer : MonoBehaviour
     }
     public void savePositionData()
     {
-        PositionSaver.SavePositionData(FILEPATH, ref positionData);
+        PositionSaver.SavePositionData(FILEPATH + saveSlot, ref positionData);
     }
 }
 
