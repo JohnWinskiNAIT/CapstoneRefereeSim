@@ -219,14 +219,14 @@ public class GameplayManager : MonoBehaviour
 
     private void PlayCheck()
     {
-        if (playTimer > currentPlayInfo.penaltyTimer - 10f && activationTime == null)
+        if (playTimer > CurrentPlayInfo.penaltyTimer - 10f && activationTime == null)
         {
-            Vector3 distance = currentPlayers[currentPlayInfo.offenderId].transform.position - currentPlayers[currentPlayInfo.affectedId].transform.position;
+            Vector3 distance = currentPlayers[CurrentPlayInfo.offenderId].transform.position - currentPlayers[CurrentPlayInfo.affectedId].transform.position;
             Debug.Log(distance.magnitude);
             activationTime = distance.magnitude;
         }
 
-        if (playTimer > currentPlayInfo.penaltyTimer && !penaltyOccured)
+        if (playTimer > CurrentPlayInfo.penaltyTimer && !penaltyOccured)
         {
             penaltyOccured = true;
             playTest.SetActive(true);
@@ -260,11 +260,6 @@ public class GameplayManager : MonoBehaviour
     //Creates the PlayInformation struct, and fills it.
     private void InitiatePlayInformation()
     {
-        CurrentPlayInfo = new()
-        {
-            penaltyTimer = Random.Range(15f, 50f),
-            stopTimer = Random.Range(0, 15f)
-        };
         //Replace this random range with a reference to a list of all players in the scene.
         int player1 = Random.Range(0, currentPlayers.Length / 2);
         while (!enabledPlayers[player1])
@@ -276,9 +271,16 @@ public class GameplayManager : MonoBehaviour
         {
             player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
         }
-        CurrentPlayInfo.offenderId = player1;
-        CurrentPlayInfo.affectedId = player2;
-        CurrentPlayInfo.penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length);
+
+        CurrentPlayInfo = new()
+        {
+            penaltyTimer = Random.Range(15f, 50f),
+            stopTimer = Random.Range(5f, 15f),
+            offenderId = player1,
+            affectedId = player2,
+            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length)
+        };
+
         penaltyCall = false;
         callTimestamp = 0;
 
