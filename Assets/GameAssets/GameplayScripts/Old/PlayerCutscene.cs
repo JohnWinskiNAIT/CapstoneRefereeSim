@@ -8,7 +8,7 @@ public class PlayerCutscene : MonoBehaviour
 {
     const float snapThreshold = 2f;
 
-    Vector3[] waypoints, cameraPoints;
+    Vector3[] waypoints;
     private Vector3 autoskateDestination;
     Vector3 basePosition;
 
@@ -91,7 +91,6 @@ public class PlayerCutscene : MonoBehaviour
     private void LoadWaypoints(CutsceneData cutsceneData)
     {
         waypoints = cutsceneData.waypoints;
-        cameraPoints = cutsceneData.cameraPoints;
 
         if (controls.CurrentPlayerState != PlayerState.Autoskate)
         {
@@ -100,6 +99,7 @@ public class PlayerCutscene : MonoBehaviour
 
         if (cutsceneData.pointTypes[0] == CutsceneData.PointType.Teleport)
         {
+            //Debug.Log(waypoints[0]);
             transform.position = waypoints[0];
         }
     }

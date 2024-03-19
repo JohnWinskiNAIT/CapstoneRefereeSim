@@ -49,6 +49,13 @@ public class ZoneAIController : MonoBehaviour
         Right
     }
 
+    public enum AIMode
+    {
+        Default,
+        Penalty,
+        Frozen
+    }
+
     private void Awake()
     {
         GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
