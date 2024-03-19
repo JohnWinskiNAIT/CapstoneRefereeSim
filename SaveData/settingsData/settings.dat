@@ -56,32 +56,24 @@
   </penalties>
   <startingPos>
     <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
       <posName>RedDefense</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueDefense</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueDefense</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
@@ -93,6 +85,14 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueDefense</posName>
+      <isEnabled>false</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueDefense</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
   </startingPos>

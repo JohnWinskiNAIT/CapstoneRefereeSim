@@ -2,6 +2,7 @@ using Oculus.VoiceSDK.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,8 @@ public class GameplayManager : MonoBehaviour
 {
     static public GameplayManager Instance;
 
+    public GameObject SettingsContainer;
+    public SettingsData mySettings;
     [SerializeField]
     CutsceneData playEndCutscene, puckDropCutscene;
 
@@ -75,7 +78,9 @@ public class GameplayManager : MonoBehaviour
         offsetPuckDropCutscene = new();
 
         gameplayState = GameState.Ice;
+        mySettings = GameObject.Find("MySettings").GetComponent<Settings>().mySettings;
         SelectFaceoff();
+        EnablePlayers();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
     }
@@ -101,7 +106,13 @@ public class GameplayManager : MonoBehaviour
             }
         }
     }
-
+    void EnablePlayers()
+    {
+        for(int i = 0; i < enabledPlayers.Length; i++)
+        {
+            enabledPlayers[i] = mySettings.startingPos[i].isEnabled;
+        }
+    }
     void UpdatePlayers()
     {
         for (int i = 0; i < currentPlayers.Length; i++)

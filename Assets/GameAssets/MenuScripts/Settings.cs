@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System;
 using System.Reflection;
 using TMPro;
+using System.Linq;
 
 public class Settings : MonoBehaviour
 {
@@ -30,11 +31,12 @@ public class Settings : MonoBehaviour
     int screenMode;
     public int keyLayout;
     bool mute;
-    public static SettingsData mySettings;
+    public SettingsData mySettings;
     string filePath;
     string rootPath = "SaveData\\";
     private void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         keyLayout = 1;
         mySettings = new SettingsData();
         myPenaltyToggles = penaltyUIContainer.GetComponentsInChildren<Toggle>();
@@ -242,7 +244,7 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.startingPos.Length; i++)
         {
             mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
-            if(i == 4 || i == 9)
+            if(i == 0 || i == 5)
             {
                 myStartingPosToggles[i].interactable = false;
             }

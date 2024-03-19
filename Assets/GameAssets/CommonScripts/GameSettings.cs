@@ -6,52 +6,30 @@ using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
-    public GameSettingsContainer settingsContainer { get; private set; }
+    public static GameSettingsContainer settingsContainer { get; private set; }
     public SettingsData mySettings;
-    public string rootPath = "SaveData\\settingsData";
-    public enum WindowedSettings
-    {
-        Fullscreen,
-        Windowed
-    }
-
-    public enum GameResolutions
-    {
-        WIDE1920_1080,
-        WIDE1280_720
-    }
 
     [Serializable]
     public struct GameSettingsContainer
     {
         //Number of players. The remainder will be distributed randomly and the rest are split evenly.
         public int numberOfPlayers;
-        //Fullscreen, windowed, or bordered if we add it.
-        public WindowedSettings windowedSettings;
-        //Resolutions. Can be added later.
-        public GameResolutions resolutions;
         //Bool list to be read that will detemrine which types of penalties are disabled.
-        public bool[] enabledPenalties;
+        public PenaltyData[] enabledPenalties;
+        public int numberOfscenarios;
 
-        public GameSettingsContainer(int playerNumber, WindowedSettings settings, GameResolutions resolution, bool[] penaltyList)
+        public GameSettingsContainer(int playerNumber, PenaltyData[] penaltyList, int scenarios)
         {
             numberOfPlayers = playerNumber;
-            windowedSettings = settings;
-            resolutions = resolution;
             enabledPenalties = penaltyList;
+            numberOfscenarios = scenarios;
         }
     }
 
 
     private void Awake()
     {
-        //Logic to look for an external file with settings. If it exists, load them. If not, create a default.
-        mySettings = new SettingsData();
-        if (Directory.Exists(rootPath))
-        {
-            SaveManager.LoadData(rootPath + "\\settings.dat", ref mySettings);
-            LoadSettings();
-        }
+        DefaultSettings();
     }
 
     private void DefaultSettings()
@@ -59,15 +37,18 @@ public class GameSettings : MonoBehaviour
         //Set values to defaults then save a settings file.
 
         //Setting values.
-        settingsContainer = new GameSettingsContainer(10, WindowedSettings.Fullscreen, GameResolutions.WIDE1920_1080, new bool[0]);
+        settingsContainer = new GameSettingsContainer(10, new PenaltyData[9], 1);
     }
 
     private void LoadSettings()
     {
         GameSettingsContainer loadedSettings;
-
-        //Insert file loading logic here. This is placeholder so it compiles.
         loadedSettings = new GameSettingsContainer();
+        //Insert file loading logic here. This is placeholder so it compiles.
+        int playersCount = 0;
+        loadedSettings.numberOfPlayers = playersCount;
+        loadedSettings.enabledPenalties = mySettings.penalties;
+        loadedSettings.numberOfscenarios = mySettings.scenarios;
         settingsContainer = loadedSettings;
     }
 }
