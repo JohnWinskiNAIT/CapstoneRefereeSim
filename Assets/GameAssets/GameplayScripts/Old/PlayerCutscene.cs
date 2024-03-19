@@ -91,6 +91,7 @@ public class PlayerCutscene : MonoBehaviour
     private void LoadWaypoints(CutsceneData cutsceneData)
     {
         waypoints = cutsceneData.waypoints;
+        cameraPoints = cutsceneData.cameraPoints;
 
         if (controls.CurrentPlayerState != PlayerState.Autoskate)
         {
