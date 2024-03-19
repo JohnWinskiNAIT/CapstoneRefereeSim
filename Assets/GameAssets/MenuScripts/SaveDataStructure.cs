@@ -21,6 +21,11 @@ public struct PenaltyData
 {
     public string PenaltyName;
     public bool isEnabled;
+
+    public Sprite RefereeSprite
+    {
+        get { return Resources.Load<Sprite>(Settings.RefereeSpritePath + PenaltyName); }
+    }
 }
 [Serializable]
 public struct StartingPosData

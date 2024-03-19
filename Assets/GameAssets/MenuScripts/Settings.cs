@@ -11,6 +11,8 @@ using TMPro;
 
 public class Settings : MonoBehaviour
 {
+    public const string RefereeSpritePath = "PenaltyIcons/";
+
     public Slider masterSlider;
     public Slider SFXSlider;
     public Slider ambientSlider;
