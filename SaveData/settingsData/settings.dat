@@ -21,7 +21,7 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossChecking</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -72,7 +72,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
@@ -84,7 +84,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
@@ -96,11 +96,11 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
