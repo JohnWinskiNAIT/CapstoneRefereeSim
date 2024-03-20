@@ -31,7 +31,7 @@ public class Settings : MonoBehaviour
     int screenMode;
     public int keyLayout;
     bool mute;
-    public SettingsData mySettings;
+    public static SettingsData mySettings;
     string filePath;
     string rootPath = "SaveData\\";
     private void Start()
@@ -46,6 +46,7 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.penalties.Length; i++)
         {
             mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
+            mySettings.penalties[i].isWhistle = true;
         }
         for (int i = 0; i < myStartingPosToggles.Length; i++)
         {
@@ -99,12 +100,17 @@ public class Settings : MonoBehaviour
             ambientSlider.value = 1;
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
-                mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
+                //mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
+                mySettings.penalties[i].isEnabled = true;
             }
             for (int i = 0; i < myStartingPosToggles.Length; i++)
             {
                 mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
             }
+            mySettings.startingPos[0].isEnabled = true;
+            mySettings.startingPos[5].isEnabled = true;
+
+            SaveSettings();
         }
     }
     public void TogglePenalty(int index)

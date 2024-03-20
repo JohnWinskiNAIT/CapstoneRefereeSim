@@ -78,7 +78,7 @@ public class GameplayManager : MonoBehaviour
         offsetPuckDropCutscene = new();
 
         gameplayState = GameState.Ice;
-        mySettings = GameObject.Find("MySettings").GetComponent<Settings>().mySettings;
+        mySettings = Settings.mySettings;
         SelectFaceoff();
         EnablePlayers();
         GeneratePlayers();
@@ -271,13 +271,23 @@ public class GameplayManager : MonoBehaviour
     private void InitiatePlayInformation()
     {
         //Replace this random range with a reference to a list of all players in the scene.
+        bool playersExist = false;
+
+        for (int i = 0; i < currentPlayers.Length && !playersExist; i++)
+        {
+            if (enabledPlayers[i])
+            {
+                playersExist = true;
+            }
+        }
+
         int player1 = Random.Range(0, currentPlayers.Length / 2);
-        while (!enabledPlayers[player1])
+        while (!enabledPlayers[player1] && playersExist)
         {
             player1 = Random.Range(0, currentPlayers.Length / 2);
         }
         int player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
-        while (!enabledPlayers[player2])
+        while (!enabledPlayers[player2] && playersExist)
         {
             player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
         }
