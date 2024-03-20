@@ -53,7 +53,7 @@ public class Settings : MonoBehaviour
             mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
         }
         filePath = rootPath + "settingsData\\settings.dat";
-        if (Directory.Exists("SaveData\\settingsData"))
+        if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
             LoadSettings();
             masterSlider.value = mySettings.masterVolume;
@@ -100,8 +100,7 @@ public class Settings : MonoBehaviour
             ambientSlider.value = 1;
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
-                //mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
-                mySettings.penalties[i].isEnabled = true;
+                mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
             }
             for (int i = 0; i < myStartingPosToggles.Length; i++)
             {
@@ -112,6 +111,8 @@ public class Settings : MonoBehaviour
 
             SaveSettings();
         }
+
+        Debug.Log(mySettings.penalties[4].RefereeSprite.name);
     }
     public void TogglePenalty(int index)
     {
@@ -276,6 +277,7 @@ public class Settings : MonoBehaviour
             Directory.CreateDirectory("SaveData\\settingsData");
         }
         SaveManager.SaveData(filePath, ref mySettings);
+        SettingsHolder.mySettings = mySettings;
     }
     public void LoadSettings()
     {

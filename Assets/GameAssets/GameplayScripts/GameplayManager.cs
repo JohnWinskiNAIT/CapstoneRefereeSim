@@ -79,6 +79,7 @@ public class GameplayManager : MonoBehaviour
 
         gameplayState = GameState.Ice;
         mySettings = Settings.mySettings;
+        Debug.Log(mySettings.penalties[1].isWhistle);
         SelectFaceoff();
         EnablePlayers();
         GeneratePlayers();
@@ -329,7 +330,6 @@ public class GameplayManager : MonoBehaviour
 [Serializable]
 public class CutsceneData
 {
-
     public int NumberOfPoints
     {
         get { return waypoints.Length; }

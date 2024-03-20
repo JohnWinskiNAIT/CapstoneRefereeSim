@@ -92,11 +92,13 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
-        if (Settings.mySettings.WhistleCount > 0)
+        Debug.Log(SettingsHolder.mySettings.penalties.Length);
+
+        if (SettingsHolder.mySettings.WhistleCount > 0)
         {
             whistleInformation = GenerateWheelInformation(true);
         }
-        if (Settings.mySettings.penalties.Length - Settings.mySettings.WhistleCount > 0)
+        if (SettingsHolder.mySettings.penalties.Length - SettingsHolder.mySettings.WhistleCount > 0)
         {
             callInformation = GenerateWheelInformation(false);
         }
@@ -107,7 +109,7 @@ public class PlayerUIManager : MonoBehaviour
     private WheelInformation GenerateWheelInformation(bool isWhistle)
     {
         WheelInformation info = new WheelInformation();
-        SettingsData settings = Settings.mySettings;
+        SettingsData settings = SettingsHolder.mySettings;
         int optionsCounter = 0;
 
         if (isWhistle)
@@ -121,7 +123,7 @@ public class PlayerUIManager : MonoBehaviour
 
         for (int i = 0; i < settings.penalties.Length; i++)
         {
-            if (!settings.penalties[i].isWhistle)
+            if (settings.penalties[i].isWhistle == isWhistle)
             {
                 info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
                 info.options[optionsCounter].optionText = settings.penalties[i].PenaltyName;
@@ -208,8 +210,6 @@ public class PlayerUIManager : MonoBehaviour
                 //Self-made method to check for the magnitude (absolute distance) because percentage is width biased.
                 magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
             }
-
-
 
             if (magnitudeCheck.magnitude > Screen.height / 5)
             {

@@ -2,21 +2,21 @@
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <scenarios>0</scenarios>
   <screenMode>0</screenMode>
-  <masterVolume>0.0001</masterVolume>
-  <SFXvolume>0.0001</SFXvolume>
-  <ambientVolume>0.0001</ambientVolume>
+  <masterVolume>1</masterVolume>
+  <SFXvolume>1</SFXvolume>
+  <ambientVolume>1</ambientVolume>
   <lastMasterVolume>0</lastMasterVolume>
   <lastSFXvolume>0</lastSFXvolume>
   <lastAmbientVolume>0</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -26,53 +26,53 @@
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>BlindCheck</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Holding</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Interference</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HighStick</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Tripping</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Slashing</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HandPass</PenaltyName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
   </penalties>
   <startingPos>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
@@ -80,15 +80,11 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueForward</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
@@ -96,15 +92,19 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>BlueForward</posName>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
   </startingPos>
 </SettingsData>

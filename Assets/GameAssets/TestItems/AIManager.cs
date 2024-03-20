@@ -52,7 +52,7 @@ public class AIManager : MonoBehaviour
             }
             for (int i = 0; i < rightTeamPlayers.Count; i++)
             {
-                if ((leftTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
+                if ((rightTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
                 {
                     redirectPlayer = rightTeamPlayers[i];
                     distance = (redirectPlayer.transform.position - puckObject.transform.position).magnitude;

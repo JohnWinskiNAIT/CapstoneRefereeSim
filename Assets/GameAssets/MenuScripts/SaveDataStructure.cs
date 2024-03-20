@@ -20,9 +20,12 @@ public struct SettingsData
         get
         {
             int count = 0;
-            for (int i= 0; i < penalties.Length; i++)
+            for (int i = 0; i < penalties.Length; i++)
             {
-                count++;
+                if (penalties[i].isWhistle)
+                {
+                    count++;
+                }
             }
             return count;
         }
