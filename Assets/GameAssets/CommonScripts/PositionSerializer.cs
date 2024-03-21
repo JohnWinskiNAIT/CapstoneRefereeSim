@@ -16,6 +16,7 @@ public class PositionSerializer : MonoBehaviour
     int saveSlot;
     int index = 0;
     bool saved = false;
+    float timer;
     const string FILEPATH = "SaveData\\PositionData";
 
     //makes object data into float data for saving.
@@ -26,6 +27,7 @@ public class PositionSerializer : MonoBehaviour
         currentData.x = new float[10];
         currentData.y = new float[10];
         currentData.z = new float[10];
+        timer = Time.time;
 
     }
     public void FixedUpdate()
@@ -43,7 +45,7 @@ public class PositionSerializer : MonoBehaviour
             }
         }
 
-        if (Time.time > 30f && !saved)
+        if (timer > 30f + Time.time && !saved)
         {
             savePositionData();
             saved= true;
