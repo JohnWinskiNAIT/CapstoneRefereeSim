@@ -36,6 +36,7 @@ public class Settings : MonoBehaviour
     private void Start()
     {
         keyLayout = 1;
+        scenarios = 1;
         mySettings = new SettingsData();
         myPenaltyToggles = penaltyUIContainer.GetComponentsInChildren<Toggle>();
         mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
@@ -95,9 +96,10 @@ public class Settings : MonoBehaviour
         }
         else
         {
-            masterSlider.value = 1;
-            SFXSlider.value = 1;
-            ambientSlider.value = 1;
+            mySettings.scenarios = scenarios;
+            mySettings.masterVolume = masterSlider.value = 1;
+            mySettings.SFXvolume = SFXSlider.value = 1;
+            mySettings.ambientVolume = ambientSlider.value = 1;
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
                 mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
@@ -106,6 +108,8 @@ public class Settings : MonoBehaviour
             {
                 mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
             }
+            mySettings.screenMode = screenMode;
+            ChangeScreenMode(mySettings.screenMode);
             mySettings.startingPos[0].isEnabled = true;
             mySettings.startingPos[5].isEnabled = true;
 
