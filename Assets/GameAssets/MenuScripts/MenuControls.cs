@@ -12,7 +12,7 @@ public class MenuControls : MonoBehaviour
 {
     [SerializeField]
     GameObject[] panels;
-    [SerializeField] Transform offScreen, onScreen;
+    Transform offScreen, onScreen;
     Button[] onScreenButtons;
     Slider[] onScreenSliders;
     Toggle[] onScreenToggles;
@@ -25,8 +25,11 @@ public class MenuControls : MonoBehaviour
     int menu;
     int previousPanel;
     float time;
+    Vector3 speed;
     private void Start()
     {
+        offScreen = GameObject.Find("OffScreen").transform;
+        onScreen = GameObject.Find("OnScreen").transform;
         previousOnScreen = new List<GameObject>();
         canEscape = false;
         offScreenPanel = panels[menu + 1];
@@ -143,11 +146,11 @@ public class MenuControls : MonoBehaviour
                     }
                     onScreenPanel.SetActive(false);
                     fadeOn = true;
-                    time = 1.5f;
+                    time = 1f;
                     fade = false;
                 }
-                onScreenPanel.transform.position = Vector3.Lerp(onScreenPanel.transform.position, offScreen.position, 0.095f);
-                offScreenPanel.transform.position = Vector3.Lerp(offScreenPanel.transform.position, onScreen.position, 0.1f);
+                onScreenPanel.transform.position = Vector3.Slerp(onScreenPanel.transform.position, offScreen.position, 0.095f);
+                offScreenPanel.transform.position = Vector3.SmoothDamp(offScreenPanel.transform.position, onScreen.position, ref speed, 0.1f);
             }
         }
     }
