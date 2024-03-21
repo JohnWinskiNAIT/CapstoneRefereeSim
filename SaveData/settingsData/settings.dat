@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>0</scenarios>
+  <scenarios>4</scenarios>
   <screenMode>0</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
@@ -11,51 +11,96 @@
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
+      <penaltyText>Head Contact</penaltyText>
+      <penaltyId>0</penaltyId>
       <isEnabled>true</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Slew Foot</penaltyText>
+      <penaltyId>1</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
-      <PenaltyName>CrossCheck</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <PenaltyName>CrossChecking</PenaltyName>
+      <penaltyText>Cross Check</penaltyText>
+      <penaltyId>2</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>BlindCheck</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Blind Check</penaltyText>
+      <penaltyId>3</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Holding</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Holding</penaltyText>
+      <penaltyId>4</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Interference</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Interference</penaltyText>
+      <penaltyId>5</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HighStick</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>High Stick</penaltyText>
+      <penaltyId>6</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Tripping</PenaltyName>
+      <penaltyText>Tripping</penaltyText>
+      <penaltyId>7</penaltyId>
       <isEnabled>true</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Hooking</penaltyText>
+      <penaltyId>8</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Slashing</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <penaltyText>Slashing</penaltyText>
+      <penaltyId>9</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
-      <PenaltyName>Hand Pass</PenaltyName>
-      <isEnabled>true</isEnabled>
+      <PenaltyName>HandPass</PenaltyName>
+      <penaltyText>Hand Pass</penaltyText>
+      <penaltyId>10</penaltyId>
+      <isEnabled>false</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
   </penalties>
   <startingPos>
     <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedForward</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
       <posName>RedDefense</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
@@ -64,15 +109,15 @@
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
-      <posName>RedForward</posName>
+      <posName>BlueForward</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
-      <posName>RedForward</posName>
+      <posName>BlueForward</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
-      <posName>RedForward</posName>
+      <posName>BlueForward</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
@@ -81,18 +126,6 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueForward</posName>
-      <isEnabled>true</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueForward</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>BlueForward</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
   </startingPos>

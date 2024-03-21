@@ -2,13 +2,20 @@ using Oculus.VoiceSDK.UX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.WSA;
 using Random = UnityEngine.Random;
 
 public class GameplayManager : MonoBehaviour
 {
     static public GameplayManager Instance;
 
+    public SettingsData mySettings;
     [SerializeField]
     CutsceneData playEndCutscene, puckDropCutscene;
 
@@ -22,8 +29,9 @@ public class GameplayManager : MonoBehaviour
     CutsceneData currentCutscene;
     public PlayInformation CurrentPlayInfo { get; private set; }
 
+    int scenariosCompleted;
     int cutsceneStatus;
-    float playTimer, callTimestamp;
+    float playTimer, callTimestamp, callDifference;
     float? activationTime;
 
     public bool cameraDone, moveDone;
@@ -74,8 +82,11 @@ public class GameplayManager : MonoBehaviour
     {
         offsetPuckDropCutscene = new();
 
+        scenariosCompleted = 0;
         gameplayState = GameState.Ice;
-        SelectFaceoff();
+        mySettings = Settings.mySettings;
+        Debug.Log(mySettings.penalties[1].isWhistle);
+        EnablePlayers();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
     }
@@ -88,20 +99,17 @@ public class GameplayManager : MonoBehaviour
             if (enabledPlayers[i])
             {
                 currentPlayers[i] = Instantiate(playerPrefab, null);
-                if (CurrentFaceoff.isCentre)
-                {
-                    currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
-                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset);
-                }
-                else
-                {
-                    currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
-                    currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent, setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset);
-                }
+                currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent);
             }
         }
     }
-
+    void EnablePlayers()
+    {
+        for(int i = 0; i < enabledPlayers.Length; i++)
+        {
+            enabledPlayers[i] = mySettings.startingPos[i].isEnabled;
+        }
+    }
     void UpdatePlayers()
     {
         for (int i = 0; i < currentPlayers.Length; i++)
@@ -134,7 +142,7 @@ public class GameplayManager : MonoBehaviour
         if (playOngoing)
         {
             playOngoing = false;
-            Debug.Log($"Difference: {callTimestamp - CurrentPlayInfo.penaltyTimer}");
+            callDifference = callTimestamp - CurrentPlayInfo.penaltyTimer;
         }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
@@ -155,9 +163,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public void ConfirmChoice(PenaltyType choice)
+    public void ConfirmChoice(int choice)
     {
-        if (choice == CurrentPlayInfo.penaltyType)
+        if (choice == CurrentPlayInfo.penaltyId)
         {
             Debug.Log("True");
         }
@@ -166,10 +174,10 @@ public class GameplayManager : MonoBehaviour
             Debug.Log("False");
         }
 
-        SelectFaceoff();
         gameplayState = GameState.Results;
+        resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         resultsUI.gameObject.SetActive(true);
-        //GameplayEvents.InitializePlay.Invoke();
+        GameplayEvents.OpenWheel.Invoke(false);
     }
 
     public void ProgressCutscene()
@@ -240,6 +248,19 @@ public class GameplayManager : MonoBehaviour
 
     private void StartPlay()
     {
+        scenariosCompleted++;
+        if (scenariosCompleted > SettingsHolder.mySettings.scenarios)
+        {
+            SceneManager.LoadScene("MenuScene");
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (resultsUI.activeSelf)
+        {
+            resultsUI.SetActive(false);
+        }
+
+        SelectFaceoff();
         UpdatePlayers();
         InitiatePlayInformation();
         offsetPuckDropCutscene.OverwriteCutscene(puckDropCutscene);
@@ -249,7 +270,6 @@ public class GameplayManager : MonoBehaviour
         cutsceneStatus = 0;
         activationTime = null;
 
-        //Debug.Log(CurrentFaceoff.faceoffName);
         
         playTimer = 0;
         playOngoing = true;
@@ -260,13 +280,23 @@ public class GameplayManager : MonoBehaviour
     private void InitiatePlayInformation()
     {
         //Replace this random range with a reference to a list of all players in the scene.
+        bool playersExist = false;
+
+        for (int i = 0; i < currentPlayers.Length && !playersExist; i++)
+        {
+            if (enabledPlayers[i])
+            {
+                playersExist = true;
+            }
+        }
+
         int player1 = Random.Range(0, currentPlayers.Length / 2);
-        while (!enabledPlayers[player1])
+        while (!enabledPlayers[player1] && playersExist)
         {
             player1 = Random.Range(0, currentPlayers.Length / 2);
         }
         int player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
-        while (!enabledPlayers[player2])
+        while (!enabledPlayers[player2] && playersExist)
         {
             player2 = Random.Range(currentPlayers.Length / 2, currentPlayers.Length);
         }
@@ -277,7 +307,8 @@ public class GameplayManager : MonoBehaviour
             stopTimer = Random.Range(5f, 15f),
             offenderId = player1,
             affectedId = player2,
-            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length)
+            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length),
+            penaltyId = mySettings.penalties[Random.Range(0, SettingsHolder.mySettings.penalties.Length)].penaltyId
         };
 
         callTimestamp = 0;
@@ -293,6 +324,7 @@ public class GameplayManager : MonoBehaviour
         public int offenderId, affectedId;
         //What type of penalty it is is stored here.
         public PenaltyType penaltyType;
+        public int penaltyId;
     }
 
     [Serializable]
@@ -308,7 +340,6 @@ public class GameplayManager : MonoBehaviour
 [Serializable]
 public class CutsceneData
 {
-
     public int NumberOfPoints
     {
         get { return waypoints.Length; }

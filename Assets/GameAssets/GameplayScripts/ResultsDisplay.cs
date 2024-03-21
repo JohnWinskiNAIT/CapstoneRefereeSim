@@ -3,14 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ResultsDisplay : MonoBehaviour
 {
     [SerializeField]
+    InputActionAsset playerInputs;
+
+    InputAction continueInput, replayInput;
+
     RectTransform resultsUI;
 
     [SerializeField]
-    Tuple<Vector3, Vector3> startCorners, finalCorners;
+    Vector3[] startCorners, finalCorners;
 
     [SerializeField]
     TextMeshProUGUI choiceText, actualText, timingText;
@@ -21,11 +26,25 @@ public class ResultsDisplay : MonoBehaviour
     float transitionTimer;
     bool resultsPulledUp;
 
-    public void InitiateResults()
+    private void Awake()
     {
-        choiceText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
-        actualText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
-        timingText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyTimer.ToString();
+        continueInput = playerInputs.FindActionMap("Gameplay").FindAction("Call/Select");
+        replayInput = playerInputs.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
+        resultsUI = GetComponent<RectTransform>();
+    }
+
+    public void InitiateResults(int choiceId, int actualId, float timing)
+    {
+        string choice = SettingsHolder.mySettings.penalties[choiceId].penaltyText;
+        string actual = SettingsHolder.mySettings.penalties[actualId].penaltyText;
+        float timer = Mathf.Round(timing * 10f) * 0.1f;
+
+        choiceText.text = $"Player Call: {choice}";
+        actualText.text = $"Actual Penalty: {actual}";
+        timingText.text = $"Time Before Call: {timer}s";
+
+        transitionTimer = 0;
+        resultsPulledUp = true;
     }
 
     // Update is called once per frame
@@ -35,9 +54,25 @@ public class ResultsDisplay : MonoBehaviour
         {
             if (transitionTimer < transitionTime)
             {
-                resultsUI.anchorMin = Vector3.Lerp(startCorners.Item1, finalCorners.Item1, transitionTimer / transitionTime);
-                resultsUI.anchorMax = Vector3.Lerp(startCorners.Item2, finalCorners.Item2, transitionTimer / transitionTime);
+                resultsUI.anchorMin = Vector3.Lerp(startCorners[0], finalCorners[0], transitionTimer / transitionTime);
+                resultsUI.anchorMax = Vector3.Lerp(startCorners[1], finalCorners[1], transitionTimer / transitionTime);
+                transitionTimer += Time.deltaTime;
+            }
+            else
+            {
+                if (continueInput.WasPressedThisFrame())
+                {
+                    resultsPulledUp = false;
+                    GameplayEvents.InitializePlay.Invoke();
+                }
             }
         }
+    }
+
+    private struct ResultsContainer
+    {
+        public string difference;
+        public string chosenPenalty;
+        public string actualPenalty;
     }
 }

@@ -14,13 +14,48 @@ public struct SettingsData
     public float lastAmbientVolume;
     public PenaltyData[] penalties;
     public StartingPosData[] startingPos;
+
+    public int WhistleCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < penalties.Length; i++)
+            {
+                if (penalties[i].isWhistle && penalties[i].isEnabled)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
+    public int EnabledCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < penalties.Length; i++)
+            {
+                if (penalties[i].isEnabled)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
 }
 
 [Serializable]
 public struct PenaltyData
 {
     public string PenaltyName;
+    public string penaltyText;
+    public int penaltyId;
     public bool isEnabled;
+    public bool isWhistle;
 
     public Sprite RefereeSprite
     {

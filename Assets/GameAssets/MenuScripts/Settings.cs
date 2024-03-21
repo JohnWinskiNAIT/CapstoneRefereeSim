@@ -8,11 +8,11 @@ using System.Xml.Serialization;
 using System;
 using System.Reflection;
 using TMPro;
+using System.Linq;
 
 public class Settings : MonoBehaviour
 {
     public const string RefereeSpritePath = "PenaltyIcons/";
-
     public Slider masterSlider;
     public Slider SFXSlider;
     public Slider ambientSlider;
@@ -32,7 +32,7 @@ public class Settings : MonoBehaviour
     bool mute;
     public static SettingsData mySettings;
     string filePath;
-    string rootPath = "SaveData\\";
+    const string RootPath = "SaveData\\";
     private void Start()
     {
         keyLayout = 1;
@@ -44,13 +44,16 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.penalties.Length; i++)
         {
             mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
+            mySettings.penalties[i].penaltyId = i;
+            mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
+            mySettings.penalties[i].isWhistle = true;
         }
         for (int i = 0; i < myStartingPosToggles.Length; i++)
         {
             mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
         }
-        filePath = rootPath + "settingsData\\settings.dat";
-        if (Directory.Exists("SaveData\\settingsData"))
+        filePath = RootPath + "settingsData\\settings.dat";
+        if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
             LoadSettings();
             masterSlider.value = mySettings.masterVolume;
@@ -103,7 +106,13 @@ public class Settings : MonoBehaviour
             {
                 mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
             }
+            mySettings.startingPos[0].isEnabled = true;
+            mySettings.startingPos[5].isEnabled = true;
+
+            SaveSettings();
         }
+
+        Debug.Log(mySettings.penalties[4].RefereeSprite.name);
     }
     public void TogglePenalty(int index)
     {
@@ -242,7 +251,7 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.startingPos.Length; i++)
         {
             mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
-            if(i == 4 || i == 9)
+            if(i == 0 || i == 5)
             {
                 myStartingPosToggles[i].interactable = false;
             }
@@ -268,6 +277,7 @@ public class Settings : MonoBehaviour
             Directory.CreateDirectory("SaveData\\settingsData");
         }
         SaveManager.SaveData(filePath, ref mySettings);
+        SettingsHolder.mySettings = mySettings;
     }
     public void LoadSettings()
     {

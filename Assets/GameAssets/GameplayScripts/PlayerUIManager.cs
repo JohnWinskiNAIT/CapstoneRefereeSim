@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -91,19 +92,47 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(SettingsHolder.mySettings.penalties.Length);
 
+        if (SettingsHolder.mySettings.WhistleCount > 0)
+        {
+            whistleInformation = GenerateWheelInformation(true);
+        }
+        if (SettingsHolder.mySettings.penalties.Length - SettingsHolder.mySettings.WhistleCount > 0)
+        {
+            callInformation = GenerateWheelInformation(false);
+        }
+
+        wheelInfo = whistleInformation;
     }
 
-    private void GenerateWheelInformation(bool isWhistle)
+    private WheelInformation GenerateWheelInformation(bool isWhistle)
     {
+        WheelInformation info = new WheelInformation();
+        SettingsData settings = SettingsHolder.mySettings;
+        int optionsCounter = 0;
+
         if (isWhistle)
         {
-
+            info.options = new WheelInformation.Option[settings.WhistleCount];
         }
         else
         {
-
+            info.options = new WheelInformation.Option[settings.EnabledCount - settings.WhistleCount];
         }
+
+        for (int i = 0; i < settings.penalties.Length; i++)
+        {
+            if (settings.penalties[i].isWhistle == isWhistle && settings.penalties[i].isEnabled)
+            {
+                info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
+                info.options[optionsCounter].optionText = settings.penalties[i].penaltyText;
+                info.options[optionsCounter].optionType = PenaltyType.HeadContact;
+                info.options[optionsCounter].optionId = settings.penalties[i].penaltyId;
+                optionsCounter++;
+            }
+        }
+        return info;
     }
 
     // Visual effects are performed in this update.
@@ -183,8 +212,6 @@ public class PlayerUIManager : MonoBehaviour
                 magnitudeCheck = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
             }
 
-
-
             if (magnitudeCheck.magnitude > Screen.height / 5)
             {
                 float mouseAngle;
@@ -211,7 +238,7 @@ public class PlayerUIManager : MonoBehaviour
                         //Input to choose a penalty.
                         if (callSelectAction.WasPressedThisFrame())
                         {
-                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionType);
+                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionId);
                         }
                     }
                 }
@@ -336,10 +363,7 @@ public class PlayerUIManager : MonoBehaviour
             public string optionText;
             public PenaltyType optionType;
 
-            Sprite OptionSprite
-            {
-                get { return OptionSprite; }
-            }
+            public int optionId;
         }
     }
 }
