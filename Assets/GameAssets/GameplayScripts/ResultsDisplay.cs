@@ -12,7 +12,6 @@ public class ResultsDisplay : MonoBehaviour
 
     InputAction continueInput, replayInput;
 
-    [SerializeField]
     RectTransform resultsUI;
 
     [SerializeField]
@@ -31,6 +30,7 @@ public class ResultsDisplay : MonoBehaviour
     {
         continueInput = playerInputs.FindActionMap("Gameplay").FindAction("Call/Select");
         replayInput = playerInputs.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
+        resultsUI = GetComponent<RectTransform>();
     }
 
     public void InitiateResults(int choiceId, int actualId, float timing)
@@ -42,6 +42,8 @@ public class ResultsDisplay : MonoBehaviour
         actualText.text = SettingsHolder.mySettings.penalties[actualId].penaltyText;
 
         timingText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyTimer.ToString();
+        transitionTimer = 0;
+        resultsPulledUp = true;
     }
 
     // Update is called once per frame
@@ -53,6 +55,15 @@ public class ResultsDisplay : MonoBehaviour
             {
                 resultsUI.anchorMin = Vector3.Lerp(startCorners[0], finalCorners[0], transitionTimer / transitionTime);
                 resultsUI.anchorMax = Vector3.Lerp(startCorners[1], finalCorners[1], transitionTimer / transitionTime);
+                transitionTimer += Time.deltaTime;
+            }
+            else
+            {
+                if (continueInput.WasPressedThisFrame())
+                {
+                    resultsPulledUp = false;
+                    GameplayEvents.InitializePlay.Invoke();
+                }
             }
         }
     }

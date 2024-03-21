@@ -101,7 +101,7 @@ public class ZoneAIController : MonoBehaviour
         ManagerCallback();
     }
 
-    public void SetupAIAttributes(AIType typeOfPlayer, AITeam playerTeam, GameObject zoneParentObject, Vector3 baseSpawn)
+    public void SetupAIAttributes(AIType typeOfPlayer, AITeam playerTeam, GameObject zoneParentObject)
     {
         aiType = typeOfPlayer;
         aiTeam = playerTeam;

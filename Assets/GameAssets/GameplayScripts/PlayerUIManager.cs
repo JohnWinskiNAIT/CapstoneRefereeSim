@@ -128,7 +128,7 @@ public class PlayerUIManager : MonoBehaviour
                 info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
                 info.options[optionsCounter].optionText = settings.penalties[i].penaltyText;
                 info.options[optionsCounter].optionType = PenaltyType.HeadContact;
-                info.options[optionsCounter].optionId = settings.penalties[i].PenaltyName;
+                info.options[optionsCounter].optionId = settings.penalties[i].penaltyId;
                 optionsCounter++;
             }
         }
@@ -363,7 +363,7 @@ public class PlayerUIManager : MonoBehaviour
             public string optionText;
             public PenaltyType optionType;
 
-            public string optionId;
+            public int optionId;
         }
     }
 }
