@@ -240,7 +240,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 96
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12129,7 +12129,7 @@ GameObject:
   - component: {fileID: 1632992456}
   - component: {fileID: 1632992455}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14854,10 +14854,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d17aae10ee2cdf498877ac8d22fbc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputs: {fileID: 0}
   resultsUI: {fileID: 0}
-  choiceText: {fileID: 0}
-  actualText: {fileID: 0}
-  timingText: {fileID: 0}
+  choiceText: {fileID: 1786934459}
+  actualText: {fileID: 684632416}
+  timingText: {fileID: 1632992455}
   transitionTime: 0
 --- !u!1 &1986925675
 GameObject:

@@ -44,6 +44,7 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.penalties.Length; i++)
         {
             mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
+            mySettings.penalties[i].penaltyText = myPenaltyToggles[i].GetComponentInChildren<TextMeshProUGUI>().text;
             mySettings.penalties[i].isWhistle = true;
         }
         for (int i = 0; i < myStartingPosToggles.Length; i++)

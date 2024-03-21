@@ -6,9 +6,9 @@ public class AIManager : MonoBehaviour
 {
     static public AIManager Instance { get; private set; }
 
-    public List<GameObject> leftTeamPlayers { get; private set; }
+    public List<GameObject> LeftTeamPlayers { get; private set; }
 
-    public List<GameObject> rightTeamPlayers { get; private set; }
+    public List<GameObject> RightTeamPlayers { get; private set; }
 
     private GameObject puckObject;
 
@@ -18,8 +18,8 @@ public class AIManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        leftTeamPlayers = new List<GameObject>();
-        rightTeamPlayers = new List<GameObject>();
+        LeftTeamPlayers = new List<GameObject>();
+        RightTeamPlayers = new List<GameObject>();
         if (Instance == null)
         {
             Instance = gameObject.GetComponent<AIManager>();
@@ -37,11 +37,11 @@ public class AIManager : MonoBehaviour
             GameObject redirectPlayer = null;
             float distance = float.PositiveInfinity;
 
-            for (int i = 0; i < leftTeamPlayers.Count; i++)
+            for (int i = 0; i < LeftTeamPlayers.Count; i++)
             {
-                if ((leftTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
+                if ((LeftTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
                 {
-                    redirectPlayer = leftTeamPlayers[i];
+                    redirectPlayer = LeftTeamPlayers[i];
                     distance = (redirectPlayer.transform.position - puckObject.transform.position).magnitude;
                 }
             }
@@ -50,11 +50,11 @@ public class AIManager : MonoBehaviour
                 Debug.Log("Test");
                 redirectPlayer.GetComponent<ZoneAIController>().DeclarePosition(puckObject.transform.position);
             }
-            for (int i = 0; i < rightTeamPlayers.Count; i++)
+            for (int i = 0; i < RightTeamPlayers.Count; i++)
             {
-                if ((rightTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
+                if ((RightTeamPlayers[i].transform.position - puckObject.transform.position).magnitude < distance)
                 {
-                    redirectPlayer = rightTeamPlayers[i];
+                    redirectPlayer = RightTeamPlayers[i];
                     distance = (redirectPlayer.transform.position - puckObject.transform.position).magnitude;
                 }
             }

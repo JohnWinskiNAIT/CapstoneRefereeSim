@@ -126,8 +126,9 @@ public class PlayerUIManager : MonoBehaviour
             if (settings.penalties[i].isWhistle == isWhistle)
             {
                 info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
-                info.options[optionsCounter].optionText = settings.penalties[i].PenaltyName;
+                info.options[optionsCounter].optionText = settings.penalties[i].penaltyText;
                 info.options[optionsCounter].optionType = PenaltyType.HeadContact;
+                info.options[optionsCounter].optionId = settings.penalties[i].PenaltyName;
                 optionsCounter++;
             }
         }
@@ -237,7 +238,7 @@ public class PlayerUIManager : MonoBehaviour
                         //Input to choose a penalty.
                         if (callSelectAction.WasPressedThisFrame())
                         {
-                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionType);
+                            GameplayManager.Instance.ConfirmChoice(wheelInfo.options[i].optionId);
                         }
                     }
                 }
