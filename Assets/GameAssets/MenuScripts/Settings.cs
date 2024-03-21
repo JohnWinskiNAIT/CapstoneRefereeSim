@@ -13,7 +13,6 @@ using System.Linq;
 public class Settings : MonoBehaviour
 {
     public const string RefereeSpritePath = "PenaltyIcons/";
-
     public Slider masterSlider;
     public Slider SFXSlider;
     public Slider ambientSlider;
@@ -33,10 +32,9 @@ public class Settings : MonoBehaviour
     bool mute;
     public static SettingsData mySettings;
     string filePath;
-    string rootPath = "SaveData\\";
+    const string RootPath = "SaveData\\";
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         keyLayout = 1;
         mySettings = new SettingsData();
         myPenaltyToggles = penaltyUIContainer.GetComponentsInChildren<Toggle>();
@@ -54,7 +52,7 @@ public class Settings : MonoBehaviour
         {
             mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
         }
-        filePath = rootPath + "settingsData\\settings.dat";
+        filePath = RootPath + "settingsData\\settings.dat";
         if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
             LoadSettings();

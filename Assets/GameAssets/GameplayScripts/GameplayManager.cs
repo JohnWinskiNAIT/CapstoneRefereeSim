@@ -11,7 +11,6 @@ public class GameplayManager : MonoBehaviour
 {
     static public GameplayManager Instance;
 
-    public GameObject SettingsContainer;
     public SettingsData mySettings;
     [SerializeField]
     CutsceneData playEndCutscene, puckDropCutscene;

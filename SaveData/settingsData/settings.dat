@@ -1,26 +1,22 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>0</scenarios>
+  <scenarios>2</scenarios>
   <screenMode>0</screenMode>
-  <masterVolume>1</masterVolume>
-  <SFXvolume>1</SFXvolume>
-  <ambientVolume>1</ambientVolume>
-  <lastMasterVolume>0</lastMasterVolume>
-  <lastSFXvolume>0</lastSFXvolume>
-  <lastAmbientVolume>0</lastAmbientVolume>
+  <masterVolume>0.744861</masterVolume>
+  <SFXvolume>0.568037331</SFXvolume>
+  <ambientVolume>0.14741227</ambientVolume>
+  <lastMasterVolume>0.256961316</lastMasterVolume>
+  <lastSFXvolume>0.568037331</lastSFXvolume>
+  <lastAmbientVolume>0.14741227</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
-      <penaltyText>Head Contact</penaltyText>
-      <penaltyId>0</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
-      <penaltyText>Slew Foot</penaltyText>
-      <penaltyId>1</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -98,7 +94,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
