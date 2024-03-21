@@ -8,23 +8,31 @@ using UnityEngine.UIElements;
 public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
-    [SerializeField]
-    GameObject[] convertableObject;
     Vector3 objectPosition;
     List<HockeyPlayerPositionData> positionData;
-    HockeyPlayerPositionData currentData;
+    [SerializeField] HockeyPlayerPositionData currentData;
 
+    [SerializeField]
     int saveSlot;
     int index = 0;
     const string FILEPATH = "SaveData\\PositionData";
 
     //makes object data into float data for saving.
+    private void Start()
+    {
+        positionData = new List<HockeyPlayerPositionData>();
+        currentData = new HockeyPlayerPositionData();
+        currentData.x = new float[10];
+        currentData.y = new float[10];
+        currentData.z = new float[10];
+
+    }
     public void FixedUpdate()
     {
-        index++;
-        if (0 == 10 % index)
+        //index++;
+        //if (0 == 10 % index)
         {
-            for (int i = 0; i < convertableObject.Length; i++)
+            for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
             {
                 objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
                 currentData.x[i] = objectPosition.x;

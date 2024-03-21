@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>5</scenarios>
+  <scenarios>2</scenarios>
   <screenMode>0</screenMode>
   <masterVolume>0.65947783</masterVolume>
   <SFXvolume>0.416773379</SFXvolume>
