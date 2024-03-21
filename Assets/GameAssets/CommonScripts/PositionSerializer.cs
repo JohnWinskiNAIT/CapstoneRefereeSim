@@ -45,7 +45,7 @@ public class PositionSerializer : MonoBehaviour
             }
         }
 
-        if (timer > 30f + Time.time && !saved)
+        if (Time.time > 30f + timer && !saved)
         {
             savePositionData();
             saved= true;
