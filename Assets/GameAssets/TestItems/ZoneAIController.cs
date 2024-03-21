@@ -118,13 +118,13 @@ public class ZoneAIController : MonoBehaviour
         {
             if (teammates.Length == 0)
             {
-                if (aiTeam == AITeam.Left && AIManager.Instance.leftTeamPlayers.Count > 0)
+                if (aiTeam == AITeam.Left && AIManager.Instance.LeftTeamPlayers.Count > 0)
                 {
-                    teammates = AIManager.Instance.leftTeamPlayers.ToArray();
+                    teammates = AIManager.Instance.LeftTeamPlayers.ToArray();
                 }
-                if (aiTeam == AITeam.Right && AIManager.Instance.rightTeamPlayers.Count > 0)
+                if (aiTeam == AITeam.Right && AIManager.Instance.RightTeamPlayers.Count > 0)
                 {
-                    teammates = AIManager.Instance.rightTeamPlayers.ToArray();
+                    teammates = AIManager.Instance.RightTeamPlayers.ToArray();
                 }
             }
 
@@ -237,7 +237,7 @@ public class ZoneAIController : MonoBehaviour
                 int target = Random.Range(0, teammates.Length);
                 int reps = 0;
 
-                while (AIManager.Instance.leftTeamPlayers[target] == gameObject && reps < 10)
+                while (AIManager.Instance.LeftTeamPlayers[target] == gameObject && reps < 10)
                 {
                     target = Random.Range(0, teammates.Length);
                     reps++;
@@ -276,11 +276,11 @@ public class ZoneAIController : MonoBehaviour
     {
         if (aiTeam == AITeam.Left)
         {
-            AIManager.Instance.leftTeamPlayers.Add(gameObject);
+            AIManager.Instance.LeftTeamPlayers.Add(gameObject);
         }
         else
         {
-            AIManager.Instance.rightTeamPlayers.Add(gameObject);
+            AIManager.Instance.RightTeamPlayers.Add(gameObject);
         }
     }
 

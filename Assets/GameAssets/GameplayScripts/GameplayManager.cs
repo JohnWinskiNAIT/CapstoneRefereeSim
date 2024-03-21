@@ -167,9 +167,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public void ConfirmChoice(PenaltyType choice)
+    public void ConfirmChoice(string choice)
     {
-        if (choice == CurrentPlayInfo.penaltyType)
+        if (choice == CurrentPlayInfo.penaltyId)
         {
             Debug.Log("True");
         }
@@ -180,8 +180,8 @@ public class GameplayManager : MonoBehaviour
 
         SelectFaceoff();
         gameplayState = GameState.Results;
+        resultsUI.GetComponent<ResultsDisplay>();
         resultsUI.gameObject.SetActive(true);
-        //GameplayEvents.InitializePlay.Invoke();
     }
 
     public void ProgressCutscene()
@@ -299,7 +299,8 @@ public class GameplayManager : MonoBehaviour
             stopTimer = Random.Range(5f, 15f),
             offenderId = player1,
             affectedId = player2,
-            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length)
+            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length),
+            penaltyId = mySettings.penalties[Random.Range(0, SettingsHolder.mySettings.penalties.Length)].PenaltyName
         };
 
         callTimestamp = 0;
@@ -315,6 +316,7 @@ public class GameplayManager : MonoBehaviour
         public int offenderId, affectedId;
         //What type of penalty it is is stored here.
         public PenaltyType penaltyType;
+        public string penaltyId;
     }
 
     [Serializable]

@@ -36,6 +36,7 @@ public struct SettingsData
 public struct PenaltyData
 {
     public string PenaltyName;
+    public string penaltyText;
     public bool isEnabled;
     public bool isWhistle;
 
