@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using UnityEngine.WSA;
 using Random = UnityEngine.Random;
 
 public class GameplayManager : MonoBehaviour

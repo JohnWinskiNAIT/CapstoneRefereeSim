@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>4</scenarios>
+  <scenarios>5</scenarios>
   <screenMode>0</screenMode>
-  <masterVolume>0.7930341</masterVolume>
-  <SFXvolume>1</SFXvolume>
-  <ambientVolume>0.07572762</ambientVolume>
-  <lastMasterVolume>0.7930341</lastMasterVolume>
-  <lastSFXvolume>1</lastSFXvolume>
-  <lastAmbientVolume>0.07572762</lastAmbientVolume>
+  <masterVolume>0.65947783</masterVolume>
+  <SFXvolume>0.416773379</SFXvolume>
+  <ambientVolume>0.876522243</ambientVolume>
+  <lastMasterVolume>0.65947783</lastMasterVolume>
+  <lastSFXvolume>0.416773379</lastSFXvolume>
+  <lastAmbientVolume>0.876522243</lastAmbientVolume>
   <penalties>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>
