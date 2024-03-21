@@ -35,13 +35,14 @@ public class ResultsDisplay : MonoBehaviour
 
     public void InitiateResults(int choiceId, int actualId, float timing)
     {
-        choiceText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
-        actualText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyType.ToString();
+        string choice = SettingsHolder.mySettings.penalties[choiceId].penaltyText;
+        string actual = SettingsHolder.mySettings.penalties[actualId].penaltyText;
+        float timer = Mathf.Round(timing * 10f) * 0.1f;
 
-        choiceText.text = SettingsHolder.mySettings.penalties[choiceId].penaltyText;
-        actualText.text = SettingsHolder.mySettings.penalties[actualId].penaltyText;
+        choiceText.text = $"Player Call: {choice}";
+        actualText.text = $"Actual Penalty: {actual}";
+        timingText.text = $"Time Before Call: {timer}s";
 
-        timingText.text = GameplayManager.Instance.CurrentPlayInfo.penaltyTimer.ToString();
         transitionTimer = 0;
         resultsPulledUp = true;
     }
@@ -66,18 +67,6 @@ public class ResultsDisplay : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        continueInput.Enable();
-        replayInput.Enable();
-    }
-
-    private void OnDisable()
-    {
-        continueInput.Disable();
-        replayInput.Disable();
     }
 
     private struct ResultsContainer

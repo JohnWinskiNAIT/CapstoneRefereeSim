@@ -22,7 +22,23 @@ public struct SettingsData
             int count = 0;
             for (int i = 0; i < penalties.Length; i++)
             {
-                if (penalties[i].isWhistle)
+                if (penalties[i].isWhistle && penalties[i].isEnabled)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
+    public int EnabledCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < penalties.Length; i++)
+            {
+                if (penalties[i].isEnabled)
                 {
                     count++;
                 }

@@ -289,7 +289,7 @@ public class PlayerControl : MonoBehaviour
     private void CameraClamp()
     {
         // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
-        CameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * cameraSpeed * Time.deltaTime;
+        CameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * (cameraSpeed * Time.deltaTime);
 
         //Full rotation logic + clamping the x angle to serialized values since it controls the up/down of the camera.
         if (CameraAngle.x > 360)
@@ -344,7 +344,7 @@ public class PlayerControl : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddForce(InputAngle * accelerationSpeed * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(InputAngle * (accelerationSpeed * Time.fixedDeltaTime), ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new(rb.velocity.x, rb.velocity.z);

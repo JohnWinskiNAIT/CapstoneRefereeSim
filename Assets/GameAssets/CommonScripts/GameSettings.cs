@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
-    public static GameSettingsContainer settingsContainer { get; private set; }
+    public static GameSettingsContainer SettingsContainer { get; private set; }
     public SettingsData mySettings;
 
     [Serializable]
@@ -37,7 +37,7 @@ public class GameSettings : MonoBehaviour
         //Set values to defaults then save a settings file.
 
         //Setting values.
-        settingsContainer = new GameSettingsContainer(10, new PenaltyData[9], 1);
+        SettingsContainer = new GameSettingsContainer(10, new PenaltyData[9], 1);
     }
 
     private void LoadSettings()
@@ -49,6 +49,6 @@ public class GameSettings : MonoBehaviour
         loadedSettings.numberOfPlayers = playersCount;
         loadedSettings.enabledPenalties = mySettings.penalties;
         loadedSettings.numberOfscenarios = mySettings.scenarios;
-        settingsContainer = loadedSettings;
+        SettingsContainer = loadedSettings;
     }
 }

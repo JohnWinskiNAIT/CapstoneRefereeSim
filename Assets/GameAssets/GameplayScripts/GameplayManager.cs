@@ -3,8 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.WSA;
 using Random = UnityEngine.Random;
 
 public class GameplayManager : MonoBehaviour
@@ -171,8 +175,9 @@ public class GameplayManager : MonoBehaviour
         }
 
         gameplayState = GameState.Results;
-        resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, 0f);
+        resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         resultsUI.gameObject.SetActive(true);
+        GameplayEvents.OpenWheel.Invoke(false);
     }
 
     public void ProgressCutscene()
@@ -247,6 +252,7 @@ public class GameplayManager : MonoBehaviour
         if (scenariosCompleted > SettingsHolder.mySettings.scenarios)
         {
             SceneManager.LoadScene("MenuScene");
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
         }
 
         if (resultsUI.activeSelf)

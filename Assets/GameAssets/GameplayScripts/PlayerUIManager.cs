@@ -118,12 +118,12 @@ public class PlayerUIManager : MonoBehaviour
         }
         else
         {
-            info.options = new WheelInformation.Option[settings.penalties.Length - settings.WhistleCount];
+            info.options = new WheelInformation.Option[settings.EnabledCount - settings.WhistleCount];
         }
 
         for (int i = 0; i < settings.penalties.Length; i++)
         {
-            if (settings.penalties[i].isWhistle == isWhistle)
+            if (settings.penalties[i].isWhistle == isWhistle && settings.penalties[i].isEnabled)
             {
                 info.options[optionsCounter].optionImage = settings.penalties[i].RefereeSprite;
                 info.options[optionsCounter].optionText = settings.penalties[i].penaltyText;
