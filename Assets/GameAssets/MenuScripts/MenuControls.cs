@@ -35,7 +35,7 @@ public class MenuControls : MonoBehaviour
         offScreenPanel = panels[menu + 1];
         onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
-        time = 1.5f;
+        time = 1f;
         ButtonUpdater();
         foreach (Button button in offScreenButtons)
         {
@@ -81,11 +81,15 @@ public class MenuControls : MonoBehaviour
         }
         if (!fade && fadeOn)
         {
+            //Looks for the current active panel with the help of tags and makes it the onScreen panel
             onScreenPanel = GameObject.FindGameObjectWithTag("MenuPanel");
+            //Checks to see if the previousOnScreen list has objects in it and sets the offScreen panel
+            //as the panel supposed to be previous to the current on screen one
             if (previousOnScreen.Count > 0)
             {
                 offScreenPanel = previousOnScreen[previousOnScreen.Count - 1];
             }
+            //If not it sets the offscreen panel as the panel at the next index to the onscreen panel
             else
             {
                 int index = Array.IndexOf(panels, onScreenPanel);
