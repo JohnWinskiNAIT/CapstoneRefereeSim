@@ -15,6 +15,7 @@ public class PositionSerializer : MonoBehaviour
     [SerializeField]
     int saveSlot;
     int index = 0;
+    bool saved = false;
     const string FILEPATH = "SaveData\\PositionData";
 
     //makes object data into float data for saving.
@@ -41,15 +42,21 @@ public class PositionSerializer : MonoBehaviour
                 positionData.Add(currentData);
             }
         }
+
+        if (Time.time > 30f && !saved)
+        {
+            savePositionData();
+            saved= true;
+        }
     }
     public void loadPositionData()
     {
-        PositionSaver.LoadPlayerData(FILEPATH + saveSlot, ref positionData);
+        PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
     }
     public void savePositionData()
     {
         CreatePlayerFileStructure();
-        PositionSaver.SavePositionData(FILEPATH + saveSlot, ref positionData);
+        PositionSaver.SavePositionData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
     }
     void CreatePlayerFileStructure()
     {

@@ -13851,7 +13851,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c68d373be6f5e044ad447cfd360d7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  convertableObject: []
+  currentData:
+    x: []
+    y: []
+    z: []
   saveSlot: 0
 --- !u!4 &1722063056
 Transform:
