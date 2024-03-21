@@ -55,7 +55,7 @@ public class Settings : MonoBehaviour
         filePath = RootPath + "settingsData\\settings.dat";
         if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
-            LoadSettings();
+            LoadSettings(filePath, mySettings);
             masterSlider.value = mySettings.masterVolume;
             SFXSlider.value = mySettings.SFXvolume;
             ambientSlider.value = mySettings.ambientVolume;
@@ -109,7 +109,7 @@ public class Settings : MonoBehaviour
             mySettings.startingPos[0].isEnabled = true;
             mySettings.startingPos[5].isEnabled = true;
 
-            SaveSettings();
+            SaveSettings(filePath, mySettings);
         }
 
         Debug.Log(mySettings.penalties[4].RefereeSprite.name);
@@ -117,7 +117,7 @@ public class Settings : MonoBehaviour
     public void TogglePenalty(int index)
     {
         mySettings.penalties[index].isEnabled = myPenaltyToggles[index].isOn;
-        SaveSettings();
+        SaveSettings(filePath, mySettings);
     }
     public void Mute()
     {
@@ -136,7 +136,7 @@ public class Settings : MonoBehaviour
             ChangeSFXVolume();
             ambientSlider.value = 0.0001f;
             ChangeAmbientVolume();
-            SaveSettings();
+            SaveSettings(filePath, mySettings);
         }
         else
         {
@@ -146,7 +146,7 @@ public class Settings : MonoBehaviour
             ChangeSFXVolume();
             ambientSlider.value = mySettings.lastAmbientVolume;
             ChangeAmbientVolume();
-            SaveSettings();
+            SaveSettings(filePath, mySettings);
         }
     }
     public void ToggleStartingPos(int index)
@@ -160,25 +160,28 @@ public class Settings : MonoBehaviour
         {
             myStartingPosToggles[index].GetComponent<Image>().color = Color.white;
         }
-        SaveSettings();
+        SaveSettings(filePath, mySettings);
     }
     public void ChangeMasterVolume()
     {
         float volume = masterSlider.value;
         audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
-        SaveSettings();
+        mySettings.masterVolume = masterSlider.value;
+        SaveSettings(filePath, mySettings);
     }
     public void ChangeSFXVolume()
     {
         float volume = SFXSlider.value;
         audioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
-        SaveSettings();
+        mySettings.SFXvolume = SFXSlider.value;
+        SaveSettings(filePath, mySettings);
     }
     public void ChangeAmbientVolume()
     {
         float volume = ambientSlider.value;
         audioMixer.SetFloat("Ambient", Mathf.Log10(volume) * 20);
-        SaveSettings();
+        mySettings.ambientVolume = ambientSlider.value;
+        SaveSettings(filePath, mySettings);
     }
     public void ChangeScenarioNumber(int num)
     {
@@ -194,7 +197,7 @@ public class Settings : MonoBehaviour
         }
         scenarioField.text = scenarioNum.ToString();
         mySettings.scenarios = scenarioNum;
-        SaveSettings();
+        SaveSettings(filePath, mySettings);
     }
     public void ChangeImage(int num)
     {
@@ -244,7 +247,7 @@ public class Settings : MonoBehaviour
         }
         screenMode = screenModeNum;
         mySettings.screenMode = screenMode;
-        SaveSettings();
+        SaveSettings(filePath, mySettings);
     }
     public void Update()
     {
@@ -267,11 +270,8 @@ public class Settings : MonoBehaviour
             mute = true;
         }
     }
-    public void SaveSettings()
+    public static void SaveSettings(string filePath, SettingsData mySettings)
     {
-        mySettings.masterVolume = masterSlider.value;
-        mySettings.SFXvolume = SFXSlider.value;
-        mySettings.ambientVolume = ambientSlider.value;
         if (!Directory.Exists("SaveData\\settingsData"))
         {
             Directory.CreateDirectory("SaveData\\settingsData");
@@ -279,7 +279,7 @@ public class Settings : MonoBehaviour
         SaveManager.SaveData(filePath, ref mySettings);
         SettingsHolder.mySettings = mySettings;
     }
-    public void LoadSettings()
+    public static void LoadSettings(string filePath, SettingsData mySettings)
     {
         SaveManager.LoadData(filePath, ref mySettings);
     }

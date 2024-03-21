@@ -8,15 +8,24 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Audio;
+using System.IO;
 
 public class PauseManager : MonoBehaviour
 {
     public Slider masterSlider;
     public Slider SFXSlider;
     public Slider ambientSlider;
+    public AudioMixer audioMixer;
+    public TMP_Text muteText;
     public TMP_InputField screenModeText;
     public Image controllerImage;
     public Image keyBoardImage;
+    SettingsData settingsData;
+    int screenMode;
+    public int keyLayout;
+    bool mute;
+    string filePath;
+    const string RootPath = "SaveData\\";
 
     [SerializeField]
     GameObject[] panels;
@@ -50,6 +59,8 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
+        keyLayout = 1;
+        settingsData = Settings.mySettings;
         offScreen = GameObject.Find("OffScreen").transform;
         onScreen = GameObject.Find("OnScreen").transform;
         previousOnScreen = new List<GameObject>();
@@ -58,6 +69,36 @@ public class PauseManager : MonoBehaviour
         onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
         time = 1.5f;
+        filePath = RootPath + "settingsData\\settings.dat";
+        if (File.Exists("SaveData\\settingsData\\settings.dat"))
+        {
+            Settings.LoadSettings(filePath, settingsData);
+            masterSlider.value = settingsData.masterVolume;
+            SFXSlider.value = settingsData.SFXvolume;
+            ambientSlider.value = settingsData.ambientVolume;
+            if (settingsData.screenMode != 0)
+            {
+                screenMode = settingsData.screenMode;
+                if (settingsData.screenMode == 0)
+                {
+                    screenModeText.text = "Full Screen";
+                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+                }
+                else
+                {
+                    screenModeText.text = "Windowed";
+                    Screen.SetResolution(1280, 720, false);
+                }
+            }
+            else
+            {
+                masterSlider.value = 1;
+                SFXSlider.value = 1;
+                ambientSlider.value = 1;
+                Settings.mySettings = settingsData;
+                Settings.SaveSettings(filePath, settingsData);
+            }
+        }
         ButtonUpdater();
         foreach (Button button in offScreenButtons)
         {
@@ -230,6 +271,110 @@ public class PauseManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+    public void Mute()
+    {
+        mute = !mute;
+        if (mute)
+        {
+            if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
+            {
+                settingsData.lastMasterVolume = masterSlider.value;
+                settingsData.lastSFXvolume = SFXSlider.value;
+                settingsData.lastAmbientVolume = ambientSlider.value;
+            }
+            masterSlider.value = 0.0001f;
+            ChangeMasterVolume();
+            SFXSlider.value = 0.0001f;
+            ChangeSFXVolume();
+            ambientSlider.value = 0.0001f;
+            ChangeAmbientVolume();
+            Settings.mySettings = settingsData;
+            Settings.SaveSettings(filePath, settingsData);
+        }
+        else
+        {
+            masterSlider.value = settingsData.lastMasterVolume;
+            ChangeMasterVolume();
+            SFXSlider.value = settingsData.lastSFXvolume;
+            ChangeSFXVolume();
+            ambientSlider.value = settingsData.lastAmbientVolume;
+            ChangeAmbientVolume();
+            Settings.mySettings = settingsData;
+            Settings.SaveSettings(filePath, settingsData);
+        }
+    }
+    public void ChangeMasterVolume()
+    {
+        float volume = masterSlider.value;
+        audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+        settingsData.masterVolume = masterSlider.value;
+        Settings.mySettings = settingsData;
+        Settings.SaveSettings(filePath, settingsData);
+    }
+    public void ChangeSFXVolume()
+    {
+        float volume = SFXSlider.value;
+        audioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+        settingsData.SFXvolume = SFXSlider.value;
+        Settings.SaveSettings(filePath, settingsData);
+    }
+    public void ChangeAmbientVolume()
+    {
+        float volume = ambientSlider.value;
+        audioMixer.SetFloat("Ambient", Mathf.Log10(volume) * 20);
+        Settings.mySettings = settingsData;
+        Settings.SaveSettings(filePath, settingsData);
+    }
+    public void ChangeImage(int num)
+    {
+        int keyLayoutNum = keyLayout;
+        keyLayoutNum += num;
+        if (keyLayoutNum < 0)
+        {
+            keyLayoutNum = 1;
+        }
+        else if (keyLayoutNum > 1)
+        {
+            keyLayoutNum = 0;
+        }
+        keyLayout = keyLayoutNum;
+        if (keyLayout == 0)
+        {
+            controllerImage.enabled = true;
+            keyBoardImage.enabled = false;
+        }
+        else if (keyLayout == 1)
+        {
+            controllerImage.enabled = false;
+            keyBoardImage.enabled = true;
+        }
+    }
+    public void ChangeScreenMode(int num)
+    {
+        int screenModeNum = screenMode;
+        screenModeNum += num;
+        if (screenModeNum < 0)
+        {
+            screenModeNum = 1;
+        }
+        else if (screenModeNum > 1)
+        {
+            screenModeNum = 0;
+        }
+        if (screenModeNum == 0)
+        {
+            screenModeText.text = "Full Screen";
+            Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+        }
+        else if (screenModeNum == 1)
+        {
+            screenModeText.text = "Windowed";
+            Screen.SetResolution(1280, 720, false);
+        }
+        screenMode = screenModeNum;
+        settingsData.screenMode = screenMode;
+        Settings.SaveSettings(filePath, settingsData);
     }
     public void Glow(GameObject callingObject)
     {
