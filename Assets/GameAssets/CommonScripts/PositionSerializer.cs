@@ -8,41 +8,57 @@ using UnityEngine.UIElements;
 public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
-    [SerializeField]
-    GameObject[] convertableObject;
-
     Vector3 objectPosition;
     List<HockeyPlayerPositionData> positionData;
-    HockeyPlayerPositionData currentData;
+    [SerializeField] HockeyPlayerPositionData currentData;
 
+    [SerializeField]
     int saveSlot;
     int index = 0;
+    bool saved = false;
+    float timer;
     const string FILEPATH = "SaveData\\PositionData";
 
     //makes object data into float data for saving.
+    private void Start()
+    {
+        positionData = new List<HockeyPlayerPositionData>();
+        currentData = new HockeyPlayerPositionData();
+        currentData.x = new float[10];
+        currentData.y = new float[10];
+        currentData.z = new float[10];
+        timer = Time.time;
+
+    }
     public void FixedUpdate()
     {
-        index++;
-        if (0 == 10 % index)
+        //index++;
+        //if (0 == 10 % index)
         {
-            for (int i = 0; i < convertableObject.Length; i++)
+            for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
             {
-                objectPosition = convertableObject[i].transform.position;
+                objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
                 currentData.x[i] = objectPosition.x;
                 currentData.y[i] = objectPosition.y;
                 currentData.z[i] = objectPosition.z;
                 positionData.Add(currentData);
             }
         }
+
+        if (timer > 30f + Time.time && !saved)
+        {
+            savePositionData();
+            saved= true;
+        }
     }
     public void loadPositionData()
     {
-        PositionSaver.LoadPlayerData(FILEPATH + saveSlot, ref positionData);
+        PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
     }
     public void savePositionData()
     {
         CreatePlayerFileStructure();
-        PositionSaver.SavePositionData(FILEPATH + saveSlot, ref positionData);
+        PositionSaver.SavePositionData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
     }
     void CreatePlayerFileStructure()
     {
