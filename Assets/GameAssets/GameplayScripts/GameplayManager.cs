@@ -37,7 +37,7 @@ public class GameplayManager : MonoBehaviour
     bool playOngoing, penaltyOccured;
 
     bool freezeManager;
-    GameObject[] currentPlayers;
+    public GameObject[] currentPlayers;
 
     public GameObject playerUI;
     public GameObject resultsUI;
