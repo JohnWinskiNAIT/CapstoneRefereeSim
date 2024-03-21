@@ -112,7 +112,6 @@ public class Settings : MonoBehaviour
             SaveSettings();
         }
 
-        Debug.Log(mySettings.penalties[4].RefereeSprite.name);
     }
     public void TogglePenalty(int index)
     {

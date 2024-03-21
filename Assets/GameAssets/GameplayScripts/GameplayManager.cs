@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,7 +35,7 @@ public class GameplayManager : MonoBehaviour
     float? activationTime;
 
     public bool cameraDone, moveDone;
-    bool playOngoing, penaltyOccured;
+    bool playOngoing, penaltyMovement, penaltyOccured;
 
     bool freezeManager;
     GameObject[] currentPlayers;
@@ -213,6 +214,8 @@ public class GameplayManager : MonoBehaviour
             if (playOngoing && currentCutscene == null)
             {
                 playTimer += Time.deltaTime;
+                Vector3 distance = currentPlayers[CurrentPlayInfo.offenderId].transform.position - currentPlayers[CurrentPlayInfo.affectedId].transform.position;
+                Debug.Log(distance.magnitude);
                 PlayCheck();
             }
         }
@@ -225,11 +228,15 @@ public class GameplayManager : MonoBehaviour
 
     private void PlayCheck()
     {
-        if (playTimer > CurrentPlayInfo.penaltyTimer - 10f && activationTime == null)
+        Vector3 distance = (currentPlayers[CurrentPlayInfo.offenderId].transform.position - currentPlayers[CurrentPlayInfo.affectedId].transform.position) / 2;
+        float speed = currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().maxSpeed;
+        float tValue = distance.magnitude / speed;
+
+        if (playTimer + tValue >= CurrentPlayInfo.penaltyTimer && !penaltyMovement)
         {
-            Vector3 distance = currentPlayers[CurrentPlayInfo.offenderId].transform.position - currentPlayers[CurrentPlayInfo.affectedId].transform.position;
-            Debug.Log(distance.magnitude);
-            activationTime = distance.magnitude;
+            currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().MoveTowardsTarget(-distance * 0.99f, tValue);
+            currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().MoveTowardsTarget(distance * 0.99f, tValue);
+            penaltyMovement = true;
         }
 
         if (playTimer > CurrentPlayInfo.penaltyTimer && !penaltyOccured)
@@ -271,6 +278,9 @@ public class GameplayManager : MonoBehaviour
 
         
         playTimer = 0;
+        penaltyMovement = false;
+        penaltyOccured = false;
+
         playOngoing = true;
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
     }

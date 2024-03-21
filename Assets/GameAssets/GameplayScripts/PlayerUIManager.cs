@@ -92,8 +92,6 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(SettingsHolder.mySettings.penalties.Length);
-
         if (SettingsHolder.mySettings.WhistleCount > 0)
         {
             whistleInformation = GenerateWheelInformation(true);

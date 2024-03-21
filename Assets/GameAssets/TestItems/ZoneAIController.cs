@@ -8,7 +8,9 @@ public class ZoneAIController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField]
-    float checkThreshold, positionZResetThreshold, acceleration, maxSpeed, turningSpeed, passDelay, passSpeed, lockoutTime;
+    float checkThreshold, positionZResetThreshold, turningSpeed, passDelay, passSpeed, lockoutTime;
+    public float acceleration, maxSpeed;
+
     [SerializeField]
     int passChance;
     [SerializeField]
@@ -17,6 +19,7 @@ public class ZoneAIController : MonoBehaviour
     [SerializeField]
     AIType aiType;
     public AITeam aiTeam;
+    AIMode mode;
     [SerializeField]
     Vector3 puckOffset;
 
@@ -33,7 +36,10 @@ public class ZoneAIController : MonoBehaviour
     Vector3 savedVelocity;
     GameObject carryingPuck;
 
-    float puckTimer, lockoutTimer;
+    float puckTimer, lockoutTimer, penaltyPositionTime;
+
+    float penaltyTimer;
+    Vector3 penaltyStartpoint, penaltyDestination;
 
     bool aiActive;
 
@@ -116,33 +122,41 @@ public class ZoneAIController : MonoBehaviour
     {
         if (aiActive)
         {
-            if (teammates.Length == 0)
+            if (mode == AIMode.Default)
             {
-                if (aiTeam == AITeam.Left && AIManager.Instance.LeftTeamPlayers.Count > 0)
+                if (teammates.Length == 0)
                 {
-                    teammates = AIManager.Instance.LeftTeamPlayers.ToArray();
+                    if (aiTeam == AITeam.Left && AIManager.Instance.LeftTeamPlayers.Count > 0)
+                    {
+                        teammates = AIManager.Instance.LeftTeamPlayers.ToArray();
+                    }
+                    if (aiTeam == AITeam.Right && AIManager.Instance.RightTeamPlayers.Count > 0)
+                    {
+                        teammates = AIManager.Instance.RightTeamPlayers.ToArray();
+                    }
                 }
-                if (aiTeam == AITeam.Right && AIManager.Instance.RightTeamPlayers.Count > 0)
+
+                if (PositionCheck())
                 {
-                    teammates = AIManager.Instance.RightTeamPlayers.ToArray();
+                    GetNextPosition();
+                }
+
+                if (carryingPuck != null)
+                {
+                    Vector3 finalOffset = transform.rotation * puckOffset;
+                    carryingPuck.transform.position = transform.position + finalOffset;
+                    PuckCheck();
+                }
+
+                if (lockoutTimer > 0)
+                {
+                    lockoutTimer -= Time.deltaTime;
                 }
             }
-
-            if (PositionCheck())
+            if (mode == AIMode.Penalty)
             {
-                GetNextPosition();
-            }
-
-            if (carryingPuck != null)
-            {
-                Vector3 finalOffset = transform.rotation * puckOffset;
-                carryingPuck.transform.position = transform.position + finalOffset;
-                PuckCheck();
-            }
-
-            if (lockoutTimer > 0)
-            {
-                lockoutTimer -= Time.deltaTime;
+                penaltyTimer += Time.deltaTime;
+                transform.position = Vector3.Lerp(penaltyStartpoint, penaltyDestination, penaltyTimer / penaltyPositionTime);
             }
         }
     }
@@ -308,6 +322,16 @@ public class ZoneAIController : MonoBehaviour
             rb.velocity = savedVelocity;
             aiActive = true;
         }
+    }
+
+    public void MoveTowardsTarget(Vector3 targetPosition, float timeValue)
+    {
+        penaltyStartpoint = transform.position;
+        penaltyDestination = transform.position + targetPosition;
+        penaltyPositionTime = timeValue;
+        penaltyTimer = 0f;
+        transform.GetChild(1).localScale = new(70, 70, 70);
+        mode = AIMode.Penalty;
     }
 
     private void CutsceneStartCallback(CutsceneData data)
