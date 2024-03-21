@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,7 +41,21 @@ public class PositionSerializer : MonoBehaviour
     }
     public void savePositionData()
     {
+        CreatePlayerFileStructure();
         PositionSaver.SavePositionData(FILEPATH + saveSlot, ref positionData);
+    }
+    void CreatePlayerFileStructure()
+    {
+        // Determine whether the directory exists.
+        if (Directory.Exists(FILEPATH + saveSlot))
+        {
+            Debug.Log("Folder structure already exists");
+        }
+        else
+        {
+            // Try to create the directory.
+            Directory.CreateDirectory(FILEPATH + saveSlot);
+        }
     }
 }
 
