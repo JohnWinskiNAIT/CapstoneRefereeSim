@@ -8,15 +8,24 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Audio;
+using System.IO;
 
 public class PauseManager : MonoBehaviour
 {
     public Slider masterSlider;
     public Slider SFXSlider;
     public Slider ambientSlider;
+    [SerializeField] AudioMixer audioMixer;
     public TMP_InputField screenModeText;
+    public TMP_Text muteText;
     public Image controllerImage;
     public Image keyBoardImage;
+    int screenMode;
+    public int keyLayout;
+    bool mute;
+    public SettingsData mySettings;
+    string filePath;
+    const string RootPath = "SaveData\\";
 
     [SerializeField]
     GameObject[] panels;
@@ -58,6 +67,38 @@ public class PauseManager : MonoBehaviour
         onScreenPanel = panels[menu];
         offScreenPanel.transform.position = offScreen.position;
         time = 1.5f;
+        keyLayout = 1;
+        mySettings = Settings.mySettings;
+        filePath = RootPath + "settingsData\\settings.dat";
+        if (File.Exists("SaveData\\settingsData\\settings.dat"))
+        {
+            LoadSettings();
+            masterSlider.value = mySettings.masterVolume;
+            SFXSlider.value = mySettings.SFXvolume;
+            ambientSlider.value = mySettings.ambientVolume;
+            if (mySettings.screenMode != 0)
+            {
+                screenMode = mySettings.screenMode;
+                if (mySettings.screenMode == 0)
+                {
+                    screenModeText.text = "Full Screen";
+                    Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+                }
+                else
+                {
+                    screenModeText.text = "Windowed";
+                    Screen.SetResolution(1280, 720, false);
+                }
+            }
+        }
+        else
+        {
+            masterSlider.value = 1;
+            SFXSlider.value = 1;
+            ambientSlider.value = 1;
+
+            SaveSettings();
+        }
         ButtonUpdater();
         foreach (Button button in offScreenButtons)
         {
@@ -157,6 +198,16 @@ public class PauseManager : MonoBehaviour
         {
             Previous();
         }
+        if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
+        {
+            muteText.text = "Mute";
+            mute = false;
+        }
+        else
+        {
+            muteText.text = "Unmute";
+            mute = true;
+        }
     }
     public void MenuSelector(int thismenu)
     {
@@ -250,8 +301,122 @@ public class PauseManager : MonoBehaviour
         offScreenToggles = offScreenPanel.GetComponentsInChildren<Toggle>();
         canEscape = true;
     }
+    public void Mute()
+    {
+        mute = !mute;
+        if (mute)
+        {
+            if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
+            {
+                mySettings.lastMasterVolume = masterSlider.value;
+                mySettings.lastSFXvolume = SFXSlider.value;
+                mySettings.lastAmbientVolume = ambientSlider.value;
+            }
+            masterSlider.value = 0.0001f;
+            ChangeMasterVolume();
+            SFXSlider.value = 0.0001f;
+            ChangeSFXVolume();
+            ambientSlider.value = 0.0001f;
+            ChangeAmbientVolume();
+            SaveSettings();
+        }
+        else
+        {
+            masterSlider.value = mySettings.lastMasterVolume;
+            ChangeMasterVolume();
+            SFXSlider.value = mySettings.lastSFXvolume;
+            ChangeSFXVolume();
+            ambientSlider.value = mySettings.lastAmbientVolume;
+            ChangeAmbientVolume();
+            SaveSettings();
+        }
+    }
+    public void ChangeMasterVolume()
+    {
+        float volume = masterSlider.value;
+        audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+        SaveSettings();
+    }
+    public void ChangeSFXVolume()
+    {
+        float volume = SFXSlider.value;
+        audioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+        SaveSettings();
+    }
+    public void ChangeAmbientVolume()
+    {
+        float volume = ambientSlider.value;
+        audioMixer.SetFloat("Ambient", Mathf.Log10(volume) * 20);
+        SaveSettings();
+    }
+    public void ChangeImage(int num)
+    {
+        int keyLayoutNum = keyLayout;
+        keyLayoutNum += num;
+        if (keyLayoutNum < 0)
+        {
+            keyLayoutNum = 1;
+        }
+        else if (keyLayoutNum > 1)
+        {
+            keyLayoutNum = 0;
+        }
+        keyLayout = keyLayoutNum;
+        if (keyLayout == 0)
+        {
+            controllerImage.enabled = true;
+            keyBoardImage.enabled = false;
+        }
+        else if (keyLayout == 1)
+        {
+            controllerImage.enabled = false;
+            keyBoardImage.enabled = true;
+        }
+    }
+    public void ChangeScreenMode(int num)
+    {
+        int screenModeNum = screenMode;
+        screenModeNum += num;
+        if (screenModeNum < 0)
+        {
+            screenModeNum = 1;
+        }
+        else if (screenModeNum > 1)
+        {
+            screenModeNum = 0;
+        }
+        if (screenModeNum == 0)
+        {
+            screenModeText.text = "Full Screen";
+            Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+        }
+        else if (screenModeNum == 1)
+        {
+            screenModeText.text = "Windowed";
+            Screen.SetResolution(1280, 720, false);
+        }
+        screenMode = screenModeNum;
+        mySettings.screenMode = screenMode;
+        SaveSettings();
+    }
     public void ExitGame()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+    public void SaveSettings()
+    {
+        mySettings.masterVolume = masterSlider.value;
+        mySettings.SFXvolume = SFXSlider.value;
+        mySettings.ambientVolume = ambientSlider.value;
+        if (!Directory.Exists("SaveData\\settingsData"))
+        {
+            Directory.CreateDirectory("SaveData\\settingsData");
+        }
+        SaveManager.SaveData(filePath, ref mySettings);
+        SettingsHolder.mySettings = mySettings;
+    }
+    public void LoadSettings()
+    {
+        SaveManager.LoadData(filePath, ref mySettings);
     }
 }
