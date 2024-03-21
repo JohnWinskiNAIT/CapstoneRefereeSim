@@ -10,7 +10,6 @@ public class PositionSerializer : MonoBehaviour
     //Object to convert to save data.
     [SerializeField]
     GameObject[] convertableObject;
-
     Vector3 objectPosition;
     List<HockeyPlayerPositionData> positionData;
     HockeyPlayerPositionData currentData;
@@ -27,7 +26,7 @@ public class PositionSerializer : MonoBehaviour
         {
             for (int i = 0; i < convertableObject.Length; i++)
             {
-                objectPosition = convertableObject[i].transform.position;
+                objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
                 currentData.x[i] = objectPosition.x;
                 currentData.y[i] = objectPosition.y;
                 currentData.z[i] = objectPosition.z;
