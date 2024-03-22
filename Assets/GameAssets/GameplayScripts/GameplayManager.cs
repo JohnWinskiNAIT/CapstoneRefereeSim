@@ -234,15 +234,17 @@ public class GameplayManager : MonoBehaviour
 
         if (playTimer + tValue >= CurrentPlayInfo.penaltyTimer && !penaltyMovement)
         {
-            currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().MoveTowardsTarget(-distance * 0.99f, tValue);
-            currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().MoveTowardsTarget(distance * 0.99f, tValue);
+            currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().MoveTowardsTarget(-distance * 0.9f, tValue);
+            currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().MoveTowardsTarget(distance * 0.9f, tValue);
             penaltyMovement = true;
         }
 
         if (playTimer > CurrentPlayInfo.penaltyTimer && !penaltyOccured)
         {
-            penaltyOccured = true;
+            currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().ResolvePenalty(false);
+            currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().ResolvePenalty(true);
             playTest.SetActive(true);
+            penaltyOccured = true;
         }
 
         if (playTimer > CurrentPlayInfo.penaltyTimer + CurrentPlayInfo.stopTimer)

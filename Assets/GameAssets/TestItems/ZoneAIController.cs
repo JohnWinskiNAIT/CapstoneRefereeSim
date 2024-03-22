@@ -41,7 +41,7 @@ public class ZoneAIController : MonoBehaviour
     float penaltyTimer;
     Vector3 penaltyStartpoint, penaltyDestination;
 
-    bool aiActive;
+    bool aiActive, aiFreezing;
 
     public enum AIType
     {
@@ -59,6 +59,7 @@ public class ZoneAIController : MonoBehaviour
     {
         Default,
         Penalty,
+        Animation,
         Frozen
     }
 
@@ -157,6 +158,22 @@ public class ZoneAIController : MonoBehaviour
             {
                 penaltyTimer += Time.deltaTime;
                 transform.position = Vector3.Lerp(penaltyStartpoint, penaltyDestination, penaltyTimer / penaltyPositionTime);
+            }
+            if (mode == AIMode.Animation)
+            {
+                //Once we have animations, check for them here before proceeding.
+                if (aiFreezing)
+                {
+                    mode = AIMode.Frozen;
+                }
+                else
+                {
+                    mode = AIMode.Default;
+                }
+            }
+            if (mode == AIMode.Frozen)
+            {
+                nextPosition = transform.position;
             }
         }
     }
@@ -307,6 +324,8 @@ public class ZoneAIController : MonoBehaviour
             carryingPuck = null;
         }
         nextPosition = transform.position;
+        mode = AIMode.Default;
+        aiFreezing = false;
     }
 
     void PauseAI(bool pausing)
@@ -332,6 +351,12 @@ public class ZoneAIController : MonoBehaviour
         penaltyTimer = 0f;
         transform.GetChild(1).localScale = new(70, 70, 70);
         mode = AIMode.Penalty;
+    }
+
+    public void ResolvePenalty(bool toBeFrozen)
+    {
+        mode = AIMode.Animation;
+        aiFreezing = toBeFrozen;
     }
 
     private void CutsceneStartCallback(CutsceneData data)
