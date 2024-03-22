@@ -1377,6 +1377,7 @@ GameObject:
   - component: {fileID: 185613850}
   - component: {fileID: 185613852}
   - component: {fileID: 185613851}
+  - component: {fileID: 185613853}
   m_Layer: 5
   m_Name: BlindCheck
   m_TagString: Options
@@ -1443,6 +1444,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185613849}
   m_CullTransparentMesh: 1
+--- !u!114 &185613853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185613849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: BlindCheck
+    penaltyText: Blind Check
+    penaltyId: 3
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &190631940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4831,7 +4850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -29.74701, y: -188.01685}
+  m_AnchoredPosition: {x: -29.74707, y: -188.01685}
   m_SizeDelta: {x: -47.596, y: -211.587}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &587908592
@@ -5250,6 +5269,7 @@ GameObject:
   - component: {fileID: 617035639}
   - component: {fileID: 617035641}
   - component: {fileID: 617035640}
+  - component: {fileID: 617035642}
   m_Layer: 5
   m_Name: CrossChecking
   m_TagString: Options
@@ -5316,6 +5336,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617035638}
   m_CullTransparentMesh: 1
+--- !u!114 &617035642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617035638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: CrossChecking
+    penaltyText: Cross Checking
+    penaltyId: 2
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &623997086
 GameObject:
   m_ObjectHideFlags: 0
@@ -8917,6 +8955,7 @@ GameObject:
   - component: {fileID: 1081269740}
   - component: {fileID: 1081269742}
   - component: {fileID: 1081269741}
+  - component: {fileID: 1081269743}
   m_Layer: 5
   m_Name: HandPass
   m_TagString: Options
@@ -8983,6 +9022,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081269739}
   m_CullTransparentMesh: 1
+--- !u!114 &1081269743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081269739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: HandPass
+    penaltyText: Hand Pass
+    penaltyId: 10
+    isEnabled: 0
+    isWhistle: 1
 --- !u!1 &1091540274
 GameObject:
   m_ObjectHideFlags: 0
@@ -9650,6 +9707,7 @@ GameObject:
   - component: {fileID: 1126964504}
   - component: {fileID: 1126964506}
   - component: {fileID: 1126964505}
+  - component: {fileID: 1126964507}
   m_Layer: 5
   m_Name: HighStick
   m_TagString: Options
@@ -9716,6 +9774,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126964503}
   m_CullTransparentMesh: 1
+--- !u!114 &1126964507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126964503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: HighStick
+    penaltyText: High Stick
+    penaltyId: 6
+    isEnabled: 0
+    isWhistle: 1
 --- !u!1 &1132175483
 GameObject:
   m_ObjectHideFlags: 0
@@ -10732,6 +10808,7 @@ GameObject:
   - component: {fileID: 1235662276}
   - component: {fileID: 1235662278}
   - component: {fileID: 1235662277}
+  - component: {fileID: 1235662279}
   m_Layer: 5
   m_Name: Holding
   m_TagString: Options
@@ -10798,6 +10875,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235662275}
   m_CullTransparentMesh: 1
+--- !u!114 &1235662279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235662275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: Holding
+    penaltyText: Holding
+    penaltyId: 4
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1239298497
 GameObject:
   m_ObjectHideFlags: 0
@@ -11077,6 +11172,7 @@ GameObject:
   - component: {fileID: 1263066726}
   - component: {fileID: 1263066728}
   - component: {fileID: 1263066727}
+  - component: {fileID: 1263066729}
   m_Layer: 5
   m_Name: Tripping
   m_TagString: Options
@@ -11143,6 +11239,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263066725}
   m_CullTransparentMesh: 1
+--- !u!114 &1263066729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263066725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: Tripping
+    penaltyText: Tripping
+    penaltyId: 7
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1270911332
 GameObject:
   m_ObjectHideFlags: 0
@@ -11813,6 +11927,7 @@ GameObject:
   - component: {fileID: 1410373065}
   - component: {fileID: 1410373067}
   - component: {fileID: 1410373066}
+  - component: {fileID: 1410373068}
   m_Layer: 5
   m_Name: Interference
   m_TagString: Options
@@ -11879,6 +11994,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410373064}
   m_CullTransparentMesh: 1
+--- !u!114 &1410373068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410373064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: Interference
+    penaltyText: Interference
+    penaltyId: 5
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1415930172
 GameObject:
   m_ObjectHideFlags: 0
@@ -12041,6 +12174,7 @@ GameObject:
   - component: {fileID: 1423343645}
   - component: {fileID: 1423343647}
   - component: {fileID: 1423343646}
+  - component: {fileID: 1423343648}
   m_Layer: 5
   m_Name: Hooking
   m_TagString: Options
@@ -12107,6 +12241,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423343644}
   m_CullTransparentMesh: 1
+--- !u!114 &1423343648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423343644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: Hooking
+    penaltyText: Hooking
+    penaltyId: 8
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1423355874
 GameObject:
   m_ObjectHideFlags: 0
@@ -12508,6 +12660,7 @@ GameObject:
   - component: {fileID: 1488142008}
   - component: {fileID: 1488142010}
   - component: {fileID: 1488142009}
+  - component: {fileID: 1488142011}
   m_Layer: 5
   m_Name: HeadContact
   m_TagString: Options
@@ -12574,6 +12727,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488142007}
   m_CullTransparentMesh: 1
+--- !u!114 &1488142011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488142007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: HeadContact
+    penaltyText: Head Contact
+    penaltyId: 0
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1497799549
 GameObject:
   m_ObjectHideFlags: 0
@@ -13580,6 +13751,7 @@ GameObject:
   - component: {fileID: 1631642414}
   - component: {fileID: 1631642416}
   - component: {fileID: 1631642415}
+  - component: {fileID: 1631642417}
   m_Layer: 5
   m_Name: SlewFoot
   m_TagString: Options
@@ -13646,6 +13818,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631642413}
   m_CullTransparentMesh: 1
+--- !u!114 &1631642417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631642413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: SlewFoot
+    penaltyText: Slewfoot Tripping
+    penaltyId: 1
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1634468364
 GameObject:
   m_ObjectHideFlags: 0
@@ -15139,6 +15329,7 @@ GameObject:
   - component: {fileID: 1725390828}
   - component: {fileID: 1725390830}
   - component: {fileID: 1725390829}
+  - component: {fileID: 1725390831}
   m_Layer: 5
   m_Name: Slashing
   m_TagString: Options
@@ -15205,6 +15396,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725390827}
   m_CullTransparentMesh: 1
+--- !u!114 &1725390831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725390827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7dfc59f6fb57343b2e7a9dcf8f9246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldData:
+    PenaltyName: Slashing
+    penaltyText: Slashing
+    penaltyId: 9
+    isEnabled: 0
+    isWhistle: 0
 --- !u!1 &1727223508
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,6 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     FaceoffData[] rinkFaceoffs;
     public FaceoffData CurrentFaceoff { get; private set; }
-    GameState gameplayState;
 
     CutsceneData currentCutscene;
     public PlayInformation CurrentPlayInfo { get; private set; }
@@ -32,7 +31,6 @@ public class GameplayManager : MonoBehaviour
     int scenariosCompleted;
     int cutsceneStatus;
     float playTimer, callTimestamp, callDifference;
-    float? activationTime;
 
     public bool cameraDone, moveDone;
     bool playOngoing, penaltyMovement, penaltyOccured;
@@ -83,7 +81,6 @@ public class GameplayManager : MonoBehaviour
         offsetPuckDropCutscene = new();
 
         scenariosCompleted = 0;
-        gameplayState = GameState.Ice;
         mySettings = Settings.mySettings;
         Debug.Log(mySettings.penalties[1].isWhistle);
         EnablePlayers();
@@ -174,9 +171,8 @@ public class GameplayManager : MonoBehaviour
             Debug.Log("False");
         }
 
-        gameplayState = GameState.Results;
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
-        resultsUI.gameObject.SetActive(true);
+        resultsUI.SetActive(true);
         GameplayEvents.OpenWheel.Invoke(false);
     }
 
@@ -276,7 +272,6 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.LoadCutscene.Invoke(offsetPuckDropCutscene);
         currentCutscene = offsetPuckDropCutscene;
         cutsceneStatus = 0;
-        activationTime = null;
 
         
         playTimer = 0;
