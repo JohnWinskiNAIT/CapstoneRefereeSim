@@ -289,7 +289,7 @@ public class PlayerUIManager : MonoBehaviour
             Vector2 position = new(Mathf.Sin((segments * i) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i) * Mathf.Deg2Rad) * notchGap);
             currentNotches[i].transform.localScale = new Vector3(notchScale, 1f, 1f);
             currentNotches[i].GetComponent<RectTransform>().anchoredPosition = position;
-            currentNotches[i].GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, 90 - segments * i);
+            currentNotches[i].GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 90 - segments * i);
         }
     }
 

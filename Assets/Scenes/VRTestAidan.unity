@@ -589,12 +589,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -1580,12 +1580,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -2124,12 +2124,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -3804,12 +3804,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -4872,12 +4872,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -5393,34 +5393,40 @@ MonoBehaviour:
   wheelWorldspaceTrans: {fileID: 917532216}
   playerUICanvas: {fileID: 1119031680}
   wheelInfo:
-    numberOfOptions: 7
     options:
     - optionImage: {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
       optionText: Head Contact
       optionType: 0
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
       optionText: Cross Check
       optionType: 2
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: 2a647333a9c874f4cbf9606accbfa931, type: 3}
       optionText: Hooking
       optionType: 7
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: 46014dcf57c50e44aac3aa16cdd58a78, type: 3}
       optionText: Blind Check
       optionType: 3
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
       optionText: Tripping
       optionType: 1
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
       optionText: Holding
       optionType: 4
+      optionId: 0
     - optionImage: {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
       optionText: Interference
       optionType: 5
+      optionId: 0
   wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
   iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
   wheelOpen: 0
   chargingCornerOffset: 0.45
-  isVREnabled: 0
+  isVREnabled: 1
   VRPointer: {fileID: 1135132138}
 --- !u!1 &1135132138
 GameObject:
@@ -5556,12 +5562,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -6354,12 +6360,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -6672,6 +6678,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6f0bb83a5939748aa5328f89960ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
+  ambientSlider: {fileID: 0}
+  audioMixer: {fileID: 0}
+  screenModeText: {fileID: 0}
+  muteText: {fileID: 0}
+  controllerImage: {fileID: 0}
+  keyBoardImage: {fileID: 0}
+  keyLayout: 0
+  mySettings:
+    scenarios: 0
+    screenMode: 0
+    masterVolume: 0
+    SFXvolume: 0
+    ambientVolume: 0
+    lastMasterVolume: 0
+    lastSFXvolume: 0
+    lastAmbientVolume: 0
+    penalties: []
+    startingPos: []
+  panels: []
+  onScreenButtons: []
   pauseTransitionTime: 0.29
   pauseMenu: {fileID: 947787293}
 --- !u!4 &1430517112
@@ -6853,12 +6881,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -7222,12 +7250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -8181,7 +8209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasParent: {fileID: 1681881818}
-  isVrActive: 0
+  isVRActive: 1
   canvasWorldTrans: {fileID: 700720600}
   canvasScreenTrans: {fileID: 1498457048}
   cam: {fileID: 51658058}
@@ -9297,7 +9325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d17aae10ee2cdf498877ac8d22fbc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultsUI: {fileID: 0}
+  playerInputs: {fileID: 0}
+  startCorners: []
+  finalCorners: []
   choiceText: {fileID: 0}
   actualText: {fileID: 0}
   timingText: {fileID: 0}
@@ -9331,6 +9361,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd790e887581964f93cf4a8e9040dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySettings:
+    scenarios: 0
+    screenMode: 0
+    masterVolume: 0
+    SFXvolume: 0
+    ambientVolume: 0
+    lastMasterVolume: 0
+    lastSFXvolume: 0
+    lastAmbientVolume: 0
+    penalties: []
+    startingPos: []
   playEndCutscene:
     waypoints:
     - {x: 30, y: 0, z: 0}
@@ -9408,6 +9449,7 @@ MonoBehaviour:
     isCentre: 0
   cameraDone: 0
   moveDone: 0
+  currentPlayers: []
   playerUI: {fileID: 1119031677}
   resultsUI: {fileID: 0}
   enabledPlayers: 01010101010101010101

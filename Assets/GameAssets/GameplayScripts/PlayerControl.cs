@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour
     private void Start()
     {
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
-        uiManager.isVREnabled = isVREnabled;
+        //uiManager.isVREnabled = isVREnabled;
 
         CameraAngle = cam.transform.rotation.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;

@@ -6,7 +6,7 @@ public class MenuVRSupport : MonoBehaviour
 {
     [SerializeField] GameObject canvasParent;
     Canvas canvas;
-    public bool isVrActive = true;
+    public bool isVRActive = true;
     [SerializeField] Transform canvasWorldTrans;
     [SerializeField] Transform canvasScreenTrans;
 
@@ -22,12 +22,24 @@ public class MenuVRSupport : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (isVRActive)
+            {
+                isVRActive = false;
+            }
+            else
+            {
+                isVRActive = true;
+            }
+        }
+
         CanvasStart();
     }
 
     public void CanvasStart()
     {
-        if (isVrActive)
+        if (isVRActive)
         {
             canvas.renderMode = RenderMode.WorldSpace;
             canvasParent.transform.SetPositionAndRotation(canvasWorldTrans.position, canvasWorldTrans.rotation);
