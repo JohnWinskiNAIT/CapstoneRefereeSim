@@ -69,7 +69,7 @@ public class LazerEmitter : MonoBehaviour
     public void Activate()
     {
         isHeldDown = true;
-        //Debug.Log("LazerActivation");
+        Debug.Log("LazerActivation");
         if (isHeldDown && reciever!=null)
         {
             reciever.Activate();
@@ -82,22 +82,22 @@ public class LazerEmitter : MonoBehaviour
         isHeldDown = false;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (isHeldDown)
-        {
-            Gizmos.color = Color.green;
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-        }
+    //private void OnDrawGizmos()
+    //{
+    //    if (isHeldDown)
+    //    {
+    //        Gizmos.color = Color.green;
+    //    }
+    //    else
+    //    {
+    //        Gizmos.color = Color.red;
+    //    }
 
-        Gizmos.DrawLine(transform.position, transform.TransformDirection(Vector3.forward) * 100);
+    //    Gizmos.DrawLine(transform.position, transform.TransformDirection(Vector3.forward) * 100);
 
-        if ( hitSomething )
-        {
-            Gizmos.DrawSphere(hitPos, 1);
-        }
-    }
+    //    if ( hitSomething )
+    //    {
+    //        Gizmos.DrawSphere(hitPos, 1);
+    //    }
+    //}
 }

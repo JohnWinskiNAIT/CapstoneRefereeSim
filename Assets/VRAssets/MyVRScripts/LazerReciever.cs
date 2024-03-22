@@ -61,7 +61,7 @@ public class LazerReciever : MonoBehaviour
     }
 
     public Vector2 CursorPos2D()
-    {   //returns the losition of the pointer as if the canvas was a 2d flat screen.
+    {   //returns the position of the pointer as if the canvas was a 2d flat screen.
         cursorParent.transform.position = hitPos;
         return cursorParent.transform.localPosition;
     }

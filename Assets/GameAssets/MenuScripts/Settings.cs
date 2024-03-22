@@ -51,7 +51,7 @@ public class Settings : MonoBehaviour
         }*/
         for (int i = 0; i < mySettings.penalties.Length; i++)
         {
-            mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
+            //mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
         }
         for (int i = 0; i < myStartingPosToggles.Length; i++)
         {

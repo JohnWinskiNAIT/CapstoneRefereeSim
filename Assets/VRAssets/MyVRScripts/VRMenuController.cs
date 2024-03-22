@@ -25,7 +25,7 @@ public class VRMenuController : MonoBehaviour
     [SerializeField] InputActionAsset inputActions;
     private InputAction moveAction, lookAction, callselectAction, pauseAction, whistleAction;
 
-    [SerializeField] InputAction action;
+    //[SerializeField] InputAction action;
 
 
     void Awake()

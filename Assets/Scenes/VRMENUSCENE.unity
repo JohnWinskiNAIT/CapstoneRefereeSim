@@ -14064,6 +14064,7 @@ GameObject:
   - component: {fileID: 1289627480}
   - component: {fileID: 1289627479}
   - component: {fileID: 1289627483}
+  - component: {fileID: 1289627484}
   m_Layer: 0
   m_Name: VR Player
   m_TagString: Untagged
@@ -14105,13 +14106,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289627477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017c5e3933235514c9520e1dace2a4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ActionAssets:
   - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  - {fileID: -944628639613478452, guid: 7bcc7b8dbb7d30b4798da7f3c25e357d, type: 3}
 --- !u!114 &1289627481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14169,16 +14171,21 @@ MonoBehaviour:
   isRightHanded: 1
   canvasParent: {fileID: 1374799550}
   cam: {fileID: 114113698}
-  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
-  action:
-    m_Name: Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bbcfe123-5607-421c-b828-9a266167c485
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  inputActions: {fileID: -944628639613478452, guid: 7bcc7b8dbb7d30b4798da7f3c25e357d, type: 3}
+--- !u!114 &1289627484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289627477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017c5e3933235514c9520e1dace2a4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActionAssets:
+  - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &1300783639
 GameObject:
   m_ObjectHideFlags: 0
@@ -15301,8 +15308,6 @@ MonoBehaviour:
   - {fileID: 1850925138}
   - {fileID: 1256099685}
   - {fileID: 978172009}
-  offScreen: {fileID: 1359426017}
-  onScreen: {fileID: 1974692131}
 --- !u!114 &1374799553
 MonoBehaviour:
   m_ObjectHideFlags: 0
