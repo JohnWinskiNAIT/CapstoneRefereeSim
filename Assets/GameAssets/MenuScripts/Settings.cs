@@ -91,6 +91,8 @@ public class Settings : MonoBehaviour
         }
         else
         {
+            mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
+            mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
                 mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
@@ -99,7 +101,6 @@ public class Settings : MonoBehaviour
             {
                 mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
             }
-
             mySettings.scenarios = scenarios;
             mySettings.masterVolume = masterSlider.value = 1;
             mySettings.SFXvolume = SFXSlider.value = 1;
