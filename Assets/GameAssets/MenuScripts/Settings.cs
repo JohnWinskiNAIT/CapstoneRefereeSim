@@ -99,7 +99,16 @@ public class Settings : MonoBehaviour
             {
                 mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
             }
-            mySettings.scenarios = scenarios;
+            if (mySettings.scenarios != 0)
+            {
+                scenarios = mySettings.scenarios;
+                scenarioField.text = scenarios.ToString();
+            }
+            else
+            {
+                mySettings.scenarios = scenarios;
+                scenarioField.text = scenarios.ToString();
+            }
             mySettings.masterVolume = masterSlider.value = 1;
             mySettings.SFXvolume = SFXSlider.value = 1;
             mySettings.ambientVolume = ambientSlider.value = 1;
@@ -115,7 +124,6 @@ public class Settings : MonoBehaviour
             ChangeScreenMode(mySettings.screenMode);
             mySettings.startingPos[0].isEnabled = true;
             mySettings.startingPos[5].isEnabled = true;
-
             SaveSettings();
         }
 
