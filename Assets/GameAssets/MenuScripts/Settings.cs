@@ -39,9 +39,7 @@ public class Settings : MonoBehaviour
         scenarios = 1;
         mySettings = new SettingsData();
         myPenaltyToggles = penaltyUIContainer.GetComponentsInChildren<Toggle>();
-        mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
         myStartingPosToggles = startingPosContainer.GetComponentsInChildren<Toggle>();
-        mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
         filePath = RootPath + "settingsData\\settings.dat";
 
         if (File.Exists("SaveData\\settingsData\\settings.dat"))
