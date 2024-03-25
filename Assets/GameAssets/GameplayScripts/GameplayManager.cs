@@ -121,7 +121,6 @@ public class GameplayManager : MonoBehaviour
                 {
                     currentPlayers[i].transform.position = setupInformation[i].otherPosition + CurrentFaceoff.unscaledOffset;
                 }
-                currentPlayers[i].transform.rotation = Quaternion.LookRotation(CurrentFaceoff.unscaledOffset - currentPlayers[i].transform.position);
             }
         }
     }

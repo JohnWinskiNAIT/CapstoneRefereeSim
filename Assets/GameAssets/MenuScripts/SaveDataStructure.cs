@@ -21,11 +21,14 @@ public struct SettingsData
         get
         {
             int count = 0;
-            for (int i = 0; i < penalties.Length; i++)
+            if(penalties != null)
             {
-                if (penalties[i].isWhistle && penalties[i].isEnabled)
+                for (int i = 0; i < penalties.Length; i++)
                 {
-                    count++;
+                    if (penalties[i].isWhistle && penalties[i].isEnabled)
+                    {
+                        count++;
+                    }
                 }
             }
             return count;
