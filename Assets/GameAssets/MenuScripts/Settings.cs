@@ -42,32 +42,6 @@ public class Settings : MonoBehaviour
         mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
         myStartingPosToggles = startingPosContainer.GetComponentsInChildren<Toggle>();
         mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
-<<<<<<< HEAD
-        for (int i = 0; i < mySettings.penalties.Length; i++)
-        {
-            //mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
-            //mySettings.penalties[i].penaltyId = i;
-            //mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
-            //mySettings.penalties[i].isWhistle = true;
-
-        }
-        //for (int i = 0; i < mySettings.penalties.Length; i++)
-        //{
-        //    //mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
-        //}
-=======
-        /*for (int i = 0; i < mySettings.penalties.Length; i++)
-        {
-            mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
-            mySettings.penalties[i].penaltyId = i;
-            mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
-            mySettings.penalties[i].isWhistle = true;
-        }*/
-        for (int i = 0; i < mySettings.penalties.Length; i++)
-        {
-            //mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
-        }
->>>>>>> parent of 6b8fa41 (player rotation fixed, cutscene startup fix1, settings update)
         for (int i = 0; i < myStartingPosToggles.Length; i++)
         {
             mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
@@ -120,6 +94,16 @@ public class Settings : MonoBehaviour
         }
         else
         {
+            mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
+            mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
+            for (int i = 0; i < mySettings.penalties.Length; i++)
+            {
+                mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
+            }
+            for (int i = 0; i < myStartingPosToggles.Length; i++)
+            {
+                mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
+            }
             mySettings.scenarios = scenarios;
             mySettings.masterVolume = masterSlider.value = 1;
             mySettings.SFXvolume = SFXSlider.value = 1;
