@@ -101,7 +101,6 @@ public class PlayerCutscene : MonoBehaviour
         {
             //Debug.Log(waypoints[0]);
             transform.position = waypoints[0];
-            cam.transform.rotation = Quaternion.LookRotation(cutsceneData.cameraPoints[0] - transform.position);
         }
     }
 

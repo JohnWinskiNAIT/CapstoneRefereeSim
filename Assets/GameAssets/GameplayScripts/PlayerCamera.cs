@@ -54,6 +54,7 @@ public class PlayerCamera : MonoBehaviour
     private void LoadCameraPoints(CutsceneData cutsceneData)
     {
         focusPoints = cutsceneData.cameraPoints;
+        playerCam.transform.rotation = Quaternion.LookRotation(GameplayManager.Instance.CurrentFaceoff.unscaledOffset - playerCam.transform.position);
     }
 
     private void CutsceneCallback(int progress)
