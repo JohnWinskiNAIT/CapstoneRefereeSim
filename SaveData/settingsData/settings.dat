@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>1</scenarios>
+  <scenarios>2</scenarios>
   <screenMode>0</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
@@ -15,7 +15,20 @@
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
+<<<<<<< HEAD
       <penaltyId>0</penaltyId>
+=======
+      <PenaltyName>SlewFoot</PenaltyName>
+      <penaltyText>Slewfoot Tripping</penaltyText>
+      <penaltyId>1</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>CrossChecking</PenaltyName>
+      <penaltyText>Cross Checking</penaltyText>
+      <penaltyId>2</penaltyId>
+>>>>>>> parent of 6b8fa41 (player rotation fixed, cutscene startup fix1, settings update)
       <isEnabled>true</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
