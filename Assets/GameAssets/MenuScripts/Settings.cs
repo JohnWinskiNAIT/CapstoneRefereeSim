@@ -39,25 +39,9 @@ public class Settings : MonoBehaviour
         scenarios = 1;
         mySettings = new SettingsData();
         myPenaltyToggles = penaltyUIContainer.GetComponentsInChildren<Toggle>();
-        mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
         myStartingPosToggles = startingPosContainer.GetComponentsInChildren<Toggle>();
-        mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
-        /*for (int i = 0; i < mySettings.penalties.Length; i++)
-        {
-            mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
-            mySettings.penalties[i].penaltyId = i;
-            mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
-            mySettings.penalties[i].isWhistle = true;
-        }*/
-        for (int i = 0; i < mySettings.penalties.Length; i++)
-        {
-            //mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
-        }
-        for (int i = 0; i < myStartingPosToggles.Length; i++)
-        {
-            mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
-        }
         filePath = RootPath + "settingsData\\settings.dat";
+
         if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
             LoadSettings();
@@ -83,6 +67,11 @@ public class Settings : MonoBehaviour
                 scenarios = mySettings.scenarios;
                 scenarioField.text = scenarios.ToString();
             }
+            else
+            {
+                mySettings.scenarios = scenarios;
+                scenarioField.text = scenarios.ToString();
+            }
             if (mySettings.screenMode != 0)
             {
                 screenMode = mySettings.screenMode;
@@ -100,7 +89,26 @@ public class Settings : MonoBehaviour
         }
         else
         {
-            mySettings.scenarios = scenarios;
+            mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
+            mySettings.startingPos = new StartingPosData[myStartingPosToggles.Length];
+            for (int i = 0; i < mySettings.penalties.Length; i++)
+            {
+                mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
+            }
+            for (int i = 0; i < myStartingPosToggles.Length; i++)
+            {
+                mySettings.startingPos[i].posName = myStartingPosToggles[i].transform.parent.gameObject.name;
+            }
+            if (mySettings.scenarios != 0)
+            {
+                scenarios = mySettings.scenarios;
+                scenarioField.text = scenarios.ToString();
+            }
+            else
+            {
+                mySettings.scenarios = scenarios;
+                scenarioField.text = scenarios.ToString();
+            }
             mySettings.masterVolume = masterSlider.value = 1;
             mySettings.SFXvolume = SFXSlider.value = 1;
             mySettings.ambientVolume = ambientSlider.value = 1;
@@ -116,7 +124,6 @@ public class Settings : MonoBehaviour
             ChangeScreenMode(mySettings.screenMode);
             mySettings.startingPos[0].isEnabled = true;
             mySettings.startingPos[5].isEnabled = true;
-
             SaveSettings();
         }
 
