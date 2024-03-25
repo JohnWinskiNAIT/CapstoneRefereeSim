@@ -97,6 +97,7 @@ public class MenuControls : MonoBehaviour
             }
             ButtonUpdater();
         }
+        //If panel is not mainscreen and the timer of the transition is completed
         if (Input.GetKeyDown(KeyCode.Escape) && canEscape && onScreenPanel != panels[0])
         {
             Previous();
