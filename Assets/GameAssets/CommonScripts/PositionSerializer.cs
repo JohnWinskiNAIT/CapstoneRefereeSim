@@ -12,10 +12,13 @@ public class PositionSerializer : MonoBehaviour
     List<HockeyPlayerPositionData> positionData;
     [SerializeField] HockeyPlayerPositionData currentData;
 
-    [SerializeField]
+    [SerializeField] private GameObject[] currentGhostPlayers;
+
     int saveSlot;
     int index = 0;
-    bool saved = false;
+
+    [SerializeField] bool savedOrLoaded = false;
+    [SerializeField] bool playGhostData;
     float timer;
     const string FILEPATH = "SaveData\\PositionData";
 
@@ -32,23 +35,31 @@ public class PositionSerializer : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        //index++;
-        //if (0 == 10 % index)
+        if (playGhostData)
         {
-            for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
-            {
-                objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
-                currentData.x[i] = objectPosition.x;
-                currentData.y[i] = objectPosition.y;
-                currentData.z[i] = objectPosition.z;
-                positionData.Add(currentData);
-            }
+            GenerateGhostPlayers();
+        }
+        else
+        {
+            TrackPositionData();
+        }
+    }
+    public void TrackPositionData()
+    {
+        for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
+        {
+            objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
+            currentData.x[i] = objectPosition.x;
+            currentData.y[i] = objectPosition.y;
+            currentData.z[i] = objectPosition.z;
+            positionData.Add(currentData);
         }
 
-        if (Time.time > 30f + timer && !saved)
+
+        if (Time.time > 30f + timer && !savedOrLoaded)
         {
             savePositionData();
-            saved= true;
+            savedOrLoaded = true;
         }
     }
     public void loadPositionData()
@@ -72,6 +83,27 @@ public class PositionSerializer : MonoBehaviour
             // Try to create the directory.
             Directory.CreateDirectory(FILEPATH + saveSlot);
         }
+    }
+    public void GenerateGhostPlayers()
+    {
+        if (!savedOrLoaded)
+        {
+            loadPositionData();
+            savedOrLoaded = true;
+        }
+        //foreach (HockeyPlayerPositionData positionData in positionData)
+        {
+            
+            for (int i = 0; i < currentGhostPlayers.Length; i++)
+            {
+                currentData = positionData[index];
+                objectPosition.x = currentData.x[i];
+                objectPosition.y = currentData.y[i];
+                objectPosition.z = currentData.z[i];
+                currentGhostPlayers[i].transform.position = objectPosition;
+            }
+        }
+        index++;
     }
 }
 
