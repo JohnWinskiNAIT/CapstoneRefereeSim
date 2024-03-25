@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>2</scenarios>
+  <scenarios>1</scenarios>
   <screenMode>0</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
@@ -20,7 +20,7 @@
       <PenaltyName>SlewFoot</PenaltyName>
       <penaltyText>Slewfoot Tripping</penaltyText>
       <penaltyId>1</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
