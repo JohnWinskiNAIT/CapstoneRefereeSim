@@ -4089,7 +4089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emitter: {fileID: 51658060}
-  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  inputActions: {fileID: -944628639613478452, guid: 8d4ce1e10b7071e4ba4a51f05c9ed730, type: 3}
   cam: {fileID: 51658058}
   maxSpeed: 25
   accelerationSpeed: 1200
