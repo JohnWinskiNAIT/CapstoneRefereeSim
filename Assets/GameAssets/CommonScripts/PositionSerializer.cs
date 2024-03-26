@@ -83,14 +83,19 @@ public class PositionSerializer : MonoBehaviour
             currentData.z[i] = objectPosition.z;
             positionData.Add(currentData);
         }
-
-
-        if (Time.time > 30f + timer && !savedOrLoaded)
-        {
-            SavePositionData();
-            savedOrLoaded = true;
-        }
     }
+
+    public void EndRecording()
+    {
+        active = false;
+    }
+
+    public void SaveRecording()
+    {
+        SavePositionData();
+        savedOrLoaded = true;
+    }
+
     public void LoadPositionData()
     {
         PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref positionData);

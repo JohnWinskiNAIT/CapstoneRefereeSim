@@ -17197,6 +17197,7 @@ MonoBehaviour:
   choiceText: {fileID: 1786934459}
   actualText: {fileID: 684632416}
   timingText: {fileID: 1632992455}
+  promptText: {fileID: 669995836}
   transitionTime: 1.6
 --- !u!1 &1986925675
 GameObject:

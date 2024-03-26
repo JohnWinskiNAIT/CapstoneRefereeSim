@@ -245,7 +245,6 @@ public class stinkyMerged : MonoBehaviour
     {
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
-        GameplayManager.Instance.CallPrep();
         storedAction = null;
     }
 

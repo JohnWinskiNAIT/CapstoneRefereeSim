@@ -28,6 +28,8 @@ public class GameplayManager : MonoBehaviour
     CutsceneData currentCutscene;
     public PlayInformation CurrentPlayInfo { get; private set; }
 
+    PositionSerializer recorder;
+
     int scenariosCompleted;
     int cutsceneStatus;
     float playTimer, callTimestamp, callDifference;
@@ -91,6 +93,7 @@ public class GameplayManager : MonoBehaviour
 
         scenariosCompleted = 0;
         mySettings = Settings.mySettings;
+        recorder = GetComponent<PositionSerializer>();
         Debug.Log(mySettings.penalties[1].isWhistle);
         EnablePlayers();
         GeneratePlayers();
@@ -194,6 +197,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
+        recorder.EndRecording();
         resultsUI.SetActive(true);
         GameplayEvents.OpenWheel.Invoke(false, false);
     }
@@ -249,6 +253,11 @@ public class GameplayManager : MonoBehaviour
         {
             Call = CallState.Call;
         }
+    }
+
+    public void SaveRecording()
+    {
+        recorder.SaveRecording();
     }
 
     private void PlayCheck()
@@ -308,6 +317,7 @@ public class GameplayManager : MonoBehaviour
         penaltyOccured = false;
 
         playOngoing = true;
+        recorder.InitiateRecording();
         GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
     }
 

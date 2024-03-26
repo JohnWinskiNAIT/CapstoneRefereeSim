@@ -18,13 +18,13 @@ public class ResultsDisplay : MonoBehaviour
     Vector3[] startCorners, finalCorners;
 
     [SerializeField]
-    TextMeshProUGUI choiceText, actualText, timingText;
+    TextMeshProUGUI choiceText, actualText, timingText, promptText;
 
     [SerializeField]
     float transitionTime;
 
     float transitionTimer;
-    bool resultsPulledUp;
+    bool resultsPulledUp, recorded;
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class ResultsDisplay : MonoBehaviour
 
         transitionTimer = 0;
         resultsPulledUp = true;
+        recorded = false;
     }
 
     // Update is called once per frame
@@ -60,11 +61,29 @@ public class ResultsDisplay : MonoBehaviour
             }
             else
             {
+                resultsUI.anchorMin = finalCorners[0];
+                resultsUI.anchorMax = finalCorners[1];
+
+                if (replayInput.WasPressedThisFrame() && !recorded)
+                {
+                    GameplayManager.Instance.SaveRecording();
+                    recorded = true;
+
+                }
                 if (continueInput.WasPressedThisFrame())
                 {
                     resultsPulledUp = false;
                     GameplayEvents.InitializePlay.Invoke();
                 }
+            }
+
+            if (recorded)
+            {
+                promptText.text = "Replay recorded. Left Click to continue.";
+            }
+            else
+            {
+                promptText.text = "Left Click to continue. Right Click to save the replay.";
             }
         }
     }
