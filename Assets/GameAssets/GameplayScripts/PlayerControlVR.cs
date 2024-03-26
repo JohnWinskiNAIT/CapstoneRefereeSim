@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControlVR : MonoBehaviour
 {
     [SerializeField]
     LazerEmitter emitter;
@@ -58,7 +58,7 @@ public class PlayerControl : MonoBehaviour
 
         if (!isVREnabled)
         {
-            Debug.Log("VR UnEnabled");
+            Destroy(gameObject.GetComponent<PlayerControlVR>());
         }
 
         rb = GetComponent<Rigidbody>();
@@ -149,23 +149,51 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //This checks if the stored action (whistle or call) is still being held. If not, cancel the charge.
-    //If true, check if it's been held for long enough and use the appropriate method if so.
+    //VR STORED ACTION METHOD
     private void StoredActionCheck()
     {
-        if (!HeldAction.IsPressed())
+        //All of these are placeholders and should be determined elsewhere later.
+        GameObject vrRightHand = new();
+        GameObject vrLeftHand = new();
+        float vrMagnitude = 1f;
+        string currentAction = "blech";
+
+        float yMagnitude = 0f;
+
+        if (currentAction == null)
         {
-            HeldAction = null;
-        }
-        if (Time.time > storeTimestamp + storeInputDuration)
-        {
-            if (HeldAction == whistleAction)
+            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
             {
-                WhistleActivate();
+                currentAction = "Whistle";
             }
-            if (HeldAction == callAction)
+            else if (vrLeftHand.transform.position.y >= yMagnitude)
             {
-                CallActivate();
+                currentAction = "Call";
+            }
+        }
+        else
+        {
+            //Add an "and" to this alongside currentAction being Whistle
+            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude && currentAction == "Whistle")
+            {
+                storeTimestamp += Time.deltaTime;
+                if (storeTimestamp > 0f)
+                {
+
+                }
+            }
+            else if (vrLeftHand.transform.position.y >= yMagnitude && currentAction == "Call")
+            {
+                storeTimestamp += Time.deltaTime;
+                if (storeTimestamp > 0f)
+                {
+
+                }
+            }
+            else
+            {
+                storeTimestamp = 0f;
+                currentAction = null;
             }
         }
     }

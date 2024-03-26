@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>1</scenarios>
+  <scenarios>3</scenarios>
   <screenMode>0</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
-  <ambientVolume>1</ambientVolume>
+  <ambientVolume>0.453718424</ambientVolume>
   <lastMasterVolume>0</lastMasterVolume>
   <lastSFXvolume>0</lastSFXvolume>
   <lastAmbientVolume>0</lastAmbientVolume>
@@ -34,21 +34,21 @@
       <PenaltyName>BlindCheck</PenaltyName>
       <penaltyText>Blind Check</penaltyText>
       <penaltyId>3</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Holding</PenaltyName>
       <penaltyText>Holding</penaltyText>
       <penaltyId>4</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Interference</PenaltyName>
       <penaltyText>Interference</penaltyText>
       <penaltyId>5</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -69,14 +69,14 @@
       <PenaltyName>Hooking</PenaltyName>
       <penaltyText>Hooking</penaltyText>
       <penaltyId>8</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Slashing</PenaltyName>
       <penaltyText>Slashing</penaltyText>
       <penaltyId>9</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -98,7 +98,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
@@ -106,7 +106,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
@@ -118,7 +118,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
@@ -126,7 +126,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
   </startingPos>
 </SettingsData>
