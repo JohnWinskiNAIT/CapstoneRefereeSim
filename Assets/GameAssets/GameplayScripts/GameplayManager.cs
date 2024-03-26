@@ -94,7 +94,6 @@ public class GameplayManager : MonoBehaviour
         scenariosCompleted = 0;
         mySettings = Settings.mySettings;
         recorder = GetComponent<PositionSerializer>();
-        Debug.Log(mySettings.penalties[1].isWhistle);
         EnablePlayers();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
@@ -153,6 +152,11 @@ public class GameplayManager : MonoBehaviour
         {
             playOngoing = false;
             callDifference = callTimestamp - CurrentPlayInfo.penaltyTimer;
+
+            if (callDifference < 0)
+            {
+                CurrentPlayInfo.WipeId();
+            }
         }
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
@@ -211,7 +215,6 @@ public class GameplayManager : MonoBehaviour
             if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true, TypeOfWheel());
-                Debug.Log($"{CurrentPlayInfo.penaltyType}");
             }
 
             moveDone = false;
@@ -236,8 +239,6 @@ public class GameplayManager : MonoBehaviour
             if (playOngoing && currentCutscene == null)
             {
                 playTimer += Time.deltaTime;
-                Vector3 distance = currentPlayers[CurrentPlayInfo.offenderId].transform.position - currentPlayers[CurrentPlayInfo.affectedId].transform.position;
-                Debug.Log(distance.magnitude);
                 PlayCheck();
             }
         }
@@ -278,6 +279,7 @@ public class GameplayManager : MonoBehaviour
             currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().ResolvePenalty(false);
             currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().ResolvePenalty(true);
             playTest.SetActive(true);
+            Debug.Log($"{CurrentPlayInfo.penaltyId}");
             penaltyOccured = true;
         }
 
@@ -352,7 +354,6 @@ public class GameplayManager : MonoBehaviour
             stopTimer = Random.Range(5f, 15f),
             offenderId = player1,
             affectedId = player2,
-            penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length),
             penaltyId = mySettings.penalties[Random.Range(0, Settings.mySettings.penalties.Length)].penaltyId
         };
 
@@ -367,9 +368,14 @@ public class GameplayManager : MonoBehaviour
         public float penaltyTimer, stopTimer;
         //This contains the ID on the playerlist for the two players who will be involved in this incident.
         public int offenderId, affectedId;
-        //What type of penalty it is is stored here.
-        public PenaltyType penaltyType;
+        //What type of penalty it is is stored here
         public int penaltyId;
+        
+        //Used for calls that are too abrupt and early.
+        public void WipeId()
+        {
+            penaltyId = -1;
+        }
     }
 
     [Serializable]

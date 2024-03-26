@@ -28,6 +28,7 @@ public class ZoneAIController : MonoBehaviour
     //Id 0 = center, Id 1 = left, Id 2 = right
     GameObject primaryZone;
     GameObject advanceZone;
+    Animator animator;
 
     public GameObject[] teammates;
 
@@ -75,11 +76,7 @@ public class ZoneAIController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        /*zones = new GameObject[zonesParent.transform.childCount];
-        for (int i = 0; i < zones.Length; i++)
-        {
-            zones[i] = zonesParent.transform.GetChild(i).gameObject;
-        }*/
+
         if (aiType == AIType.Forward)
         {
             primaryZone = zonesParent.transform.GetChild(0).gameObject;
@@ -115,6 +112,7 @@ public class ZoneAIController : MonoBehaviour
         zonesParent = zoneParentObject;
         //startPosition = baseSpawn;
 
+        animator = GetComponentInChildren<Animator>();
         GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
 
@@ -165,6 +163,7 @@ public class ZoneAIController : MonoBehaviour
                 if (aiFreezing)
                 {
                     mode = AIMode.Frozen;
+                    animator.SetBool("Stunned", true);
                 }
                 else
                 {
@@ -326,6 +325,7 @@ public class ZoneAIController : MonoBehaviour
         nextPosition = transform.position;
         mode = AIMode.Default;
         aiFreezing = false;
+        animator.SetBool("Stunned", false);
     }
 
     void PauseAI(bool pausing)
@@ -349,7 +349,6 @@ public class ZoneAIController : MonoBehaviour
         penaltyDestination = transform.position + targetPosition;
         penaltyPositionTime = timeValue;
         penaltyTimer = 0f;
-        transform.GetChild(1).localScale = new(70, 70, 70);
         mode = AIMode.Penalty;
     }
 

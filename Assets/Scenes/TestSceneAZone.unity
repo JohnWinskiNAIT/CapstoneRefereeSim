@@ -486,12 +486,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -1684,12 +1684,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -2291,12 +2291,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -3435,12 +3435,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -3525,12 +3525,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -3616,12 +3616,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -4048,12 +4048,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
@@ -4244,12 +4244,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -4590,12 +4590,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 0
@@ -4850,12 +4850,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkThreshold: 2.8
   positionZResetThreshold: 28
-  acceleration: 3600
-  maxSpeed: 19
   turningSpeed: 0
   passDelay: 0.7
   passSpeed: 65
   lockoutTime: 0.05
+  acceleration: 3600
+  maxSpeed: 19
   passChance: 12
   teamMaterials: []
   aiType: 1
