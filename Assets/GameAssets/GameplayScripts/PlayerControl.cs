@@ -106,31 +106,34 @@ public class PlayerControl : MonoBehaviour
 
             //Stored action stuff. If nothing is stored, it checks for to store whistle or call. If something is stored,
             //it runs a check to see if it's still being held.
-            if (HeldAction == null)
+            if (GameplayManager.Instance.Call == GameplayManager.CallState.None)
             {
-                if (whistleAction.WasPressedThisFrame())
+                if (HeldAction == null)
                 {
-                    HeldAction = whistleAction;
-                    storeTimestamp = Time.time;
-                }
-                if (callAction.WasPressedThisFrame())
-                {
-                    HeldAction = callAction;
-                    storeTimestamp = Time.time;
-                }
-            }
-            else
-            {
-
-                if (isVREnabled)
-                {
-
+                    if (whistleAction.WasPressedThisFrame())
+                    {
+                        HeldAction = whistleAction;
+                        storeTimestamp = Time.time;
+                    }
+                    if (callAction.WasPressedThisFrame())
+                    {
+                        HeldAction = callAction;
+                        storeTimestamp = Time.time;
+                    }
                 }
                 else
                 {
-                    StoredActionCheck();
+
+                    if (isVREnabled)
+                    {
+
+                    }
+                    else
+                    {
+                        StoredActionCheck();
+                    }
+
                 }
-                
             }
 
             //Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -223,7 +226,7 @@ public class PlayerControl : MonoBehaviour
     {
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
-        GameplayManager.Instance.CallPrep();
+        GameplayManager.Instance.CallPrep(false);
         HeldAction = null;
     }
 
@@ -231,6 +234,7 @@ public class PlayerControl : MonoBehaviour
     {
         //Unfinished.
         GameplayManager.Instance.SetCallTimer();
+        GameplayManager.Instance.CallPrep(true);
         GameplayEvents.EndPlay.Invoke();
         HeldAction = null;
     }

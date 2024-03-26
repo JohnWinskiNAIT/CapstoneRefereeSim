@@ -53,10 +53,19 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     GameObject playTest;
 
+    public CallState Call {get; private set;}
+
     public enum GameState
     {
         Ice,
         Results
+    }
+
+    public enum CallState
+    {
+        None,
+        Call,
+        Whistle
     }
 
     // Start is called before the first frame update
@@ -153,6 +162,18 @@ public class GameplayManager : MonoBehaviour
         freezeManager = pauseBool;
     }
 
+    public bool TypeOfWheel()
+    {
+        bool returnBool = true;
+
+        if (Call != CallState.Whistle)
+        {
+            returnBool = false;
+        }
+
+        return returnBool;
+    }
+
     public void SetCallTimer()
     {
         if (callTimestamp == 0)
@@ -174,7 +195,7 @@ public class GameplayManager : MonoBehaviour
 
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         resultsUI.SetActive(true);
-        GameplayEvents.OpenWheel.Invoke(false);
+        GameplayEvents.OpenWheel.Invoke(false, false);
     }
 
     public void ProgressCutscene()
@@ -185,7 +206,7 @@ public class GameplayManager : MonoBehaviour
             GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
             if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
             {
-                GameplayEvents.OpenWheel.Invoke(true);
+                GameplayEvents.OpenWheel.Invoke(true, TypeOfWheel());
                 Debug.Log($"{CurrentPlayInfo.penaltyType}");
             }
 
@@ -218,9 +239,16 @@ public class GameplayManager : MonoBehaviour
         }
     }
     
-    public void CallPrep()
+    public void CallPrep(bool isWhistle)
     {
-        Debug.Log($"Difference: {callTimestamp - CurrentPlayInfo.penaltyTimer}");
+        if (isWhistle)
+        {
+            Call = CallState.Whistle;
+        }
+        else
+        {
+            Call = CallState.Call;
+        }
     }
 
     private void PlayCheck()
@@ -274,7 +302,7 @@ public class GameplayManager : MonoBehaviour
         currentCutscene = offsetPuckDropCutscene;
         cutsceneStatus = 0;
 
-        
+        Call = CallState.None;
         playTimer = 0;
         penaltyMovement = false;
         penaltyOccured = false;

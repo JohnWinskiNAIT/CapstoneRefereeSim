@@ -12,7 +12,7 @@ public class SaveManager
         if(path != null)
         {
             Stream stream = File.Open(path, FileMode.Create);
-            XmlSerializer serializer = new XmlSerializer(typeof(SettingsData));
+            XmlSerializer serializer = new(typeof(SettingsData));
             serializer.Serialize(stream, mySettings);
             stream.Close();
         }
@@ -22,7 +22,7 @@ public class SaveManager
         if (File.Exists(path))
         {
             Stream stream = File.Open(path, FileMode.Open);
-            XmlSerializer serializer = new XmlSerializer(typeof(SettingsData));
+            XmlSerializer serializer = new(typeof(SettingsData));
             mySettings = (SettingsData)serializer.Deserialize(stream);
             stream.Close();
         }

@@ -87,7 +87,7 @@ public class PlayerUIManager : MonoBehaviour
 
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
         GameplayEvents.InitializePlay.AddListener(ResetUI);
-        ToggleWheel(false);
+        ToggleWheel(false, false);
     }
 
     private void Start()
@@ -100,8 +100,6 @@ public class PlayerUIManager : MonoBehaviour
         {
             callInformation = GenerateWheelInformation(false);
         }
-
-        wheelInfo = whistleInformation;
     }
 
     private WheelInformation GenerateWheelInformation(bool isWhistle)
@@ -173,14 +171,6 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         // Lockstate
-        /*if (wheelTestAction.IsPressed())
-        {
-            ToggleWheel(true);
-        }
-        else
-        {
-            ToggleWheel(false);
-        }*/
 
         // Figures out where mouse is relative to center of screen and tries to find an appropriate quadrant to fill based on
         if (wheelOpen)
@@ -249,10 +239,19 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    public void ToggleWheel(bool enable)
+    public void ToggleWheel(bool enable, bool isWhistle)
     {
         if (enable)
         {
+            if (isWhistle)
+            {
+                wheelInfo = whistleInformation;
+            }
+            else
+            {
+                wheelInfo = callInformation;
+            }
+
             Cursor.lockState = CursorLockMode.None;
             if (!selectionWheel.activeSelf)
             {
@@ -332,7 +331,7 @@ public class PlayerUIManager : MonoBehaviour
 
     private void ResetUI()
     {
-        ToggleWheel(false);
+        ToggleWheel(false, false);
     }
 
     private void OnEnable()

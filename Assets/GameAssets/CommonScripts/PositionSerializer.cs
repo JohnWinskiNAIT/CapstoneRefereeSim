@@ -12,7 +12,7 @@ public class PositionSerializer : MonoBehaviour
     List<HockeyPlayerPositionData> positionData;
     [SerializeField] HockeyPlayerPositionData currentData;
 
-    [SerializeField] private GameObject[] currentGhostPlayers;
+    GameObject[] currentGhostPlayers;
 
     int saveSlot;
     int index = 0;
@@ -21,9 +21,24 @@ public class PositionSerializer : MonoBehaviour
     [SerializeField] bool playGhostData;
     float timer;
     const string FILEPATH = "SaveData\\PositionData";
+    bool active;
 
     //makes object data into float data for saving.
     private void Start()
+    {
+        active = false;
+
+        int slotCheck = 0;
+        int breakCheck = 0;
+        while (File.Exists(FILEPATH + saveSlot + "\\PositionData") && breakCheck < 100)
+        {
+            slotCheck++;
+            breakCheck++;
+        }
+        saveSlot = slotCheck;
+    }
+
+    public void InitiateRecording()
     {
         positionData = new List<HockeyPlayerPositionData>();
         currentData = new HockeyPlayerPositionData();
@@ -32,18 +47,32 @@ public class PositionSerializer : MonoBehaviour
         currentData.z = new float[10];
         timer = Time.time;
 
+        active = true;
+        playGhostData = false;
     }
+
+    public void InitiatePlayback(GameObject[] ghostPlayers)
+    {
+        //Same as above but set up for replay with a list of players.
+        currentGhostPlayers = ghostPlayers;
+        active = true;
+    }
+
     public void FixedUpdate()
     {
-        if (playGhostData)
+        if (active)
         {
-            GenerateGhostPlayers();
-        }
-        else
-        {
-            TrackPositionData();
+            if (playGhostData)
+            {
+                GenerateGhostPlayers();
+            }
+            else
+            {
+                TrackPositionData();
+            }
         }
     }
+
     public void TrackPositionData()
     {
         for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
@@ -58,15 +87,15 @@ public class PositionSerializer : MonoBehaviour
 
         if (Time.time > 30f + timer && !savedOrLoaded)
         {
-            savePositionData();
+            SavePositionData();
             savedOrLoaded = true;
         }
     }
-    public void loadPositionData()
+    public void LoadPositionData()
     {
         PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
     }
-    public void savePositionData()
+    public void SavePositionData()
     {
         CreatePlayerFileStructure();
         PositionSaver.SavePositionData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
@@ -88,7 +117,7 @@ public class PositionSerializer : MonoBehaviour
     {
         if (!savedOrLoaded)
         {
-            loadPositionData();
+            LoadPositionData();
             savedOrLoaded = true;
         }
         //foreach (HockeyPlayerPositionData positionData in positionData)
