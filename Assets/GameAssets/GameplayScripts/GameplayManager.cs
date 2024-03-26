@@ -200,8 +200,6 @@ public class GameplayManager : MonoBehaviour
             Debug.Log("False");
         }
 
-        Debug.Log(CurrentPlayInfo.penaltyId);
-
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         recorder.EndRecording();
         resultsUI.SetActive(true);
@@ -281,7 +279,7 @@ public class GameplayManager : MonoBehaviour
             currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().ResolvePenalty(false);
             currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().ResolvePenalty(true);
             playTest.SetActive(true);
-            Debug.Log($"{CurrentPlayInfo.penaltyId}");
+            Debug.Log(Settings.mySettings.penalties[CurrentPlayInfo.penaltyId].PenaltyName);
             penaltyOccured = true;
         }
 
@@ -364,7 +362,7 @@ public class GameplayManager : MonoBehaviour
         playTest.SetActive(false);
     }
 
-    public struct PlayInformation
+    public class PlayInformation
     {
         //Penalty Timestamp denotes when the penalty will occur. Playstop indicates an additional timer added onto the Timestamp before the play will end (unless ended with whistle).
         public float penaltyTimer, stopTimer;

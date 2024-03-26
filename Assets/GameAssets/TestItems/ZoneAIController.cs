@@ -199,9 +199,9 @@ public class ZoneAIController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        if (rb.velocity.magnitude != 0 && rb.velocity.normalized != Vector3.forward)
+        if (rb.velocity.magnitude >= 0.45f)
         {
-            transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+            transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z), Vector3.up);
         }
     }
 
