@@ -1,5 +1,5 @@
 {
-    "name": "VRHandActions",
+    "name": "VRLeftHandActions",
     "maps": [
         {
             "name": "Gameplay",
@@ -64,7 +64,7 @@
                 {
                     "name": "",
                     "id": "f994c8f1-6153-4a75-b96d-4b7eb209a75b",
-                    "path": "<XRController>{LeftHand}/thumbstick",
+                    "path": "<XRController>{RightHand}/thumbstick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -75,7 +75,7 @@
                 {
                     "name": "",
                     "id": "09f19d72-956e-466d-8726-26cb7e6893dd",
-                    "path": "<XRController>{RightHand}/thumbstick",
+                    "path": "<XRController>{LeftHand}/thumbstick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -86,7 +86,7 @@
                 {
                     "name": "",
                     "id": "626a1296-899a-463a-b353-53e76ff8b1e9",
-                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
+                    "path": "<XRController>{LeftHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -97,7 +97,7 @@
                 {
                     "name": "",
                     "id": "c929c4b3-6ddc-48f0-b200-81160a81f33e",
-                    "path": "<OculusTouchController>{LeftHand}/start",
+                    "path": "<XRController>{LeftHand}/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -119,7 +119,7 @@
                 {
                     "name": "",
                     "id": "cd87729c-7cc1-4125-8fdf-554c873c1b8f",
-                    "path": "<OculusTouchController>{LeftHand}/triggerPressed",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
