@@ -92,11 +92,11 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
-        if (SettingsHolder.mySettings.WhistleCount > 0)
+        if (Settings.mySettings.WhistleCount > 0)
         {
             whistleInformation = GenerateWheelInformation(true);
         }
-        if (SettingsHolder.mySettings.penalties.Length - SettingsHolder.mySettings.WhistleCount > 0)
+        if (Settings.mySettings.penalties.Length - Settings.mySettings.WhistleCount > 0)
         {
             callInformation = GenerateWheelInformation(false);
         }
@@ -107,7 +107,7 @@ public class PlayerUIManager : MonoBehaviour
     private WheelInformation GenerateWheelInformation(bool isWhistle)
     {
         WheelInformation info = new WheelInformation();
-        SettingsData settings = SettingsHolder.mySettings;
+        SettingsData settings = Settings.mySettings;
         int optionsCounter = 0;
 
         if (isWhistle)

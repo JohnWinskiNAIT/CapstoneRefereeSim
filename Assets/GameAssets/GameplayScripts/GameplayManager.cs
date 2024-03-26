@@ -254,7 +254,7 @@ public class GameplayManager : MonoBehaviour
     private void StartPlay()
     {
         scenariosCompleted++;
-        if (scenariosCompleted > SettingsHolder.mySettings.scenarios)
+        if (scenariosCompleted > Settings.mySettings.scenarios)
         {
             SceneManager.LoadScene("MenuScene");
             UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -315,7 +315,7 @@ public class GameplayManager : MonoBehaviour
             offenderId = player1,
             affectedId = player2,
             penaltyType = (PenaltyType)Random.Range(0, Enum.GetNames(typeof(PenaltyType)).Length),
-            penaltyId = mySettings.penalties[Random.Range(0, SettingsHolder.mySettings.penalties.Length)].penaltyId
+            penaltyId = mySettings.penalties[Random.Range(0, Settings.mySettings.penalties.Length)].penaltyId
         };
 
         callTimestamp = 0;

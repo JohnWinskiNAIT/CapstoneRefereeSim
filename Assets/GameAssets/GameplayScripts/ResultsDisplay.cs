@@ -35,8 +35,8 @@ public class ResultsDisplay : MonoBehaviour
 
     public void InitiateResults(int choiceId, int actualId, float timing)
     {
-        string choice = SettingsHolder.mySettings.penalties[choiceId].penaltyText;
-        string actual = SettingsHolder.mySettings.penalties[actualId].penaltyText;
+        string choice = Settings.mySettings.penalties[choiceId].penaltyText;
+        string actual = Settings.mySettings.penalties[actualId].penaltyText;
         float timer = Mathf.Round(timing * 10f) * 0.1f;
 
         choiceText.text = $"Player Call: {choice}";

@@ -413,7 +413,7 @@ public class PauseManager : MonoBehaviour
             Directory.CreateDirectory("SaveData\\settingsData");
         }
         SaveManager.SaveData(filePath, ref mySettings);
-        SettingsHolder.mySettings = mySettings;
+        Settings.mySettings = mySettings;
     }
     public void LoadSettings()
     {
