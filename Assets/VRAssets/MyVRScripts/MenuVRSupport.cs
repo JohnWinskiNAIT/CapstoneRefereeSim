@@ -15,7 +15,7 @@ public class MenuVRSupport : MonoBehaviour
     void Start()
     {
         canvas = GetComponentInChildren<Canvas>();
-        //isVrActive = GameUtilities.VREnabled();
+        isVRActive = GameUtilities.VREnabled();
         //CanvasStart();
     }
 
