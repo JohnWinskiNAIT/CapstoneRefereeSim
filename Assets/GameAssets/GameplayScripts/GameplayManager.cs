@@ -200,6 +200,8 @@ public class GameplayManager : MonoBehaviour
             Debug.Log("False");
         }
 
+        Debug.Log(CurrentPlayInfo.penaltyId);
+
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         recorder.EndRecording();
         resultsUI.SetActive(true);
