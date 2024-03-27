@@ -81,8 +81,8 @@ public class PositionSerializer : MonoBehaviour
             currentData.x[i] = objectPosition.x;
             currentData.y[i] = objectPosition.y;
             currentData.z[i] = objectPosition.z;
-            positionData.Add(currentData);
         }
+        positionData.Add(currentData);
     }
 
     public void EndRecording()
@@ -126,16 +126,14 @@ public class PositionSerializer : MonoBehaviour
             savedOrLoaded = true;
         }
         //foreach (HockeyPlayerPositionData positionData in positionData)
+
+        for (int i = 0; i < currentGhostPlayers.Length; i++)
         {
-            
-            for (int i = 0; i < currentGhostPlayers.Length; i++)
-            {
-                currentData = positionData[index];
-                objectPosition.x = currentData.x[i];
-                objectPosition.y = currentData.y[i];
-                objectPosition.z = currentData.z[i];
-                currentGhostPlayers[i].transform.position = objectPosition;
-            }
+            currentData = positionData[index];
+            objectPosition.x = currentData.x[i];
+            objectPosition.y = currentData.y[i];
+            objectPosition.z = currentData.z[i];
+            currentGhostPlayers[i].transform.position = objectPosition;
         }
         index++;
     }
