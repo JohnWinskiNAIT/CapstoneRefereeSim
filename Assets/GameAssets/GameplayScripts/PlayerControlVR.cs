@@ -59,22 +59,17 @@ public class PlayerControlVR : MonoBehaviour
     {
         isVREnabled = GameUtilities.VREnabled();
 
+        moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
+        pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
+
         if (!isVREnabled)
         {
-            Destroy(vrLeftHand);
-            Destroy(vrRightHand);
-            Destroy(cam);
+            Destroy(cam.transform.parent.gameObject);
             Destroy(gameObject.GetComponent<XROrigin>());
             Destroy(gameObject.GetComponent<PlayerControlVR>());
         }
 
         rb = GetComponent<Rigidbody>();
-
-        /// Depending on what options the player selects
-        /// inputActions = 
-
-        moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
-        pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         CurrentPlayerState = PlayerState.Control;
 
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);

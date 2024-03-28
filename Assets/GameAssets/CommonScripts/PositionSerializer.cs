@@ -17,20 +17,22 @@ public class PositionSerializer : MonoBehaviour
     int saveSlot;
     int index = 0;
 
-    [SerializeField] bool savedOrLoaded = false;
-    [SerializeField] bool playGhostData;
+    bool savedOrLoaded;
+    bool playGhostData;
     float timer;
     const string FILEPATH = "SaveData\\PositionData";
-    bool active;
+    private bool active;
 
     //makes object data into float data for saving.
     private void Start()
     {
+        savedOrLoaded = false;
         active = false;
+        playGhostData = false;
 
         int slotCheck = 0;
         int breakCheck = 0;
-        while (File.Exists(FILEPATH + saveSlot + "\\PositionData") && breakCheck < 100)
+        while (File.Exists(FILEPATH + slotCheck + "\\PositionData") && breakCheck < 100)
         {
             slotCheck++;
             breakCheck++;
@@ -60,34 +62,50 @@ public class PositionSerializer : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (active)
+        if (!GameplayManager.Instance.ManagerPaused)
         {
-            if (playGhostData)
+            if (active)
             {
-                GenerateGhostPlayers();
+                if (playGhostData)
+                {
+                    GenerateGhostPlayers();
+                }
+                else
+                {
+                    TrackPositionData();
+                    Debug.Log("aeiou");
+                }
             }
             else
             {
-                TrackPositionData();
+                if (positionData != null && !active)
+                {
+                    active = true;
+                }
             }
         }
+
+        Debug.Log(active);
     }
 
     public void TrackPositionData()
     {
         for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
         {
-            objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
-            currentData.x[i] = objectPosition.x;
-            currentData.y[i] = objectPosition.y;
-            currentData.z[i] = objectPosition.z;
+            if (GameplayManager.Instance.currentPlayers[i].activeSelf)
+            {
+                objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
+                currentData.x[i] = objectPosition.x;
+                currentData.y[i] = objectPosition.y;
+                currentData.z[i] = objectPosition.z;
+            }
         }
         positionData.Add(currentData);
     }
 
     public void EndRecording()
     {
-        active = false;
+        //active = false;
     }
 
     public void SaveRecording()
