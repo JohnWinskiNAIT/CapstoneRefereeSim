@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
@@ -15,19 +16,21 @@ public class PlayerControlVR : MonoBehaviour
     InputActionAsset inputActions;
     [SerializeField]
     Camera cam;
+    [SerializeField]
+    GameObject vrLeftHand, vrRightHand;
+    [SerializeField]
+    float vrYMagnitude, vrMagnitude;
 
     private Rigidbody rb;
 
     public float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
-    [SerializeField]
-    float cameraSpeed, cameraMaxY, cameraMinY;
 
-    private InputAction moveAction, lookAction, callAction, pauseAction, whistleAction;
-    public InputAction HeldAction { get; private set; }
+    private InputAction moveAction, pauseAction;
+    public string HeldAction { get; private set; }
 
     private float storeTimestamp;
 
-    private Vector2 moveInput, lookInput;
+    private Vector2 moveInput;
     public Vector3 CameraAngle { get; private set; }
     public Vector3 InputAngle { get; private set; }
 
@@ -58,6 +61,10 @@ public class PlayerControlVR : MonoBehaviour
 
         if (!isVREnabled)
         {
+            Destroy(vrLeftHand);
+            Destroy(vrRightHand);
+            Destroy(cam);
+            Destroy(gameObject.GetComponent<XROrigin>());
             Destroy(gameObject.GetComponent<PlayerControlVR>());
         }
 
@@ -67,9 +74,6 @@ public class PlayerControlVR : MonoBehaviour
         /// inputActions = 
 
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
-        lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
-        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
-        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         CurrentPlayerState = PlayerState.Control;
 
@@ -83,7 +87,6 @@ public class PlayerControlVR : MonoBehaviour
     {
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         //uiManager.isVREnabled = isVREnabled;
-
         CameraAngle = cam.transform.rotation.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -96,7 +99,6 @@ public class PlayerControlVR : MonoBehaviour
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
-            lookInput = lookAction.ReadValue<Vector2>();
 
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
@@ -108,32 +110,7 @@ public class PlayerControlVR : MonoBehaviour
             //it runs a check to see if it's still being held.
             if (GameplayManager.Instance.Call == GameplayManager.CallState.None)
             {
-                if (HeldAction == null)
-                {
-                    if (whistleAction.WasPressedThisFrame())
-                    {
-                        HeldAction = whistleAction;
-                        storeTimestamp = Time.time;
-                    }
-                    if (callAction.WasPressedThisFrame())
-                    {
-                        HeldAction = callAction;
-                        storeTimestamp = Time.time;
-                    }
-                }
-                else
-                {
-
-                    if (isVREnabled)
-                    {
-
-                    }
-                    else
-                    {
-                        StoredActionCheck();
-                    }
-
-                }
+                StoredActionCheck();
             }
 
             //Vector3 test1 = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -144,7 +121,6 @@ public class PlayerControlVR : MonoBehaviour
         else
         {
             moveInput = Vector2.zero;
-            lookInput = Vector2.zero;
             HeldAction = null;
         }
     }
@@ -156,44 +132,43 @@ public class PlayerControlVR : MonoBehaviour
         GameObject vrRightHand = new();
         GameObject vrLeftHand = new();
         float vrMagnitude = 1f;
-        string currentAction = "blech";
 
         float yMagnitude = 0f;
 
-        if (currentAction == null)
+        if (HeldAction == null)
         {
             if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
             {
-                currentAction = "Whistle";
+                HeldAction = "Whistle";
             }
             else if (vrLeftHand.transform.position.y >= yMagnitude)
             {
-                currentAction = "Call";
+                HeldAction = "Call";
             }
         }
         else
         {
             //Add an "and" to this alongside currentAction being Whistle
-            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude && currentAction == "Whistle")
+            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude && HeldAction == "Whistle")
             {
                 storeTimestamp += Time.deltaTime;
-                if (storeTimestamp > 0f)
+                if (storeTimestamp > storeInputDuration)
                 {
-
+                    WhistleActivate();
                 }
             }
-            else if (vrLeftHand.transform.position.y >= yMagnitude && currentAction == "Call")
+            else if (vrLeftHand.transform.position.y >= vrYMagnitude && HeldAction == "Call")
             {
                 storeTimestamp += Time.deltaTime;
-                if (storeTimestamp > 0f)
+                if (storeTimestamp > storeInputDuration)
                 {
-
+                    CallActivate();
                 }
             }
             else
             {
                 storeTimestamp = 0f;
-                currentAction = null;
+                HeldAction = null;
             }
         }
     }
@@ -257,64 +232,6 @@ public class PlayerControlVR : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        if (isVREnabled)
-        {
-
-        }
-        else
-        {
-            CameraClamp();
-
-            // This section eliminates a janky and awkward transition between >360 and 0, and vice versa. Still a bit awkward.
-            // Smoothing it out may involve checking the values (0.9f below) used for interpolation.
-            float rotateValue = (CameraAngle.y - transform.rotation.eulerAngles.y);
-            if (rotateValue > 180)
-            {
-                rotateValue -= 360;
-            }
-            if (rotateValue < -180)
-            {
-                rotateValue += 360;
-            }
-            transform.Rotate(Vector3.up, rotateValue * 0.9f * Time.fixedDeltaTime);
-        }
-    }
-
-    private void CameraClamp()
-    {
-        // cameraAngle changes based on inputs to be used by the camera script. Capped at 360 and 0 going over and under.
-        CameraAngle += new Vector3(-lookInput.y, lookInput.x, 0) * (cameraSpeed * Time.deltaTime);
-
-        //Full rotation logic + clamping the x angle to serialized values since it controls the up/down of the camera.
-        if (CameraAngle.x > 360)
-        {
-            CameraAngle = new Vector3(CameraAngle.x - 360, CameraAngle.y);
-        }
-        if (CameraAngle.x < 0)
-        {
-            CameraAngle = new Vector3(CameraAngle.x + 360, CameraAngle.y);
-        }
-        if (CameraAngle.x < 180 && CameraAngle.x > cameraMinY)
-        {
-            CameraAngle = new Vector3(cameraMinY, CameraAngle.y);
-        }
-        if (CameraAngle.x > 180 && CameraAngle.x < cameraMaxY)
-        {
-            CameraAngle = new Vector3(cameraMaxY, CameraAngle.y);
-        }
-
-        if (CameraAngle.y > 360)
-        {
-            CameraAngle = new Vector3(CameraAngle.x, CameraAngle.y - 360);
-        }
-        if (CameraAngle.y < 0)
-        {
-            CameraAngle = new Vector3(CameraAngle.x, CameraAngle.y + 360);
-        }
-    }
-
     private void PlayerMovement()
     {
         //Determines the angle between where the player's velocity is going and the player's input.
@@ -367,18 +284,12 @@ public class PlayerControlVR : MonoBehaviour
     private void OnEnable()
     {
         moveAction.Enable();
-        lookAction.Enable();
-        callAction.Enable();
-        whistleAction.Enable();
         pauseAction.Enable();
     }
 
     private void OnDisable()
     {
         moveAction.Disable();
-        lookAction.Disable();
-        callAction.Disable();
-        whistleAction.Disable();
         pauseAction.Disable();
     }
     #endregion

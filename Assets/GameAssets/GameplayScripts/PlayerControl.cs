@@ -56,9 +56,11 @@ public class PlayerControl : MonoBehaviour
     {
         isVREnabled = GameUtilities.VREnabled();
 
-        if (!isVREnabled)
+        if (isVREnabled)
         {
-            Debug.Log("VR UnEnabled");
+            Destroy(cam);
+            Destroy(gameObject.GetComponent<PlayerCamera>());
+            Destroy(gameObject.GetComponent<PlayerControl>());
         }
 
         rb = GetComponent<Rigidbody>();
@@ -113,26 +115,17 @@ public class PlayerControl : MonoBehaviour
                     if (whistleAction.WasPressedThisFrame())
                     {
                         HeldAction = whistleAction;
-                        storeTimestamp = Time.time;
+                        storeTimestamp = 0;
                     }
                     if (callAction.WasPressedThisFrame())
                     {
                         HeldAction = callAction;
-                        storeTimestamp = Time.time;
+                        storeTimestamp = 0;
                     }
                 }
                 else
                 {
-
-                    if (isVREnabled)
-                    {
-
-                    }
-                    else
-                    {
-                        StoredActionCheck();
-                    }
-
+                    StoredActionCheck();
                 }
             }
 
@@ -157,15 +150,22 @@ public class PlayerControl : MonoBehaviour
         {
             HeldAction = null;
         }
-        if (Time.time > storeTimestamp + storeInputDuration)
+        else
         {
-            if (HeldAction == whistleAction)
+            if (storeTimestamp > storeInputDuration)
             {
-                WhistleActivate();
+                if (HeldAction == whistleAction)
+                {
+                    WhistleActivate();
+                }
+                if (HeldAction == callAction)
+                {
+                    CallActivate();
+                }
             }
-            if (HeldAction == callAction)
+            else
             {
-                CallActivate();
+                storeTimestamp += Time.deltaTime;
             }
         }
     }
@@ -180,7 +180,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            returnValue = (Time.time - storeTimestamp) / storeInputDuration;
+            returnValue = storeTimestamp / storeInputDuration;
         }
 
         return returnValue;
