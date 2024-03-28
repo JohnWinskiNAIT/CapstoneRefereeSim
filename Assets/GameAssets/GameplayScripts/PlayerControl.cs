@@ -56,6 +56,12 @@ public class PlayerControl : MonoBehaviour
     {
         isVREnabled = GameUtilities.VREnabled();
 
+        moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
+        lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
+        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
+        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
+        pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
+
         if (isVREnabled)
         {
             Destroy(cam);
@@ -64,15 +70,6 @@ public class PlayerControl : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody>();
-
-        /// Depending on what options the player selects
-        /// inputActions = 
-
-        moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
-        lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
-        callAction = inputActions.FindActionMap("Gameplay").FindAction("Call/Select");
-        whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
-        pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         CurrentPlayerState = PlayerState.Control;
 
         GameplayEvents.InitializePlay.AddListener(ResetPlayer);
