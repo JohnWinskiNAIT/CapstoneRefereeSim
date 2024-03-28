@@ -47,7 +47,6 @@ public class AIManager : MonoBehaviour
             }
             if (redirectPlayer != null)
             {
-                Debug.Log("Test");
                 redirectPlayer.GetComponent<ZoneAIController>().DeclarePosition(puckObject.transform.position);
             }
             for (int i = 0; i < RightTeamPlayers.Count; i++)

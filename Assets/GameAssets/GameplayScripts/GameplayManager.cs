@@ -37,7 +37,7 @@ public class GameplayManager : MonoBehaviour
     public bool cameraDone, moveDone;
     bool playOngoing, penaltyMovement, penaltyOccured;
 
-    bool freezeManager;
+    public bool ManagerPaused { get; private set; }
     public GameObject[] currentPlayers;
 
     public GameObject playerUI;
@@ -97,6 +97,7 @@ public class GameplayManager : MonoBehaviour
         EnablePlayers();
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
+        ManagerPaused = false;
     }
 
     void GeneratePlayers()
@@ -166,7 +167,7 @@ public class GameplayManager : MonoBehaviour
 
     public void PauseGame(bool pauseBool)
     {
-        freezeManager = pauseBool;
+        ManagerPaused = pauseBool;
     }
 
     public bool TypeOfWheel()
@@ -229,7 +230,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        if (!freezeManager)
+        if (!ManagerPaused)
         {
             if (moveDone && cameraDone && currentCutscene != null)
             {
