@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI ;
+using UnityEngine.UI;
 
 #nullable enable
 public class LazerReciever : MonoBehaviour
@@ -9,11 +9,18 @@ public class LazerReciever : MonoBehaviour
     bool isPointedAt = false;    //is the raycast looking at it
     bool isActivated;
     Button button;
+    Toggle toggle;
+    Slider slider;
+
+    bool isBttn;
+    bool isTogg;
+    bool isSlid;
+
     Collider coll;
     Vector3 hitPos = Vector3.zero;
     Vector3 center;
     Vector2 center2D;
-    
+
     Vector2 distFromCenterSimplified;
     Vector2 hitPos2D;
 
@@ -32,7 +39,24 @@ public class LazerReciever : MonoBehaviour
         if (bottLeftBound != null) bottLeftPos = bottLeftBound.transform.localPosition;
 
         bottLeftPos2D = new Vector2(bottLeftPos.x, bottLeftPos.y);
-        button = GetComponentInParent<Button>();
+
+        if (GetComponentInParent<Button>() != null)
+        {
+            button = GetComponentInParent<Button>();
+            isBttn = true;
+        }
+
+        if (GetComponentInParent<Toggle>() != null)
+        {
+            toggle = GetComponentInParent<Toggle>();
+            isTogg = true;
+        }
+
+        if (GetComponentInParent<Slider>() != null)
+        {
+            slider = GetComponentInParent<Slider>();
+            isSlid = true;
+        }
     }
 
     private void Update()
@@ -75,7 +99,22 @@ public class LazerReciever : MonoBehaviour
 
     public void Activate()
     {   //Makes the button react as if it has been clicked. Runs all the OnClick() events  in the Button component
-        Debug.Log($"{button.onClick.GetPersistentMethodName(0)}");  //returns name of the method we are calling
-        button.onClick.Invoke();
+
+        if (isBttn)
+        {
+            Debug.Log($"{button.onClick.GetPersistentMethodName(0)}");  //returns name of the method we are calling
+            button.onClick.Invoke();
+        }
+        else if (isTogg)
+        {
+            Debug.Log($"Toggle Switch");
+            toggle.isOn = !toggle.isOn;
+        }
+        else if (isSlid)
+        {
+            //handle localPos = new vector2 (hitpos.x, 0)
+            Debug.Log($"Toggle Switch");
+            toggle.isOn = !toggle.isOn;
+        }
     }
 }
