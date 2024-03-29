@@ -8,9 +8,9 @@ public class LazerReciever : MonoBehaviour
 {
     bool isPointedAt = false;    //is the raycast looking at it
     bool isActivated;
-    Button button;
-    Toggle toggle;
-    Slider slider;
+    Button? button;
+    Toggle? toggle;
+    Slider? slider;
 
     bool isBttn;
     bool isTogg;
