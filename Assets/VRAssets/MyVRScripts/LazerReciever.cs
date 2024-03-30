@@ -67,11 +67,7 @@ public class LazerReciever : MonoBehaviour
     public void PointedAt(Vector3 hitPosition)
     {
         hitPos = hitPosition;
-
-        if (isPointedAt)
-        {
-            Debug.Log($"Is being pointed at");
-        }
+        Debug.Log($"Is being pointed at");
     }
 
     public Vector3 DistFromCenter()

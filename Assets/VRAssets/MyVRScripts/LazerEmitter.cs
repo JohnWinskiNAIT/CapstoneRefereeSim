@@ -35,6 +35,7 @@ public class LazerEmitter : MonoBehaviour
             hitSomething = true;
             hitPos = hit.point;
             reciever = hit.transform.gameObject.GetComponent<LazerReciever>();
+
             if ( reciever != null )
             {
                 reciever.PointedAt(hitPos);
@@ -69,7 +70,7 @@ public class LazerEmitter : MonoBehaviour
     public void Activate()
     {
         isHeldDown = true;
-        Debug.Log("LazerActivation");
+        //Debug.Log("LazerActivation");
         if (isHeldDown && reciever!=null)
         {
             reciever.Activate();
