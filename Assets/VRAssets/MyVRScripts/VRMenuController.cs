@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using static PlayerControl;
 using UnityEngine.InputSystem;
+using System;
 
 public class VRMenuController : MonoBehaviour
 {
@@ -15,15 +16,16 @@ public class VRMenuController : MonoBehaviour
     [SerializeField] Transform emitterPosL;
 
     [SerializeField] bool isController;
-    [SerializeField] bool isLeftHanded;
     [SerializeField] bool isRightHanded;
 
     [SerializeField] GameObject canvasParent;
     Canvas canvas;
 
-    [SerializeField] Camera cam;
+    [SerializeField] GameObject camParent;
     [SerializeField] InputActionAsset inputActions;
     private InputAction moveAction, lookAction, callselectAction, pauseAction, whistleAction;
+
+    public float lookSensitivity = 1;
 
     //[SerializeField] InputAction action;
 
@@ -62,6 +64,8 @@ public class VRMenuController : MonoBehaviour
     {
         emitter = emitterObj.GetComponent<LazerEmitter>();
         canvas = canvasParent.GetComponentInChildren<Canvas>();
+
+        //lookSensitivity = settings.lookSensitivity
     }
 
     void Update()
@@ -78,7 +82,13 @@ public class VRMenuController : MonoBehaviour
 
         LazerPositionUpdate();
 
+        CamRotationUpdate();
         //rotate off of values from thum stick
+    }
+
+    void CamRotationUpdate()
+    {
+        camParent.transform.Rotate(0, lookAction.ReadValue<Vector2>().x * lookSensitivity , 0);
     }
 
     void LazerPositionUpdate()
@@ -102,7 +112,7 @@ public class VRMenuController : MonoBehaviour
                 emitterObj.transform.rotation = emitterPosR.rotation;
                 //Inputactions asset = right handed one
             }
-            else if (isLeftHanded)
+            else
             {
                 Pointer.transform.position = emitterPosL.position;
                 emitterObj.transform.position = emitterPosL.position;
