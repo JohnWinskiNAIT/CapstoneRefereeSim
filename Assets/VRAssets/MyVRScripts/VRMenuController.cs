@@ -24,6 +24,8 @@ public class VRMenuController : MonoBehaviour
     [SerializeField] GameObject camParent;
     [SerializeField] InputActionAsset inputActions;
     private InputAction moveAction, lookAction, callselectAction, pauseAction, whistleAction;
+    bool isClicking;
+    bool wasClicking;
 
     public float lookSensitivity = 1;
 
@@ -69,15 +71,21 @@ public class VRMenuController : MonoBehaviour
     }
 
     void Update()
-    {
-        if (callselectAction.ReadValue<float>() > 0.1)   
-        {
-            emitter.Activate();
+    { 
+
+        if (callselectAction.ReadValue<float>() > 0.3)   
+        {   //check isClicking
+            if (!wasClicking)
+            {   //check wasClicking last frame
+                emitter.Activate();
+            }
             //Debug.Log("MouseDown");
+            wasClicking = true;
         }
         else
         {
             emitter.Deactivate();
+            wasClicking = false;
         }
 
         LazerPositionUpdate();
