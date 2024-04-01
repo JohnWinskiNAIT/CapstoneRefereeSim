@@ -291,7 +291,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 154683143}
-  - component: {fileID: 154683142}
   - component: {fileID: 154683141}
   m_Layer: 0
   m_Name: PlaybackUI
@@ -323,18 +322,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &154683142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154683140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c33aa3f2efd7fd54382f17bc0e56a125, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &154683143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -636,6 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353949677}
   - component: {fileID: 1353949676}
+  - component: {fileID: 1353949678}
   m_Layer: 0
   m_Name: ReplayManager
   m_TagString: Untagged
@@ -655,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c12b115db7f9544da11c930c4a354fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 2851081034928759604, guid: 08a236a2fe1126843b66a03fb5127724, type: 3}
 --- !u!4 &1353949677
 Transform:
   m_ObjectHideFlags: 0
@@ -670,6 +659,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1353949678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353949675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33aa3f2efd7fd54382f17bc0e56a125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1676939329
 GameObject:
   m_ObjectHideFlags: 0

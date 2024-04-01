@@ -98,14 +98,14 @@
     </StartingPosData>
     <StartingPosData>
       <posName>RedForward</posName>
-      <isEnabled>false</isEnabled>
-    </StartingPosData>
-    <StartingPosData>
-      <posName>RedDefense</posName>
       <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>RedDefense</posName>
+      <isEnabled>true</isEnabled>
+    </StartingPosData>
+    <StartingPosData>
+      <posName>RedDefense</posName>
       <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
@@ -118,7 +118,7 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>

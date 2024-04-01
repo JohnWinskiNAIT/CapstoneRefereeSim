@@ -21,7 +21,7 @@ public class PlaybackManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        readingSlot = 1;
+        readingSlot = 0;
         PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref positionData);
         CreatePlayers();
         playback = true;
@@ -33,9 +33,11 @@ public class PlaybackManager : MonoBehaviour
 
         for (int i = 0; i < players.Length; i++)
         {
-            players[0] = Instantiate(playerPrefab, null);
-            players[0].transform.position = new (positionData[0].x[i], positionData[0].y[i], positionData[0].z[i]);
-            players[0].GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrievePlayerSkin(0);
+            players[i] = Instantiate(playerPrefab, null);
+            players[i].transform.position = new (positionData[0].x[i], positionData[0].y[i], positionData[0].z[i]);
+            GameObject model = players[i].transform.Find("Model").gameObject;
+            model.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+            model.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(1, true);
         }
     }
 
@@ -53,6 +55,8 @@ public class PlaybackManager : MonoBehaviour
                 timer += Time.deltaTime;
                 InterpolatePosition(currentPosition);
             }
+
+            Debug.Log(currentPosition);
         }
     }
 

@@ -108,10 +108,29 @@ public class GameplayManager : MonoBehaviour
             if (enabledPlayers[i])
             {
                 currentPlayers[i] = Instantiate(playerPrefab, null);
+                GameObject model = currentPlayers[i].transform.Find("Model").gameObject;
+                SelectPlayerSkin(model, i);
                 currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent);
             }
         }
     }
+
+    void SelectPlayerSkin(GameObject playerModel, int playerNumber)
+    {
+        int chosenSkin = Random.Range(1, 7);
+
+        if (playerNumber >= 5)
+        {
+            playerModel.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
+        }
+        else
+        {
+            playerModel.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
+        }
+
+        playerModel.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+    }
+
     void EnablePlayers()
     {
         for(int i = 0; i < enabledPlayers.Length; i++)
