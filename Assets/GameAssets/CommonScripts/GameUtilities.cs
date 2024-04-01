@@ -9,7 +9,7 @@ using UnityEngine.XR.Management;
 public class GameUtilities
 {
     //Class of Static Methods to help with regularly used features in other scripts.
-
+    public static string PlayerSkinPath = "PlayerSkins/";
     public static InputActionAsset[] actionMapList = new InputActionAsset[4];
 
     static public Vector2 CursorPercentage()
@@ -38,5 +38,14 @@ public class GameUtilities
         actionMapList[1] = controller;
         actionMapList[2] = vrLeft;
         actionMapList[3] = vrRight;
+    }
+
+    static public Material RetrievePlayerSkin(int id)
+    {
+        Material selectedMaterial = null;
+
+        selectedMaterial = Resources.Load<Material> (PlayerSkinPath + id);
+
+        return selectedMaterial;
     }
 }
