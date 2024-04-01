@@ -32,6 +32,7 @@ public class PositionSerializer : MonoBehaviour
 
         int slotCheck = 0;
         int breakCheck = 0;
+        timer = 0;
         while (File.Exists(FILEPATH + slotCheck + "\\PositionData") && breakCheck < 100)
         {
             slotCheck++;
@@ -57,10 +58,9 @@ public class PositionSerializer : MonoBehaviour
     {
         //Same as above but set up for replay with a list of players.
         currentGhostPlayers = ghostPlayers;
-        active = true;
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
         if (!GameplayManager.Instance.ManagerPaused)
         {
@@ -72,8 +72,16 @@ public class PositionSerializer : MonoBehaviour
                 }
                 else
                 {
-                    TrackPositionData();
-                    Debug.Log("aeiou");
+                    if (timer > ReplaySettings.Tick_Rate)
+                    {
+                        TrackPositionData();
+                        Debug.Log("aeiou");
+                        timer = 0;
+                    }
+                    else
+                    {
+                        timer += Time.deltaTime;
+                    }
                 }
             }
             else
@@ -84,15 +92,13 @@ public class PositionSerializer : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(active);
     }
 
     public void TrackPositionData()
     {
         for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
         {
-            if (GameplayManager.Instance.currentPlayers[i].activeSelf)
+            if (GameplayManager.Instance.currentPlayers[i] != null)
             {
                 objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
                 currentData.x[i] = objectPosition.x;
@@ -105,7 +111,7 @@ public class PositionSerializer : MonoBehaviour
 
     public void EndRecording()
     {
-        //active = false;
+        active = false;
     }
 
     public void SaveRecording()

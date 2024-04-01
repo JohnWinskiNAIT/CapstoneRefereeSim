@@ -112,7 +112,7 @@ public class ZoneAIController : MonoBehaviour
         zonesParent = zoneParentObject;
         //startPosition = baseSpawn;
 
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
 
@@ -163,7 +163,7 @@ public class ZoneAIController : MonoBehaviour
                 if (aiFreezing)
                 {
                     mode = AIMode.Frozen;
-                    animator.SetBool("Stunned", true);
+                    //animator.SetBool("Stunned", true);
                 }
                 else
                 {
@@ -325,7 +325,7 @@ public class ZoneAIController : MonoBehaviour
         nextPosition = transform.position;
         mode = AIMode.Default;
         aiFreezing = false;
-        animator.SetBool("Stunned", false);
+        //animator.SetBool("Stunned", false);
     }
 
     void PauseAI(bool pausing)

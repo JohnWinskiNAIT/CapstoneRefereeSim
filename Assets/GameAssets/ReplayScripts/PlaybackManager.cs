@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlaybackManager : MonoBehaviour
 {
+    [SerializeField]
     int readingSlot;
+
     int totalCount;
     int currentPosition;
     float tickRate = ReplaySettings.Tick_Rate;
@@ -21,7 +23,6 @@ public class PlaybackManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        readingSlot = 0;
         PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref positionData);
         CreatePlayers();
         playback = true;
