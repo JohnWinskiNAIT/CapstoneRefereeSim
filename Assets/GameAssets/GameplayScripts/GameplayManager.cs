@@ -178,6 +178,7 @@ public class GameplayManager : MonoBehaviour
                 CurrentPlayInfo.WipeId();
             }
         }
+        recorder.EndRecording();
         GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
         currentCutscene = playEndCutscene;
         cutsceneStatus = 0;
@@ -221,7 +222,6 @@ public class GameplayManager : MonoBehaviour
         }
 
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
-        recorder.EndRecording();
         resultsUI.SetActive(true);
         GameplayEvents.OpenWheel.Invoke(false, false);
     }

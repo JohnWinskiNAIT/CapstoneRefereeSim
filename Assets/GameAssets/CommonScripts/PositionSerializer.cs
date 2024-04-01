@@ -75,7 +75,6 @@ public class PositionSerializer : MonoBehaviour
                     if (timer > ReplaySettings.Tick_Rate)
                     {
                         TrackPositionData();
-                        Debug.Log("aeiou");
                         timer = 0;
                     }
                     else
@@ -107,6 +106,7 @@ public class PositionSerializer : MonoBehaviour
             }
         }
         positionData.Add(currentData);
+        Debug.Log(positionData[positionData.Count - 1].x[0]);
     }
 
     public void EndRecording()
