@@ -67,9 +67,13 @@ public class PlaybackManager : MonoBehaviour
 
     public void SetToPosition(int currentPosition)
     {
-        for (int i = 0; i < positionData[currentPosition].x.Length; i++)
+        if (currentPosition < positionData.Count)
         {
-            players[i].transform.position = new(positionData[currentPosition].x[i], positionData[currentPosition].y[i], positionData[currentPosition].z[i]);
+            for (int i = 0; i < positionData[currentPosition].x.Length; i++)
+            {
+                players[i].transform.position = new(positionData[currentPosition].x[i], positionData[currentPosition].y[i], positionData[currentPosition].z[i]);
+            }
+            CurrentPosition = currentPosition;
         }
     }
 
