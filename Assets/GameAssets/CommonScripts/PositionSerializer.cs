@@ -9,8 +9,10 @@ public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
     Vector3 objectPosition;
+    [SerializeField]
     List<HockeyPlayerPositionData> positionData;
-    [SerializeField] HockeyPlayerPositionData currentData;
+
+    HockeyPlayerPositionData currentData;
 
     GameObject[] currentGhostPlayers;
 
@@ -95,18 +97,22 @@ public class PositionSerializer : MonoBehaviour
 
     public void TrackPositionData()
     {
+        HockeyPlayerPositionData newData = new();
+        newData.x = new float[10];
+        newData.y = new float[10];
+        newData.z = new float[10];
+
         for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
         {
             if (GameplayManager.Instance.currentPlayers[i] != null)
             {
                 objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
-                currentData.x[i] = objectPosition.x;
-                currentData.y[i] = objectPosition.y;
-                currentData.z[i] = objectPosition.z;
+                newData.x[i] = objectPosition.x;
+                newData.y[i] = objectPosition.y;
+                newData.z[i] = objectPosition.z;
             }
         }
-        positionData.Add(currentData);
-        Debug.Log(positionData[positionData.Count - 1].x[0]);
+        positionData.Add(newData);
     }
 
     public void EndRecording()
