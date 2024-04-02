@@ -9,7 +9,6 @@ public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
     Vector3 objectPosition;
-    [SerializeField]
     List<HockeyPlayerPositionData> positionData;
 
     HockeyPlayerPositionData currentData;
@@ -23,13 +22,13 @@ public class PositionSerializer : MonoBehaviour
     bool playGhostData;
     float timer;
     const string FILEPATH = "SaveData\\PositionData";
+    [SerializeField]
     private bool active;
 
     //makes object data into float data for saving.
     private void Start()
     {
         savedOrLoaded = false;
-        active = false;
         playGhostData = false;
 
         int slotCheck = 0;
@@ -83,13 +82,6 @@ public class PositionSerializer : MonoBehaviour
                     {
                         timer += Time.deltaTime;
                     }
-                }
-            }
-            else
-            {
-                if (positionData != null && !active)
-                {
-                    active = true;
                 }
             }
         }

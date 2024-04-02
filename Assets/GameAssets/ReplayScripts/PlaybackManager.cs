@@ -7,8 +7,8 @@ public class PlaybackManager : MonoBehaviour
     [SerializeField]
     int readingSlot;
 
-    int totalCount;
-    int currentPosition;
+    public int TotalCount {get; private set;}
+    public int CurrentPosition {get; private set;}
     float tickRate = ReplaySettings.Tick_Rate;
 
     List<HockeyPlayerPositionData> positionData;
@@ -18,14 +18,15 @@ public class PlaybackManager : MonoBehaviour
     GameObject playerPrefab;
 
     float timer;
-    bool playback;
+    public bool Playback {get; private set;}
 
     // Update is called once per frame
     void Start()
     {
         PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref positionData);
+        TotalCount = positionData.Count;
         CreatePlayers();
-        playback = true;
+        Playback = true;
     }
 
     void CreatePlayers()
@@ -44,20 +45,23 @@ public class PlaybackManager : MonoBehaviour
 
     void Update()
     {
-        if (playback)
+        if (Playback)
         {
             if (timer > tickRate)
             {
-                currentPosition++;
+                CurrentPosition++;
                 timer = 0;
             }
             else
             {
                 timer += Time.deltaTime;
-                InterpolatePosition(currentPosition);
+                InterpolatePosition(CurrentPosition);
             }
 
-            Debug.Log(currentPosition);
+            if (CurrentPosition > positionData.Count)
+            {
+                Playback = false;
+            }
         }
     }
 
@@ -76,6 +80,14 @@ public class PlaybackManager : MonoBehaviour
             Vector3 position1 = new(positionData[currentPosition].x[i], positionData[currentPosition].y[i], positionData[currentPosition].z[i]);
             Vector3 position2 = new(positionData[currentPosition + 1].x[i], positionData[currentPosition + 1].y[i], positionData[currentPosition + 1].z[i]);
             players[i].transform.position = Vector3.Lerp(position1, position2, timer / tickRate);
+        }
+    }
+
+    public void TogglePlayback(bool toggle)
+    {
+        if (CurrentPosition <= positionData.Count)
+        {
+            Playback = toggle;
         }
     }
 }
