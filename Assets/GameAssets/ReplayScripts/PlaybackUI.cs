@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,15 @@ public class PlaybackUI : MonoBehaviour
         }
 
         EnableBar();
+
+        if (manager.Playback)
+        {
+            stopStartButton.GetComponentInChildren<TextMeshProUGUI>().text = "Pause";
+        }
+        else
+        {
+            stopStartButton.GetComponentInChildren<TextMeshProUGUI>().text = "Play";
+        }
     }
 
     void EnableBar()

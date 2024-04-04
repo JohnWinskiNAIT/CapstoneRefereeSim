@@ -20,12 +20,15 @@ public class PlayerControlVR : MonoBehaviour
     GameObject vrLeftHand, vrRightHand;
     [SerializeField]
     float vrYMagnitude, vrMagnitude;
+    [SerializeField]
+    GameObject camParent;
 
     private Rigidbody rb;
 
     public float maxSpeed, accelerationSpeed, breakingModifier, storeInputDuration;
+    public float lookSensitivity = 1;
 
-    private InputAction moveAction, pauseAction;
+    private InputAction moveAction, lookAction, pauseAction;
     public string HeldAction { get; private set; }
 
     private float storeTimestamp;
@@ -61,6 +64,7 @@ public class PlayerControlVR : MonoBehaviour
 
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
+        lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
 
         if (!isVREnabled)
         {
@@ -118,6 +122,13 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
+
+        CamRotationUpdate();
+    }
+
+    void CamRotationUpdate()
+    {
+        camParent.transform.Rotate(0, lookAction.ReadValue<Vector2>().x * lookSensitivity, 0);
     }
 
     //VR STORED ACTION METHOD
@@ -280,12 +291,14 @@ public class PlayerControlVR : MonoBehaviour
     {
         moveAction.Enable();
         pauseAction.Enable();
+        lookAction.Enable();
     }
 
     private void OnDisable()
     {
         moveAction.Disable();
         pauseAction.Disable();
+        lookAction.Disable();
     }
     #endregion
 
