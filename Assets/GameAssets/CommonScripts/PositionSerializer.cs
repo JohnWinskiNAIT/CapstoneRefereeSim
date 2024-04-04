@@ -9,11 +9,9 @@ public class PositionSerializer : MonoBehaviour
 {
     //Object to convert to save data.
     Vector3 objectPosition;
-    List<HockeyPlayerPositionData> positionData;
 
-    HockeyPlayerPositionData currentData;
-
-    GameObject[] currentGhostPlayers;
+    HockeyPlayerPositionData currentPositions;
+    HockeyScenarioPositionData scenarioData;
 
     int saveSlot;
     int index = 0;
@@ -44,21 +42,18 @@ public class PositionSerializer : MonoBehaviour
 
     public void InitiateRecording()
     {
-        positionData = new List<HockeyPlayerPositionData>();
-        currentData = new HockeyPlayerPositionData();
-        currentData.x = new float[10];
-        currentData.y = new float[10];
-        currentData.z = new float[10];
+        currentPositions = new HockeyPlayerPositionData();
+        currentPositions.playerX = new float[10];
+        currentPositions.playerY = new float[10];
+        currentPositions.playerZ = new float[10];
         timer = Time.time;
 
         active = true;
         playGhostData = false;
-    }
 
-    public void InitiatePlayback(GameObject[] ghostPlayers)
-    {
-        //Same as above but set up for replay with a list of players.
-        currentGhostPlayers = ghostPlayers;
+        scenarioData = new();
+        scenarioData.playerData = new List<HockeyPlayerPositionData>();
+        scenarioData.refereePosition = new List<Vector3>();
     }
 
     public void Update()
@@ -67,21 +62,14 @@ public class PositionSerializer : MonoBehaviour
         {
             if (active)
             {
-                if (playGhostData)
+                if (timer > ReplaySettings.Tick_Rate)
                 {
-                    GenerateGhostPlayers();
+                    TrackPositionData();
+                    timer = 0;
                 }
                 else
                 {
-                    if (timer > ReplaySettings.Tick_Rate)
-                    {
-                        TrackPositionData();
-                        timer = 0;
-                    }
-                    else
-                    {
-                        timer += Time.deltaTime;
-                    }
+                    timer += Time.deltaTime;
                 }
             }
         }
@@ -90,21 +78,23 @@ public class PositionSerializer : MonoBehaviour
     public void TrackPositionData()
     {
         HockeyPlayerPositionData newData = new();
-        newData.x = new float[10];
-        newData.y = new float[10];
-        newData.z = new float[10];
+        newData.playerX = new float[10];
+        newData.playerY = new float[10];
+        newData.playerZ = new float[10];
 
         for (int i = 0; i < GameplayManager.Instance.currentPlayers.Length; i++)
         {
             if (GameplayManager.Instance.currentPlayers[i] != null)
             {
                 objectPosition = GameplayManager.Instance.currentPlayers[i].transform.position;
-                newData.x[i] = objectPosition.x;
-                newData.y[i] = objectPosition.y;
-                newData.z[i] = objectPosition.z;
+                newData.playerX[i] = objectPosition.x;
+                newData.playerY[i] = objectPosition.y;
+                newData.playerZ[i] = objectPosition.z;
             }
         }
-        positionData.Add(newData);
+
+        scenarioData.refereePosition.Add(GameplayManager.Instance.player.transform.position);
+        scenarioData.playerData.Add(newData);
     }
 
     public void EndRecording()
@@ -120,12 +110,12 @@ public class PositionSerializer : MonoBehaviour
 
     public void LoadPositionData()
     {
-        PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
+        PositionSaver.LoadPlayerData(FILEPATH + saveSlot + "\\PositionData", ref scenarioData);
     }
     public void SavePositionData()
     {
         CreatePlayerFileStructure();
-        PositionSaver.SavePositionData(FILEPATH + saveSlot + "\\PositionData", ref positionData);
+        PositionSaver.SavePositionData(FILEPATH + saveSlot + "\\PositionData", ref scenarioData);
     }
     void CreatePlayerFileStructure()
     {
@@ -140,31 +130,23 @@ public class PositionSerializer : MonoBehaviour
             Directory.CreateDirectory(FILEPATH + saveSlot);
         }
     }
-    public void GenerateGhostPlayers()
-    {
-        if (!savedOrLoaded)
-        {
-            LoadPositionData();
-            savedOrLoaded = true;
-        }
-        //foreach (HockeyPlayerPositionData positionData in positionData)
-
-        for (int i = 0; i < currentGhostPlayers.Length; i++)
-        {
-            currentData = positionData[index];
-            objectPosition.x = currentData.x[i];
-            objectPosition.y = currentData.y[i];
-            objectPosition.z = currentData.z[i];
-            currentGhostPlayers[i].transform.position = objectPosition;
-        }
-        index++;
-    }
 }
 
 [Serializable]
 public struct HockeyPlayerPositionData
 {
-    public float[] x;
-    public float[] y;
-    public float[] z;
+    public float[] playerX;
+    public float[] playerY;
+    public float[] playerZ;
+}
+
+public class HockeyScenarioPositionData
+{
+    public List<HockeyPlayerPositionData> playerData;
+
+    public bool[] playerEnabled;
+    public int[] playerSkins;
+
+    List<Vector3> puckPosition;
+    public List <Vector3> refereePosition;
 }

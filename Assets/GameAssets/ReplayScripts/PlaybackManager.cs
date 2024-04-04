@@ -11,7 +11,7 @@ public class PlaybackManager : MonoBehaviour
     public int CurrentPosition {get; private set;}
     float tickRate = ReplaySettings.Tick_Rate;
 
-    List<HockeyPlayerPositionData> positionData;
+    HockeyScenarioPositionData scenarioData;
     GameObject[] players;
 
     [SerializeField]
@@ -23,8 +23,8 @@ public class PlaybackManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref positionData);
-        TotalCount = positionData.Count;
+        PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref scenarioData);
+        TotalCount = scenarioData.playerData.Count;
         CreatePlayers();
         Playback = true;
     }
@@ -36,7 +36,7 @@ public class PlaybackManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             players[i] = Instantiate(playerPrefab, null);
-            players[i].transform.position = new (positionData[0].x[i], positionData[0].y[i], positionData[0].z[i]);
+            players[i].transform.position = new (scenarioData.playerData[0].playerX[i], scenarioData.playerData[0].playerY[i], scenarioData.playerData[0].playerZ[i]);
             GameObject model = players[i].transform.Find("Model").gameObject;
             model.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
             model.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(1, true);
@@ -58,7 +58,7 @@ public class PlaybackManager : MonoBehaviour
                 InterpolatePosition(CurrentPosition);
             }
 
-            if (CurrentPosition > positionData.Count)
+            if (CurrentPosition > scenarioData.playerData.Count)
             {
                 Playback = false;
             }
@@ -67,11 +67,11 @@ public class PlaybackManager : MonoBehaviour
 
     public void SetToPosition(int currentPosition)
     {
-        if (currentPosition < positionData.Count)
+        if (currentPosition < scenarioData.playerData.Count)
         {
-            for (int i = 0; i < positionData[currentPosition].x.Length; i++)
+            for (int i = 0; i < scenarioData.playerData[currentPosition].playerX.Length; i++)
             {
-                players[i].transform.position = new(positionData[currentPosition].x[i], positionData[currentPosition].y[i], positionData[currentPosition].z[i]);
+                players[i].transform.position = new(scenarioData.playerData[currentPosition].playerX[i], scenarioData.playerData[currentPosition].playerY[i], scenarioData.playerData[currentPosition].playerZ[i]);
             }
             CurrentPosition = currentPosition;
         }
@@ -79,17 +79,17 @@ public class PlaybackManager : MonoBehaviour
 
     void InterpolatePosition(int currentPosition)
     {
-        for (int i = 0; i < positionData[currentPosition].x.Length; i++)
+        for (int i = 0; i < scenarioData.playerData[currentPosition].playerX.Length; i++)
         {
-            Vector3 position1 = new(positionData[currentPosition].x[i], positionData[currentPosition].y[i], positionData[currentPosition].z[i]);
-            Vector3 position2 = new(positionData[currentPosition + 1].x[i], positionData[currentPosition + 1].y[i], positionData[currentPosition + 1].z[i]);
+            Vector3 position1 = new(scenarioData.playerData[currentPosition].playerX[i], scenarioData.playerData[currentPosition].playerY[i], scenarioData.playerData[currentPosition].playerZ[i]);
+            Vector3 position2 = new(scenarioData.playerData[currentPosition + 1].playerX[i], scenarioData.playerData[currentPosition + 1].playerY[i], scenarioData.playerData[currentPosition + 1].playerZ[i]);
             players[i].transform.position = Vector3.Lerp(position1, position2, timer / tickRate);
         }
     }
 
     public void TogglePlayback(bool toggle)
     {
-        if (CurrentPosition <= positionData.Count)
+        if (CurrentPosition <= scenarioData.playerData.Count)
         {
             Playback = toggle;
         }

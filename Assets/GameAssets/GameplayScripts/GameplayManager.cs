@@ -40,6 +40,8 @@ public class GameplayManager : MonoBehaviour
     public bool ManagerPaused { get; private set; }
     public GameObject[] currentPlayers;
 
+    public GameObject player;
+    public GameObject puck;
     public GameObject playerUI;
     public GameObject resultsUI;
 
@@ -98,6 +100,16 @@ public class GameplayManager : MonoBehaviour
         GeneratePlayers();
         GameplayEvents.InitializePlay.Invoke();
         ManagerPaused = false;
+    }
+
+    public void DeclarePlayer(GameObject newPlayer)
+    {
+        player = newPlayer;
+    }
+
+    public void DeclarePuck(GameObject newPuck)
+    {
+        puck = newPuck;
     }
 
     void GeneratePlayers()
