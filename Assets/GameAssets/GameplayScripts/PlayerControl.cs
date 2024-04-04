@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
@@ -14,7 +15,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActions;
     [SerializeField]
-    Camera cam;
+    public Camera cam;
 
     private Rigidbody rb;
 
@@ -62,12 +63,7 @@ public class PlayerControl : MonoBehaviour
         whistleAction = inputActions.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
 
-        if (isVREnabled)
-        {
-            Destroy(cam);
-            Destroy(gameObject.GetComponent<PlayerCamera>());
-            Destroy(gameObject.GetComponent<PlayerControl>());
-        }
+
 
         rb = GetComponent<Rigidbody>();
         CurrentPlayerState = PlayerState.Control;
@@ -80,6 +76,13 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
+        if (!isVREnabled)
+        {
+            Destroy(gameObject.GetComponent<PlayerControlVR>().camParent);
+            Destroy(gameObject.GetComponent<XROrigin>());
+            Destroy(gameObject.GetComponent<PlayerControlVR>());
+        }
+
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         //uiManager.isVREnabled = isVREnabled;
         GameplayManager.Instance.DeclarePlayer(gameObject);

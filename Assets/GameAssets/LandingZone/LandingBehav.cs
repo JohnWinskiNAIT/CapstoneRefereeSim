@@ -21,7 +21,7 @@ public class LandingBehav : MonoBehaviour
     {
         if (GameUtilities.VREnabled())
         {
-            SceneManager.LoadScene(""); //MenuSceneVR
+            SceneManager.LoadScene("VRMENUSCENE"); //MenuSceneVR
         }
         else
         {

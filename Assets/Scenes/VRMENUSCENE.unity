@@ -4229,7 +4229,7 @@ GameObject:
   - component: {fileID: 398475122}
   - component: {fileID: 398475125}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: StartPosHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4365,7 +4365,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410261271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4373,7 +4373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -155}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &410261273
@@ -4999,8 +4999,8 @@ RectTransform:
   m_GameObject: {fileID: 459262225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.79, y: 2.2910006, z: 2.2910006}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.79, y: 2.2910006, z: 6}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 81363650}
   - {fileID: 1080199427}
@@ -5009,7 +5009,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: -68.30002, y: 37.000004}
-  m_SizeDelta: {x: 329.854, y: 34.737}
+  m_SizeDelta: {x: 335, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &459262227
 MonoBehaviour:
@@ -5544,7 +5544,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496276594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 200, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5552,7 +5552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -32}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496276596
@@ -5654,7 +5654,7 @@ GameObject:
   - component: {fileID: 522564116}
   - component: {fileID: 522564119}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: PenaltyHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5778,7 +5778,7 @@ GameObject:
   - component: {fileID: 539362610}
   - component: {fileID: 539362613}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: AudioHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6770,7 +6770,7 @@ GameObject:
   - component: {fileID: 615183707}
   - component: {fileID: 615183710}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: OptionsHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6823,7 +6823,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615183705}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8340,7 +8340,7 @@ GameObject:
   - component: {fileID: 749415245}
   - component: {fileID: 749415248}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: BackgroundHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8393,7 +8393,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749415243}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8406,7 +8406,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d1e9aefa8c1256940b21ea50c0719f94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10898,7 +10898,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991959808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 200, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11975,7 +11975,7 @@ GameObject:
   - component: {fileID: 1080199428}
   - component: {fileID: 1080199431}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: PlayHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12028,7 +12028,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080199426}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12041,7 +12041,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6cba61558242f364bb1862ee2d8eaec5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13375,7 +13375,7 @@ GameObject:
   - component: {fileID: 1208112625}
   - component: {fileID: 1208112628}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: ControlsHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14745,7 +14745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289627477}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14754,7 +14754,7 @@ Transform:
   - {fileID: 1289578696}
   - {fileID: 775078426}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1289627483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14776,7 +14776,7 @@ MonoBehaviour:
   isRightHanded: 1
   canvasParent: {fileID: 1374799550}
   camParent: {fileID: 1670313094}
-  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  inputActions: {fileID: -944628639613478452, guid: 7bcc7b8dbb7d30b4798da7f3c25e357d, type: 3}
   lookSensitivity: 0
 --- !u!114 &1289627484
 MonoBehaviour:
@@ -15053,7 +15053,7 @@ GameObject:
   - component: {fileID: 1323570469}
   - component: {fileID: 1323570472}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: ExitHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15106,7 +15106,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323570467}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16011,7 +16011,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374799550}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1205d5b1f9d96584895ffbeaf44b042c, type: 3}
   m_Name: 
@@ -17312,7 +17312,7 @@ GameObject:
   - component: {fileID: 1516655964}
   - component: {fileID: 1516655967}
   m_Layer: 5
-  m_Name: Hitbox
+  m_Name: ExitHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19741,7 +19741,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cf93695355ebae8409a560fc2d555600, type: 2}
+  - {fileID: 2100000, guid: 6cba61558242f364bb1862ee2d8eaec5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21933,7 +21933,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: -68.300064, y: -62.100006}
-  m_SizeDelta: {x: 332.63, y: 40.662}
+  m_SizeDelta: {x: 335, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2007426995
 MonoBehaviour:
@@ -23232,7 +23232,7 @@ GameObject:
   - component: {fileID: 2115838104}
   - component: {fileID: 2115838103}
   - component: {fileID: 2115838102}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

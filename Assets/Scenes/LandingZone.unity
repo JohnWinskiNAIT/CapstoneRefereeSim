@@ -353,6 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d29804f08d70e774ba594e1cb3cc45a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyboardInputs: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  controllerInputs: {fileID: -944628639613478452, guid: 7314ca20e6766b84aa0db1c0acbfd429, type: 3}
+  vrLeftInputs: {fileID: -944628639613478452, guid: cd4e01cfd4ec260419055f086da9d71a, type: 3}
+  vrRightInputs: {fileID: -944628639613478452, guid: 7bcc7b8dbb7d30b4798da7f3c25e357d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

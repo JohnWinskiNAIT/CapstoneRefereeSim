@@ -6829,10 +6829,13 @@ MonoBehaviour:
   vrRightHand: {fileID: 991626365}
   vrYMagnitude: 2
   vrMagnitude: 2
+  camParent: {fileID: 1635894848}
+  nonVRCamera: {fileID: 51658056}
   maxSpeed: 25
   accelerationSpeed: 1200
   breakingModifier: 0.965
   storeInputDuration: 0.85
+  lookSensitivity: 1
   isVREnabled: 0
 --- !u!1 &706946550
 GameObject:
@@ -14981,10 +14984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c68d373be6f5e044ad447cfd360d7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentData:
-    x: []
-    y: []
-    z: []
+  active: 0
 --- !u!4 &1722063056
 Transform:
   m_ObjectHideFlags: 0
@@ -17601,10 +17601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c68d373be6f5e044ad447cfd360d7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentData:
-    x: []
-    y: []
-    z: []
+  active: 0
 --- !u!1 &2058712195
 GameObject:
   m_ObjectHideFlags: 0

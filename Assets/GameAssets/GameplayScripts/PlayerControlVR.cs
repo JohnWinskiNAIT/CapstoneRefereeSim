@@ -21,7 +21,9 @@ public class PlayerControlVR : MonoBehaviour
     [SerializeField]
     float vrYMagnitude, vrMagnitude;
     [SerializeField]
-    GameObject camParent;
+    public GameObject camParent;
+    [SerializeField]
+    GameObject nonVRCamera;
 
     private Rigidbody rb;
 
@@ -66,12 +68,7 @@ public class PlayerControlVR : MonoBehaviour
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
 
-        if (!isVREnabled)
-        {
-            Destroy(cam.transform.parent.gameObject);
-            Destroy(gameObject.GetComponent<XROrigin>());
-            Destroy(gameObject.GetComponent<PlayerControlVR>());
-        }
+
 
         rb = GetComponent<Rigidbody>();
         CurrentPlayerState = PlayerState.Control;
@@ -84,6 +81,13 @@ public class PlayerControlVR : MonoBehaviour
 
     private void Start()
     {
+        if (isVREnabled)
+        {
+            Destroy(nonVRCamera);
+            Destroy(GetComponent<PlayerCamera>());
+            Destroy(GetComponent<PlayerControl>());
+        }
+
         uiManager = GameplayManager.Instance.playerUI.GetComponent<PlayerUIManager>();
         //uiManager.isVREnabled = isVREnabled;
         CameraAngle = cam.transform.rotation.eulerAngles;
@@ -122,14 +126,9 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
-
-        CamRotationUpdate();
     }
 
-    void CamRotationUpdate()
-    {
-        camParent.transform.Rotate(0, lookAction.ReadValue<Vector2>().x * lookSensitivity, 0);
-    }
+   
 
     //VR STORED ACTION METHOD
     private void StoredActionCheck()
