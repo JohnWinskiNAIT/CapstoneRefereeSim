@@ -42,18 +42,24 @@ public class PositionSerializer : MonoBehaviour
 
     public void InitiateRecording()
     {
-        currentPositions = new HockeyPlayerPositionData();
-        currentPositions.playerX = new float[10];
-        currentPositions.playerY = new float[10];
-        currentPositions.playerZ = new float[10];
+        currentPositions = new()
+        {
+            playerX = new float[10],
+            playerY = new float[10],
+            playerZ = new float[10]
+        };
+
         timer = Time.time;
 
         active = true;
         playGhostData = false;
 
-        scenarioData = new();
-        scenarioData.playerData = new List<HockeyPlayerPositionData>();
-        scenarioData.refereePosition = new List<Vector3>();
+        scenarioData = new()
+        {
+            playerData = new List<HockeyPlayerPositionData>(),
+            puckPosition = new List<Vector3>(),
+            refereePosition = new List<Vector3>()
+        };
     }
 
     public void Update()
@@ -94,6 +100,7 @@ public class PositionSerializer : MonoBehaviour
         }
 
         scenarioData.refereePosition.Add(GameplayManager.Instance.player.transform.position);
+        scenarioData.puckPosition.Add(GameplayManager.Instance.puck.transform.position);
         scenarioData.playerData.Add(newData);
     }
 
@@ -147,6 +154,6 @@ public class HockeyScenarioPositionData
     public bool[] playerEnabled;
     public int[] playerSkins;
 
-    List<Vector3> puckPosition;
-    public List <Vector3> refereePosition;
+    public List<Vector3> puckPosition;
+    public List<Vector3> refereePosition;
 }

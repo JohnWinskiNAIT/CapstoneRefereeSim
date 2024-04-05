@@ -13,6 +13,8 @@ public class PlaybackManager : MonoBehaviour
 
     HockeyScenarioPositionData scenarioData;
     GameObject[] players;
+    GameObject referee;
+    GameObject puck;
 
     [SerializeField]
     GameObject playerPrefab;
@@ -41,6 +43,9 @@ public class PlaybackManager : MonoBehaviour
             model.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
             model.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(1, true);
         }
+
+        referee = Instantiate(playerPrefab, null);
+        referee.transform.position = new Vector3(scenarioData.refereePosition[0].x, scenarioData.refereePosition[0].y, scenarioData.refereePosition[0].z);
     }
 
     void Update()
