@@ -188,7 +188,6 @@ public class MenuControls : MonoBehaviour
     }
     public void Play()
     {
-        Debug.Log("Wagabagabobo");
         SceneManager.LoadScene("TestSceneA");
     }
 }
