@@ -839,7 +839,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: Mute
         m_Mode: 1
@@ -3409,7 +3409,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -4068,7 +4068,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeImage
         m_Mode: 3
@@ -4202,7 +4202,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -4821,7 +4821,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -4891,7 +4891,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeSFXVolume
           m_Mode: 1
@@ -4907,7 +4907,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeSFXVolume
           m_Mode: 1
@@ -6011,7 +6011,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -6743,7 +6743,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -7174,7 +7174,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -8104,7 +8104,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -9188,7 +9188,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -10054,7 +10054,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeScreenMode
         m_Mode: 3
@@ -10446,7 +10446,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeImage
         m_Mode: 3
@@ -10693,7 +10693,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -11379,7 +11379,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeAmbientVolume
           m_Mode: 1
@@ -11395,7 +11395,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeAmbientVolume
           m_Mode: 1
@@ -11581,7 +11581,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -11678,7 +11678,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeScenarioNumber
         m_Mode: 3
@@ -11851,7 +11851,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -11948,7 +11948,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -13708,7 +13708,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeScenarioNumber
         m_Mode: 3
@@ -14613,7 +14613,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -14951,7 +14951,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -15362,7 +15362,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -15861,7 +15861,6 @@ GameObject:
   - component: {fileID: 1374799554}
   - component: {fileID: 1374799553}
   - component: {fileID: 1374799552}
-  - component: {fileID: 1374799551}
   - component: {fileID: 1374799557}
   m_Layer: 5
   m_Name: MainScreen
@@ -15870,31 +15869,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1374799551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374799550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterSlider: {fileID: 1741846596}
-  SFXSlider: {fileID: 458628398}
-  ambientSlider: {fileID: 1022574012}
-  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
-  penaltyUIContainer: {fileID: 1252026769}
-  startingPosContainer: {fileID: 978172009}
-  scenarioField: {fileID: 559934420}
-  screenModeText: {fileID: 1015727726}
-  muteText: {fileID: 1956788669}
-  controllerImage: {fileID: 782396971}
-  keyBoardImage: {fileID: 1320581575}
-  myStartingPosToggles: []
-  keyLayout: 0
 --- !u!114 &1374799552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15997,6 +15971,7 @@ RectTransform:
   - {fileID: 1256099686}
   - {fileID: 978172012}
   - {fileID: 749415244}
+  - {fileID: 1967548778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -16388,7 +16363,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -17008,7 +16983,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -17791,7 +17766,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -18099,7 +18074,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeScreenMode
         m_Mode: 3
@@ -18706,7 +18681,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleStartingPos
         m_Mode: 3
@@ -19534,7 +19509,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
@@ -19843,7 +19818,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeMasterVolume
           m_Mode: 1
@@ -19859,7 +19834,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1374799551}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Settings, Assembly-CSharp
           m_MethodName: ChangeMasterVolume
           m_Mode: 1
@@ -21263,6 +21238,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959056701}
   m_CullTransparentMesh: 1
+--- !u!1 &1967548777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967548778}
+  - component: {fileID: 1967548779}
+  - component: {fileID: 1967548780}
+  m_Layer: 0
+  m_Name: MySettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1967548778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967548777}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 375.77856, y: -289.81088, z: 45.37373}
+  m_LocalScale: {x: 9.528108, y: 9.528108, z: 9.528108}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1374799556}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1967548779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967548777}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
+  ambientSlider: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
+  penaltyUIContainer: {fileID: 0}
+  startingPosContainer: {fileID: 0}
+  scenarioField: {fileID: 0}
+  screenModeText: {fileID: 0}
+  muteText: {fileID: 0}
+  controllerImage: {fileID: 0}
+  keyBoardImage: {fileID: 0}
+  myStartingPosToggles: []
+  keyLayout: 0
+--- !u!114 &1967548780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967548777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70597d3c052084448a8e9e71f06b594c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSlider: {fileID: 1741846596}
+  SFXSlider: {fileID: 458628398}
+  ambientSlider: {fileID: 1022574012}
+  audioMixer: {fileID: 24100000, guid: fa52ce6a85d96be4abd2e2ed88426765, type: 2}
+  penaltyUIContainer: {fileID: 1252026769}
+  startingPosContainer: {fileID: 978172009}
+  scenarioField: {fileID: 559934420}
+  screenModeText: {fileID: 1015727726}
+  muteText: {fileID: 1956788669}
+  controllerImage: {fileID: 782396971}
+  keyBoardImage: {fileID: 1320581575}
+  myStartingPosToggles: []
+  keyLayout: 0
 --- !u!1 &1968004481
 GameObject:
   m_ObjectHideFlags: 0
@@ -22595,7 +22653,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374799551}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: TogglePenalty
         m_Mode: 3
