@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <scenarios>4</scenarios>
-  <screenMode>0</screenMode>
+  <screenMode>1</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
   <ambientVolume>0.453718424</ambientVolume>
@@ -62,14 +62,14 @@
       <PenaltyName>Tripping</PenaltyName>
       <penaltyText>Tripping</penaltyText>
       <penaltyId>7</penaltyId>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
       <penaltyText>Hooking</penaltyText>
       <penaltyId>8</penaltyId>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>

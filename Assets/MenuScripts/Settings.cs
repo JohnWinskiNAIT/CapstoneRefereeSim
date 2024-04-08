@@ -9,6 +9,7 @@ using System;
 using System.Reflection;
 using TMPro;
 using System.Linq;
+using UnityEngine.InputSystem.Android;
 
 public class Settings : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class Settings : MonoBehaviour
     public Image keyBoardImage;
     Toggle[] myPenaltyToggles;
     public Toggle[] myStartingPosToggles;
+    public Button[] windowButtons;
+    public GameObject windowText;
     int scenarios;
     int screenMode;
     public int keyLayout;
@@ -253,12 +256,12 @@ public class Settings : MonoBehaviour
         for (int i = 0; i < mySettings.startingPos.Length; i++)
         {
             mySettings.startingPos[i].isEnabled = myStartingPosToggles[i].isOn;
-            if(i == 0 || i == 5)
+            if (i == 0 || i == 5)
             {
                 myStartingPosToggles[i].interactable = false;
             }
         }
-        if(masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
+        if (masterSlider.value > 0.0001f || SFXSlider.value > 0.0001f || ambientSlider.value > 0.0001f)
         {
             muteText.text = "Mute";
             mute = false;
@@ -267,6 +270,26 @@ public class Settings : MonoBehaviour
         {
             muteText.text = "Unmute";
             mute = true;
+        }
+        if (GameUtilities.VREnabled())
+        {
+            foreach (Button button in windowButtons)
+            {
+                button.interactable = false;
+            }
+            Color color = Color.white;
+            color.a = 135f;
+            windowText.GetComponent<TMP_Text>().color = color;
+        }
+        else
+        {
+            foreach (Button button in windowButtons)
+            {
+                button.interactable = true;
+            }
+            Color color = Color.white;
+            color.a = 255f;
+            windowText.GetComponent<TMP_Text>().color = color;
         }
     }
     public void SaveSettings()
