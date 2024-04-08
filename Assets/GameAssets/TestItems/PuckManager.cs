@@ -14,6 +14,7 @@ public class PuckManager : MonoBehaviour
     private void Start()
     {
         GameplayEvents.InitializePlay.AddListener(InitializePuck);
+        GameplayManager.Instance.DeclarePuck(gameObject);
         rb = GetComponent<Rigidbody>();
         AIManagerCallback();
     }
