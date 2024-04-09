@@ -9,7 +9,7 @@ public class SaveManager
 {
     public static void SaveData(string path, ref SettingsData mySettings)
     {
-        if(path != null)
+        if (path != null)
         {
             Stream stream = File.Open(path, FileMode.Create);
             XmlSerializer serializer = new(typeof(SettingsData));

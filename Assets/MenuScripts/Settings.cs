@@ -8,8 +8,6 @@ using System.Xml.Serialization;
 using System;
 using System.Reflection;
 using TMPro;
-using System.Linq;
-using UnityEngine.InputSystem.Android;
 
 public class Settings : MonoBehaviour
 {
@@ -121,10 +119,11 @@ public class Settings : MonoBehaviour
     }
     public void TogglePenalty(int index)
     {
+        Debug.Log(myPenaltyToggles[index].isOn);
         mySettings.penalties[index].isEnabled = myPenaltyToggles[index].isOn;
-        //mySettings.penalties[index].isWhistle = myPenaltyToggles[index].isOn;
         SaveSettings();
     }
+
     public void Mute()
     {
         mute = !mute;

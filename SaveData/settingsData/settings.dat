@@ -76,7 +76,7 @@
       <PenaltyName>SlewFoot</PenaltyName>
       <penaltyText>Slewfoot Tripping</penaltyText>
       <penaltyId>1</penaltyId>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
@@ -84,7 +84,7 @@
       <penaltyText>Head Contact</penaltyText>
       <penaltyId>0</penaltyId>
       <isEnabled>true</isEnabled>
-      <isWhistle>true</isWhistle>
+      <isWhistle>false</isWhistle>
     </PenaltyData>
   </penalties>
   <startingPos>
