@@ -55,7 +55,11 @@ public class Settings : MonoBehaviour
             {
                 for (int i = 0; i < myPenaltyToggles.Length; i++)
                 {
-                    myPenaltyToggles[i].isOn = mySettings.penalties[i].isEnabled;
+                    if (mySettings.penalties[i].PenaltyName == myPenaltyToggles[i].transform.parent.gameObject.name)
+                    {
+                        myPenaltyToggles[i].isOn = mySettings.penalties[i].isEnabled;
+                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
+                    }
                 }
             }
             if (mySettings.startingPos.Length != 0)
@@ -91,7 +95,16 @@ public class Settings : MonoBehaviour
             mySettings.penalties = new PenaltyData[myPenaltyToggles.Length];
             for (int i = 0; i < mySettings.penalties.Length; i++)
             {
-                mySettings.penalties[i] = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData;
+                mySettings.penalties[i].PenaltyName = myPenaltyToggles[i].transform.parent.gameObject.name;
+                for(int j = 0; j < myPenaltyToggles.Length; j++)
+                {
+                    if (mySettings.penalties[i].PenaltyName == myPenaltyToggles[j].transform.parent.gameObject.name)
+                    {
+                        mySettings.penalties[i].isEnabled = myPenaltyToggles[j].isOn;
+                        mySettings.penalties[i].isWhistle = myPenaltyToggles[j].isOn;
+                    }
+                }
+                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
             }
             for (int i = 0; i < myStartingPosToggles.Length; i++)
             {
@@ -118,12 +131,6 @@ public class Settings : MonoBehaviour
             SaveSettings();
         }
 
-    }
-    public void TogglePenalty(int index)
-    {
-        mySettings.penalties[index].isEnabled = myPenaltyToggles[index].isOn;
-        mySettings.penalties[index].isWhistle = myPenaltyToggles[index].isOn;
-        SaveSettings();
     }
     public void Mute()
     {
@@ -153,6 +160,19 @@ public class Settings : MonoBehaviour
             ambientSlider.value = mySettings.lastAmbientVolume;
             ChangeAmbientVolume();
             SaveSettings();
+        }
+    }
+    public void PenaltyToggle(string name)
+    {
+        for(int i = 0; i < mySettings.penalties.Length; i++)
+        {
+            if (myPenaltyToggles[i].transform.parent.gameObject.name == name)
+            {
+                mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
+                mySettings.penalties[i].isWhistle = myPenaltyToggles[i].isOn;
+                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
+                SaveSettings();
+            }
         }
     }
     public void ToggleStartingPos(int index)
