@@ -14745,7 +14745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289627477}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.3420201, z: 0, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0.17364816, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0, z: -9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14754,7 +14754,7 @@ Transform:
   - {fileID: 1289578696}
   - {fileID: 775078426}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 40, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 0}
 --- !u!114 &1289627483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21295,6 +21295,8 @@ MonoBehaviour:
   controllerImage: {fileID: 0}
   keyBoardImage: {fileID: 0}
   myStartingPosToggles: []
+  windowButtons: []
+  windowText: {fileID: 0}
   keyLayout: 0
 --- !u!114 &1967548780
 MonoBehaviour:
@@ -21320,6 +21322,8 @@ MonoBehaviour:
   controllerImage: {fileID: 782396971}
   keyBoardImage: {fileID: 1320581575}
   myStartingPosToggles: []
+  windowButtons: []
+  windowText: {fileID: 1289627477}
   keyLayout: 0
 --- !u!1 &1968004481
 GameObject:

@@ -25,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
         Normal,
         FocusingOnPoint
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         playerControls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
@@ -37,7 +37,6 @@ public class PlayerCamera : MonoBehaviour
         CurrentMode = CameraModes.Normal;
     }
 
-    // Update is called once per frame
     private void LateUpdate()
     {
         if (CurrentMode == CameraModes.Normal)
@@ -98,19 +97,26 @@ public class PlayerCamera : MonoBehaviour
         Quaternion lerpTest1 = playerCam.transform.rotation;
         Quaternion lerpTest2 = Quaternion.LookRotation(focusPoints[currentPoint] - playerCam.transform.position);
 
-        if (Quaternion.Angle(lerpTest1, lerpTest2) > 1f )
+        if (!GameUtilities.VREnabled())
         {
-            float step = camSpeed * Time.deltaTime;
+            if (Quaternion.Angle(lerpTest1, lerpTest2) > 1f)
+            {
+                float step = camSpeed * Time.deltaTime;
 
-            //transform.rotation = Quaternion.Euler(currentAngle);
-            playerCam.transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
+                //transform.rotation = Quaternion.Euler(currentAngle);
+                playerCam.transform.rotation = Quaternion.RotateTowards(lerpTest1, lerpTest2, step);
 
-            //nextAngle = Quaternion.LookRotation(focusPoints[currentPoint] - transform.position, Vector3.up).eulerAngles;
-            turnTimer += Time.deltaTime;
+                //nextAngle = Quaternion.LookRotation(focusPoints[currentPoint] - transform.position, Vector3.up).eulerAngles;
+                turnTimer += Time.deltaTime;
+            }
+            else
+            {
+                playerCam.transform.rotation = lerpTest2;
+                GameplayManager.Instance.cameraDone = true;
+            }
         }
         else
         {
-            playerCam.transform.rotation = lerpTest2;
             GameplayManager.Instance.cameraDone = true;
         }
     }

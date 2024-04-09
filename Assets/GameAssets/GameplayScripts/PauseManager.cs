@@ -70,7 +70,7 @@ public class PauseManager : MonoBehaviour
         keyLayout = 1;
         mySettings = Settings.mySettings;
         filePath = RootPath + "settingsData\\settings.dat";
-        if (File.Exists("SaveData\\settingsData\\settings.dat"))
+        /*if (File.Exists("SaveData\\settingsData\\settings.dat"))
         {
             LoadSettings();
             masterSlider.value = mySettings.masterVolume;
@@ -98,7 +98,7 @@ public class PauseManager : MonoBehaviour
             ambientSlider.value = 1;
 
             SaveSettings();
-        }
+        }*/
         ButtonUpdater();
         foreach (Button button in offScreenButtons)
         {
