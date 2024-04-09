@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ReplayMenuManager : MonoBehaviour
 {
@@ -49,12 +52,22 @@ public class ReplayMenuManager : MonoBehaviour
     {
         replayButtons = new GameObject[data.Count];
 
+        //UnityAction callback = () => LoadReplayPlayback(i + 1);
+
         for (int i = 0; i < data.Count; i++)
         {
+            Debug.Log(i);
             replayButtons[i] = Instantiate(menuOptionPrefab, replayParent.transform);
             replayButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Replay Test";
             replayButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = DateTime.Now.ToString();
+            int test = i;
+            replayButtons[i].GetComponent<Button>().onClick.AddListener(() => { LoadReplayPlayback(test); });
         }
+    }
+
+    public void LoadReplayPlayback(int id)
+    {
+        Debug.Log(id);
     }
 
     private HockeyScenarioPositionData Deserialize(int id)
