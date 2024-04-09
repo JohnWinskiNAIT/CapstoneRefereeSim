@@ -288,8 +288,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public void SaveRecording()
+    public void SaveRecording(string name)
     {
+        recorder.SetNameTime(name);
         recorder.SaveRecording();
     }
 
