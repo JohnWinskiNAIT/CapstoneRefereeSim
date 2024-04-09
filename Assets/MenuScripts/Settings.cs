@@ -58,7 +58,9 @@ public class Settings : MonoBehaviour
                     if (mySettings.penalties[i].PenaltyName == myPenaltyToggles[i].transform.parent.gameObject.name)
                     {
                         myPenaltyToggles[i].isOn = mySettings.penalties[i].isEnabled;
-                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
+                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
+                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
+                        mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
                     }
                 }
             }
@@ -102,9 +104,11 @@ public class Settings : MonoBehaviour
                     {
                         mySettings.penalties[i].isEnabled = myPenaltyToggles[j].isOn;
                         mySettings.penalties[i].isWhistle = myPenaltyToggles[j].isOn;
+                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
+                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
+                        mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
                     }
                 }
-                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
             }
             for (int i = 0; i < myStartingPosToggles.Length; i++)
             {
@@ -170,7 +174,9 @@ public class Settings : MonoBehaviour
             {
                 mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
                 mySettings.penalties[i].isWhistle = myPenaltyToggles[i].isOn;
-                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData = mySettings.penalties[i];
+                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
+                myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
+                mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
                 SaveSettings();
             }
         }
