@@ -14,14 +14,14 @@
       <penaltyText>Head Contact</penaltyText>
       <penaltyId>0</penaltyId>
       <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
       <penaltyText>Slewfoot Tripping</penaltyText>
       <penaltyId>1</penaltyId>
       <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossChecking</PenaltyName>
@@ -63,14 +63,14 @@
       <penaltyText>Tripping</penaltyText>
       <penaltyId>7</penaltyId>
       <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Hooking</PenaltyName>
       <penaltyText>Hooking</penaltyText>
       <penaltyId>8</penaltyId>
       <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>Slashing</PenaltyName>
