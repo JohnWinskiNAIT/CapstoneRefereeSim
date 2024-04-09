@@ -11,7 +11,7 @@ public class PositionSerializer : MonoBehaviour
     Vector3 objectPosition;
 
     HockeyPlayerPositionData currentPositions;
-    HockeyScenarioPositionData scenarioData;
+    private HockeyScenarioPositionData scenarioData;
 
     int saveSlot;
     int index = 0;
@@ -109,6 +109,12 @@ public class PositionSerializer : MonoBehaviour
         active = false;
     }
 
+    public void SetNameTime(string name)
+    {
+        scenarioData.replayName = name;
+        scenarioData.replayTime = DateTime.Now;
+    }
+
     public void SaveRecording()
     {
         SavePositionData();
@@ -149,6 +155,9 @@ public struct HockeyPlayerPositionData
 
 public class HockeyScenarioPositionData
 {
+    public string replayName;
+    public DateTime replayTime;
+
     public List<HockeyPlayerPositionData> playerData;
 
     public bool[] playerEnabled;

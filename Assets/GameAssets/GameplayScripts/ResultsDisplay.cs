@@ -13,6 +13,7 @@ public class ResultsDisplay : MonoBehaviour
     InputAction continueInput, replayInput;
 
     RectTransform resultsUI;
+    RectTransform nameInput;
 
     [SerializeField]
     Vector3[] startCorners, finalCorners;
@@ -26,15 +27,20 @@ public class ResultsDisplay : MonoBehaviour
     float transitionTimer;
     bool resultsPulledUp, recorded;
 
+    string selectedName;
+
     private void Awake()
     {
         continueInput = playerInputs.FindActionMap("Gameplay").FindAction("Call/Select");
         replayInput = playerInputs.FindActionMap("Gameplay").FindAction("Whistle/Cancel");
         resultsUI = GetComponent<RectTransform>();
+        nameInput = transform.GetChild(transform.childCount - 1).GetComponent<RectTransform>();
+        selectedName = string.Empty;
     }
 
     public void InitiateResults(int choiceId, int actualId, float timing)
     {
+        ToggleNameEntry(false);
         string choice = Settings.mySettings.penalties[choiceId].penaltyText;
         string actual;
         if (actualId == -1)
@@ -73,13 +79,11 @@ public class ResultsDisplay : MonoBehaviour
                 resultsUI.anchorMin = finalCorners[0];
                 resultsUI.anchorMax = finalCorners[1];
 
-                if (replayInput.WasPressedThisFrame() && !recorded)
+                if (!nameInput.gameObject.activeSelf && replayInput.WasPressedThisFrame() && !recorded)
                 {
-                    GameplayManager.Instance.SaveRecording();
-                    recorded = true;
-
+                    ToggleNameEntry(true);
                 }
-                if (continueInput.WasPressedThisFrame())
+                if (!nameInput.gameObject.activeSelf && continueInput.WasPressedThisFrame())
                 {
                     resultsPulledUp = false;
                     GameplayEvents.InitializePlay.Invoke();
@@ -95,6 +99,32 @@ public class ResultsDisplay : MonoBehaviour
                 promptText.text = "Left Click to continue. Right Click to save the replay.";
             }
         }
+    }
+
+    public void ToggleNameEntry(bool toggle)
+    {
+        nameInput.gameObject.SetActive(toggle);
+
+        if (toggle)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void SaveReplay()
+    {
+        recorded = true;
+        GameplayManager.Instance.SaveRecording(selectedName);
+        ToggleNameEntry(false);
+    }
+
+    public void SetName(string newName)
+    {
+        selectedName = newName;
     }
 
     private struct ResultsContainer

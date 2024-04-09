@@ -25,7 +25,8 @@ public class PlaybackManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref scenarioData);
+        //PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref scenarioData);
+        scenarioData = ReplaySettings.heldData;
         TotalCount = scenarioData.playerData.Count;
         CreatePlayers();
         Playback = true;
@@ -60,7 +61,10 @@ public class PlaybackManager : MonoBehaviour
             else
             {
                 timer += Time.deltaTime;
-                InterpolatePosition(CurrentPosition);
+                if (CurrentPosition < scenarioData.playerData.Count - 1)
+                {
+                    InterpolatePosition(CurrentPosition);
+                }
             }
 
             if (CurrentPosition > scenarioData.playerData.Count)
@@ -78,6 +82,9 @@ public class PlaybackManager : MonoBehaviour
             {
                 players[i].transform.position = new(scenarioData.playerData[currentPosition].playerX[i], scenarioData.playerData[currentPosition].playerY[i], scenarioData.playerData[currentPosition].playerZ[i]);
             }
+
+            referee.transform.position = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
+
             CurrentPosition = currentPosition;
         }
     }
@@ -90,6 +97,10 @@ public class PlaybackManager : MonoBehaviour
             Vector3 position2 = new(scenarioData.playerData[currentPosition + 1].playerX[i], scenarioData.playerData[currentPosition + 1].playerY[i], scenarioData.playerData[currentPosition + 1].playerZ[i]);
             players[i].transform.position = Vector3.Lerp(position1, position2, timer / tickRate);
         }
+        
+        Vector3 refPosition1 = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
+        Vector3 refPosition2 = new(scenarioData.refereePosition[currentPosition + 1].x, scenarioData.refereePosition[currentPosition + 1].y, scenarioData.refereePosition[currentPosition + 1].z);
+        referee.transform.position = Vector3.Lerp(refPosition1, refPosition2, timer / tickRate);
     }
 
     public void TogglePlayback(bool toggle)

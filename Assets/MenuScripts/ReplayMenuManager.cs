@@ -7,10 +7,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ReplayMenuManager : MonoBehaviour
 {
+    const int FileHeight = 150;
     const string FILEPATH = "SaveData";
     const string PositionDataString = "PositionData";
     const string DATAPATH = "SaveData/PositionData";
@@ -42,7 +44,7 @@ public class ReplayMenuManager : MonoBehaviour
             {
                 if (directoryZone[i].Contains(PositionDataString))
                 {
-                    data.Add(Deserialize(i));
+                    data.Add(Deserialize(directoryZone[i]));
                 }
             }
         }
@@ -51,6 +53,7 @@ public class ReplayMenuManager : MonoBehaviour
     private void CreateButtons()
     {
         replayButtons = new GameObject[data.Count];
+        replayParent.GetComponent<RectTransform>().sizeDelta = new Vector2(0, FileHeight * data.Count);
 
         //UnityAction callback = () => LoadReplayPlayback(i + 1);
 
@@ -58,8 +61,8 @@ public class ReplayMenuManager : MonoBehaviour
         {
             Debug.Log(i);
             replayButtons[i] = Instantiate(menuOptionPrefab, replayParent.transform);
-            replayButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Replay Test";
-            replayButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = DateTime.Now.ToString();
+            replayButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = data[i].replayName;
+            replayButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = data[i].replayTime.ToString();
             int test = i;
             replayButtons[i].GetComponent<Button>().onClick.AddListener(() => { LoadReplayPlayback(test); });
         }
@@ -68,13 +71,15 @@ public class ReplayMenuManager : MonoBehaviour
     public void LoadReplayPlayback(int id)
     {
         Debug.Log(id);
+        ReplaySettings.heldData = data[id];
+        SceneManager.LoadScene("ReplayPlaybackScene");
     }
 
-    private HockeyScenarioPositionData Deserialize(int id)
+    private HockeyScenarioPositionData Deserialize(string name)
     {
         HockeyScenarioPositionData data;
         XmlSerializer serializer = new XmlSerializer(typeof(HockeyScenarioPositionData));
-        Stream stream = File.Open(DATAPATH + $"{id}/" + PositionDataString, FileMode.Open);
+        Stream stream = File.Open($"{name}/" + PositionDataString, FileMode.Open);
         data = (HockeyScenarioPositionData)serializer.Deserialize(stream);
 
         return data;
