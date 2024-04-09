@@ -1,67 +1,25 @@
 <?xml version="1.0"?>
 <SettingsData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <scenarios>4</scenarios>
-  <screenMode>1</screenMode>
+  <scenarios>1</scenarios>
+  <screenMode>0</screenMode>
   <masterVolume>1</masterVolume>
   <SFXvolume>1</SFXvolume>
-  <ambientVolume>0.453718424</ambientVolume>
+  <ambientVolume>1</ambientVolume>
   <lastMasterVolume>0</lastMasterVolume>
   <lastSFXvolume>0</lastSFXvolume>
   <lastAmbientVolume>0</lastAmbientVolume>
   <penalties>
     <PenaltyData>
-      <PenaltyName>HeadContact</PenaltyName>
-      <penaltyText>Head Contact</penaltyText>
-      <penaltyId>0</penaltyId>
-      <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>SlewFoot</PenaltyName>
-      <penaltyText>Slewfoot Tripping</penaltyText>
-      <penaltyId>1</penaltyId>
-      <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>CrossChecking</PenaltyName>
-      <penaltyText>Cross Checking</penaltyText>
-      <penaltyId>2</penaltyId>
-      <isEnabled>false</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>BlindCheck</PenaltyName>
-      <penaltyText>Blind Check</penaltyText>
-      <penaltyId>3</penaltyId>
-      <isEnabled>false</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Holding</PenaltyName>
-      <penaltyText>Holding</penaltyText>
-      <penaltyId>4</penaltyId>
-      <isEnabled>false</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>Interference</PenaltyName>
-      <penaltyText>Interference</penaltyText>
-      <penaltyId>5</penaltyId>
-      <isEnabled>true</isEnabled>
-      <isWhistle>false</isWhistle>
-    </PenaltyData>
-    <PenaltyData>
-      <PenaltyName>HighStick</PenaltyName>
-      <penaltyText>High Stick</penaltyText>
-      <penaltyId>6</penaltyId>
+      <PenaltyName>HandPass</PenaltyName>
+      <penaltyText>Hand Pass</penaltyText>
+      <penaltyId>10</penaltyId>
       <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
-      <PenaltyName>Tripping</PenaltyName>
-      <penaltyText>Tripping</penaltyText>
-      <penaltyId>7</penaltyId>
+      <PenaltyName>Slashing</PenaltyName>
+      <penaltyText>Slashing</penaltyText>
+      <penaltyId>9</penaltyId>
       <isEnabled>true</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
@@ -73,18 +31,60 @@
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
-      <PenaltyName>Slashing</PenaltyName>
-      <penaltyText>Slashing</penaltyText>
-      <penaltyId>9</penaltyId>
-      <isEnabled>false</isEnabled>
+      <PenaltyName>Tripping</PenaltyName>
+      <penaltyText>Tripping</penaltyText>
+      <penaltyId>7</penaltyId>
+      <isEnabled>true</isEnabled>
       <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
-      <PenaltyName>HandPass</PenaltyName>
-      <penaltyText>Hand Pass</penaltyText>
-      <penaltyId>10</penaltyId>
-      <isEnabled>false</isEnabled>
+      <PenaltyName>HighStick</PenaltyName>
+      <penaltyText>High Stick</penaltyText>
+      <penaltyId>6</penaltyId>
+      <isEnabled>true</isEnabled>
       <isWhistle>true</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Interference</PenaltyName>
+      <penaltyText>Interference</penaltyText>
+      <penaltyId>5</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>Holding</PenaltyName>
+      <penaltyText>Holding</penaltyText>
+      <penaltyId>4</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>BlindCheck</PenaltyName>
+      <penaltyText>Blind Check</penaltyText>
+      <penaltyId>3</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>CrossChecking</PenaltyName>
+      <penaltyText>Cross Checking</penaltyText>
+      <penaltyId>2</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>SlewFoot</PenaltyName>
+      <penaltyText>Slewfoot Tripping</penaltyText>
+      <penaltyId>1</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
+    </PenaltyData>
+    <PenaltyData>
+      <PenaltyName>HeadContact</PenaltyName>
+      <penaltyText>Head Contact</penaltyText>
+      <penaltyId>0</penaltyId>
+      <isEnabled>true</isEnabled>
+      <isWhistle>false</isWhistle>
     </PenaltyData>
   </penalties>
   <startingPos>
@@ -114,15 +114,15 @@
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueForward</posName>
-      <isEnabled>true</isEnabled>
+      <isEnabled>false</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>
-      <isEnabled>false</isEnabled>
+      <isEnabled>true</isEnabled>
     </StartingPosData>
     <StartingPosData>
       <posName>BlueDefense</posName>

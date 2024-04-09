@@ -38,7 +38,6 @@ public class ReplayMenuManager : MonoBehaviour
         {
             string[] directoryZone = Directory.GetDirectories(FILEPATH);
             data = new List<HockeyScenarioPositionData>();
-            Debug.Log(directoryZone.Length);
 
             for (int i = 0; i < directoryZone.Length; i++)
             {
@@ -59,7 +58,6 @@ public class ReplayMenuManager : MonoBehaviour
 
         for (int i = 0; i < data.Count; i++)
         {
-            Debug.Log(i);
             replayButtons[i] = Instantiate(menuOptionPrefab, replayParent.transform);
             replayButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = data[i].replayName;
             replayButtons[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = data[i].replayTime.ToString();
@@ -70,7 +68,6 @@ public class ReplayMenuManager : MonoBehaviour
 
     public void LoadReplayPlayback(int id)
     {
-        Debug.Log(id);
         ReplaySettings.heldData = data[id];
         SceneManager.LoadScene("ReplayPlaybackScene");
     }
