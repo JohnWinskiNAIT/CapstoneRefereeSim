@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.9
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1319,13 +1319,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -3989346385401443251, guid: 4ef51cf25a503ee408bfed55ba4ab835, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666808288}
   m_SourcePrefab: {fileID: 100100000, guid: 4ef51cf25a503ee408bfed55ba4ab835, type: 3}
 --- !u!4 &1666808286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4ef51cf25a503ee408bfed55ba4ab835, type: 3}
   m_PrefabInstance: {fileID: 1666808285}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1666808287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3989346385401443251, guid: 4ef51cf25a503ee408bfed55ba4ab835, type: 3}
+  m_PrefabInstance: {fileID: 1666808285}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1666808288
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666808287}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2138796739762357153, guid: 4ef51cf25a503ee408bfed55ba4ab835, type: 3}
 --- !u!1 &1676939329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1526,7 @@ Transform:
   m_GameObject: {fileID: 1728894160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

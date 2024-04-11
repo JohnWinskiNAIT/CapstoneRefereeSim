@@ -53,7 +53,7 @@ public class GameplayManager : MonoBehaviour
     GameObject zoneParent;
 
     [SerializeField]
-    GameObject playerPrefab;
+    GameObject playerPrefab, puckPrefab;
     [SerializeField]
     GameObject playTest;
 
@@ -133,14 +133,14 @@ public class GameplayManager : MonoBehaviour
 
         if (playerNumber >= 5)
         {
-            playerModel.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
+            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
         }
         else
         {
-            playerModel.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
+            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
         }
 
-        playerModel.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+        playerModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
     }
 
     void EnablePlayers()

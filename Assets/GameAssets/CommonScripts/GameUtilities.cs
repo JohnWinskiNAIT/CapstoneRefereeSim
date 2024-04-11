@@ -11,6 +11,7 @@ public class GameUtilities
     //Class of Static Methods to help with regularly used features in other scripts.
     public static string PlayerSkinPath = "PlayerSkins/";
     public static string HelmetPath = "HelmetSkins/";
+    public static string RefereePath = "RefereeSkins/";
     public static InputActionAsset[] actionMapList = new InputActionAsset[4];
 
     static public Vector2 CursorPercentage()
@@ -55,6 +56,11 @@ public class GameUtilities
         }
 
         return selectedMaterial;
+    }
+
+    static public Material RetrieveRefereeSkin(int id)
+    {
+        return Resources.Load<Material>(RefereePath + id);
     }
 
     static public Material RetrieveHelmetSkin()

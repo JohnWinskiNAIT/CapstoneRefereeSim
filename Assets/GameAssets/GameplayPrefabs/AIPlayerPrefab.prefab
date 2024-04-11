@@ -344,10 +344,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Name
+      value: PlayerHelmet
+      objectReference: {fileID: 0}
     - target: {fileID: -3316209038747775882, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -8140499575222096, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Name
+      value: PlayerBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 148596120497668291, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3758573805739257388, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     - target: {fileID: 919132149155446097, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_Name
       value: Model
@@ -357,7 +369,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8196798520224901374, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+    - {fileID: 5994721076960434074, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}

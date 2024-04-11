@@ -41,12 +41,32 @@ public class PlaybackManager : MonoBehaviour
             players[i] = Instantiate(playerPrefab, null);
             players[i].transform.position = new (scenarioData.playerData[0].playerX[i], scenarioData.playerData[0].playerY[i], scenarioData.playerData[0].playerZ[i]);
             GameObject model = players[i].transform.Find("Model").gameObject;
-            model.GetComponentInChildren<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
-            model.GetComponentInChildren<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(1, true);
+            SelectPlayerSkin(model, i);
+
         }
 
         referee = Instantiate(playerPrefab, null);
         referee.transform.position = new Vector3(scenarioData.refereePosition[0].x, scenarioData.refereePosition[0].y, scenarioData.refereePosition[0].z);
+        int chosenSkin = Random.Range(1, 4);
+        GameObject refModel = referee.transform.Find("Model").gameObject;
+        refModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrieveRefereeSkin(chosenSkin);
+        refModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+    }
+
+    void SelectPlayerSkin(GameObject playerModel, int playerNumber)
+    {
+        int chosenSkin = Random.Range(1, 7);
+
+        if (playerNumber >= 5)
+        {
+            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
+        }
+        else
+        {
+            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
+        }
+
+        playerModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
     }
 
     void Update()

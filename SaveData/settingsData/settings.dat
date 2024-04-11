@@ -62,22 +62,22 @@
       <PenaltyName>BlindCheck</PenaltyName>
       <penaltyText>Blind Check</penaltyText>
       <penaltyId>0</penaltyId>
-      <isEnabled>false</isEnabled>
-      <isWhistle>false</isWhistle>
+      <isEnabled>true</isEnabled>
+      <isWhistle>true</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>CrossChecking</PenaltyName>
       <penaltyText>Cross Checking</penaltyText>
       <penaltyId>0</penaltyId>
-      <isEnabled>true</isEnabled>
-      <isWhistle>true</isWhistle>
+      <isEnabled>false</isEnabled>
+      <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>SlewFoot</PenaltyName>
       <penaltyText>Slewfoot Tripping</penaltyText>
       <penaltyId>0</penaltyId>
-      <isEnabled>true</isEnabled>
-      <isWhistle>true</isWhistle>
+      <isEnabled>false</isEnabled>
+      <isWhistle>false</isWhistle>
     </PenaltyData>
     <PenaltyData>
       <PenaltyName>HeadContact</PenaltyName>

@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6497378935216686664}
-  - {fileID: 4725713155407754509}
+  - {fileID: 5425346497213853205}
   - {fileID: 6965001991958157009}
   - {fileID: 1775830758274565007}
   m_Father: {fileID: 0}
@@ -254,7 +254,7 @@ CapsuleCollider:
   m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
---- !u!1001 &5052935903698572006
+--- !u!1001 &5530431996862007806
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -280,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -314,10 +314,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Name
+      value: PlayerHelmet
+      objectReference: {fileID: 0}
     - target: {fileID: -3316209038747775882, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -8140499575222096, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Name
+      value: PlayerBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 148596120497668291, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3758573805739257388, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     - target: {fileID: 919132149155446097, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_Name
       value: Model
@@ -327,12 +339,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8196798520224901374, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+    - {fileID: 5994721076960434074, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
---- !u!4 &4725713155407754509 stripped
+--- !u!4 &5425346497213853205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
-  m_PrefabInstance: {fileID: 5052935903698572006}
+  m_PrefabInstance: {fileID: 5530431996862007806}
   m_PrefabAsset: {fileID: 0}
