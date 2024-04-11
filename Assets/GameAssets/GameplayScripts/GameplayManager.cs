@@ -57,7 +57,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     GameObject playTest;
 
-    public CallState Call {get; private set;}
+    public CallState Call { get; private set; }
 
     public enum GameState
     {
@@ -145,7 +145,7 @@ public class GameplayManager : MonoBehaviour
 
     void EnablePlayers()
     {
-        for(int i = 0; i < enabledPlayers.Length; i++)
+        for (int i = 0; i < enabledPlayers.Length; i++)
         {
             enabledPlayers[i] = mySettings.startingPos[i].isEnabled;
         }
@@ -275,7 +275,7 @@ public class GameplayManager : MonoBehaviour
             }
         }
     }
-    
+
     public void CallPrep(bool isWhistle)
     {
         if (isWhistle)
@@ -403,7 +403,7 @@ public class GameplayManager : MonoBehaviour
         public int offenderId, affectedId;
         //What type of penalty it is is stored here
         public int penaltyId;
-        
+
         //Used for calls that are too abrupt and early.
         public void WipeId()
         {
