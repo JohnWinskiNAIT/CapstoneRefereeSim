@@ -61,7 +61,7 @@ public class LazerReciever : MonoBehaviour
 
     private void Update()
     {
-
+        Debug.Log($"Button:{isBttn}, Toggle:{isTogg}, Slider:{isSlid}, ParentName: {gameObject.GetComponentInParent<RectTransform>().gameObject.name}");
     }
 
     public void PointedAt(Vector3 hitPosition)
