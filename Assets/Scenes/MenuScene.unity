@@ -9834,7 +9834,7 @@ MonoBehaviour:
     penaltyText: Hand Pass
     penaltyId: 10
     isEnabled: 0
-    isWhistle: 0
+    isWhistle: 1
 --- !u!1 &1091540274
 GameObject:
   m_ObjectHideFlags: 0
@@ -10586,7 +10586,7 @@ MonoBehaviour:
     penaltyText: High Stick
     penaltyId: 6
     isEnabled: 0
-    isWhistle: 0
+    isWhistle: 1
 --- !u!1 &1132175483
 GameObject:
   m_ObjectHideFlags: 0

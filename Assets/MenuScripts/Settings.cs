@@ -9,7 +9,6 @@ using System;
 using System.Reflection;
 using TMPro;
 using System.Linq;
-using UnityEngine.InputSystem.Android;
 
 public class Settings : MonoBehaviour
 {
@@ -36,6 +35,7 @@ public class Settings : MonoBehaviour
     public static SettingsData mySettings;
     string filePath;
     const string RootPath = "SaveData\\";
+
     private void Start()
     {
         keyLayout = 1;
@@ -103,9 +103,8 @@ public class Settings : MonoBehaviour
                     if (mySettings.penalties[i].PenaltyName == myPenaltyToggles[j].transform.parent.gameObject.name)
                     {
                         mySettings.penalties[i].isEnabled = myPenaltyToggles[j].isOn;
-                        mySettings.penalties[i].isWhistle = myPenaltyToggles[j].isOn;
                         myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
-                        myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
+                        mySettings.penalties[i].isWhistle = myPenaltyToggles[j].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle;
                         mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
                     }
                 }
@@ -173,7 +172,6 @@ public class Settings : MonoBehaviour
             if (myPenaltyToggles[i].transform.parent.gameObject.name == name)
             {
                 mySettings.penalties[i].isEnabled = myPenaltyToggles[i].isOn;
-                mySettings.penalties[i].isWhistle = myPenaltyToggles[i].isOn;
                 myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
                 myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
                 mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
