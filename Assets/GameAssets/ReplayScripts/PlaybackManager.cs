@@ -6,6 +6,8 @@ public class PlaybackManager : MonoBehaviour
 {
     [SerializeField]
     int readingSlot;
+    [SerializeField]
+    GameObject puck;
 
     public int TotalCount {get; private set;}
     public int CurrentPosition {get; private set;}
@@ -14,7 +16,6 @@ public class PlaybackManager : MonoBehaviour
     HockeyScenarioPositionData scenarioData;
     GameObject[] players;
     GameObject referee;
-    GameObject puck;
 
     [SerializeField]
     GameObject playerPrefab;
@@ -104,6 +105,7 @@ public class PlaybackManager : MonoBehaviour
             }
 
             referee.transform.position = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
+            puck.transform.position = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
 
             CurrentPosition = currentPosition;
         }
@@ -121,6 +123,10 @@ public class PlaybackManager : MonoBehaviour
         Vector3 refPosition1 = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
         Vector3 refPosition2 = new(scenarioData.refereePosition[currentPosition + 1].x, scenarioData.refereePosition[currentPosition + 1].y, scenarioData.refereePosition[currentPosition + 1].z);
         referee.transform.position = Vector3.Lerp(refPosition1, refPosition2, timer / tickRate);
+
+        Vector3 puckPosition1 = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
+        Vector3 puckPosition2 = new(scenarioData.puckPosition[currentPosition + 1].x, scenarioData.puckPosition[currentPosition + 1].y, scenarioData.puckPosition[currentPosition + 1].z);
+        puck.transform.position = Vector3.Lerp(puckPosition1, puckPosition2, timer / tickRate);
     }
 
     public void TogglePlayback(bool toggle)

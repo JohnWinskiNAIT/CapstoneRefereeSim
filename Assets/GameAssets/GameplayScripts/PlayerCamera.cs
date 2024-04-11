@@ -75,17 +75,6 @@ public class PlayerCamera : MonoBehaviour
         }
         currentPoint = intendedPoint;
     }
-        
-    public void SetState(CameraModes newMode)
-    {
-        CurrentMode = newMode;
-    }
-
-    public void SetState(CameraModes newMode, Vector3[] cameraPoints)
-    {
-        CurrentMode = newMode;
-        focusPoints = cameraPoints;
-    }
 
     public void ResetCamera()
     {
