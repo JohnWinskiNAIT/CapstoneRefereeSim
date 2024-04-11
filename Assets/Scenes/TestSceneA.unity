@@ -7413,7 +7413,7 @@ MonoBehaviour:
   vrRightHand: {fileID: 991626365}
   vrYMagnitude: 2
   vrMagnitude: 2
-  camParent: {fileID: 1635894848}
+  vrCamera: {fileID: 977113817}
   nonVRCamera: {fileID: 51658056}
   maxSpeed: 25
   accelerationSpeed: 1200

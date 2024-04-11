@@ -21,7 +21,7 @@ public class PlayerControlVR : MonoBehaviour
     [SerializeField]
     float vrYMagnitude, vrMagnitude;
     [SerializeField]
-    public GameObject camParent;
+    public GameObject vrCamera;
     [SerializeField]
     GameObject nonVRCamera;
 

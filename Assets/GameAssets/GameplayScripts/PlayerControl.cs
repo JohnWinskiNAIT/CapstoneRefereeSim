@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!isVREnabled)
         {
-            Destroy(gameObject.GetComponent<PlayerControlVR>().camParent);
+            Destroy(gameObject.GetComponent<PlayerControlVR>().vrCamera);
             Destroy(gameObject.GetComponent<XROrigin>());
             Destroy(gameObject.GetComponent<PlayerControlVR>());
         }
