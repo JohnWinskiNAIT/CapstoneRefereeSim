@@ -97,6 +97,8 @@ public class PlayerControlVR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameplayManager.Instance.cameraDone = true;
+
         //Cannot move if selection wheel is open.
         if (CurrentPlayerState == PlayerState.Control)
         {
