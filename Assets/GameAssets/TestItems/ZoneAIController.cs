@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ZoneAIController : MonoBehaviour
@@ -138,12 +139,9 @@ public class ZoneAIController : MonoBehaviour
                     }
                 }
 
-                if (PositionCheck())
+                if (PositionCheck() || BlockCheck())
                 {
-                    do
-                    {
-                        GetNextPosition();
-                    } while (BlockCheck());
+                    GetNextPosition();
                 }
 
                 if (carryingPuck != null)
@@ -260,7 +258,8 @@ public class ZoneAIController : MonoBehaviour
     bool BlockCheck()
     {
         int layerMask = 1 << 0;
-        return Physics.BoxCast(new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), nextPosition, transform.rotation, nextPosition.magnitude, layerMask);
+        Vector3 playerDirection = nextPosition - transform.position;
+        return Physics.BoxCast(transform.position + new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), playerDirection, transform.rotation, 5f, layerMask);
     }
 
     public void DeclarePosition(Vector3 newPosition)
@@ -393,8 +392,8 @@ public class ZoneAIController : MonoBehaviour
     {
         RaycastHit hitInfo;
         int layerMask = 1 << 0;
-        Physics.BoxCast(transform.position + new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), nextPosition, out hitInfo, transform.rotation, nextPosition.magnitude, layerMask);
-        Gizmos.DrawRay(transform.position + new Vector3(0, aiCollider.height / 2, aiCollider.radius), nextPosition);
+        Physics.BoxCast(transform.position + new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), transform.forward * 2f, out hitInfo, transform.rotation, 10f, layerMask);
+        Gizmos.DrawRay(transform.position + new Vector3(0, aiCollider.height / 2), transform.forward * 10f);
         Gizmos.DrawCube(hitInfo.point, Vector3.one * 2);
     }
 }
