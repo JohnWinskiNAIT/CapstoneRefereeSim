@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class ZoneAIController : MonoBehaviour
@@ -36,6 +37,7 @@ public class ZoneAIController : MonoBehaviour
     Vector3 nextPosition;
     Vector3 savedVelocity;
     GameObject carryingPuck;
+    CapsuleCollider aiCollider;
 
     float puckTimer, lockoutTimer, penaltyPositionTime;
 
@@ -76,6 +78,7 @@ public class ZoneAIController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        aiCollider = GetComponentInChildren<CapsuleCollider>();
 
         if (aiType == AIType.Forward)
         {
@@ -137,7 +140,10 @@ public class ZoneAIController : MonoBehaviour
 
                 if (PositionCheck())
                 {
-                    GetNextPosition();
+                    do
+                    {
+                        GetNextPosition();
+                    } while (BlockCheck());
                 }
 
                 if (carryingPuck != null)
@@ -249,7 +255,12 @@ public class ZoneAIController : MonoBehaviour
         }
 
         nextPosition = new Vector3(newX, 0, newZ);
-        //Debug.Log(nextPosition);
+    }
+
+    bool BlockCheck()
+    {
+        int layerMask = 1 << 0;
+        return Physics.BoxCast(new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), nextPosition, transform.rotation, nextPosition.magnitude, layerMask);
     }
 
     public void DeclarePosition(Vector3 newPosition)
@@ -376,5 +387,14 @@ public class ZoneAIController : MonoBehaviour
             carryingPuck.GetComponent<PuckManager>().ChangePosession(gameObject);
             other.gameObject.GetComponentInParent<Rigidbody>().isKinematic = true;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        RaycastHit hitInfo;
+        int layerMask = 1 << 0;
+        Physics.BoxCast(transform.position + new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), nextPosition, out hitInfo, transform.rotation, nextPosition.magnitude, layerMask);
+        Gizmos.DrawRay(transform.position + new Vector3(0, aiCollider.height / 2, aiCollider.radius), nextPosition);
+        Gizmos.DrawCube(hitInfo.point, Vector3.one * 2);
     }
 }
