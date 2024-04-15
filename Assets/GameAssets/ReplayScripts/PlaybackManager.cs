@@ -7,7 +7,10 @@ public class PlaybackManager : MonoBehaviour
     [SerializeField]
     int readingSlot;
     [SerializeField]
-    GameObject puck;
+    GameObject puckPrefab;
+
+    public GameObject Referee { get; private set; }
+    public GameObject Puck { get; private set; }
 
     public int TotalCount {get; private set;}
     public int CurrentPosition {get; private set;}
@@ -15,7 +18,6 @@ public class PlaybackManager : MonoBehaviour
 
     HockeyScenarioPositionData scenarioData;
     GameObject[] players;
-    GameObject referee;
 
     [SerializeField]
     GameObject playerPrefab;
@@ -46,10 +48,12 @@ public class PlaybackManager : MonoBehaviour
 
         }
 
-        referee = Instantiate(playerPrefab, null);
-        referee.transform.position = new Vector3(scenarioData.refereePosition[0].x, scenarioData.refereePosition[0].y, scenarioData.refereePosition[0].z);
+        Referee = Instantiate(playerPrefab, null);
+        Referee.transform.position = new Vector3(scenarioData.refereePosition[0].x, scenarioData.refereePosition[0].y, scenarioData.refereePosition[0].z);
+        Puck = Instantiate(puckPrefab, null);
+        Puck.transform.position = new Vector3(scenarioData.puckPosition[0].x, scenarioData.puckPosition[0].y, scenarioData.puckPosition[0].z);
         int chosenSkin = Random.Range(1, 4);
-        GameObject refModel = referee.transform.Find("Model").gameObject;
+        GameObject refModel = Referee.transform.Find("Model").gameObject;
         refModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrieveRefereeSkin(chosenSkin);
         refModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
     }
@@ -104,8 +108,8 @@ public class PlaybackManager : MonoBehaviour
                 players[i].transform.position = new(scenarioData.playerData[currentPosition].playerX[i], scenarioData.playerData[currentPosition].playerY[i], scenarioData.playerData[currentPosition].playerZ[i]);
             }
 
-            referee.transform.position = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
-            puck.transform.position = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
+            Referee.transform.position = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
+            Puck.transform.position = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
 
             CurrentPosition = currentPosition;
         }
@@ -122,11 +126,11 @@ public class PlaybackManager : MonoBehaviour
         
         Vector3 refPosition1 = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
         Vector3 refPosition2 = new(scenarioData.refereePosition[currentPosition + 1].x, scenarioData.refereePosition[currentPosition + 1].y, scenarioData.refereePosition[currentPosition + 1].z);
-        referee.transform.position = Vector3.Lerp(refPosition1, refPosition2, timer / tickRate);
+        Referee.transform.position = Vector3.Lerp(refPosition1, refPosition2, timer / tickRate);
 
         Vector3 puckPosition1 = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
         Vector3 puckPosition2 = new(scenarioData.puckPosition[currentPosition + 1].x, scenarioData.puckPosition[currentPosition + 1].y, scenarioData.puckPosition[currentPosition + 1].z);
-        puck.transform.position = Vector3.Lerp(puckPosition1, puckPosition2, timer / tickRate);
+        Puck.transform.position = Vector3.Lerp(puckPosition1, puckPosition2, timer / tickRate);
     }
 
     public void TogglePlayback(bool toggle)
