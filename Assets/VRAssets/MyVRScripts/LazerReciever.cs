@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 #nullable enable
@@ -61,13 +63,21 @@ public class LazerReciever : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"Button:{isBttn}, Toggle:{isTogg}, Slider:{isSlid}, ParentName: {gameObject.GetComponentInParent<RectTransform>().gameObject.name}");
+        //Debug.Log($"Button:{isBttn}, Toggle:{isTogg}, Slider:{isSlid}, ParentName: {gameObject.GetComponentInParent<RectTransform>().gameObject.name}");
     }
 
     public void PointedAt(Vector3 hitPosition)
     {
         hitPos = hitPosition;
         Debug.Log($"{transform.name} is being pointed at");
+
+        //button.OnPointerEnter()
+        //PointerEventData
+
+        
+        //button.Select();
+        //TextMeshProUGUI text = button.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        //text.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.3f);
     }
 
     public Vector3 DistFromCenter()
