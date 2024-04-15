@@ -304,7 +304,7 @@ public class Settings : MonoBehaviour
             }
             Color color = Color.white;
             color.a = 135f;
-            windowText.GetComponent<TMP_Text>().color = color;
+            //windowText.GetComponent<TMP_Text>().color = color;
         }
         else
         {
