@@ -67,6 +67,13 @@ public class PlaybackUI : MonoBehaviour
 
     void UpdateSlider()
     {
-        playbackBar.value = manager.CurrentPosition;
+        if (manager.CurrentPosition > playbackBar.maxValue)
+        {
+            playbackBar.value = playbackBar.maxValue;
+        }
+        else
+        {
+            playbackBar.value = manager.CurrentPosition;
+        }
     }
 }
