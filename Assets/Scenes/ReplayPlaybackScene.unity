@@ -701,7 +701,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1348132731}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1712194803}
+        m_TargetAssemblyTypeName: PlaybackCameraManager, Assembly-CSharp
+        m_MethodName: UpdateMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1348132731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,7 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c12b115db7f9544da11c930c4a354fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readingSlot: 0
   puckPrefab: {fileID: 202565466493382052, guid: d5cd45ee05f8aff48a221f8069561dc5, type: 3}
   playerPrefab: {fileID: 2851081034928759604, guid: 08a236a2fe1126843b66a03fb5127724, type: 3}
 --- !u!4 &1353949677
@@ -948,6 +959,7 @@ GameObject:
   - component: {fileID: 1712194802}
   - component: {fileID: 1712194801}
   - component: {fileID: 1712194800}
+  - component: {fileID: 1712194803}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1029,6 +1041,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+--- !u!114 &1712194803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712194799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4eb5160c1ab334d8865b7cb61d637d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  objectOffset: {x: 0, y: 7.5, z: -11.5}
+  switchButton: {fileID: 1348132730}
 --- !u!1 &1978824165
 GameObject:
   m_ObjectHideFlags: 0

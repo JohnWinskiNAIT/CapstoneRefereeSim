@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlaybackManager : MonoBehaviour
 {
-    [SerializeField]
-    int readingSlot;
+    public static PlaybackManager Instance;
+
     [SerializeField]
     GameObject puckPrefab;
 
@@ -28,7 +28,15 @@ public class PlaybackManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        //PositionSaver.LoadPlayerData(ReplaySettings.FILEPATH + readingSlot + "\\PositionData", ref scenarioData);
+        if (Instance == null)
+        {
+            Instance = gameObject.GetComponent<PlaybackManager>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         scenarioData = ReplaySettings.heldData;
         TotalCount = scenarioData.playerData.Count;
         CreatePlayers();
@@ -89,6 +97,7 @@ public class PlaybackManager : MonoBehaviour
                 if (CurrentPosition < scenarioData.playerData.Count - 1)
                 {
                     InterpolatePosition(CurrentPosition);
+                    RotateObjects(CurrentPosition);
                 }
             }
 
@@ -112,6 +121,7 @@ public class PlaybackManager : MonoBehaviour
             Puck.transform.position = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
 
             CurrentPosition = currentPosition;
+            //RotateObjects(currentPosition);
         }
     }
 
@@ -131,6 +141,20 @@ public class PlaybackManager : MonoBehaviour
         Vector3 puckPosition1 = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
         Vector3 puckPosition2 = new(scenarioData.puckPosition[currentPosition + 1].x, scenarioData.puckPosition[currentPosition + 1].y, scenarioData.puckPosition[currentPosition + 1].z);
         Puck.transform.position = Vector3.Lerp(puckPosition1, puckPosition2, timer / tickRate);
+    }
+
+    void RotateObjects(int currentPosition)
+    {
+        for (int i = 0; i < scenarioData.playerData[currentPosition].playerX.Length; i++)
+        {
+            Vector3 position1 = new(scenarioData.playerData[currentPosition].playerX[i], scenarioData.playerData[currentPosition].playerY[i], scenarioData.playerData[currentPosition].playerZ[i]);
+            Vector3 position2 = new(scenarioData.playerData[currentPosition + 1].playerX[i], scenarioData.playerData[currentPosition + 1].playerY[i], scenarioData.playerData[currentPosition + 1].playerZ[i]);
+            players[i].transform.rotation = Quaternion.LookRotation(position2 - position1);
+        }
+
+        Vector3 refPosition1 = new(scenarioData.refereePosition[currentPosition].x, scenarioData.refereePosition[currentPosition].y, scenarioData.refereePosition[currentPosition].z);
+        Vector3 refPosition2 = new(scenarioData.refereePosition[currentPosition + 1].x, scenarioData.refereePosition[currentPosition + 1].y, scenarioData.refereePosition[currentPosition + 1].z);
+        Referee.transform.rotation = Quaternion.LookRotation(refPosition2 - refPosition1);
     }
 
     public void TogglePlayback(bool toggle)
