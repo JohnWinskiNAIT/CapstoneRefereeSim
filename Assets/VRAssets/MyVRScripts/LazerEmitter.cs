@@ -38,6 +38,7 @@ public class LazerEmitter : MonoBehaviour
 
             if ( reciever != null )
             {
+                
                 reciever.PointedAt(hitPos);
             }
             //Debug.Log($"Did Hit {hit.point} {hit.collider.gameObject.name}");
