@@ -71,6 +71,16 @@ public class LazerReciever : MonoBehaviour
         hitPos = hitPosition;
         Debug.Log($"{transform.name} is being pointed at");
 
+        Button buttonPointedAt = transform.GetComponentInParent<Button>();
+        if(buttonPointedAt != null )
+        {
+            GameObject callingObject = buttonPointedAt.transform.parent.gameObject;
+            if( callingObject != null )
+            {
+                callingObject.GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.3f);
+                callingObject.GetComponent<Button>().Select();
+            }
+        }
         //button.OnPointerEnter()
         //PointerEventData
 

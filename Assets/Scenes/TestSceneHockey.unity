@@ -11300,6 +11300,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 439035080451769986, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 03d99a1bb7035c84bb98f38605d93da9, type: 2}
     - target: {fileID: 919132149155446097, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
       propertyPath: m_Name
       value: HockeyRink_V2
