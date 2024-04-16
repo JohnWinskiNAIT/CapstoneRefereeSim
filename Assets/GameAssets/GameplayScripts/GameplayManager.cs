@@ -25,13 +25,13 @@ public class GameplayManager : MonoBehaviour
     FaceoffData[] rinkFaceoffs;
     public FaceoffData CurrentFaceoff { get; private set; }
 
-    CutsceneData currentCutscene;
+    public CutsceneData CurrentCutscene { get; private set; }
+    public int CutsceneStatus { get; private set; }
     public PlayInformation CurrentPlayInfo { get; private set; }
 
     PositionSerializer recorder;
 
     int scenariosCompleted;
-    int cutsceneStatus;
     float playTimer, callTimestamp, callDifference;
 
     public bool cameraDone, moveDone;
@@ -195,9 +195,9 @@ public class GameplayManager : MonoBehaviour
         if (Call != CallState.None)
         {
             GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
-            currentCutscene = playEndCutscene;
-            cutsceneStatus = 0;
-            GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+            CurrentCutscene = playEndCutscene;
+            CutsceneStatus = 0;
+            GameplayEvents.CutsceneTrigger.Invoke(CutsceneStatus);
         }
         else
         {
@@ -240,11 +240,11 @@ public class GameplayManager : MonoBehaviour
 
     public void ProgressCutscene()
     {
-        cutsceneStatus++;
-        if (cutsceneStatus < currentCutscene.NumberOfPoints)
+        CutsceneStatus++;
+        if (CutsceneStatus < CurrentCutscene.NumberOfPoints)
         {
-            GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
-            if (currentCutscene.pointTypes[cutsceneStatus] == CutsceneData.PointType.WheelOpen)
+            GameplayEvents.CutsceneTrigger.Invoke(CutsceneStatus);
+            if (CurrentCutscene.pointTypes[CutsceneStatus] == CutsceneData.PointType.WheelOpen)
             {
                 GameplayEvents.OpenWheel.Invoke(true, TypeOfWheel());
             }
@@ -255,7 +255,7 @@ public class GameplayManager : MonoBehaviour
         else
         {
             GameplayEvents.EndCutscene.Invoke();
-            currentCutscene = null;
+            CurrentCutscene = null;
         }
     }
 
@@ -263,12 +263,12 @@ public class GameplayManager : MonoBehaviour
     {
         if (!ManagerPaused)
         {
-            if (moveDone && cameraDone && currentCutscene != null)
+            if (moveDone && cameraDone && CurrentCutscene != null)
             {
                 ProgressCutscene();
             }
 
-            if (playOngoing && currentCutscene == null)
+            if (playOngoing && CurrentCutscene == null)
             {
                 playTimer += Time.deltaTime;
                 PlayCheck();
@@ -343,8 +343,8 @@ public class GameplayManager : MonoBehaviour
         offsetPuckDropCutscene.OverwriteCutscene(puckDropCutscene);
         offsetPuckDropCutscene.PuckDrop(CurrentFaceoff.unscaledOffset);
         GameplayEvents.LoadCutscene.Invoke(offsetPuckDropCutscene);
-        currentCutscene = offsetPuckDropCutscene;
-        cutsceneStatus = 0;
+        CurrentCutscene = offsetPuckDropCutscene;
+        CutsceneStatus = 0;
 
         Call = CallState.None;
         playTimer = 0;
@@ -353,7 +353,7 @@ public class GameplayManager : MonoBehaviour
 
         playOngoing = true;
         recorder.InitiateRecording();
-        GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+        GameplayEvents.CutsceneTrigger.Invoke(CutsceneStatus);
     }
 
     //Creates the PlayInformation struct, and fills it.
@@ -465,7 +465,8 @@ public class CutsceneData
         Movement,
         WheelOpen,
         PuckdropInput,
-        Teleport
+        Teleport,
+        EnablePlayers
     }
 }
 

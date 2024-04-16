@@ -18770,11 +18770,13 @@ MonoBehaviour:
     - {x: -6, y: 0, z: 0}
     - {x: -6, y: 0, z: 0}
     - {x: -39, y: 0, z: 0}
+    - {x: -39, y: 0, z: 0}
     cameraPoints:
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: 7, z: 0}
-    pointTypes: 030000000000000000000000
+    - {x: 0, y: 7, z: 0}
+    pointTypes: 03000000000000000000000004000000
   rinkFaceoffs:
   - faceoffId: 0
     faceoffName: centre
