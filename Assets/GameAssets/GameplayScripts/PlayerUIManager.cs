@@ -280,9 +280,9 @@ public class PlayerUIManager : MonoBehaviour
     private void GenerateNotches()
     {
         currentNotches = new GameObject[wheelInfo.NumberOfOptions];
-        float notchGap = baseScreenOffset * (Screen.height / 1080);
+        float notchGap = baseScreenOffset;
         float segments = totalFill / wheelInfo.NumberOfOptions;
-        float notchScale = baseScreenScale * (Screen.width / 1920);
+        float notchScale = baseScreenScale;
         for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
@@ -297,9 +297,9 @@ public class PlayerUIManager : MonoBehaviour
     private void GenerateIcons()
     {
         currentIcons = new GameObject[wheelInfo.NumberOfOptions];
-        float notchGap = baseScreenOffset * (Screen.height / 1080);
+        float notchGap = baseScreenOffset;
         float segments = totalFill / wheelInfo.NumberOfOptions;
-        float iconScale = baseScreenScale * (Screen.width / 1920);
+        float iconScale = baseScreenScale;
         for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
