@@ -6153,7 +6153,7 @@ GameObject:
   - component: {fileID: 630770176}
   - component: {fileID: 630770175}
   - component: {fileID: 630770174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Puck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7495,7 +7495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759353050}
   - component: {fileID: 759353051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12937,7 +12937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345023309}
   - component: {fileID: 1345023310}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17665,7 +17665,7 @@ GameObject:
   - component: {fileID: 1870798171}
   - component: {fileID: 1870798173}
   - component: {fileID: 1870798172}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
