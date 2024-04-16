@@ -156,6 +156,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (currentPlayers[i] != null)
             {
+                currentPlayers[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 if (CurrentFaceoff.isCentre)
                 {
                     currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;
@@ -191,10 +192,18 @@ public class GameplayManager : MonoBehaviour
             }
         }
         recorder.EndRecording();
-        GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
-        currentCutscene = playEndCutscene;
-        cutsceneStatus = 0;
-        GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+        if (Call != CallState.None)
+        {
+            GameplayEvents.LoadCutscene.Invoke(playEndCutscene);
+            currentCutscene = playEndCutscene;
+            cutsceneStatus = 0;
+            GameplayEvents.CutsceneTrigger.Invoke(cutsceneStatus);
+        }
+        else
+        {
+            resultsUI.GetComponent<ResultsDisplay>().InitiateResults(-1, CurrentPlayInfo.penaltyId, callDifference);
+            resultsUI.SetActive(true);
+        }
     }
 
     public void PauseGame(bool pauseBool)
@@ -224,15 +233,6 @@ public class GameplayManager : MonoBehaviour
 
     public void ConfirmChoice(int choice)
     {
-        if (choice == CurrentPlayInfo.penaltyId)
-        {
-            Debug.Log("True");
-        }
-        else
-        {
-            Debug.Log("False");
-        }
-
         resultsUI.GetComponent<ResultsDisplay>().InitiateResults(choice, CurrentPlayInfo.penaltyId, callDifference);
         resultsUI.SetActive(true);
         GameplayEvents.OpenWheel.Invoke(false, false);

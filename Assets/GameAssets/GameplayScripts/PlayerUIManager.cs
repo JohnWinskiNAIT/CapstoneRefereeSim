@@ -12,15 +12,15 @@ public class PlayerUIManager : MonoBehaviour
 {
     //Very stupid but just made because typing in 360 each time will make it an int unless you include the f affix, and this makes it more readable.
     const float totalFill = 360f;
-    const float screenScaleDenominator = 1280f;
+    const float baseScreenScale = 1.5f;
+    const float baseScreenOffset = 324;
 
     //Used to compare InputActions.
     [SerializeField]
     InputActionAsset inputActions;
     InputAction whistleCancelAction, callSelectAction, wheelTestAction;
 
-    [SerializeField]
-    PlayerControl tempPlayerControl;
+    PlayerControl playerControl;
 
     //Reference to the image with a radial fill that will appear in the center of the screen.
     [SerializeField]
@@ -42,7 +42,6 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     Canvas playerUICanvas;
 
-    [SerializeField]
     WheelInformation wheelInfo;
 
     //Reference to the gameobjects/images that will denote the selection wheel.
@@ -85,6 +84,7 @@ public class PlayerUIManager : MonoBehaviour
         currentNotches = new GameObject[0];
         currentIcons = new GameObject[0];
 
+        playerControl = GetComponent<PlayerControl>();
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
         GameplayEvents.InitializePlay.AddListener(ResetUI);
         ToggleWheel(false, false);
@@ -134,18 +134,18 @@ public class PlayerUIManager : MonoBehaviour
     // Visual effects are performed in this update.
     private void Update()
     {
-        if (tempPlayerControl.HeldAction != null)
+        if (playerControl.HeldAction != null)
         {
-            inputStoreRadial.fillAmount = tempPlayerControl.StoredActionStatus();
-            if (tempPlayerControl.HeldAction == whistleCancelAction)
+            inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
+            if (playerControl.HeldAction == whistleCancelAction)
             {
-                rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
-                rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
+                rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControl.StoredActionStatus());
+                rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControl.StoredActionStatus());
             }
-            if (tempPlayerControl.HeldAction == callSelectAction)
+            if (playerControl.HeldAction == callSelectAction)
             {
-                leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
-                leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
+                leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControl.StoredActionStatus());
+                leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControl.StoredActionStatus());
             }
         }
         else
@@ -259,7 +259,6 @@ public class PlayerUIManager : MonoBehaviour
                 GenerateNotches();
                 GenerateIcons();
                 wheelOpen = true;
-                tempPlayerControl.SetPlayerControl(PlayerControl.PlayerState.Lockout);
             }
         }
         else
@@ -270,7 +269,6 @@ public class PlayerUIManager : MonoBehaviour
                 selectionWheel.SetActive(false);
                 RemoveWheelElements();
                 wheelOpen = false;
-                tempPlayerControl.SetPlayerControl(PlayerControl.PlayerState.Control);
             }
         }
     }
@@ -279,9 +277,9 @@ public class PlayerUIManager : MonoBehaviour
     private void GenerateNotches()
     {
         currentNotches = new GameObject[wheelInfo.NumberOfOptions];
-        float notchGap = (Screen.height / 2f) * 0.65f;
+        float notchGap = baseScreenOffset;
         float segments = totalFill / wheelInfo.NumberOfOptions;
-        float notchScale = (Screen.width / screenScaleDenominator);
+        float notchScale = baseScreenScale;
         for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentNotches[i] = Instantiate(wheelNotchObj, selectionWheel.transform);
@@ -296,14 +294,14 @@ public class PlayerUIManager : MonoBehaviour
     private void GenerateIcons()
     {
         currentIcons = new GameObject[wheelInfo.NumberOfOptions];
-        float notchGap = (Screen.height / 2f) * 0.6f;
+        float notchGap = baseScreenOffset;
         float segments = totalFill / wheelInfo.NumberOfOptions;
-        float iconScale = 1f * (Screen.width / screenScaleDenominator);
+        float iconScale = baseScreenScale;
         for (int i = 0; i < wheelInfo.NumberOfOptions; i++)
         {
             currentIcons[i] = Instantiate(iconObj, selectionWheel.transform);
             Vector2 position = new(Mathf.Sin((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap, Mathf.Cos((segments * i + segments / 2) * Mathf.Deg2Rad) * notchGap);
-            currentIcons[i].transform.localScale = new Vector3(iconScale, iconScale, iconScale);
+            currentIcons[i].transform.localScale = new Vector3(iconScale, iconScale, 1);
             currentIcons[i].GetComponent<RectTransform>().anchoredPosition = position;
             currentIcons[i].GetComponent<Image>().sprite = wheelInfo.options[i].optionImage;
         }

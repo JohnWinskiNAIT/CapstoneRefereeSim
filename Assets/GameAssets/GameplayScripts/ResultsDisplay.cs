@@ -41,7 +41,7 @@ public class ResultsDisplay : MonoBehaviour
     public void InitiateResults(int choiceId, int actualId, float timing)
     {
         ToggleNameEntry(false);
-        string choice = Settings.mySettings.penalties[choiceId].penaltyText;
+        string choice;
         string actual;
         if (actualId == -1)
         {
@@ -50,6 +50,14 @@ public class ResultsDisplay : MonoBehaviour
         else
         {
             actual = Settings.mySettings.penalties[actualId].penaltyText;
+        }
+        if (choiceId == -1)
+        {
+            choice = "None";
+        }
+        else
+        {
+            choice = Settings.mySettings.penalties[choiceId].penaltyText;
         }
 
         float timer = Mathf.Round(timing * 10f) * 0.1f;

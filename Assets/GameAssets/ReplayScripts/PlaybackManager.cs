@@ -121,7 +121,10 @@ public class PlaybackManager : MonoBehaviour
             Puck.transform.position = new(scenarioData.puckPosition[currentPosition].x, scenarioData.puckPosition[currentPosition].y, scenarioData.puckPosition[currentPosition].z);
 
             CurrentPosition = currentPosition;
-            //RotateObjects(currentPosition);
+            if (currentPosition < scenarioData.playerData.Count - 1)
+            {
+                RotateObjects(currentPosition);
+            }
         }
     }
 

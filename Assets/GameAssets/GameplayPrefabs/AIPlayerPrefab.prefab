@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 4650871945351830948}
   - component: {fileID: 272994180834852654}
   - component: {fileID: 5711059728051211617}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: StickModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6965001991958157009}
   - component: {fileID: 7926095894924502813}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: PuckPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

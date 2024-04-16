@@ -5,6 +5,7 @@ using UnityEngine;
 public class PuckManager : MonoBehaviour
 {
     public GameObject Owner { get; private set; }
+    GameObject player;
     private Rigidbody rb;
     public ZoneAIController.AITeam? OwnerTeam { get; private set; }
     Vector3 savedVelocity;
@@ -26,6 +27,12 @@ public class PuckManager : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+        {
+            player = GameplayManager.Instance.player;
+            Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), player.GetComponentInChildren<Collider>(), true);
+        }
+
         savedVelocity = rb.velocity;
 
         if (Owner == null)
