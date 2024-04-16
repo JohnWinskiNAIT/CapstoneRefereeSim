@@ -388,12 +388,12 @@ public class ZoneAIController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         RaycastHit hitInfo;
         int layerMask = 1 << 0;
         Physics.BoxCast(transform.position + new Vector3(0, aiCollider.height / 2, 0), new Vector3(aiCollider.radius / 2, aiCollider.height / 4, 0.1f), transform.forward * 2f, out hitInfo, transform.rotation, 10f, layerMask);
         Gizmos.DrawRay(transform.position + new Vector3(0, aiCollider.height / 2), transform.forward * 10f);
         Gizmos.DrawCube(hitInfo.point, Vector3.one * 2);
-    }
+    }*/
 }
