@@ -71,22 +71,22 @@ public class LazerReciever : MonoBehaviour
         hitPos = hitPosition;
         //Debug.Log($"{transform.name} is being pointed at");
 
-        Button buttonPointedAt = transform.GetComponentInParent<Button>();
-        if(buttonPointedAt != null )
-        {
-            GameObject callingObject = buttonPointedAt.transform.gameObject;
-            if( callingObject != null )
-            {
-                callingObject.GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.3f);
-                callingObject.GetComponent<Button>().Select();
+        //Button buttonPointedAt = transform.GetComponentInParent<Button>();
+        //if(buttonPointedAt != null )
+        //{
+        //    GameObject callingObject = buttonPointedAt.transform.gameObject;
+        //    if( callingObject != null )
+        //    {
+        //        callingObject.GetComponentInChildren<TextMeshProUGUI>().fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.3f);
+        //        callingObject.GetComponent<Button>().Select();
 
-                Debug.Log($"{callingObject.name} is pointed at");
-            }
-        }
+        //        Debug.Log($"{callingObject.name} is pointed at");
+        //    }
+        //}
 
-        IPointerEnterHandler clickHandler = transform.gameObject.GetComponent<IPointerEnterHandler>();
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        clickHandler.OnPointerEnter(pointerEventData);
+        //IPointerEnterHandler clickHandler = transform.gameObject.GetComponent<IPointerEnterHandler>();
+        //PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        //clickHandler.OnPointerEnter(pointerEventData);
 
 
         //button.OnPointerEnter()
