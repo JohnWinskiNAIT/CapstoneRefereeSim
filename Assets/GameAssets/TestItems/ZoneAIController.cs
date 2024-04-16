@@ -70,8 +70,8 @@ public class ZoneAIController : MonoBehaviour
     private void Awake()
     {
         GameplayEvents.InitializePlay.AddListener(InitializeForPlay);
-        GameplayEvents.LoadCutscene.AddListener(CutsceneStartCallback);
-        GameplayEvents.EndCutscene.AddListener(CutsceneEndCallback);
+        GameplayEvents.EndPlay.AddListener(EndPlayCallback);
+        GameplayEvents.EndCutscene.AddListener(StartPlayCallback);
         GameplayEvents.SetPause.AddListener(PauseAI);
     }
 
@@ -361,21 +361,24 @@ public class ZoneAIController : MonoBehaviour
         penaltyTimer = 0f;
         mode = AIMode.Penalty;
     }
-
+        
     public void ResolvePenalty(bool toBeFrozen)
     {
         mode = AIMode.Animation;
         aiFreezing = toBeFrozen;
     }
 
-    private void CutsceneStartCallback(CutsceneData data)
+    private void EndPlayCallback()
     {
         aiActive = false;
     }
 
-    private void CutsceneEndCallback()
+    private void StartPlayCallback()
     {
-        aiActive = true;
+        if (GameplayManager.Instance.CurrentCutscene.pointTypes[GameplayManager.Instance.CurrentCutscene.waypoints.Length - 1] == CutsceneData.PointType.EnablePlayers)
+        {
+            aiActive = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
