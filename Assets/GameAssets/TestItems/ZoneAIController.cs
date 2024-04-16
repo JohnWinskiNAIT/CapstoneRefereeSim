@@ -361,7 +361,7 @@ public class ZoneAIController : MonoBehaviour
         penaltyTimer = 0f;
         mode = AIMode.Penalty;
     }
-
+        
     public void ResolvePenalty(bool toBeFrozen)
     {
         mode = AIMode.Animation;
