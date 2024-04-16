@@ -20,8 +20,7 @@ public class PlayerUIManager : MonoBehaviour
     InputActionAsset inputActions;
     InputAction whistleCancelAction, callSelectAction, wheelTestAction;
 
-    [SerializeField]
-    PlayerControl tempPlayerControl;
+    PlayerControl playerControl;
 
     //Reference to the image with a radial fill that will appear in the center of the screen.
     [SerializeField]
@@ -43,7 +42,6 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     Canvas playerUICanvas;
 
-    [SerializeField]
     WheelInformation wheelInfo;
 
     //Reference to the gameobjects/images that will denote the selection wheel.
@@ -86,6 +84,7 @@ public class PlayerUIManager : MonoBehaviour
         currentNotches = new GameObject[0];
         currentIcons = new GameObject[0];
 
+        playerControl = GetComponent<PlayerControl>();
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
         GameplayEvents.InitializePlay.AddListener(ResetUI);
         ToggleWheel(false, false);
@@ -135,18 +134,18 @@ public class PlayerUIManager : MonoBehaviour
     // Visual effects are performed in this update.
     private void Update()
     {
-        if (tempPlayerControl.HeldAction != null)
+        if (playerControl.HeldAction != null)
         {
-            inputStoreRadial.fillAmount = tempPlayerControl.StoredActionStatus();
-            if (tempPlayerControl.HeldAction == whistleCancelAction)
+            inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
+            if (playerControl.HeldAction == whistleCancelAction)
             {
-                rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
-                rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, tempPlayerControl.StoredActionStatus());
+                rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControl.StoredActionStatus());
+                rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControl.StoredActionStatus());
             }
-            if (tempPlayerControl.HeldAction == callSelectAction)
+            if (playerControl.HeldAction == callSelectAction)
             {
-                leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
-                leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, tempPlayerControl.StoredActionStatus());
+                leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControl.StoredActionStatus());
+                leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControl.StoredActionStatus());
             }
         }
         else
@@ -260,7 +259,6 @@ public class PlayerUIManager : MonoBehaviour
                 GenerateNotches();
                 GenerateIcons();
                 wheelOpen = true;
-                tempPlayerControl.SetPlayerControl(PlayerControl.PlayerState.Lockout);
             }
         }
         else
@@ -271,7 +269,6 @@ public class PlayerUIManager : MonoBehaviour
                 selectionWheel.SetActive(false);
                 RemoveWheelElements();
                 wheelOpen = false;
-                tempPlayerControl.SetPlayerControl(PlayerControl.PlayerState.Control);
             }
         }
     }

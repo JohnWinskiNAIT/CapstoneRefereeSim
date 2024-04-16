@@ -156,6 +156,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (currentPlayers[i] != null)
             {
+                currentPlayers[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 if (CurrentFaceoff.isCentre)
                 {
                     currentPlayers[i].transform.position = setupInformation[i].centrePosition + CurrentFaceoff.unscaledOffset;

@@ -12,6 +12,7 @@ public class PlayerCutscene : MonoBehaviour
     private Vector3 autoskateDestination;
     Vector3 basePosition;
 
+    PlayerUIManager uiManager;
     PlayerControl controls;
     PlayerCamera cam;
 
@@ -26,6 +27,7 @@ public class PlayerCutscene : MonoBehaviour
         GameplayEvents.LoadCutscene.AddListener(LoadWaypoints);
         GameplayEvents.EndCutscene.AddListener(CutsceneEndCallback);
         controls = GetComponent<PlayerControl>();
+        uiManager = GetComponent<PlayerUIManager>();
         cam = GetComponent<PlayerCamera>();
         rb = GetComponent<Rigidbody>();
     }
@@ -105,7 +107,14 @@ public class PlayerCutscene : MonoBehaviour
 
     private void CutsceneEndCallback()
     {
-        controls.SetPlayerControl(PlayerState.Control);
+        if (uiManager.wheelOpen)
+        {
+            controls.SetPlayerControl(PlayerState.Lockout);
+        }
+        else
+        {
+            controls.SetPlayerControl(PlayerState.Control);
+        }
         rb.isKinematic = false;
     }
 }

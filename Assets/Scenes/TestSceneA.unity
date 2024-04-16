@@ -6953,6 +6953,7 @@ GameObject:
   - component: {fileID: 698313458}
   - component: {fileID: 698313454}
   - component: {fileID: 698313456}
+  - component: {fileID: 698313460}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7196,6 +7197,32 @@ MonoBehaviour:
   storeInputDuration: 0.85
   lookSensitivity: 1
   isVREnabled: 0
+--- !u!114 &698313460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698313451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7b469705176244dafe391817c8cd7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
+  inputStoreRadial: {fileID: 1439535752}
+  leftSideStore: {fileID: 519493058}
+  rightSideStore: {fileID: 1107081530}
+  selectionWheel: {fileID: 2136186174}
+  wheelText: {fileID: 25094315}
+  wheelWorldspaceTrans: {fileID: 0}
+  playerUICanvas: {fileID: 1119031680}
+  wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
+  iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
+  wheelOpen: 0
+  chargingCornerOffset: 0.45
+  isVREnabled: 0
+  VRPointer: {fileID: 1135132138}
 --- !u!1 &706946550
 GameObject:
   m_ObjectHideFlags: 0
@@ -10266,7 +10293,6 @@ GameObject:
   - component: {fileID: 1119031680}
   - component: {fileID: 1119031679}
   - component: {fileID: 1119031678}
-  - component: {fileID: 1119031682}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -10360,63 +10386,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1119031682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119031677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7b469705176244dafe391817c8cd7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 9c3d6d497561ea64d87432cfd1c6e4ca, type: 3}
-  tempPlayerControl: {fileID: 698313452}
-  inputStoreRadial: {fileID: 1439535752}
-  leftSideStore: {fileID: 519493058}
-  rightSideStore: {fileID: 1107081530}
-  selectionWheel: {fileID: 2136186174}
-  wheelText: {fileID: 25094315}
-  wheelWorldspaceTrans: {fileID: 0}
-  playerUICanvas: {fileID: 1119031680}
-  wheelInfo:
-    options:
-    - optionImage: {fileID: 21300000, guid: 9d0094dcc6a64ff4eab75753ca02e1cc, type: 3}
-      optionText: Head Contact
-      optionType: 0
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: 887b27348b7181448b325126b7b0c9cc, type: 3}
-      optionText: Cross Check
-      optionType: 2
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: 2a647333a9c874f4cbf9606accbfa931, type: 3}
-      optionText: Hooking
-      optionType: 7
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: 46014dcf57c50e44aac3aa16cdd58a78, type: 3}
-      optionText: Blind Check
-      optionType: 3
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: 56e0497985b0c7a48a6889acfee9d38d, type: 3}
-      optionText: Tripping
-      optionType: 1
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: 58fdd3ebd5c8d104981e547b49f93aab, type: 3}
-      optionText: Holding
-      optionType: 4
-      optionId: 0
-    - optionImage: {fileID: 21300000, guid: a8d5617c2a9f1b447a658ed5b855f852, type: 3}
-      optionText: Interference
-      optionType: 5
-      optionId: 0
-  wheelNotchObj: {fileID: 1411043613420573588, guid: c44a4b7a04e9ef247b21f5a42f59e151, type: 3}
-  iconObj: {fileID: 8427001882391226926, guid: 1c15f4c624eb57542bc3f1e98f0373d6, type: 3}
-  wheelOpen: 0
-  chargingCornerOffset: 0.45
-  isVREnabled: 0
-  VRPointer: {fileID: 1135132138}
 --- !u!1 &1121367101
 GameObject:
   m_ObjectHideFlags: 0
