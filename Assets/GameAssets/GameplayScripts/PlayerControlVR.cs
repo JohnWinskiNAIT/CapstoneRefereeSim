@@ -36,8 +36,9 @@ public class PlayerControlVR : MonoBehaviour
     private float storeTimestamp;
 
     private Vector2 moveInput;
+    private float lookInput;
     public Vector3 CameraAngle { get; private set; }
-    public Vector3 InputAngle { get; private set; }
+    public Vector3 MoveAngle { get; private set; }
 
     Vector3 basePosition;
 
@@ -67,8 +68,6 @@ public class PlayerControlVR : MonoBehaviour
         moveAction = inputActions.FindActionMap("Gameplay").FindAction("Move");
         pauseAction = inputActions.FindActionMap("Gameplay").FindAction("Pause");
         lookAction = inputActions.FindActionMap("Gameplay").FindAction("Look");
-
-
 
         rb = GetComponent<Rigidbody>();
         CurrentPlayerState = PlayerState.Control;
@@ -104,7 +103,8 @@ public class PlayerControlVR : MonoBehaviour
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
-            //  lookInput = lookAction.ReadValue<Vector2>(); //////////////////////////////
+            lookInput = lookAction.ReadValue<Vector2>().x; 
+            Debug.Log(lookInput);
 
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
@@ -129,20 +129,14 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
-
-        //Debug.Log(HeldAction);
-
+        Debug.Log(HeldAction);
     }
 
-   
+
 
     //VR STORED ACTION METHOD
     private void StoredActionCheck()
     {
-        //All of these are placeholders and should be determined elsewhere later.
-        //GameObject vrRightHand = new();
-        //GameObject vrLeftHand = new();
-
         if (HeldAction == null)
         {
             if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrRMagnitude)
@@ -180,7 +174,7 @@ public class PlayerControlVR : MonoBehaviour
             }
         }
 
-        Debug.Log(vrLeftHand.transform.position.y);
+        //Debug.Log(vrLeftHand.transform.position.y);
         //Debug.Log((vrRightHand.transform.position - cam.transform.position).magnitude);
     }
 
@@ -240,26 +234,27 @@ public class PlayerControlVR : MonoBehaviour
             PlayerMovement();
 
             //Camera logic might need to be determined here then visuals performed in late update.
+            PlayerRotation();
         }
     }
 
     private void PlayerMovement()
     {
         //Determines the angle between where the player's velocity is going and the player's input.
-        InputAngle = new Vector3(moveInput.x, 0, moveInput.y);
+        MoveAngle = new Vector3(moveInput.x, 0, moveInput.y);
 
         //If VR active, usees camera Y instead of player Y.
         Quaternion angleCheck;
-        if (isVREnabled)
-        {
-            angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
-        }
-        else
-        {
-            angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
-        }
+        //if (isVREnabled)
+        //{
+        angleCheck = Quaternion.AngleAxis(cam.transform.eulerAngles.y, Vector3.up);
+        //}
+        //else
+        //{
+        //    angleCheck = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up);
+        //}
 
-        InputAngle = angleCheck * InputAngle;
+        MoveAngle = angleCheck * MoveAngle;
 
         //Add an object over a GameObject friend parameter to have it display where the player is moving.
         /*if (friend != null)
@@ -268,20 +263,25 @@ public class PlayerControlVR : MonoBehaviour
         }*/
 
         //Add relative force.
-        rb.AddForce(InputAngle * (accelerationSpeed * Time.fixedDeltaTime), ForceMode.Force);
+        rb.AddForce(MoveAngle * (accelerationSpeed * Time.fixedDeltaTime), ForceMode.Force);
 
         //Apply cap if greater than max speed. (Parabolic acceleration curve for later?)
         Vector2 capTest = new(rb.velocity.x, rb.velocity.z);
-        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(InputAngle.x, InputAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
+        if (capTest.magnitude > maxSpeed || Vector2.Angle(new Vector2(MoveAngle.x, MoveAngle.z), new Vector2(rb.velocity.x, rb.velocity.z)) > 90)
         {
             rb.velocity = new Vector3(rb.velocity.x * breakingModifier, rb.velocity.y, rb.velocity.z * breakingModifier);
         }
     }
 
-    public void SetCamAngles(Vector3 camAngles)
+    private void PlayerRotation()
     {
-        CameraAngle = camAngles;
+        transform.Rotate(0, lookInput, 0);
     }
+
+    //public void SetCamAngles(Vector3 camAngles)
+    //{
+    //    CameraAngle = camAngles;
+    //}
 
     //If close enough to autoskate destination, invoke event to continue progress.
 
