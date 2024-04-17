@@ -18,8 +18,8 @@ public class PlayerControlVR : MonoBehaviour
     Camera cam;
     [SerializeField]
     GameObject vrLeftHand, vrRightHand;
-    [SerializeField]
-    float vrYMagnitude, vrMagnitude;
+    [SerializeField]    //this needs tweaking
+    float vrLCallHeight, vrRMagnitude;
     [SerializeField]
     public GameObject vrCamera;
     [SerializeField]
@@ -104,6 +104,7 @@ public class PlayerControlVR : MonoBehaviour
         {
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
+            //  lookInput = lookAction.ReadValue<Vector2>(); //////////////////////////////
 
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
@@ -128,6 +129,9 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
+
+        //Debug.Log(HeldAction);
+
     }
 
    
@@ -136,19 +140,16 @@ public class PlayerControlVR : MonoBehaviour
     private void StoredActionCheck()
     {
         //All of these are placeholders and should be determined elsewhere later.
-        GameObject vrRightHand = new();
-        GameObject vrLeftHand = new();
-        float vrMagnitude = 1f;
-
-        float yMagnitude = 0f;
+        //GameObject vrRightHand = new();
+        //GameObject vrLeftHand = new();
 
         if (HeldAction == null)
         {
-            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude)
+            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrRMagnitude)
             {
                 HeldAction = "Whistle";
             }
-            else if (vrLeftHand.transform.position.y >= yMagnitude)
+            else if (vrLeftHand.transform.position.y >= vrLCallHeight)
             {
                 HeldAction = "Call";
             }
@@ -156,7 +157,7 @@ public class PlayerControlVR : MonoBehaviour
         else
         {
             //Add an "and" to this alongside currentAction being Whistle
-            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrMagnitude && HeldAction == "Whistle")
+            if ((vrRightHand.transform.position - cam.transform.position).magnitude <= vrRMagnitude && HeldAction == "Whistle")
             {
                 storeTimestamp += Time.deltaTime;
                 if (storeTimestamp > storeInputDuration)
@@ -164,7 +165,7 @@ public class PlayerControlVR : MonoBehaviour
                     WhistleActivate();
                 }
             }
-            else if (vrLeftHand.transform.position.y >= vrYMagnitude && HeldAction == "Call")
+            else if (vrLeftHand.transform.position.y >= vrLCallHeight && HeldAction == "Call")
             {
                 storeTimestamp += Time.deltaTime;
                 if (storeTimestamp > storeInputDuration)
@@ -178,6 +179,9 @@ public class PlayerControlVR : MonoBehaviour
                 HeldAction = null;
             }
         }
+
+        Debug.Log(vrLeftHand.transform.position.y);
+        //Debug.Log((vrRightHand.transform.position - cam.transform.position).magnitude);
     }
 
     //Public function for UI to check how long the action has been stored for as a time (t) value.
