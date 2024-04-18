@@ -120,9 +120,9 @@ public class GameplayManager : MonoBehaviour
             if (enabledPlayers[i])
             {
                 currentPlayers[i] = Instantiate(playerPrefab, null);
+                currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent);
                 GameObject model = currentPlayers[i].transform.Find("Model").gameObject;
                 SelectPlayerSkin(model, i);
-                currentPlayers[i].GetComponent<ZoneAIController>().SetupAIAttributes(setupInformation[i].type, setupInformation[i].team, zoneParent);
             }
         }
     }

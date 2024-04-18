@@ -114,10 +114,6 @@ public class ZoneAIController : MonoBehaviour
         aiType = typeOfPlayer;
         aiTeam = playerTeam;
         zonesParent = zoneParentObject;
-        //startPosition = baseSpawn;
-
-        //animator = GetComponentInChildren<Animator>();
-        GetComponentInChildren<MeshRenderer>().material = teamMaterials[(int)playerTeam];
     }
 
     // Update is called once per frame
