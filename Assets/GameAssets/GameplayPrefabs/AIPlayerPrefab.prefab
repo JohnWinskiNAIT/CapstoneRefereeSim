@@ -84,7 +84,7 @@ MonoBehaviour:
   lockoutTime: 0.05
   acceleration: 3600
   maxSpeed: 20
-  passChance: 12
+  passChance: 1
   teamMaterials:
   - {fileID: -1976799459468813334, guid: dbefaf09d57380845a90efa81f316f63, type: 3}
   - {fileID: -2321248102219863169, guid: dbefaf09d57380845a90efa81f316f63, type: 3}
@@ -501,8 +501,37 @@ PrefabInstance:
     - {fileID: 8196798520224901374, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     - {fileID: 5994721076960434074, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4700468303007979062}
   m_SourcePrefab: {fileID: 100100000, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+--- !u!1 &8458382405082755850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
+  m_PrefabInstance: {fileID: 8764950636347395675}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4700468303007979062
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458382405082755850}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b430709b3e86cea449c22ba1bb291f7b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0b5638a25ff6e8f41b1c279501cf3663, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &9091049485721627056 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}

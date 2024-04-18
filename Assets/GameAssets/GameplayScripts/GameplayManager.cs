@@ -141,6 +141,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         playerModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+        Debug.Log(GameUtilities.RetrieveHelmetSkin().name);
     }
 
     void EnablePlayers()
