@@ -83,7 +83,7 @@ MonoBehaviour:
   passSpeed: 65
   lockoutTime: 0.05
   acceleration: 3600
-  maxSpeed: 19
+  maxSpeed: 20
   passChance: 12
   teamMaterials:
   - {fileID: -1976799459468813334, guid: dbefaf09d57380845a90efa81f316f63, type: 3}
@@ -280,10 +280,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
-  m_Height: 6
+  m_Radius: 1.7
+  m_Height: 7
   m_Direction: 1
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Center: {x: 0, y: 3.5, z: 0}
 --- !u!1001 &8764950636347395675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,15 +298,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2058fab987e90e0468979ecb80a7ead5, type: 3}
       propertyPath: m_LocalPosition.x
