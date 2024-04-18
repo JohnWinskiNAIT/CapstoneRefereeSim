@@ -133,15 +133,15 @@ public class GameplayManager : MonoBehaviour
 
         if (playerNumber >= 5)
         {
-            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
+            playerModel.transform.Find("PlayerBody").GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, false);
         }
         else
         {
-            playerModel.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
+            playerModel.transform.Find("PlayerBody").GetComponent<SkinnedMeshRenderer>().material = GameUtilities.RetrievePlayerSkin(chosenSkin, true);
         }
 
-        playerModel.transform.GetChild(1).GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
-        Debug.Log(GameUtilities.RetrieveHelmetSkin().name);
+        playerModel.transform.Find("PlayerHelmet").GetComponent<MeshRenderer>().material = GameUtilities.RetrieveHelmetSkin();
+        Debug.Log(playerModel.transform.Find("PlayerHelmet").GetComponent<MeshRenderer>().material.name);
     }
 
     void EnablePlayers()
