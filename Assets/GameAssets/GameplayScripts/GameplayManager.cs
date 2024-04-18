@@ -202,6 +202,7 @@ public class GameplayManager : MonoBehaviour
         }
         else
         {
+            player.GetComponent<PlayerControl>().SetPlayerControl(PlayerControl.PlayerState.Lockout);
             resultsUI.GetComponent<ResultsDisplay>().InitiateResults(-1, CurrentPlayInfo.penaltyId, callDifference);
             resultsUI.SetActive(true);
         }
