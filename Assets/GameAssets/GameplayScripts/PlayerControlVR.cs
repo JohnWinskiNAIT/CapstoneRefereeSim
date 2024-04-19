@@ -48,6 +48,17 @@ public class PlayerControlVR : MonoBehaviour
 
     public bool isVREnabled;
 
+
+
+    [SerializeField] Canvas VRHeadCanvas;
+    [SerializeField] Canvas VRWorldCanvas;
+
+    [SerializeField] GameObject[] Worldspacers; //UI Elements that need to be put into Worldspace when in VR
+    [SerializeField] GameObject[] OnFacers;     //UI Elements 
+
+    [SerializeField] GameObject?[] Hitboxes;     //Disabled initially, Enabled only in VR. Not used for the Wheel.
+        //\aaaaaaaaaaaaaaaaaaaaaa/////////aaaaaaaaaaaaaaaaaaaaaaaaaaaa/////////aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
     /// <summary>
     /// ////////////////////bool isInMenu; maybe this should e covered in state?
     /// we want to make the Call button Call when playying hockey, but be a Menu selecting pointer every other time
@@ -91,6 +102,18 @@ public class PlayerControlVR : MonoBehaviour
         //uiManager.isVREnabled = isVREnabled;
         CameraAngle = cam.transform.rotation.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
+
+
+        for (int i = 0; i < Worldspacers.Length; i++)
+        {
+            Worldspacers[i].gameObject.transform.SetParent(VRWorldCanvas.transform, false);
+            Worldspacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+        for (int i = 0; i < OnFacers.Length; i++)
+        {
+            OnFacers[i].gameObject.transform.SetParent(VRHeadCanvas.transform, false);
+            OnFacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
     }
 
     // Update is called once per frame
@@ -104,7 +127,7 @@ public class PlayerControlVR : MonoBehaviour
             // Getting Vector2 inputs for move and look.
             moveInput = moveAction.ReadValue<Vector2>();
             lookInput = lookAction.ReadValue<Vector2>().x; 
-            Debug.Log(lookInput);
+            //Debug.Log(lookInput);
 
             //Call pausemanager when pause is pressed.
             if (pauseAction.WasPressedThisFrame())
@@ -129,7 +152,7 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
-        Debug.Log(HeldAction);
+        //Debug.Log(HeldAction);
     }
 
 
