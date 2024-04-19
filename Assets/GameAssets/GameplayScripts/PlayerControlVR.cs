@@ -298,7 +298,7 @@ public class PlayerControlVR : MonoBehaviour
 
     private void PlayerRotation()
     {
-        if (lookInput > 0.2)
+        if (Mathf.Abs(lookInput) > 0.2)
         {
             transform.Rotate(0, lookInput, 0);
         }
