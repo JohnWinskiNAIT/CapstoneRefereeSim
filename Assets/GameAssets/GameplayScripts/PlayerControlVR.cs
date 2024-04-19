@@ -298,7 +298,10 @@ public class PlayerControlVR : MonoBehaviour
 
     private void PlayerRotation()
     {
-        transform.Rotate(0, lookInput, 0);
+        if (lookInput > 0.2)
+        {
+            transform.Rotate(0, lookInput, 0);
+        }
     }
 
     //public void SetCamAngles(Vector3 camAngles)
