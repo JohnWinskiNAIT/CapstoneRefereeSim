@@ -49,8 +49,11 @@ public class Settings : MonoBehaviour
         {
             LoadSettings();
             masterSlider.value = mySettings.masterVolume;
+            audioMixer.SetFloat("Master", Mathf.Log10(mySettings.masterVolume) * 20);
             SFXSlider.value = mySettings.SFXvolume;
+            audioMixer.SetFloat("SFX", Mathf.Log10(mySettings.SFXvolume) * 20);
             ambientSlider.value = mySettings.ambientVolume;
+            audioMixer.SetFloat("Ambient", Mathf.Log10(mySettings.ambientVolume) * 20);
             if (mySettings.penalties.Length != 0)
             {
                 for (int i = 0; i < myPenaltyToggles.Length; i++)
