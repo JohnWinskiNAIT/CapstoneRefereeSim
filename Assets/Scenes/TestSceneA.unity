@@ -7684,7 +7684,7 @@ MonoBehaviour:
   vrLeftHand: {fileID: 42715919}
   vrRightHand: {fileID: 991626365}
   vrLCallHeight: 8.5
-  vrRMagnitude: 0.15
+  vrRMagnitude: 0.18
   vrCamera: {fileID: 977113817}
   nonVRCamera: {fileID: 51658056}
   maxSpeed: 25
