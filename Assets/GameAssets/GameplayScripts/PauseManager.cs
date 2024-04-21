@@ -29,6 +29,7 @@ public class PauseManager : MonoBehaviour
 
     [SerializeField]
     GameObject[] panels;
+    [SerializeField]
     Transform offScreen, onScreen;
     public Button[] onScreenButtons;
     Slider[] onScreenSliders;
@@ -59,8 +60,8 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        offScreen = GameObject.Find("OffScreen").transform;
-        onScreen = GameObject.Find("OnScreen").transform;
+        //offScreen = GameObject.Find("OffScreen").transform;
+        //onScreen = GameObject.Find("OnScreen").transform;
         previousOnScreen = new List<GameObject>();
         canEscape = false;
         offScreenPanel = panels[menu + 1];

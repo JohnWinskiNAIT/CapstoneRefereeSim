@@ -4580,8 +4580,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -2060, y: 0, z: -0}
-  m_LocalScale: {x: 9.162545, y: 9.162548, z: 9.162545}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1119031681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10944,7 +10944,7 @@ GameObject:
   - component: {fileID: 1119031679}
   - component: {fileID: 1119031678}
   m_Layer: 5
-  m_Name: Canvas1
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14371,37 +14371,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 533896287}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1415290159
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1415290160}
-  m_Layer: 0
-  m_Name: OnScreen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1415290160
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1415290159}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2023598550}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1418209540
 GameObject:
   m_ObjectHideFlags: 0
@@ -14545,6 +14514,8 @@ MonoBehaviour:
   - {fileID: 902245537}
   - {fileID: 706946550}
   - {fileID: 1121969573}
+  offScreen: {fileID: 448229132}
+  onScreen: {fileID: 1828200891}
   onScreenButtons: []
   pauseTransitionTime: 0.1
   pauseMenu: {fileID: 947787293}
@@ -18268,8 +18239,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.162545, y: 9.162548, z: 9.162545}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1119031681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18906,37 +18877,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1883862116}
   m_CullTransparentMesh: 1
---- !u!1 &1920492306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1920492307}
-  m_Layer: 0
-  m_Name: OffScreen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1920492307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920492306}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2060, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2023598550}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1927429470
 GameObject:
   m_ObjectHideFlags: 0
@@ -19723,8 +19663,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 387122207}
-  - {fileID: 1920492307}
-  - {fileID: 1415290160}
   m_Father: {fileID: 562995191}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
