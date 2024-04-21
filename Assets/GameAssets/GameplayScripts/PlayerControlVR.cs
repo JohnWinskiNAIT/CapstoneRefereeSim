@@ -87,6 +87,8 @@ public class PlayerControlVR : MonoBehaviour
         GameplayEvents.SetPause.AddListener(PausePlayer);
 
         basePosition = transform.position;
+
+        RepositionUI();
     }
 
     private void Start()
@@ -103,17 +105,6 @@ public class PlayerControlVR : MonoBehaviour
         CameraAngle = cam.transform.rotation.eulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
 
-
-        for (int i = 0; i < Worldspacers.Length; i++)
-        {
-            Worldspacers[i].gameObject.transform.SetParent(VRWorldCanvas.transform, false);
-            Worldspacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        }
-        for (int i = 0; i < OnFacers.Length; i++)
-        {
-            OnFacers[i].gameObject.transform.SetParent(VRHeadCanvas.transform, false);
-            OnFacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        }
     }
 
     // Update is called once per frame
@@ -152,10 +143,24 @@ public class PlayerControlVR : MonoBehaviour
             moveInput = Vector2.zero;
             HeldAction = null;
         }
-        //Debug.Log(HeldAction);
+        Debug.Log(HeldAction);
     }
 
-
+    void RepositionUI()
+    {
+        for (int i = 0; i < Worldspacers.Length; i++)
+        {
+            Worldspacers[i].gameObject.transform.SetParent(VRWorldCanvas.transform, false);
+            Worldspacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            //Debug.Log($"{Worldspacers[i].gameObject.transform.name} is parented to:{Worldspacers[i].gameObject.transform.parent.name}");
+        }
+        for (int i = 0; i < OnFacers.Length; i++)
+        {
+            OnFacers[i].gameObject.transform.SetParent(VRHeadCanvas.transform, false);
+            OnFacers[i].gameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            //Debug.Log($"{OnFacers[i].gameObject.transform.name} is parented to:{OnFacers[i].gameObject.transform.parent.name}");
+        }
+    }
 
     //VR STORED ACTION METHOD
     private void StoredActionCheck()
