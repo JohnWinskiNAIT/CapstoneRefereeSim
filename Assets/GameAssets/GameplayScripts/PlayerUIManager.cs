@@ -94,7 +94,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (Settings.mySettings.WhistleCount > 0)
         {
-            whistleInformation = GenerateWheelInformation(false);
+            whistleInformation = GenerateWheelInformation(true);
         }
         if (Settings.mySettings.penalties.Length - Settings.mySettings.WhistleCount > 0)
         {
@@ -222,8 +222,6 @@ public class PlayerUIManager : MonoBehaviour
                         wheelGlow.fillAmount = segments / totalFill;
                         wheelText.text = wheelInfo.options[i].optionText;
                         wheelGlow.transform.rotation = Quaternion.Euler(0, playerUICanvas.transform.eulerAngles.y, -i * segments);
-                        //Debug.Log(i);
-                        //Debug.Log(wheelInfo.options[i].optionId);
 
                         //Input to choose a penalty.
                         if (callSelectAction.WasPressedThisFrame())

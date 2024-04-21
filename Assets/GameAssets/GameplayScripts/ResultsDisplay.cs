@@ -41,7 +41,7 @@ public class ResultsDisplay : MonoBehaviour
     public void InitiateResults(int choiceId, int actualId, float timing)
     {
         ToggleNameEntry(false);
-        Debug.Log(choiceId);
+
         string choice;
         string actual;
         if (actualId == -1)
