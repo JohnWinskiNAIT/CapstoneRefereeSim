@@ -140,7 +140,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (isVREnabled)
         {
-            if (playerControl.HeldAction != null)
+            if (playerControlVR.HeldAction != null)
             {
                 inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
                 if (playerControl.HeldAction == whistleCancelAction)
