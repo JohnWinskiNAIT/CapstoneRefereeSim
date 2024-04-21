@@ -104,6 +104,14 @@ public class PlayerUIManager : MonoBehaviour
         {
             callInformation = GenerateWheelInformation(false);
         }
+
+        if (isVREnabled)
+        {
+            leftSideBL = leftSideStore.anchorMin;
+            leftSideTR = leftSideStore.anchorMax;
+            rightSideBL = rightSideStore.anchorMin;
+            rightSideTR = rightSideStore.anchorMax;
+        }
     }
 
     private WheelInformation GenerateWheelInformation(bool isWhistle)
