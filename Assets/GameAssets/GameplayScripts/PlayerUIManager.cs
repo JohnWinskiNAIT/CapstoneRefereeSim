@@ -21,6 +21,7 @@ public class PlayerUIManager : MonoBehaviour
     InputAction whistleCancelAction, callSelectAction, wheelTestAction;
 
     PlayerControl playerControl;
+    PlayerControlVR playerControlVR;
 
     //Reference to the image with a radial fill that will appear in the center of the screen.
     [SerializeField]
@@ -85,6 +86,7 @@ public class PlayerUIManager : MonoBehaviour
         currentIcons = new GameObject[0];
 
         playerControl = GetComponent<PlayerControl>();
+        playerControlVR = GetComponent<PlayerControlVR>();
         GameplayEvents.OpenWheel.AddListener(ToggleWheel);
         GameplayEvents.InitializePlay.AddListener(ResetUI);
         ToggleWheel(false, false);
@@ -92,6 +94,8 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Start()
     {
+        isVREnabled = playerControl.isVREnabled;
+
         if (Settings.mySettings.WhistleCount > 0)
         {
             whistleInformation = GenerateWheelInformation(true);
@@ -134,41 +138,71 @@ public class PlayerUIManager : MonoBehaviour
     // Visual effects are performed in this update.
     private void Update()
     {
-        if (playerControl.HeldAction != null)
+        if (isVREnabled)
         {
-            inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
-            if (playerControl.HeldAction == whistleCancelAction)
+            if (playerControl.HeldAction != null)
             {
-                rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControl.StoredActionStatus());
-                rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControl.StoredActionStatus());
+                inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
+                if (playerControl.HeldAction == whistleCancelAction)
+                {
+                    rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControlVR.StoredActionStatus());
+                    rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControlVR.StoredActionStatus());
+                }
+                if (playerControl.HeldAction == callSelectAction)
+                {
+                    leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControlVR.StoredActionStatus());
+                    leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControlVR.StoredActionStatus());
+                }
             }
-            if (playerControl.HeldAction == callSelectAction)
+            else
             {
-                leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControl.StoredActionStatus());
-                leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControl.StoredActionStatus());
+                inputStoreRadial.fillAmount = 0;
+                rightSideStore.anchorMin = rightSideBL;
+                rightSideStore.anchorMax = rightSideTR;
+
+                leftSideStore.anchorMin = leftSideBL;
+                leftSideStore.anchorMax = leftSideTR;
             }
         }
         else
         {
-            inputStoreRadial.fillAmount = 0;
-            rightSideStore.anchorMin = rightSideBL;
-            rightSideStore.anchorMax = rightSideTR;
-
-            leftSideStore.anchorMin = leftSideBL;
-            leftSideStore.anchorMax = leftSideTR;
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (isVREnabled)
+            if (playerControl.HeldAction != null)
             {
-                isVREnabled = false;
+                inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
+                if (playerControl.HeldAction == whistleCancelAction)
+                {
+                    rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControl.StoredActionStatus());
+                    rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControl.StoredActionStatus());
+                }
+                if (playerControl.HeldAction == callSelectAction)
+                {
+                    leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControl.StoredActionStatus());
+                    leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControl.StoredActionStatus());
+                }
             }
             else
             {
-                isVREnabled = true;
+                inputStoreRadial.fillAmount = 0;
+                rightSideStore.anchorMin = rightSideBL;
+                rightSideStore.anchorMax = rightSideTR;
+
+                leftSideStore.anchorMin = leftSideBL;
+                leftSideStore.anchorMax = leftSideTR;
             }
         }
+
+
+        /*if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    if (isVREnabled)
+        //    {
+        //        isVREnabled = false;
+        //    }
+        //    else
+        //    {
+        //        isVREnabled = true;
+        //    }
+          }*/
 
         // Lockstate
 
