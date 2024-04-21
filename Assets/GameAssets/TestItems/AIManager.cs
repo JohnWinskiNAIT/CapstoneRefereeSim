@@ -32,7 +32,7 @@ public class AIManager : MonoBehaviour
 
     private void Update()
     {
-        if (puckObject.GetComponent<PuckManager>().ignoredTime > ignoreTimer)
+        if (puckObject.GetComponent<PuckManager>().IgnoredTime > ignoreTimer)
         {
             GameObject redirectPlayer = null;
             float distance = float.PositiveInfinity;

@@ -84,7 +84,7 @@ MonoBehaviour:
   lockoutTime: 0.05
   acceleration: 3600
   maxSpeed: 20
-  passChance: 11
+  passChance: 1
   teamMaterials:
   - {fileID: -1976799459468813334, guid: dbefaf09d57380845a90efa81f316f63, type: 3}
   - {fileID: -2321248102219863169, guid: dbefaf09d57380845a90efa81f316f63, type: 3}

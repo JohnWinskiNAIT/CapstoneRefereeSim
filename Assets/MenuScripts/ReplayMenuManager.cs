@@ -15,7 +15,6 @@ public class ReplayMenuManager : MonoBehaviour
     const int FileHeight = 150;
     const string FILEPATH = "SaveData";
     const string PositionDataString = "PositionData";
-    const string DATAPATH = "SaveData/PositionData";
 
     GameObject menuOptionPrefab;
 

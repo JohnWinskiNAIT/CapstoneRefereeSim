@@ -6665,6 +6665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ca793baca8a3a4784ab042c4e3d3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puckBoard: {fileID: 0}
+  puckNet: {fileID: 0}
 --- !u!4 &630770176
 Transform:
   m_ObjectHideFlags: 0
@@ -8119,6 +8121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 760416999}
   - component: {fileID: 760417000}
+  - component: {fileID: 760417001}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -8162,6 +8165,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 13.5, y: 10, z: 6.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &760417001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760416998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fa772e3f96a77468f9ea88f5fc2e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenClip: {fileID: 8300000, guid: fc97b335c8c5244458e7432f2020c9d2, type: 3}
+  volume: 0.7
 --- !u!1 &766079676
 GameObject:
   m_ObjectHideFlags: 0
@@ -14583,6 +14600,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3989346385401443251, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1435699705}
+    - targetCorrespondingSourceObject: {fileID: -3989346385401443251, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1435699708}
   m_SourcePrefab: {fileID: 100100000, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
 --- !u!1 &1435699704 stripped
 GameObject:
@@ -14621,6 +14641,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7865889945449758289, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
   m_PrefabInstance: {fileID: 1435699703}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1435699708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435699704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fa772e3f96a77468f9ea88f5fc2e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenClip: {fileID: 8300000, guid: a549e64e270e11e49b1deb5239acfe08, type: 3}
+  volume: 0.7
 --- !u!65 &1435699715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19577,6 +19611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2014623521}
   - component: {fileID: 2014623522}
+  - component: {fileID: 2014623523}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -19620,6 +19655,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 13.5, y: 10, z: 6.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2014623523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014623520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fa772e3f96a77468f9ea88f5fc2e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenClip: {fileID: 8300000, guid: fc97b335c8c5244458e7432f2020c9d2, type: 3}
+  volume: 0.7
 --- !u!1001 &2046956530
 PrefabInstance:
   m_ObjectHideFlags: 0

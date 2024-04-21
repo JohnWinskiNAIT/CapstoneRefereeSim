@@ -10,7 +10,7 @@ public class PuckManager : MonoBehaviour
     public ZoneAIController.AITeam? OwnerTeam { get; private set; }
     Vector3 savedVelocity;
 
-    public float ignoredTime { get; private set; }
+    public float IgnoredTime { get; private set; }
 
     private void Start()
     {
@@ -37,11 +37,11 @@ public class PuckManager : MonoBehaviour
 
         if (Owner == null)
         {
-            ignoredTime += Time.deltaTime;
+            IgnoredTime += Time.deltaTime;
         }
         else
         {
-            ignoredTime = 0;
+            IgnoredTime = 0;
         }
     }
 
@@ -63,15 +63,16 @@ public class PuckManager : MonoBehaviour
 
     public void ResetTime()
     {
-        ignoredTime = 0;
+        IgnoredTime = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("ArenaWall"))
+        if (collision.gameObject.GetComponent<PuckImpactManager>() != null)
         {
             rb.velocity = savedVelocity * 0.9f;
             rb.velocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal);
+            collision.gameObject.GetComponent<PuckImpactManager>().PlayImpactSound(collision.contacts[0].point);
         }
     }
 
