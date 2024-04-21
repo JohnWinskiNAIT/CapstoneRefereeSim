@@ -64,6 +64,7 @@ public class Settings : MonoBehaviour
                         myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
                         myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle = mySettings.penalties[i].isWhistle;
                         mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
+                        mySettings.penalties[i].penaltyId = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyId;
                     }
                 }
             }
@@ -109,6 +110,7 @@ public class Settings : MonoBehaviour
                         myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isEnabled = mySettings.penalties[i].isEnabled;
                         mySettings.penalties[i].isWhistle = myPenaltyToggles[j].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.isWhistle;
                         mySettings.penalties[i].penaltyText = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyText;
+                        mySettings.penalties[i].penaltyId = myPenaltyToggles[i].transform.parent.GetComponent<PenaltySettingsContainer>().heldData.penaltyId;
                     }
                 }
             }

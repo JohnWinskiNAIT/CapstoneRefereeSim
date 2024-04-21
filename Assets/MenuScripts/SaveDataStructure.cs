@@ -47,6 +47,21 @@ public struct SettingsData
             return count;
         }
     }
+
+    public PenaltyData FindPenaltyId(int id)
+    {
+        PenaltyData foundPenalty = penalties[0];
+        bool done = false;
+        for (int i = 0; i < penalties.Length && !done; i++)
+        {
+            if (penalties[i].penaltyId == id)
+            {
+                foundPenalty = penalties[i];
+                done = true;
+            }
+        }
+        return foundPenalty;
+    }
 }
 
 [Serializable]

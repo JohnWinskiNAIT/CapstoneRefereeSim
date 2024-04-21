@@ -10,6 +10,7 @@ public class PuckManager : MonoBehaviour
     public ZoneAIController.AITeam? OwnerTeam { get; private set; }
     Vector3 savedVelocity;
 
+    bool paused;
     public float IgnoredTime { get; private set; }
 
     private void Start()
@@ -18,6 +19,7 @@ public class PuckManager : MonoBehaviour
         GameplayManager.Instance.DeclarePuck(gameObject);
         rb = GetComponent<Rigidbody>();
         AIManagerCallback();
+        GameplayEvents.SetPause.AddListener(PuckPause);
     }
 
     private void AIManagerCallback()
@@ -27,21 +29,24 @@ public class PuckManager : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
+        if (!paused)
         {
-            player = GameplayManager.Instance.player;
-            Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), player.GetComponentInChildren<Collider>(), true);
-        }
+            if (player == null)
+            {
+                player = GameplayManager.Instance.player;
+                Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), player.GetComponentInChildren<Collider>(), true);
+            }
 
-        savedVelocity = rb.velocity;
+            savedVelocity = rb.velocity;
 
-        if (Owner == null)
-        {
-            IgnoredTime += Time.deltaTime;
-        }
-        else
-        {
-            IgnoredTime = 0;
+            if (Owner == null)
+            {
+                IgnoredTime += Time.deltaTime;
+            }
+            else
+            {
+                IgnoredTime = 0;
+            }
         }
     }
 
@@ -64,6 +69,21 @@ public class PuckManager : MonoBehaviour
     public void ResetTime()
     {
         IgnoredTime = 0;
+    }
+
+    public void PuckPause(bool toggle)
+    {
+        if (toggle)
+        {
+            savedVelocity = rb.velocity;
+            rb.velocity = Vector3.zero;
+            paused = true;
+        }
+        else
+        {
+            rb.velocity = savedVelocity;
+            paused = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
