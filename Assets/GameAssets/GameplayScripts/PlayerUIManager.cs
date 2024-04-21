@@ -143,12 +143,12 @@ public class PlayerUIManager : MonoBehaviour
             if (playerControlVR.HeldAction != null)
             {
                 inputStoreRadial.fillAmount = playerControl.StoredActionStatus();
-                if (playerControl.HeldAction == whistleCancelAction)
+                if (playerControlVR.HeldAction == "Whistle")
                 {
                     rightSideStore.anchorMin = Vector3.Lerp(rightSideBL, rightSideBL - chargingVectorOffset, playerControlVR.StoredActionStatus());
                     rightSideStore.anchorMax = Vector3.Lerp(rightSideTR, rightSideTR - chargingVectorOffset, playerControlVR.StoredActionStatus());
                 }
-                if (playerControl.HeldAction == callSelectAction)
+                if (playerControlVR.HeldAction == "Call")
                 {
                     leftSideStore.anchorMin = Vector3.Lerp(leftSideBL, leftSideBL + chargingVectorOffset, playerControlVR.StoredActionStatus());
                     leftSideStore.anchorMax = Vector3.Lerp(leftSideTR, leftSideTR + chargingVectorOffset, playerControlVR.StoredActionStatus());
