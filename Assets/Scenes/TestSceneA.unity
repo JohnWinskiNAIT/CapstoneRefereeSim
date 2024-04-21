@@ -7664,7 +7664,7 @@ MonoBehaviour:
   lookSensitivity: 1
   isVREnabled: 0
   VRHeadCanvas: {fileID: 1675065097}
-  VRFixedCanvas: {fileID: 1623357435}
+  VRWorldCanvas: {fileID: 0}
   Worldspacers:
   - {fileID: 1439535750}
   - {fileID: 2136186174}
@@ -14547,6 +14547,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3989346385401443251, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
+      propertyPath: m_TagString
+      value: ArenaWall
       objectReference: {fileID: 0}
     - target: {fileID: -390084606174405572, guid: 353b6dda6bc69ea4a83eb104ca11285d, type: 3}
       propertyPath: m_Materials.Array.data[0]

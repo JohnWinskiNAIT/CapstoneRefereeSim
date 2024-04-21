@@ -70,7 +70,7 @@ public class PuckManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ArenaWall"))
         {
-            rb.velocity = savedVelocity;
+            rb.velocity = savedVelocity * 0.9f;
             rb.velocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal);
         }
     }
