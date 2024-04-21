@@ -24,6 +24,7 @@ public class VRMenuController : MonoBehaviour
     [SerializeField] GameObject camParent;
     [SerializeField] InputActionAsset inputActions;
     private InputAction moveAction, lookAction, callselectAction, pauseAction, whistleAction;
+    float lookInput;
     bool isClicking;
     bool wasClicking;
 
@@ -71,8 +72,7 @@ public class VRMenuController : MonoBehaviour
     }
 
     void Update()
-    { 
-
+    {
         if (callselectAction.ReadValue<float>() > 0.3)   
         {   //check isClicking
             if (!wasClicking)
@@ -90,13 +90,17 @@ public class VRMenuController : MonoBehaviour
 
         LazerPositionUpdate();
 
-        CamRotationUpdate();
+        PlayerRotation();
         //rotate off of values from thum stick
     }
 
-    void CamRotationUpdate()
+    private void PlayerRotation()
     {
-        camParent.transform.Rotate(0, lookAction.ReadValue<Vector2>().x * lookSensitivity , 0);
+        lookInput = lookAction.ReadValue<Vector2>().x;
+        if (Mathf.Abs(lookInput) > 0.2)
+        {
+            transform.Rotate(0, lookInput, 0);
+        }
     }
 
     void LazerPositionUpdate()
