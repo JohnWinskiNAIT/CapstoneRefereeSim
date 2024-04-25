@@ -54,8 +54,6 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField]
     GameObject playerPrefab, puckPrefab;
-    [SerializeField]
-    GameObject playTest;
 
     public CallState Call { get; private set; }
 
@@ -312,7 +310,6 @@ public class GameplayManager : MonoBehaviour
         {
             currentPlayers[CurrentPlayInfo.offenderId].GetComponent<ZoneAIController>().ResolvePenalty(false);
             currentPlayers[CurrentPlayInfo.affectedId].GetComponent<ZoneAIController>().ResolvePenalty(true);
-            playTest.SetActive(true);
             Debug.Log(Settings.mySettings.penalties[CurrentPlayInfo.penaltyId].PenaltyName);
             penaltyOccured = true;
         }
@@ -392,8 +389,6 @@ public class GameplayManager : MonoBehaviour
         };
 
         callTimestamp = 0;
-
-        playTest.SetActive(false);
     }
 
     public class PlayInformation
