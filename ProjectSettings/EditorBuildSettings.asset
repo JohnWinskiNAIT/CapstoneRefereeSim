@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/VRMENUSCENE.unity
     guid: be9e33aebed4c2947a157519a56288c1
   - enabled: 1
-    path: Assets/Scenes/TestSceneA.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 0225868514b00d24a89a99ed7eb1296c
   - enabled: 1
     path: Assets/Scenes/ReplayPlaybackScene.unity
